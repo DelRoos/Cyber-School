@@ -36,6 +36,90 @@
       "trustLevel": "official-docs",
       "untrustedContentNotice": true,
       "summary": "Documentation officielle sur la syntaxe des filtres d'affichage Wireshark permettant d'isoler les drapeaux TCP (ex: tcp.flags.syn == 1)."
+    },
+    {
+      "id": "linux-mm-concepts",
+      "title": "The Linux Kernel Documentation — Memory Management Concepts",
+      "publisher": "The Linux Kernel Organization",
+      "url": "https://docs.kernel.org/admin-guide/mm/concepts.html",
+      "publishedYear": 2025,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "Virtual Memory, Page Frames, Anonymous Memory & Reclaim",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Documentation officielle du noyau Linux détaillant l'espace d'adressage virtuel, la MMU, la traduction en cadres de pages physiques, la mémoire anonyme et la gestion OOM."
+    },
+    {
+      "id": "linux-proc-pid-maps",
+      "title": "Linux man-pages — proc_pid_maps(5)",
+      "publisher": "Linux man-pages project",
+      "url": "https://man7.org/linux/man-pages/man5/proc_pid_maps.5.html",
+      "publishedYear": 2025,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "proc_pid_maps(5) — Memory Regions & Permissions",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Page de manuel décrivant la cartographie réelle de la mémoire d'un processus (/proc/[pid]/maps), ses régions ([heap], [stack], [vdso]) et ses permissions rwxp."
+    },
+    {
+      "id": "sysv-amd64-abi",
+      "title": "System V Application Binary Interface — AMD64 Architecture Processor Supplement",
+      "publisher": "x86-64 psABI Maintainers",
+      "url": "https://github.com/hjl-tools/x86-64-psABI",
+      "publishedYear": 2024,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "Section 3.2 (Function Calling Sequence & Stack Frame)",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true,
+      "summary": "Spécification ABI de référence sur x86-64 Linux : convention d'appel, registre RSP/RBP, alignement de la pile à 16 octets et Red Zone de 128 octets."
+    },
+    {
+      "id": "glibc-malloc-internals",
+      "title": "GNU C Library (glibc) Wiki — Malloc Internals",
+      "publisher": "GNU Project / sourceware.org",
+      "url": "https://sourceware.org/glibc/wiki/MallocInternals",
+      "publishedYear": 2024,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "Chunks, Bins, Tcache, Arenas & brk/mmap",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Description technique de l'allocateur ptmalloc2/glibc : structure des chunks, bits A|M|P, tcache, fastbins, unsorted/small/large bins, fusion et appels système brk/mmap."
+    },
+    {
+      "id": "rust-ownership-book",
+      "title": "The Rust Programming Language — Chapter 4: Understanding Ownership",
+      "publisher": "The Rust Project",
+      "url": "https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html",
+      "publishedYear": 2025,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "4.1 What Is Ownership? (The Stack and the Heap)",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Référence officielle comparant pile et tas et exposant le modèle d'ownership/RAII à la compilation sans ramasse-miettes ni désallocation manuelle."
+    },
+    {
+      "id": "dotnet-gc-fundamentals",
+      "title": "Microsoft .NET Documentation — Fundamentals of Garbage Collection",
+      "publisher": "Microsoft",
+      "url": "https://learn.microsoft.com/en-us/dotnet/standard/garbage-collection/fundamentals",
+      "publishedYear": 2025,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "Managed Heap, Roots & Generations",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Documentation décrivant le tas géré par ramasse-miettes (GC), la traçabilité depuis les racines (roots), les générations et le compactage."
+    },
+    {
+      "id": "godbolt-explorer",
+      "title": "Compiler Explorer (Godbolt) — Interactive Assembly & Stack Frame Inspection",
+      "publisher": "Compiler Explorer",
+      "url": "https://godbolt.org",
+      "publishedYear": 2025,
+      "verifiedAt": "2026-11-14",
+      "sectionRef": "x86-64 GCC/Clang Assembly View",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Laboratoire externe en lecture seule permettant d'observer comment un compilateur traduit des variables et appels de fonction en registres et trames de pile réelles."
     }
   ]
 }

@@ -8,7 +8,7 @@ iteration: ITER-001
 dependsOn: []
 labels: [area:infra, area:agents, area:qa]
 githubIssue: null
-verificationRef: continuity/validation/2026-11-13T22-50-35-739Z-cd2ffec7-ff0d-4a78-83e6-144994ff09be/result.json
+verificationRef: continuity/validation/2026-11-13T23-23-48-154Z-36409115-ea98-4c8a-ba14-aa74f88fcbe3/result.json
 ---
 
 # TASK-008 — Garde-fous de validation

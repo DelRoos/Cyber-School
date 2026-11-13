@@ -1,0 +1,387 @@
+{
+  "version": "1.0",
+  "domains": [
+    {
+      "id": "systems-and-memory",
+      "title": "Architecture Systèmes & Mémoire des Programmes",
+      "summary": "Comprendre comment un processeur et un système d'exploitation exécutent un programme, cartographient son espace d'adressage, orchestrent la pile et le tas et préviennent les failles mémoire.",
+      "modules": [
+        {
+          "id": "execution-and-address-space",
+          "title": "Exécution CPU & Espace d'Adressage Virtuel",
+          "summary": "Relier l'exécution séquentielle des instructions machine aux octets adressables et à la cartographie virtuelle isolée d'un processus.",
+          "chapters": [
+            {
+              "id": "instructions-registers-and-ram",
+              "title": "Cycle d'exécution et adressage mémoire",
+              "summary": "Observer comment les registres internes du processeur, le pointeur d'instruction et la RAM coopèrent à chaque cycle.",
+              "conceptIds": ["cpu-fetch-decode-execute", "memory-addressing-and-bytes"]
+            },
+            {
+              "id": "process-memory-anatomy",
+              "title": "Espace d'adressage virtuel et segments",
+              "summary": "Distinguer l'espace d'adressage logique vu par le programme des pages physiques gérées par l'OS et la MMU.",
+              "conceptIds": ["virtual-vs-physical-memory", "process-memory-segments"]
+            }
+          ]
+        },
+        {
+          "id": "variables-stack-and-pointers",
+          "title": "Variables, Pile d'Appels & Indirection",
+          "summary": "Comprendre comment les variables locales prennent vie dans les trames de pile, comment les appels s'imbriquent et pourquoi l'indirection impose des règles strictes de durée de vie.",
+          "chapters": [
+            {
+              "id": "variables-and-call-stack",
+              "title": "Variables et mécanique de la pile d'appels",
+              "summary": "Passer de la notion abstraite de variable à son empreinte en octets dans une trame gérée selon l'ABI.",
+              "conceptIds": [
+                "variable-value-vs-address-and-type",
+                "call-stack-and-frames",
+                "function-prologue-epilogue-and-abi"
+              ]
+            },
+            {
+              "id": "indirection-and-stack-hazards",
+              "title": "Pointeurs et dangers sur la pile",
+              "summary": "Manipuler les adresses comme des valeurs et identifier les pointeurs pendants et débordements de pile.",
+              "conceptIds": ["pointers-and-dereferencing", "stack-dangling-pointers-and-overflow"]
+            }
+          ]
+        },
+        {
+          "id": "heap-allocation-ownership-and-safety",
+          "title": "Tas, Allocateur, Modèles de Gestion & Sûreté",
+          "summary": "Maîtriser l'allocation dynamique sur le tas, les mécanismes internes d'un allocateur, la comparaison C / Rust / GC et les failles mémoire critiques.",
+          "chapters": [
+            {
+              "id": "dynamic-heap-and-allocators",
+              "title": "Allocation dynamique et anatomie d'un allocateur",
+              "summary": "Comprendre pourquoi le tas complète la pile, comment malloc/free découpent les blocs et d'où vient la fragmentation.",
+              "conceptIds": [
+                "heap-allocation-and-lifetime",
+                "allocator-chunks-bins-and-fragmentation"
+              ]
+            },
+            {
+              "id": "memory-management-models-and-security",
+              "title": "Stratégies de gestion, sûreté et réalité matérielle",
+              "summary": "Comparer gestion manuelle, ownership/RAII et ramasse-miettes, puis relier bugs mémoire et réalité du compilateur/CPU.",
+              "conceptIds": [
+                "manual-vs-raii-vs-gc",
+                "heap-corruption-uaf-and-leaks",
+                "compiler-optimizations-and-memory-reality"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "cpu-fetch-decode-execute",
+      "title": "Cycle Fetch-Decode-Execute et pointeur d'instruction",
+      "definition": "Boucle matérielle par laquelle le processeur lit l'instruction pointée par le registre PC/RIP en mémoire, la décode, l'exécute sur ses registres ou la RAM, puis met à jour PC/RIP.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Décrire le rôle du pointeur d'instruction (PC/RIP) et des registres généraux pendant l'exécution d'une instruction",
+        "Expliquer pourquoi le code machine et les données résident tous deux en mémoire adressable"
+      ],
+      "relations": [],
+      "resourceIds": ["sysv-amd64-abi", "godbolt-explorer"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Ordonner correctement les étapes Fetch, Decode, Execute et Update PC pour un saut ou une écriture en mémoire"
+      ]
+    },
+    {
+      "id": "memory-addressing-and-bytes",
+      "title": "Adressage par octet, taille de type et endianness",
+      "definition": "Organisation linéaire de la mémoire où chaque octet possède une adresse unique et où les valeurs multi-octets occupent des adresses contiguës selon un ordre des octets (little ou big-endian).",
+      "prerequisites": ["cpu-fetch-decode-execute"],
+      "learningObjectives": [
+        "Calculer l'intervalle d'adresses occupé par une donnée de 1, 4 ou 8 octets à partir de son adresse de base",
+        "Interpréter l'ordre des octets en mémoire en représentation little-endian sur architecture x86-64"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "cpu-fetch-decode-execute",
+          "type": "builds_on",
+          "note": "Le CPU lit instructions et opérandes par paquets d'octets aux adresses calculées."
+        }
+      ],
+      "resourceIds": ["sysv-amd64-abi"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Déterminer les 4 octets stockés aux adresses A..A+3 pour un entier 32 bits en little-endian"
+      ]
+    },
+    {
+      "id": "virtual-vs-physical-memory",
+      "title": "Mémoire virtuelle, pagination et MMU",
+      "definition": "Abstraction fournie par le système d'exploitation et la MMU qui donne à chaque processus l'illusion d'un espace d'adresses contigu et isolé, traduit à la volée vers des cadres de pages physiques.",
+      "prerequisites": ["memory-addressing-and-bytes"],
+      "learningObjectives": [
+        "Expliquer pourquoi deux processus peuvent utiliser la même adresse virtuelle sans se corrompre mutuellement",
+        "Identifier le rôle de la table des pages et du défaut de page lors d'un accès non mappé"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "memory-addressing-and-bytes",
+          "type": "builds_on",
+          "note": "Les adresses manipulées par le code utilisateur sont des adresses virtuelles traduites par la MMU."
+        }
+      ],
+      "resourceIds": ["linux-mm-concepts"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Distinguer une erreur de traduction matérielle (segmentation fault) d'une allocation paresseuse (demand paging)"
+      ]
+    },
+    {
+      "id": "process-memory-segments",
+      "title": "Segments de l'espace mémoire d'un processus",
+      "definition": "Découpage logique d'un processus en zones aux permissions et durées de vie distinctes : Text (r-x), Data initialisée et BSS (rw-), Tas (heap), zones mmap et Pile (stack).",
+      "prerequisites": ["virtual-vs-physical-memory"],
+      "learningObjectives": [
+        "Associer chaque élément d'un programme (code machine, globale initialisée, globale nulle, allocation dynamique, variable locale) à son segment et ses permissions rwx",
+        "Expliquer pourquoi écrire dans le segment Text déclenche une faute de protection mémoire"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "virtual-vs-physical-memory",
+          "type": "part_of",
+          "note": "Chaque segment correspond à un ou plusieurs intervalles VMAs visibles dans /proc/[pid]/maps."
+        }
+      ],
+      "resourceIds": ["linux-proc-pid-maps", "linux-mm-concepts"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Classer cinq artefacts de programme dans les segments Text, Data, BSS, Heap ou Stack avec leurs droits d'accès"
+      ]
+    },
+    {
+      "id": "variable-value-vs-address-and-type",
+      "title": "Variable : nom symbolique, adresse, type et valeur",
+      "definition": "Association au moment de la compilation entre un identifiant lisible par le développeur, une localisation (registre ou offset mémoire), une taille typée et les bits qui y sont interprétés.",
+      "prerequisites": ["memory-addressing-and-bytes", "process-memory-segments"],
+      "learningObjectives": [
+        "Distinguer le nom source d'une variable de son emplacement effectif et de sa valeur stockée en mémoire",
+        "Expliquer le risque d'une lecture de variable automatique non initialisée (données résiduelles)"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "memory-addressing-and-bytes",
+          "type": "applied_in",
+          "note": "Le type détermine combien d'octets sont lus à partir de l'adresse et comment les bits sont interprétés."
+        }
+      ],
+      "resourceIds": ["sysv-amd64-abi", "godbolt-explorer"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Expliquer pourquoi la copie d'une variable primitive crée une nouvelle valeur indépendante à une autre adresse ou dans un autre registre"
+      ]
+    },
+    {
+      "id": "call-stack-and-frames",
+      "title": "Pile d'appels et trames d'activation (Stack Frames)",
+      "definition": "Structure LIFO stockant à chaque appel de fonction sa trame d'activation : adresse de retour, ancien pointeur de base sauvegardé, arguments débordants et variables locales automatiques.",
+      "prerequisites": ["process-memory-segments", "variable-value-vs-address-and-type"],
+      "learningObjectives": [
+        "Prédire l'évolution du pointeur de pile (RSP) lors d'appels imbriqués et de retours de fonctions",
+        "Justifier pourquoi la libération d'une trame est quasi instantanée en O(1) par simple déplacement du pointeur"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "process-memory-segments",
+          "type": "part_of",
+          "note": "La pile d'appels croît typiquement vers les adresses basses dans la région [stack] sur x86-64."
+        }
+      ],
+      "resourceIds": ["sysv-amd64-abi", "godbolt-explorer"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Tracer la profondeur de pile et la position exacte des trames pour une chaîne d'appels récursive ou imbriquée"
+      ]
+    },
+    {
+      "id": "function-prologue-epilogue-and-abi",
+      "title": "Prologue, épilogue, adresse de retour et conventions ABI",
+      "definition": "Protocole binaire standardisé (ABI) régissant le passage des arguments dans les registres ou sur la pile, la sauvegarde de l'adresse de retour par CALL, l'alignement à 16 octets et la restauration via RET.",
+      "prerequisites": ["call-stack-and-frames"],
+      "learningObjectives": [
+        "Expliquer le rôle de l'adresse de retour empilée par CALL et exploitée par RET pour reprendre l'appelant",
+        "Comprendre la différence entre registres préservés par l'appelant (caller-saved) et par l'appelé (callee-saved)"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "call-stack-and-frames",
+          "type": "builds_on",
+          "note": "Le prologue et l'épilogue matérialisent la création et la destruction d'une trame selon l'ABI."
+        }
+      ],
+      "resourceIds": ["sysv-amd64-abi", "godbolt-explorer"],
+      "depthLevel": "advanced",
+      "validationCriteria": [
+        "Identifier sur un schéma de trame x86-64 la position relative de l'adresse de retour, de l'ancien RBP et des variables locales"
+      ]
+    },
+    {
+      "id": "pointers-and-dereferencing",
+      "title": "Pointeurs, adresses stockées et déréférencement",
+      "definition": "Variable dont la valeur est elle-même une adresse mémoire, permettant d'accéder indirectement ou de partager une donnée existante sans la dupliquer.",
+      "prerequisites": ["variable-value-vs-address-and-type", "call-stack-and-frames"],
+      "learningObjectives": [
+        "Distinguer l'adresse d'un pointeur (&p), sa valeur (p, l'adresse cible) et la valeur pointée (*p)",
+        "Prédire l'effet d'une mutation via deux alias pointant vers la même adresse mémoire"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "variable-value-vs-address-and-type",
+          "type": "builds_on",
+          "note": "Un pointeur applique le modèle adresse/taille/valeur pour référencer une autre cellule mémoire."
+        }
+      ],
+      "resourceIds": ["sysv-amd64-abi", "rust-ownership-book"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Résoudre l'état final de deux variables et d'un pointeur après réassignation et déréférencement sur diagramme"
+      ]
+    },
+    {
+      "id": "stack-dangling-pointers-and-overflow",
+      "title": "Pointeurs pendants sur pile et Stack Overflow",
+      "definition": "Défaillances liées au cycle de vie strict de la pile : conserver l'adresse d'une variable locale après le retour de sa fonction ou dépasser la limite réservée à la pile.",
+      "prerequisites": ["call-stack-and-frames", "pointers-and-dereferencing"],
+      "learningObjectives": [
+        "Expliquer pourquoi retourner l'adresse d'une variable locale crée un pointeur pendant même si les octets n'ont pas encore été effacés",
+        "Distinguer un débordement de pile par récursion infinie d'une saturation de RAM globale"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "call-stack-and-frames",
+          "type": "applied_in",
+          "note": "L'appel suivant réutilise silencieusement les adresses de l'ancienne trame et écrase les données pointées."
+        }
+      ],
+      "resourceIds": ["linux-proc-pid-maps", "sysv-amd64-abi"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Diagnostiquer sur une trace d'exécution à quel instant précis l'adresse pointée devient invalide puis corrompue"
+      ]
+    },
+    {
+      "id": "heap-allocation-and-lifetime",
+      "title": "Allocation dynamique sur le tas et séparation portée/durée de vie",
+      "definition": "Région mémoire extensible permettant à des données d'exister indépendamment de la portée lexicale d'une fonction jusqu'à leur libération explicite ou automatique.",
+      "prerequisites": ["process-memory-segments", "stack-dangling-pointers-and-overflow"],
+      "learningObjectives": [
+        "Justifier l'usage du tas lorsque la taille d'une donnée est inconnue à la compilation ou doit survivre à la trame appelante",
+        "Expliquer l'indirection nécessaire entre un pointeur stocké sur la pile et le bloc alloué sur le tas"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "call-stack-and-frames",
+          "type": "contrasts_with",
+          "note": "Contrairement aux trames LIFO de la pile, les allocations du tas peuvent être libérées dans un ordre arbitraire."
+        }
+      ],
+      "resourceIds": ["rust-ownership-book", "glibc-malloc-internals"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Choisir avec justification entre allocation sur pile et sur tas pour cinq cas d'usage logiciels"
+      ]
+    },
+    {
+      "id": "allocator-chunks-bins-and-fragmentation",
+      "title": "Fonctionnement interne d'un allocateur et fragmentation",
+      "definition": "Gestion du tas en espace utilisateur par découpage en blocs dotés de métadonnées d'en-tête, recyclage via listes libres (bins/tcache), séparation/fusion et appels noyau brk ou mmap.",
+      "prerequisites": ["heap-allocation-and-lifetime"],
+      "learningObjectives": [
+        "Expliquer le coût réel de malloc/free (métadonnées cachées, recherche de bloc libre, fusion des blocs adjacents)",
+        "Distinguer fragmentation interne, fragmentation externe et bascule vers mmap pour les grandes allocations"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "heap-allocation-and-lifetime",
+          "type": "builds_on",
+          "note": "Révèle comment l'allocateur évite de demander chaque petit bloc individuellement au noyau."
+        }
+      ],
+      "resourceIds": ["glibc-malloc-internals", "linux-mm-concepts"],
+      "depthLevel": "advanced",
+      "validationCriteria": [
+        "Prédire l'échec d'une allocation malgré une somme d'octets libres suffisante lorsque la fragmentation externe empêche un bloc contigu"
+      ]
+    },
+    {
+      "id": "manual-vs-raii-vs-gc",
+      "title": "Gestion manuelle vs Ownership/RAII vs Ramasse-miettes",
+      "definition": "Trois paradigmes de libération mémoire : responsabilité explicite (C), propriété déterministe vérifiée à la compilation ou par portée (Rust/C++ RAII) et traçage périodique depuis des racines (JVM/.NET GC).",
+      "prerequisites": ["heap-allocation-and-lifetime", "allocator-chunks-bins-and-fragmentation"],
+      "learningObjectives": [
+        "Comparer les compromis entre prévisibilité temporelle, surcharge d'exécution, empreinte mémoire et garantie de sûreté",
+        "Expliquer comment un ramasse-miettes identifie les objets accessibles depuis les racines (pile, registres, globales)"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "heap-allocation-and-lifetime",
+          "type": "builds_on",
+          "note": "Ces modèles répondent au même problème de durée de vie sur le tas par des mécanismes différents."
+        }
+      ],
+      "resourceIds": ["rust-ownership-book", "dotnet-gc-fundamentals"],
+      "depthLevel": "advanced",
+      "validationCriteria": [
+        "Associer chaque modèle de gestion à son moment de libération effectif et à son mode de défaillance résiduel"
+      ]
+    },
+    {
+      "id": "heap-corruption-uaf-and-leaks",
+      "title": "Fuites mémoire, Double Free, Use-After-Free et débordements",
+      "definition": "Famille de bugs critiques dus au non-respect des contrats de durée de vie ou de bornes sur le tas : perte de référence sans free, libération double, réutilisation après réallocation et écrasement d'en-têtes d'allocateur.",
+      "prerequisites": [
+        "allocator-chunks-bins-and-fragmentation",
+        "stack-dangling-pointers-and-overflow"
+      ],
+      "learningObjectives": [
+        "Différencier un pointeur perdu (fuite mémoire), un double free et un Use-After-Free (réutilisation d'un bloc réattribué)",
+        "Expliquer pourquoi un dépassement de tampon sur le tas corrompt l'allocateur ou des objets voisins avant tout plantage visible"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "allocator-chunks-bins-and-fragmentation",
+          "type": "applied_in",
+          "note": "Explique comment la réutilisation d'un chunk libre par une nouvelle allocation expose le Use-After-Free."
+        }
+      ],
+      "resourceIds": ["glibc-malloc-internals", "linux-mm-concepts"],
+      "depthLevel": "expert",
+      "validationCriteria": [
+        "Reconstituer la chronologie d'un Use-After-Free sur une simulation d'allocateur et identifier la cause racine"
+      ]
+    },
+    {
+      "id": "compiler-optimizations-and-memory-reality",
+      "title": "Réalité du compilateur et du matériel : registres, caches et UB",
+      "definition": "Écart entre le modèle pédagogique séquentiel et l'exécution optimisée réelle : promotion en registres, suppression de variables mortes, hiérarchie de caches L1/L2/L3 et comportement indéfini (UB).",
+      "prerequisites": ["function-prologue-epilogue-and-abi", "heap-corruption-uaf-and-leaks"],
+      "learningObjectives": [
+        "Expliquer pourquoi une variable source peut ne jamais posséder d'adresse en RAM lorsque le compilateur la place uniquement dans un registre",
+        "Comprendre qu'un comportement indéfini (UB) en C ne garantit ni un plantage immédiat ni une lecture déterministe"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "variable-value-vs-address-and-type",
+          "type": "contrasts_with",
+          "note": "Nuance l'intuition d'une correspondance 1-pour-1 permanente entre variable source et cellule RAM."
+        }
+      ],
+      "resourceIds": ["sysv-amd64-abi", "linux-mm-concepts", "godbolt-explorer"],
+      "depthLevel": "expert",
+      "validationCriteria": [
+        "Expliquer dans quels cas une inspection mémoire simplifiée diffère du binaire optimisé observé sous Compiler Explorer"
+      ]
+    }
+  ]
+}

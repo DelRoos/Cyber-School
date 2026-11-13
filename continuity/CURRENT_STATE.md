@@ -2,16 +2,16 @@
 
 Checkpoint généré par quality:checkpoint ; ne pas modifier ce fichier à la main.
 
-- Mise à jour UTC : 2026-11-13T22:56:08.275Z
+- Mise à jour UTC : 2026-11-13T23:24:57.780Z
 - Tâche active : TASK-008 (In Progress)
-- Base Git : f77c09641838d49b8e66caf7fc2a30c0f8e11a56
-- Empreinte du code/contenu/configuration : 82a427d0bd3694ccc887a2ebabd92b4d3cfad119c4e7af9abb075b333e0d818b
-- Fichiers contrôlés : 135
-- Dernière validation : passed — [rapport](validation/2026-11-13T22-50-35-739Z-cd2ffec7-ff0d-4a78-83e6-144994ff09be/result.json)
+- Base Git : 1fdf5aeb331636bbcc186c81b584a949b0c8f75d
+- Empreinte du code/contenu/configuration : e6df001b8addbc5e95b7acd82d87dcd17284bdd0a7b0970ae73eda595df80544
+- Fichiers contrôlés : 146
+- Dernière validation : passed — [rapport](validation/2026-11-13T23-23-48-154Z-36409115-ea98-4c8a-ba14-aa74f88fcbe3/result.json)
 
 ## Prochaine action
 
-Revoir les critères et la preuve de TASK-008 pour clôture, puis effectuer la revue scientifique humaine (BLK-005) et enchaîner sur TASK-003 (ITER-002).
+Conception complete du cours program-memory-fundamentals validee (docs/courses/program-memory-fundamentals/, curriculum/program-memory-foundations.json, resources/sources.json, ADR-0006 Proposed). Relais Claude Code : demarrer en parallele TASK-009 (Ready) et TASK-013 (Ready), puis TASK-010..012 et assemblage final TASK-014.
 
 ## Blocages observés automatiquement
 

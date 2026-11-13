@@ -10,9 +10,10 @@
 - Premier démonstrateur interactif : **TCP et le Three-Way Handshake**.
 - Validation complète : Vitest + Playwright + GitHub Actions CI.
 
-### M2 — Explorateur de curriculum & Premiers modules Réseaux/Sécurité (`ITER-002`)
+### M2 — Explorateur de curriculum, Cours Mémoire de référence & Modules fondateurs (`ITER-002`)
 
 - Activation de `packages/visualizations` (XYFlow pour le graphe de concepts atomiques + D3 pour métriques/fenêtres).
+- Conception et implémentation du premier cours complet de référence : **Fonctionnement de la mémoire d'un programme** (`systems-and-memory`, 14 concepts atomiques, `VIS-01..05`).
 - Extension du corpus _Réseaux fondamentaux_ (`ip-packet-delivery`, `tcp-ports-and-sockets`, `tcp-sliding-window`, `dns-resolution`).
 - Évaluations cumulatives multi-concepts et intégration des premiers liens vers laboratoires externes vérifiés.
 
