@@ -1,0 +1,228 @@
+{
+  "yaml": [
+    {
+      "path": "pnpm-workspace.yaml",
+      "parsed": true
+    },
+    {
+      "path": ".github\\workflows\\ci.yml",
+      "parsed": true
+    }
+  ],
+  "agentFrontmatter": [
+    {
+      "path": ".claude/agents/architect.md",
+      "name": "architect",
+      "keys": [
+        "name",
+        "description",
+        "tools",
+        "skills"
+      ]
+    },
+    {
+      "path": ".claude/agents/continuity-keeper.md",
+      "name": "continuity-keeper",
+      "keys": [
+        "name",
+        "description",
+        "tools",
+        "skills"
+      ]
+    },
+    {
+      "path": ".claude/agents/frontend-engineer.md",
+      "name": "frontend-engineer",
+      "keys": [
+        "name",
+        "description",
+        "tools",
+        "skills"
+      ]
+    },
+    {
+      "path": ".claude/agents/pedagogy-designer.md",
+      "name": "pedagogy-designer",
+      "keys": [
+        "name",
+        "description",
+        "tools",
+        "skills"
+      ]
+    },
+    {
+      "path": ".claude/agents/qa-engineer.md",
+      "name": "qa-engineer",
+      "keys": [
+        "name",
+        "description",
+        "tools",
+        "skills"
+      ]
+    },
+    {
+      "path": ".claude/agents/security-auditor.md",
+      "name": "security-auditor",
+      "keys": [
+        "name",
+        "description",
+        "tools",
+        "skills"
+      ]
+    },
+    {
+      "path": ".gemini/agents/architect.md",
+      "name": "architect",
+      "keys": [
+        "name",
+        "description"
+      ]
+    },
+    {
+      "path": ".gemini/agents/continuity-keeper.md",
+      "name": "continuity-keeper",
+      "keys": [
+        "name",
+        "description"
+      ]
+    },
+    {
+      "path": ".gemini/agents/frontend-engineer.md",
+      "name": "frontend-engineer",
+      "keys": [
+        "name",
+        "description"
+      ]
+    },
+    {
+      "path": ".gemini/agents/pedagogy-designer.md",
+      "name": "pedagogy-designer",
+      "keys": [
+        "name",
+        "description"
+      ]
+    },
+    {
+      "path": ".gemini/agents/qa-engineer.md",
+      "name": "qa-engineer",
+      "keys": [
+        "name",
+        "description"
+      ]
+    },
+    {
+      "path": ".gemini/agents/security-auditor.md",
+      "name": "security-auditor",
+      "keys": [
+        "name",
+        "description"
+      ]
+    },
+    {
+      "path": ".agents/skills/architecture-design/SKILL.md",
+      "name": "architecture-design",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/browser-validation/SKILL.md",
+      "name": "browser-validation",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/gsap-animation/SKILL.md",
+      "name": "gsap-animation",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/iteration-planning/SKILL.md",
+      "name": "iteration-planning",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/lesson-design/SKILL.md",
+      "name": "lesson-design",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/project-handoff/SKILL.md",
+      "name": "project-handoff",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/threejs-scene/SKILL.md",
+      "name": "threejs-scene",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    },
+    {
+      "path": ".agents/skills/visual-explanation/SKILL.md",
+      "name": "visual-explanation",
+      "keys": [
+        "name",
+        "description",
+        "metadata"
+      ]
+    }
+  ],
+  "tests": [
+    {
+      "path": "packages/ui/src/__tests__/ui.test.tsx",
+      "cases": 2
+    },
+    {
+      "path": "packages/lesson-runtime/src/__tests__/validator.test.ts",
+      "cases": 3
+    },
+    {
+      "path": "packages/exercises/src/__tests__/exercises.test.tsx",
+      "cases": 2
+    },
+    {
+      "path": "packages/animations/src/__tests__/animations.test.tsx",
+      "cases": 2
+    },
+    {
+      "path": "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+      "cases": 1
+    },
+    {
+      "path": "tests/e2e/tcp-handshake.spec.ts",
+      "casesPerProject": 1,
+      "projects": 2
+    }
+  ],
+  "sourceCounts": {
+    ".ts": 20,
+    ".tsx": 13,
+    ".md": 49,
+    ".json": 19,
+    ".toml": 6
+  }
+}

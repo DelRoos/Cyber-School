@@ -1,0 +1,281 @@
+{
+  "source": "https://registry.npmjs.org/",
+  "scope": "exact lower bound in manifests; not a semver-range resolution",
+  "results": [
+    {
+      "name": "@eslint/js",
+      "version": "10.0.1",
+      "files": [
+        "package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@playwright/test",
+      "version": "1.65.0",
+      "files": [
+        "package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@types/node",
+      "version": "24.0.0",
+      "files": [
+        "package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@vitejs/plugin-react",
+      "version": "6.3.0",
+      "files": [
+        "package.json",
+        "packages/ui/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "eslint",
+      "version": "10.14.0",
+      "files": [
+        "package.json",
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/lesson-runtime/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "prettier",
+      "version": "3.10.1",
+      "files": [
+        "package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "turbo",
+      "version": "2.11.11",
+      "files": [
+        "package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "typescript",
+      "version": "6.0.3",
+      "files": [
+        "package.json",
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/lesson-runtime/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "typescript-eslint",
+      "version": "8.72.2",
+      "files": [
+        "package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "vitest",
+      "version": "5.1.0",
+      "files": [
+        "package.json",
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/lesson-runtime/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "zod",
+      "version": "4.6.7",
+      "files": [
+        "package.json",
+        "packages/lesson-runtime/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "gsap",
+      "version": "3.15.1",
+      "files": [
+        "packages/animations/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "motion",
+      "version": "14.14.0",
+      "files": [
+        "packages/animations/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@testing-library/react",
+      "version": "16.3.3",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@types/react",
+      "version": "19.3.0",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@types/react-dom",
+      "version": "19.3.0",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "jsdom",
+      "version": "31.0.1",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "react",
+      "version": "19.3.1",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.1",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "react",
+      "version": "19.0.0",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "react-dom",
+      "version": "19.0.0",
+      "files": [
+        "packages/animations/package.json",
+        "packages/exercises/package.json",
+        "packages/ui/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "lucide-react",
+      "version": "1.72.0",
+      "files": [
+        "packages/exercises/package.json",
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "class-variance-authority",
+      "version": "0.7.1",
+      "files": [
+        "packages/ui/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "clsx",
+      "version": "2.1.1",
+      "files": [
+        "packages/ui/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "tailwind-merge",
+      "version": "3.7.0",
+      "files": [
+        "packages/ui/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "next",
+      "version": "16.4.6",
+      "files": [
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "@tailwindcss/postcss",
+      "version": "4.3.5",
+      "files": [
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "eslint-config-next",
+      "version": "16.4.6",
+      "files": [
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    },
+    {
+      "name": "tailwindcss",
+      "version": "4.3.5",
+      "files": [
+        "apps/web/package.json"
+      ],
+      "status": "unverified: URLError: <urlopen error [WinError 10051] Une op\u00e9ration a \u00e9t\u00e9 tent\u00e9e sur un r\u00e9seau impossible \u00e0 atteindre>"
+    }
+  ]
+}

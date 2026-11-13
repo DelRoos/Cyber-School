@@ -1,0 +1,36 @@
+{
+  "name": "@cyber-school/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "test:unit": "vitest run"
+  },
+  "dependencies": {
+    "@cyber-school/animations": "workspace:*",
+    "@cyber-school/exercises": "workspace:*",
+    "@cyber-school/lesson-runtime": "workspace:*",
+    "@cyber-school/ui": "workspace:*",
+    "gsap": "^3.15.1",
+    "lucide-react": "^1.72.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.5",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.4.6",
+    "tailwindcss": "^4.3.5",
+    "typescript": "~6.0.3",
+    "vitest": "^3.2.7"
+  }
+}

@@ -1,0 +1,14 @@
+﻿
+> cyber-school@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run lint
+
+corepack.cmd : 'turbo' n’est pas reconnu en tant que commande interne
+Au caractère Ligne:2 : 350
++ ... lace(':','-'); $auditOutput = & corepack pnpm @auditArgs 2>&1; $audit ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ('turbo' n’est p...ommande interne:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ou externe, un programme exécutable ou un fichier de commandes.
+ ELIFECYCLE  Command failed with exit code 1.
+ WARN   Local package.json exists, but node_modules missing, did you mean to install?

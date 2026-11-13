@@ -1,0 +1,48 @@
+{
+  "missingChoiceLocator": {
+    "text": "seq = 301, ack = 100",
+    "referencedByE2E": true,
+    "availableOptions": [
+      "seq = 300, ack = 100",
+      "seq = 300, ack = 101",
+      "seq = 101, ack = 301"
+    ],
+    "exists": false
+  },
+  "resetOrderContradiction": {
+    "initialOrder": [
+      "ev-synack",
+      "ev-ack",
+      "ev-syn",
+      "ev-srv-est"
+    ],
+    "expectedOrder": [
+      "ev-syn",
+      "ev-synack",
+      "ev-ack",
+      "ev-srv-est"
+    ],
+    "resetRestoresInitialItems": true,
+    "initialOrderIsCorrect": false
+  },
+  "currentRootModuleLinks": {
+    "pnpmLockfile": false,
+    "bin": false,
+    "runtimeWorkspace": false
+  },
+  "tailwindSources": [
+    {
+      "source": "../../../../packages/ui/src/**/*.{ts,tsx}",
+      "targetExists": true
+    },
+    {
+      "source": "../../../../packages/exercises/src/**/*.{ts,tsx}",
+      "targetExists": true
+    },
+    {
+      "source": "../../../../packages/animations/src/**/*.{ts,tsx}",
+      "targetExists": true
+    }
+  ],
+  "destructiveContrast": 5.721379238070056
+}

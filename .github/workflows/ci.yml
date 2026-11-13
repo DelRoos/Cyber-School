@@ -1,0 +1,46 @@
+name: CI Verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js (LTS 22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Enable Corepack and pnpm
+        run: corepack enable
+
+      - name: Verify environment and frozen-install prerequisites
+        run: node --experimental-strip-types scripts/quality/preflight.ts --before-install
+
+      - name: Install dependencies
+        run: corepack pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: corepack pnpm exec playwright install --with-deps chromium
+
+      - name: Run all quality gates and record evidence
+        run: corepack pnpm check:all
+
+      - name: Upload Playwright report & screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-artifacts
+          path: |
+            playwright-report/
+            test-results/
+            continuity/validation/
+          retention-days: 7

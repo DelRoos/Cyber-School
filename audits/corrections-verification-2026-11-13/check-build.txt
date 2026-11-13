@@ -1,0 +1,13 @@
+﻿
+> cyber-school@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run build
+
+corepack.cmd : 'turbo' n’est pas reconnu en tant que commande interne
+Au caractère Ligne:2 : 604
++ ... ificationOutput = & corepack pnpm @auditVerificationArgs 2>&1; $audit ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ('turbo' n’est p...ommande interne:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ou externe, un programme exécutable ou un fichier de commandes.
+ ELIFECYCLE  Command failed with exit code 1.

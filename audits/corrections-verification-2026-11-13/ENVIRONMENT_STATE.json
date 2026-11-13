@@ -1,0 +1,49 @@
+{
+  "observedNode": "23.9.0",
+  "packageManager": "pnpm@10.28.0",
+  "rootPnpmLockfile": false,
+  "rootBinLinks": false,
+  "rootRuntimeLink": false,
+  "packageEngines": [
+    {
+      "name": "vitest",
+      "version": "3.2.7",
+      "engines": {
+        "node": "^18.0.0 || ^20.0.0 || >=22.0.0"
+      },
+      "manifestPath": "node_modules/.pnpm/vitest@3.2.7_@types+node@24_c53952e80ccd07fbab71ac356fbe56cb/node_modules/vitest/package.json"
+    },
+    {
+      "name": "jsdom",
+      "version": "26.1.0",
+      "engines": {
+        "node": ">=18"
+      },
+      "manifestPath": "node_modules/.pnpm/jsdom@26.1.0/node_modules/jsdom/package.json"
+    },
+    {
+      "name": "eslint",
+      "version": "9.39.5",
+      "engines": {
+        "node": "^18.18.0 || ^20.9.0 || >=21.1.0"
+      },
+      "manifestPath": "node_modules/.pnpm/eslint@9.39.5_jiti@2.7.0/node_modules/eslint/package.json"
+    },
+    {
+      "name": "typescript",
+      "version": "6.0.3",
+      "engines": {
+        "node": ">=14.17"
+      },
+      "manifestPath": "node_modules/.pnpm/typescript@6.0.3/node_modules/typescript/package.json"
+    },
+    {
+      "name": "next",
+      "version": "16.4.6",
+      "engines": {
+        "node": ">=20.9.0"
+      },
+      "manifestPath": "node_modules/.pnpm/next@16.4.6_@babel+core@7.2_7a8f4295ff2e03092460dcd5e423435a/node_modules/next/package.json"
+    }
+  ]
+}

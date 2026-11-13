@@ -1,0 +1,98 @@
+{
+  "method": "Direct execution of unmodified validator.ts with Node type stripping; does NOT execute Zod schemas or Vitest",
+  "cases": [
+    {
+      "name": "baseline",
+      "expectedValid": true,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": true
+    },
+    {
+      "name": "prerequisite cycle",
+      "expectedValid": false,
+      "actualValid": false,
+      "codes": [
+        "PREREQUISITE_CYCLE",
+        "PREREQUISITE_CYCLE"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing prerequisite",
+      "expectedValid": false,
+      "actualValid": false,
+      "codes": [
+        "MISSING_PREREQUISITE"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "duplicate concept",
+      "expectedValid": false,
+      "actualValid": false,
+      "codes": [
+        "DUPLICATE_CONCEPT_ID"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing chapter concept",
+      "expectedValid": false,
+      "actualValid": false,
+      "codes": [
+        "MISSING_CHAPTER_CONCEPT"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing exercise concept",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    },
+    {
+      "name": "missing correct option",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    },
+    {
+      "name": "invalid sequence permutation",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    },
+    {
+      "name": "duplicate exercise id",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    },
+    {
+      "name": "duplicate lesson slug",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    },
+    {
+      "name": "missing assessment references",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    },
+    {
+      "name": "duplicate chapter id",
+      "expectedValid": false,
+      "actualValid": true,
+      "codes": [],
+      "expectationMet": false
+    }
+  ]
+}

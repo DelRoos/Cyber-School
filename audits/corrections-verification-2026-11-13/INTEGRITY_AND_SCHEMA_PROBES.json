@@ -1,0 +1,223 @@
+{
+  "method": "Unmodified source schemas.ts and validator.ts, exact declared Zod 4.6.7 already in local pnpm store; import resolution redirected in memory only; not the package build or Vitest suite",
+  "cases": [
+    {
+      "name": "baseline",
+      "expectedValid": true,
+      "actualValid": true,
+      "stage": "integrity",
+      "issues": [],
+      "expectationMet": true
+    },
+    {
+      "name": "prerequisite cycle",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "PREREQUISITE_CYCLE",
+        "PREREQUISITE_CYCLE"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing prerequisite",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "MISSING_PREREQUISITE"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "duplicate concept",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "DUPLICATE_CONCEPT_ID"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing chapter concept",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "MISSING_CHAPTER_CONCEPT"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing exercise concept",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "MISSING_EXERCISE_CONCEPT"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing correct option",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "schemas",
+      "issues": [
+        {
+          "path": [
+            "exercises",
+            0,
+            "correctOptionId"
+          ],
+          "code": "custom",
+          "message": "correctOptionId \"absent-option\" does not match any option id"
+        }
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "invalid sequence permutation",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "schemas",
+      "issues": [
+        {
+          "path": [
+            "exercises",
+            3,
+            "expectedOrder"
+          ],
+          "code": "custom",
+          "message": "expectedOrder must be an exact permutation of items ids"
+        }
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "duplicate exercise id",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "DUPLICATE_EXERCISE_ID"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "duplicate lesson slug",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "DUPLICATE_LESSON_SLUG",
+        "DUPLICATE_EXERCISE_ID",
+        "DUPLICATE_EXERCISE_ID",
+        "DUPLICATE_EXERCISE_ID",
+        "DUPLICATE_EXERCISE_ID"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "missing assessment references",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "MISSING_ASSESSMENT_CONCEPT",
+        "MISSING_ASSESSMENT_EXERCISE"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "duplicate chapter id",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "integrity",
+      "issues": [
+        "DUPLICATE_CHAPTER_ID"
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "resource unknown executable field",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "schemas",
+      "issues": [
+        {
+          "path": [
+            "resources",
+            0
+          ],
+          "code": "unrecognized_keys",
+          "message": "Unrecognized key: \"execute\""
+        }
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "resource insecure URL",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "schemas",
+      "issues": [
+        {
+          "path": [
+            "resources",
+            0,
+            "url"
+          ],
+          "code": "custom",
+          "message": "External resource URLs must use HTTPS"
+        }
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "duplicate option id",
+      "expectedValid": false,
+      "actualValid": false,
+      "stage": "schemas",
+      "issues": [
+        {
+          "path": [
+            "exercises",
+            0,
+            "options"
+          ],
+          "code": "custom",
+          "message": "Duplicate option id \"opt-a\""
+        },
+        {
+          "path": [
+            "exercises",
+            0,
+            "correctOptionId"
+          ],
+          "code": "custom",
+          "message": "correctOptionId \"opt-b\" does not match any option id"
+        }
+      ],
+      "expectationMet": true
+    },
+    {
+      "name": "published lesson without review",
+      "expectedValid": false,
+      "actualValid": true,
+      "stage": "integrity",
+      "issues": [],
+      "expectationMet": false
+    },
+    {
+      "name": "published lesson without explicit contentRevision",
+      "expectedValid": false,
+      "actualValid": true,
+      "stage": "integrity",
+      "issues": [],
+      "expectationMet": false
+    }
+  ]
+}

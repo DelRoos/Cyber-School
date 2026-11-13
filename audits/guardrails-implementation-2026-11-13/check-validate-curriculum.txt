@@ -1,0 +1,14 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 validate:curriculum C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run build --filter=@cyber-school/lesson-runtime && node --experimental-strip-types tests/scripts/validate-curriculum.ts
+
+corepack.cmd : 'turbo' n’est pas reconnu en tant que commande interne
+Au caractère Ligne:2 : 591
++ ... heck.Split(' '); $guardOutput=& corepack pnpm @guardArgs 2>&1; $guard ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ('turbo' n’est p...ommande interne:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+ou externe, un programme exécutable ou un fichier de commandes.
+ ELIFECYCLE  Command failed with exit code 1.

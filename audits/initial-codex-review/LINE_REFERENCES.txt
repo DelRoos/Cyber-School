@@ -1,0 +1,94 @@
+package.json:7: "engines": {
+package.json:12: "dev": "turbo run dev",
+package.json:21: "validate:curriculum": "turbo run build --filter=@cyber-school/lesson-runtime && node --experimental-strip-types tests/scripts/validate-curriculum.ts",
+package.json:35: "zod": "^4.6.7"
+.github/workflows/ci.yml:20: node-version: "22"
+.github/workflows/ci.yml:26: run: pnpm install --frozen-lockfile
+apps/web/src/app/globals.css:4: @source "../../../packages/ui/src/**/*.{ts,tsx}";
+apps/web/src/app/globals.css:5: @source "../../../packages/exercises/src/**/*.{ts,tsx}";
+apps/web/src/app/globals.css:6: @source "../../../packages/animations/src/**/*.{ts,tsx}";
+apps/web/src/app/globals.css:17: overflow-x: clip;
+apps/web/src/lib/curriculum-data.ts:26: export function loadAcademyData(): {
+apps/web/src/lib/curriculum-data.ts:37: fs.readFileSync(path.join(root, "curriculum/networking-foundations.json"), "utf8"),
+apps/web/src/lib/curriculum-data.ts:43: return {
+packages/lesson-runtime/src/schemas.ts:23: export const ResourceMetadataSchema = z.object({
+packages/lesson-runtime/src/schemas.ts:41: resources: z.array(ResourceMetadataSchema).min(1),
+packages/lesson-runtime/src/schemas.ts:117: export const MultipleChoiceExerciseSchema = BaseExerciseSchema.extend({
+packages/lesson-runtime/src/schemas.ts:123: export const SequenceOrderExerciseSchema = BaseExerciseSchema.extend({
+packages/lesson-runtime/src/schemas.ts:144: MultipleChoiceExerciseSchema,
+packages/lesson-runtime/src/schemas.ts:145: SequenceOrderExerciseSchema,
+packages/lesson-runtime/src/schemas.ts:149: export const AssessmentBlueprintSchema = z.object({
+packages/lesson-runtime/src/schemas.ts:164: export const LessonManifestSchema = z.object({
+packages/lesson-runtime/src/schemas.ts:173: status: z.enum(["draft", "in-review", "published"]),
+packages/lesson-runtime/src/schemas.ts:176: assessments: z.array(AssessmentBlueprintSchema).optional(),
+packages/lesson-runtime/src/schemas.ts:182: export type ResourceMetadata = z.infer<typeof ResourceMetadataSchema>;
+packages/lesson-runtime/src/schemas.ts:191: export type AssessmentBlueprint = z.infer<typeof AssessmentBlueprintSchema>;
+packages/lesson-runtime/src/schemas.ts:193: export type LessonManifest = z.infer<typeof LessonManifestSchema>;
+packages/lesson-runtime/src/validator.ts:104: const lessonIds = new Set<string>();
+packages/lesson-runtime/src/validator.ts:105: for (const lesson of lessons) {
+packages/lesson-runtime/src/validator.ts:174: return {
+apps/web/src/components/tcp-handshake-simulator.tsx:18: MotionStepPanel,
+apps/web/src/components/tcp-handshake-simulator.tsx:20: useGsapScope,
+apps/web/src/components/tcp-handshake-simulator.tsx:49: clientSeq: string;
+apps/web/src/components/tcp-handshake-simulator.tsx:63: const NOMINAL_FRAMES: HandshakeFrame[] = [
+apps/web/src/components/tcp-handshake-simulator.tsx:72: clientSeq: "—",
+apps/web/src/components/tcp-handshake-simulator.tsx:86: clientSeq: "100 (ISN_c)",
+apps/web/src/components/tcp-handshake-simulator.tsx:107: clientSeq: "100",
+apps/web/src/components/tcp-handshake-simulator.tsx:128: clientSeq: "101",
+apps/web/src/components/tcp-handshake-simulator.tsx:149: clientSeq: "101",
+apps/web/src/components/tcp-handshake-simulator.tsx:157: const LOSS_FRAMES: HandshakeFrame[] = [
+apps/web/src/components/tcp-handshake-simulator.tsx:168: clientSeq: "100 (attente)",
+apps/web/src/components/tcp-handshake-simulator.tsx:189: clientSeq: "100",
+apps/web/src/components/tcp-handshake-simulator.tsx:229: const [isPlaying, setIsPlaying] = React.useState(false);
+apps/web/src/components/tcp-handshake-simulator.tsx:230: const [exerciseScores, setExerciseScores] = React.useState<Record<string, boolean>>({});
+apps/web/src/components/tcp-handshake-simulator.tsx:240: // Automatic playback timer
+apps/web/src/components/tcp-handshake-simulator.tsx:242: if (!isPlaying) return;
+apps/web/src/components/tcp-handshake-simulator.tsx:251: }, [isPlaying, maxStep, stepIndex]);
+apps/web/src/components/tcp-handshake-simulator.tsx:254: useGsapScope(
+apps/web/src/components/tcp-handshake-simulator.tsx:290: function handleReset() {
+apps/web/src/components/tcp-handshake-simulator.tsx:311: const solvedCount = Object.values(exerciseScores).filter(Boolean).length;
+apps/web/src/components/tcp-handshake-simulator.tsx:440: {/* Historical lines */}
+apps/web/src/components/tcp-handshake-simulator.tsx:592: <MotionStepPanel stepKey={`${simulateLoss}-${activeFrame.id}`} className="mt-4">
+apps/web/src/components/tcp-handshake-simulator.tsx:599: </MotionStepPanel>
+apps/web/src/components/tcp-handshake-simulator.tsx:629: {isPlaying ? (
+apps/web/src/components/tcp-handshake-simulator.tsx:696: <Badge variant={solvedCount === lesson.exercises.length ? "success" : "secondary"}>
+apps/web/src/components/tcp-handshake-simulator.tsx:698: {solvedCount} / {lesson.exercises.length} validés
+apps/web/src/components/tcp-handshake-simulator.tsx:708: onResult={(id, ok) =>
+packages/exercises/src/exercise-card.tsx:37: const isCorrect = React.useMemo(() => {
+packages/exercises/src/exercise-card.tsx:52: function handleSubmit() {
+packages/exercises/src/exercise-card.tsx:62: function handleReset() {
+packages/exercises/src/exercise-card.tsx:70: function moveItem(fromIndex: number, direction: -1 | 1) {
+packages/exercises/src/exercise-card.tsx:127: <div role="radiogroup" aria-label={exercise.prompt} className="space-y-2">
+packages/exercises/src/exercise-card.tsx:137: role="radio"
+packages/animations/src/reduced-motion.ts:6: const [reduced, setReduced] = useState(false);
+packages/animations/src/reduced-motion.ts:14: setReduced(mediaQuery.matches);
+packages/animations/src/reduced-motion.ts:17: setReduced(event.matches);
+packages/animations/src/gsap-scope.ts:22: // eslint-disable-next-line react-hooks/exhaustive-deps
+packages/ui/src/components/feedback.tsx:79: className="h-full rounded-full bg-primary transition-all duration-300"
+continuity/CURRENT_STATE.md:5: - **Statut global** : En cours d'implémentation (Phase 1 : configuration et documentation en place ; Phase 2 : implémentation des packages, de `apps/web` et exécution des tests en cours).
+continuity/CURRENT_STATE.md:14: ## Travail restant immédiat (dans cette session)
+continuity/RESUME_PROTOCOL.md:10: - [continuity/BLOCKERS.md](./continuity/BLOCKERS.md)
+continuity/RESUME_PROTOCOL.md:22: - Créer des **checkpoints intermédiaires** dans `CURRENT_STATE.md` pendant les travaux longs.
+CLAUDE.md:7: 1. `@docs/agents/AGENT_GUIDE.md` — Règles d'architecture, commandes, qualité et sécurité.
+CLAUDE.md:12: - **Skills** : Disponibles dans `.claude/skills/` (miroirs synchronisés avec la source canonique `.agents/skills/`). Ne modifier que `.agents/skills/` puis synchroniser si besoin, ou consulter directement `.agents/skills/<nom>/SKILL.md`.
+.gemini/agents/security-auditor.md:2: name: security-auditor
+.agents/skills/gsap-animation/SKILL.md:16: 1. **Use shared primitives**: Import `useReducedMotion` and timeline helpers from `@cyber-school/animations`.
+lessons/tcp-three-way-handshake/lesson.json:2: "version": "1.0",
+lessons/tcp-three-way-handshake/lesson.json:10: "status": "published",
+lessons/tcp-three-way-handshake/lesson.json:118: "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChAdvFollowStreamSection.html",
+planning/tasks/TASK-003-curriculum-graph-viewer.md:4: status: Ready
+planning/tasks/TASK-003-curriculum-graph-viewer.md:8: dependsOn: [TASK-002]
+playwright.config.ts:10: // Fallback to locally installed ms-playwright headless/chromium if version differs slightly
+playwright.config.ts:54: webServer: {
+playwright.config.ts:57: reuseExistingServer: !process.env.CI,
+packages/ui/package.json:6: "main": "./dist/index.js",
+packages/ui/package.json:7: "types": "./dist/index.d.ts",
+packages/ui/package.json:10: "types": "./dist/index.d.ts",
+packages/ui/package.json:11: "default": "./dist/index.js"
+packages/ui/package.json:34: "@vitejs/plugin-react": "^6.3.0",
+packages/animations/eslint.config.mjs:1: import baseConfig from "../../eslint.config.mjs";
+packages/animations/eslint.config.mjs:3: export default [...baseConfig];
+apps/web/eslint.config.mjs:1: import nextVitals from "eslint-config-next/core-web-vitals";
+apps/web/eslint.config.mjs:4: const eslintConfig = [...nextVitals, ...nextTs];
+eslint.config.mjs:4: export const baseConfig = tseslint.config(
+README.md:20: corepack pnpm dev

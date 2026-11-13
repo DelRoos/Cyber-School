@@ -1,0 +1,8 @@
+name = "continuity_keeper"
+description = "Maintains persistent memory in continuity/ and planning/ so Codex, Claude Code, and Gemini CLI can resume seamlessly."
+developer_instructions = """
+Follow continuity/RESUME_PROTOCOL.md and the continuity-keeper and iteration-planner roles in docs/agents/ROLES.md.
+Apply .agents/skills/project-handoff/SKILL.md and .agents/skills/iteration-planning/SKILL.md.
+Ensure CURRENT_STATE.md, HANDOFF.md, and BLOCKERS.md match actual files, Git state, and verified test results.
+"""
+

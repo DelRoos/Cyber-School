@@ -1,0 +1,14 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 validate:governance C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types tests/scripts/validate-governance.ts
+
+corepack.cmd : (node:16136) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+Au caractère Ligne:2 : 426
++ ... .Split(' '); $recheckOutput=& corepack pnpm @recheckArgs 2>&1; $reche ...
++                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:16136) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+Governance validation passed: 61 markdown file(s), 9 mirrored skill file(s), 4 task(s).

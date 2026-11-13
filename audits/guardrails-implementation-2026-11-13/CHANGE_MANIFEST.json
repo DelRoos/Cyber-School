@@ -1,0 +1,35 @@
+{
+  "modified": [
+    ".prettierignore",
+    "package.json",
+    "README.md",
+    "tsconfig.checks.json",
+    ".github/workflows/ci.yml",
+    "apps/web/src/app/page.tsx",
+    "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+    "continuity/BLOCKERS.md",
+    "continuity/CURRENT_STATE.md",
+    "continuity/HANDOFF.md",
+    "continuity/RESUME_PROTOCOL.md",
+    "docs/agents/AGENT_GUIDE.md",
+    "lessons/tcp-three-way-handshake/lesson.json",
+    "packages/lesson-runtime/src/schemas.ts",
+    "packages/lesson-runtime/src/__tests__/validator.test.ts",
+    "planning/backlog/BACKLOG.md",
+    "tests/e2e/tcp-handshake.spec.ts",
+    "tests/scripts/validate-governance.ts"
+  ],
+  "added": [
+    "continuity/STATE.json",
+    "continuity/validation/2026-11-13T20-53-07-096Z-f577a490-007d-4a8d-94ae-069958b748b8/result.json",
+    "docs/decisions/ADR-0005-executable-quality-evidence.md",
+    "docs/standards/QUALITY_GATES.md",
+    "planning/tasks/TASK-008-quality-guardrails.md",
+    "scripts/quality/checkpoint.ts",
+    "scripts/quality/core.ts",
+    "scripts/quality/guards.test.ts",
+    "scripts/quality/preflight.ts",
+    "scripts/quality/run-checks.ts"
+  ],
+  "removed": []
+}

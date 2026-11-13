@@ -1,0 +1,68 @@
+{
+  "@cyber-school/web": {
+    "runtimeDependenciesWithoutSrcImport": [
+      "motion",
+      "react-dom"
+    ],
+    "scripts": {
+      "dev": "next dev --port 3000",
+      "build": "next build",
+      "start": "next start --port 3000",
+      "typecheck": "tsc --noEmit",
+      "lint": "eslint .",
+      "test:unit": "vitest run"
+    }
+  },
+  "@cyber-school/animations": {
+    "runtimeDependenciesWithoutSrcImport": [],
+    "scripts": {
+      "build": "tsc -p tsconfig.json",
+      "typecheck": "tsc -p tsconfig.json --noEmit",
+      "lint": "eslint src",
+      "test:unit": "vitest run"
+    }
+  },
+  "@cyber-school/exercises": {
+    "runtimeDependenciesWithoutSrcImport": [],
+    "scripts": {
+      "build": "tsc -p tsconfig.json",
+      "typecheck": "tsc -p tsconfig.json --noEmit",
+      "lint": "eslint src",
+      "test:unit": "vitest run"
+    }
+  },
+  "@cyber-school/lesson-runtime": {
+    "runtimeDependenciesWithoutSrcImport": [],
+    "scripts": {
+      "build": "tsc -p tsconfig.json",
+      "typecheck": "tsc -p tsconfig.json --noEmit",
+      "lint": "eslint src",
+      "test:unit": "vitest run"
+    }
+  },
+  "@cyber-school/ui": {
+    "runtimeDependenciesWithoutSrcImport": [],
+    "scripts": {
+      "build": "tsc -p tsconfig.json",
+      "typecheck": "tsc -p tsconfig.json --noEmit",
+      "lint": "eslint src",
+      "test:unit": "vitest run"
+    }
+  },
+  "cyber-school": {
+    "runtimeDependenciesWithoutSrcImport": [],
+    "scripts": {
+      "dev": "turbo run dev",
+      "build": "turbo run build",
+      "lint": "turbo run lint",
+      "typecheck": "turbo run typecheck",
+      "test": "pnpm test:unit",
+      "test:unit": "turbo run test:unit",
+      "test:e2e": "playwright test",
+      "format": "prettier --write .",
+      "format:check": "prettier --check .",
+      "validate:curriculum": "turbo run build --filter=@cyber-school/lesson-runtime && node --experimental-strip-types tests/scripts/validate-curriculum.ts",
+      "check:all": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test:unit && pnpm build && pnpm test:e2e"
+    }
+  }
+}

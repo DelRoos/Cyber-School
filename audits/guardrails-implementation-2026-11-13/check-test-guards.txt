@@ -1,0 +1,44 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 test:guards C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types --test scripts/quality/guards.test.ts
+
+(node:16060) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16060) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Emerite/Documents/projets/cyber-school/scripts/quality/guards.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\Emerite\Documents\projets\cyber-school\package.json.
+✔ accepts complete matching evidence with all actual result fields (73.6482ms)
+✔ rejects a failed validation run (41.3473ms)
+✔ rejects a running validation run (41.5607ms)
+✔ rejects a checklist, a test source or a missing report as evidence (40.5104ms)
+✔ rejects a skipped, failed or missing command (47.5107ms)
+✔ rejects substituted commands even when their exit code is zero (41.4974ms)
+✔ rejects repeated checks replacing an unexecuted check (44.0834ms)
+✔ rejects evidence after code or content changes (72.4065ms)
+✔ requires a recoverable Git base (41.6268ms)
+✔ binds evidence to the task ID and its acceptance criteria (43.7525ms)
+✔ rejects missing, modified and empty logs (52.5789ms)
+✔ rejects traversal outside the validation directory (41.0788ms)
+✔ rejects malformed reports and impossible timestamps (43.7714ms)
+✔ Done with all checkboxes and a decorative evidence heading still fails (40.4192ms)
+✔ Done with genuine matching fixture evidence passes, unchecked criteria do not (79.889ms)
+✔ Ready and Done cannot bypass unfinished dependencies (40.6062ms)
+✔ missing dependencies and cycles are rejected even in Backlog (41.7892ms)
+✔ duplicate task IDs are rejected instead of silently overwritten (44.7589ms)
+✔ publication without a real approval and generated QA evidence is refused (40.725ms)
+✔ pending content remains authorable, approved publication requires passing evidence (61.9653ms)
+✔ administrative promotion does not stale QA, but changing scientific content does (128.3453ms)
+✔ preflight refuses Node 23, a missing lockfile and global tool fallbacks (94.1674ms)
+✔ before-install preflight accepts supported Node with a pinned manager and lockfile (44.3289ms)
+✔ generated checkpoints become stale on code changes or manual handoff edits (349.4977ms)
+✔ a passed label with recorded errors is not accepted as validation (142.1706ms)
+✔ checkpoint generation does not promote an invalid report to passed (138.8057ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2118.3945

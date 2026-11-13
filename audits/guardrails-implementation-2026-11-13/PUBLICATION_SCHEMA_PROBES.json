@@ -1,0 +1,41 @@
+{
+  "method": "Unmodified new source schema with exact declared Zod 4.6.7 from local store; in-memory import resolution only; no Vitest suite executed",
+  "cases": [
+    {
+      "name": "current lesson remains in-review",
+      "expected": true,
+      "actual": true,
+      "met": true
+    },
+    {
+      "name": "published without approval",
+      "expected": false,
+      "actual": false,
+      "met": true
+    },
+    {
+      "name": "missing explicit content revision",
+      "expected": false,
+      "actual": false,
+      "met": true
+    },
+    {
+      "name": "pending review cannot publish",
+      "expected": false,
+      "actual": false,
+      "met": true
+    },
+    {
+      "name": "test source cannot be QA evidence",
+      "expected": false,
+      "actual": false,
+      "met": true
+    },
+    {
+      "name": "approved shape accepted; file evidence checked separately by governance",
+      "expected": true,
+      "actual": true,
+      "met": true
+    }
+  ]
+}

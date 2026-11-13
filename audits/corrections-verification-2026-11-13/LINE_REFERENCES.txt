@@ -1,0 +1,28 @@
+tests/e2e/tcp-handshake.spec.ts:4: test("renders desktop flows (nominal, auto-play, SYN-ACK loss, all 4 exercises, keyboard) without console errors", async ({
+tests/e2e/tcp-handshake.spec.ts:19: await page.setViewportSize({ width: 1280, height: 800 });
+tests/e2e/tcp-handshake.spec.ts:119: await ex1.getByText("seq = 301, ack = 100").click();
+tests/e2e/tcp-handshake.spec.ts:161: await ex4.getByRole("button", { name: "Vérifier ma réponse" }).click();
+tests/e2e/tcp-handshake.spec.ts:165: await ex4.getByRole("button", { name: "Réessayer" }).click();
+tests/e2e/tcp-handshake.spec.ts:167: await ex4.getByRole("button", { name: "Vérifier ma réponse" }).click();
+tests/e2e/tcp-handshake.spec.ts:193: test("snaps cleanly when prefers-reduced-motion is reduce", async ({ page }) => {
+tests/e2e/tcp-handshake.spec.ts:219: test("renders cleanly without horizontal overflow on mobile (375x812)", async ({ page }) => {
+tests/e2e/tcp-handshake.spec.ts:227: await page.setViewportSize({ width: 375, height: 812 });
+packages/lesson-runtime/src/schemas.ts:255: export const LessonReviewSchema = z
+packages/lesson-runtime/src/schemas.ts:267: contentRevision: z.string().min(1).default("1.0.0"),
+packages/lesson-runtime/src/schemas.ts:276: review: LessonReviewSchema.optional(),
+packages/lesson-runtime/src/schemas.ts:297: export type LessonReview = z.infer<typeof LessonReviewSchema>;
+packages/exercises/src/exercise-card.tsx:62: function handleReset() {
+packages/exercises/src/exercise-card.tsx:71: function handleSelectOption(optionId: string) {
+packages/exercises/src/exercise-card.tsx:139: <fieldset className="space-y-2">
+packages/exercises/src/exercise-card.tsx:159: type="radio"
+packages/exercises/src/exercise-card.tsx:181: </fieldset>
+docs/agents/AGENT_GUIDE.md:49: - **Critères d'acceptation & revue scientifique** : Ne jamais marquer une tâche terminée sans avoir vérifié tous ses critères d'acceptation et exécuté les tests pertinents après la dernière modification. Tout manifeste de leçon publié (`status: "ready"` ou `"published"`) doit renseigner `contentRevision` et `review` (`reviewedBy`, `reviewedAt`, `status: "approved"`).
+docs/agents/AGENT_GUIDE.md:67: | Outil CLI | Version validée | Point d'entrée & Skills | Sous-agents & Isolation |
+continuity/CURRENT_STATE.md:14: ## Travail restant immédiat (dans cette session)
+apps/web/src/lib/curriculum-data.ts:7: validateCurriculumIntegrity,
+apps/web/src/lib/curriculum-data.ts:34: export function loadAcademyData(rootDir = findRepoRoot()): AcademyData {
+apps/web/src/lib/curriculum-data.ts:72: const report = validateCurriculumIntegrity(curriculum, resources, lessons);
+apps/web/src/lib/curriculum-data.ts:80: const tcpLesson = lessons.find(
+tests/scripts/validate-governance.ts:217: if (task.status === "Done") {
+lessons/tcp-three-way-handshake/lesson.json:14: "qaEvidenceRef": "tests/e2e/tcp-handshake.spec.ts",
+lessons/tcp-three-way-handshake/lesson.json:156: "3. Faites un clic droit sur le segment SYN initial -> Follow -> TCP Stream (ou notez le numéro `tcp.stream`) puis filtrez `tcp.stream == 0` pour observer la séquence complète `[SYN]`, `[SYN, ACK]`, `[ACK]` et leurs numéros relatifs `Seq=0`, `Seq=0 Ack=1`, `Seq=1 Ack=1`."

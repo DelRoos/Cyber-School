@@ -1,0 +1,21 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 validate:curriculum C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run build --filter=@cyber-school/lesson-runtime && node --experimental-strip-types tests/scripts/validate-curriculum.ts
+
+
+   • turbo 2.11.11
+   • Packages in scope: @cyber-school/lesson-runtime
+   • Running build in 1 package
+   • Remote caching disabled
+
+corepack.cmd :   x Unable to find package manager binary: cannot find binary path
+Au caractère Ligne:2 : 426
++ ... .Split(' '); $recheckOutput=& corepack pnpm @recheckArgs 2>&1; $reche ...
++                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  x Unable to f...ind binary path:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  `-> cannot find binary path
+
+ ELIFECYCLE  Command failed with exit code 1.

@@ -1,0 +1,35 @@
+{
+  "method": "Native Gemini CLI 0.64.0 loader; no model session or sub-agent launched",
+  "agents": [
+    {
+      "name": "architect",
+      "tools": null
+    },
+    {
+      "name": "continuity-keeper",
+      "tools": null
+    },
+    {
+      "name": "frontend-engineer",
+      "tools": null
+    },
+    {
+      "name": "pedagogy-designer",
+      "tools": null
+    },
+    {
+      "name": "qa-engineer",
+      "tools": null
+    },
+    {
+      "name": "security-auditor",
+      "tools": [
+        "read_file",
+        "grep_search",
+        "glob",
+        "list_directory"
+      ]
+    }
+  ],
+  "errors": []
+}

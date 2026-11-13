@@ -1,0 +1,688 @@
+{
+  "json": [
+    {
+      "path": ".gemini/settings.json",
+      "valid": true
+    },
+    {
+      "path": ".prettierrc.json",
+      "valid": true
+    },
+    {
+      "path": "apps/web/components.json",
+      "valid": true
+    },
+    {
+      "path": "apps/web/package.json",
+      "valid": true
+    },
+    {
+      "path": "apps/web/tsconfig.json",
+      "valid": true
+    },
+    {
+      "path": "curriculum/networking-foundations.json",
+      "valid": true
+    },
+    {
+      "path": "lessons/tcp-three-way-handshake/lesson.json",
+      "valid": true
+    },
+    {
+      "path": "package.json",
+      "valid": true
+    },
+    {
+      "path": "packages/animations/package.json",
+      "valid": true
+    },
+    {
+      "path": "packages/animations/tsconfig.json",
+      "valid": true
+    },
+    {
+      "path": "packages/exercises/package.json",
+      "valid": true
+    },
+    {
+      "path": "packages/exercises/tsconfig.json",
+      "valid": true
+    },
+    {
+      "path": "packages/lesson-runtime/package.json",
+      "valid": true
+    },
+    {
+      "path": "packages/lesson-runtime/tsconfig.json",
+      "valid": true
+    },
+    {
+      "path": "packages/ui/package.json",
+      "valid": true
+    },
+    {
+      "path": "packages/ui/tsconfig.json",
+      "valid": true
+    },
+    {
+      "path": "resources/sources.json",
+      "valid": true
+    },
+    {
+      "path": "tsconfig.base.json",
+      "valid": true
+    },
+    {
+      "path": "turbo.json",
+      "valid": true
+    }
+  ],
+  "toml": [
+    {
+      "path": ".codex/agents/architect.toml",
+      "valid": true,
+      "keys": [
+        "name",
+        "description",
+        "developer_instructions"
+      ]
+    },
+    {
+      "path": ".codex/agents/continuity_keeper.toml",
+      "valid": true,
+      "keys": [
+        "name",
+        "description",
+        "developer_instructions"
+      ]
+    },
+    {
+      "path": ".codex/agents/frontend_engineer.toml",
+      "valid": true,
+      "keys": [
+        "name",
+        "description",
+        "developer_instructions"
+      ]
+    },
+    {
+      "path": ".codex/agents/pedagogy_designer.toml",
+      "valid": true,
+      "keys": [
+        "name",
+        "description",
+        "developer_instructions"
+      ]
+    },
+    {
+      "path": ".codex/agents/qa_engineer.toml",
+      "valid": true,
+      "keys": [
+        "name",
+        "description",
+        "developer_instructions"
+      ]
+    },
+    {
+      "path": ".codex/agents/security_auditor.toml",
+      "valid": true,
+      "keys": [
+        "name",
+        "description",
+        "developer_instructions"
+      ]
+    }
+  ],
+  "tailwindSources": [
+    {
+      "declared": "../../../packages/ui/src/**/*.{ts,tsx}",
+      "resolved": "C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\apps\\packages\\ui\\src",
+      "exists": false
+    },
+    {
+      "declared": "../../../packages/exercises/src/**/*.{ts,tsx}",
+      "resolved": "C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\apps\\packages\\exercises\\src",
+      "exists": false
+    },
+    {
+      "declared": "../../../packages/animations/src/**/*.{ts,tsx}",
+      "resolved": "C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\apps\\packages\\animations\\src",
+      "exists": false
+    }
+  ],
+  "sensitiveMatches": [],
+  "imports": [
+    {
+      "path": "apps/web/eslint.config.mjs",
+      "line": 1,
+      "specifier": "eslint-config-next/core-web-vitals"
+    },
+    {
+      "path": "apps/web/eslint.config.mjs",
+      "line": 2,
+      "specifier": "eslint-config-next/typescript"
+    },
+    {
+      "path": "apps/web/next.config.ts",
+      "line": 1,
+      "specifier": "next"
+    },
+    {
+      "path": "apps/web/src/app/layout.tsx",
+      "line": 1,
+      "specifier": "next"
+    },
+    {
+      "path": "apps/web/src/app/layout.tsx",
+      "line": 2,
+      "specifier": "next/link"
+    },
+    {
+      "path": "apps/web/src/app/layout.tsx",
+      "line": 3,
+      "specifier": "lucide-react"
+    },
+    {
+      "path": "apps/web/src/app/layout.tsx",
+      "line": 4,
+      "specifier": "./globals.css"
+    },
+    {
+      "path": "apps/web/src/app/lessons/tcp-three-way-handshake/page.tsx",
+      "line": 1,
+      "specifier": "next/link"
+    },
+    {
+      "path": "apps/web/src/app/lessons/tcp-three-way-handshake/page.tsx",
+      "line": 2,
+      "specifier": "lucide-react"
+    },
+    {
+      "path": "apps/web/src/app/lessons/tcp-three-way-handshake/page.tsx",
+      "line": 10,
+      "specifier": "@cyber-school/ui"
+    },
+    {
+      "path": "apps/web/src/app/lessons/tcp-three-way-handshake/page.tsx",
+      "line": 11,
+      "specifier": "@/lib/curriculum-data"
+    },
+    {
+      "path": "apps/web/src/app/lessons/tcp-three-way-handshake/page.tsx",
+      "line": 12,
+      "specifier": "@/components/tcp-handshake-simulator"
+    },
+    {
+      "path": "apps/web/src/app/page.tsx",
+      "line": 1,
+      "specifier": "next/link"
+    },
+    {
+      "path": "apps/web/src/app/page.tsx",
+      "line": 2,
+      "specifier": "lucide-react"
+    },
+    {
+      "path": "apps/web/src/app/page.tsx",
+      "line": 10,
+      "specifier": "@cyber-school/ui"
+    },
+    {
+      "path": "apps/web/src/app/page.tsx",
+      "line": 11,
+      "specifier": "@/lib/curriculum-data"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 3,
+      "specifier": "react"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 4,
+      "specifier": "gsap"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 15,
+      "specifier": "lucide-react"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 16,
+      "specifier": "@cyber-school/lesson-runtime"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 22,
+      "specifier": "@cyber-school/animations"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 23,
+      "specifier": "@cyber-school/exercises"
+    },
+    {
+      "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+      "line": 38,
+      "specifier": "@cyber-school/ui"
+    },
+    {
+      "path": "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+      "line": 1,
+      "specifier": "vitest"
+    },
+    {
+      "path": "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+      "line": 2,
+      "specifier": "@cyber-school/lesson-runtime"
+    },
+    {
+      "path": "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+      "line": 3,
+      "specifier": "../curriculum-data.js"
+    },
+    {
+      "path": "apps/web/src/lib/curriculum-data.ts",
+      "line": 1,
+      "specifier": "node:fs"
+    },
+    {
+      "path": "apps/web/src/lib/curriculum-data.ts",
+      "line": 2,
+      "specifier": "node:path"
+    },
+    {
+      "path": "apps/web/src/lib/curriculum-data.ts",
+      "line": 10,
+      "specifier": "@cyber-school/lesson-runtime"
+    },
+    {
+      "path": "apps/web/vitest.config.ts",
+      "line": 1,
+      "specifier": "vitest/config"
+    },
+    {
+      "path": "apps/web/vitest.config.ts",
+      "line": 2,
+      "specifier": "node:path"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "line": 1,
+      "specifier": "@eslint/js"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "line": 2,
+      "specifier": "typescript-eslint"
+    },
+    {
+      "path": "packages/animations/eslint.config.mjs",
+      "line": 1,
+      "specifier": "../../eslint.config.mjs"
+    },
+    {
+      "path": "packages/animations/src/__tests__/animations.test.tsx",
+      "line": 1,
+      "specifier": "@testing-library/react"
+    },
+    {
+      "path": "packages/animations/src/__tests__/animations.test.tsx",
+      "line": 2,
+      "specifier": "vitest"
+    },
+    {
+      "path": "packages/animations/src/__tests__/animations.test.tsx",
+      "line": 3,
+      "specifier": "../index.js"
+    },
+    {
+      "path": "packages/animations/src/gsap-scope.ts",
+      "line": 3,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/animations/src/gsap-scope.ts",
+      "line": 4,
+      "specifier": "gsap"
+    },
+    {
+      "path": "packages/animations/src/index.ts",
+      "line": 4,
+      "specifier": "./reduced-motion.js"
+    },
+    {
+      "path": "packages/animations/src/index.ts",
+      "line": 5,
+      "specifier": "./gsap-scope.js"
+    },
+    {
+      "path": "packages/animations/src/index.ts",
+      "line": 9,
+      "specifier": "./motion-primitives.js"
+    },
+    {
+      "path": "packages/animations/src/motion-primitives.tsx",
+      "line": 3,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/animations/src/motion-primitives.tsx",
+      "line": 4,
+      "specifier": "motion/react"
+    },
+    {
+      "path": "packages/animations/src/motion-primitives.tsx",
+      "line": 5,
+      "specifier": "./reduced-motion.js"
+    },
+    {
+      "path": "packages/animations/src/reduced-motion.ts",
+      "line": 3,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/animations/vitest.config.ts",
+      "line": 1,
+      "specifier": "vitest/config"
+    },
+    {
+      "path": "packages/exercises/eslint.config.mjs",
+      "line": 1,
+      "specifier": "../../eslint.config.mjs"
+    },
+    {
+      "path": "packages/exercises/src/__tests__/exercises.test.tsx",
+      "line": 1,
+      "specifier": "@testing-library/react"
+    },
+    {
+      "path": "packages/exercises/src/__tests__/exercises.test.tsx",
+      "line": 2,
+      "specifier": "vitest"
+    },
+    {
+      "path": "packages/exercises/src/__tests__/exercises.test.tsx",
+      "line": 3,
+      "specifier": "@cyber-school/lesson-runtime"
+    },
+    {
+      "path": "packages/exercises/src/__tests__/exercises.test.tsx",
+      "line": 4,
+      "specifier": "../index.js"
+    },
+    {
+      "path": "packages/exercises/src/exercise-card.tsx",
+      "line": 3,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/exercises/src/exercise-card.tsx",
+      "line": 4,
+      "specifier": "lucide-react"
+    },
+    {
+      "path": "packages/exercises/src/exercise-card.tsx",
+      "line": 5,
+      "specifier": "@cyber-school/lesson-runtime"
+    },
+    {
+      "path": "packages/exercises/src/exercise-card.tsx",
+      "line": 18,
+      "specifier": "@cyber-school/ui"
+    },
+    {
+      "path": "packages/exercises/src/index.ts",
+      "line": 1,
+      "specifier": "./exercise-card.js"
+    },
+    {
+      "path": "packages/exercises/vitest.config.ts",
+      "line": 1,
+      "specifier": "vitest/config"
+    },
+    {
+      "path": "packages/lesson-runtime/eslint.config.mjs",
+      "line": 1,
+      "specifier": "../../eslint.config.mjs"
+    },
+    {
+      "path": "packages/lesson-runtime/src/__tests__/validator.test.ts",
+      "line": 1,
+      "specifier": "vitest"
+    },
+    {
+      "path": "packages/lesson-runtime/src/__tests__/validator.test.ts",
+      "line": 7,
+      "specifier": "../index.js"
+    },
+    {
+      "path": "packages/lesson-runtime/src/index.ts",
+      "line": 1,
+      "specifier": "./schemas.js"
+    },
+    {
+      "path": "packages/lesson-runtime/src/index.ts",
+      "line": 2,
+      "specifier": "./validator.js"
+    },
+    {
+      "path": "packages/lesson-runtime/src/schemas.ts",
+      "line": 1,
+      "specifier": "zod"
+    },
+    {
+      "path": "packages/lesson-runtime/src/validator.ts",
+      "line": 5,
+      "specifier": "./schemas.js"
+    },
+    {
+      "path": "packages/ui/eslint.config.mjs",
+      "line": 1,
+      "specifier": "../../eslint.config.mjs"
+    },
+    {
+      "path": "packages/ui/src/__tests__/ui.test.tsx",
+      "line": 1,
+      "specifier": "@testing-library/react"
+    },
+    {
+      "path": "packages/ui/src/__tests__/ui.test.tsx",
+      "line": 2,
+      "specifier": "vitest"
+    },
+    {
+      "path": "packages/ui/src/__tests__/ui.test.tsx",
+      "line": 3,
+      "specifier": "../index.js"
+    },
+    {
+      "path": "packages/ui/src/components/badge.tsx",
+      "line": 1,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/components/badge.tsx",
+      "line": 2,
+      "specifier": "class-variance-authority"
+    },
+    {
+      "path": "packages/ui/src/components/badge.tsx",
+      "line": 3,
+      "specifier": "../lib/utils.js"
+    },
+    {
+      "path": "packages/ui/src/components/button.tsx",
+      "line": 1,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/components/button.tsx",
+      "line": 2,
+      "specifier": "class-variance-authority"
+    },
+    {
+      "path": "packages/ui/src/components/button.tsx",
+      "line": 3,
+      "specifier": "../lib/utils.js"
+    },
+    {
+      "path": "packages/ui/src/components/card.tsx",
+      "line": 1,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/components/card.tsx",
+      "line": 2,
+      "specifier": "../lib/utils.js"
+    },
+    {
+      "path": "packages/ui/src/components/feedback.tsx",
+      "line": 1,
+      "specifier": "react"
+    },
+    {
+      "path": "packages/ui/src/components/feedback.tsx",
+      "line": 2,
+      "specifier": "class-variance-authority"
+    },
+    {
+      "path": "packages/ui/src/components/feedback.tsx",
+      "line": 3,
+      "specifier": "../lib/utils.js"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "line": 1,
+      "specifier": "./lib/utils.js"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "line": 2,
+      "specifier": "./components/button.js"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "line": 10,
+      "specifier": "./components/card.js"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "line": 11,
+      "specifier": "./components/badge.js"
+    },
+    {
+      "path": "packages/ui/src/index.ts",
+      "line": 20,
+      "specifier": "./components/feedback.js"
+    },
+    {
+      "path": "packages/ui/src/lib/utils.ts",
+      "line": 1,
+      "specifier": "clsx"
+    },
+    {
+      "path": "packages/ui/src/lib/utils.ts",
+      "line": 2,
+      "specifier": "tailwind-merge"
+    },
+    {
+      "path": "packages/ui/vitest.config.ts",
+      "line": 1,
+      "specifier": "vitest/config"
+    },
+    {
+      "path": "playwright.config.ts",
+      "line": 1,
+      "specifier": "node:fs"
+    },
+    {
+      "path": "playwright.config.ts",
+      "line": 2,
+      "specifier": "node:path"
+    },
+    {
+      "path": "playwright.config.ts",
+      "line": 3,
+      "specifier": "@playwright/test"
+    },
+    {
+      "path": "tests/e2e/tcp-handshake.spec.ts",
+      "line": 1,
+      "specifier": "@playwright/test"
+    },
+    {
+      "path": "tests/scripts/validate-curriculum.ts",
+      "line": 1,
+      "specifier": "node:fs"
+    },
+    {
+      "path": "tests/scripts/validate-curriculum.ts",
+      "line": 2,
+      "specifier": "node:path"
+    },
+    {
+      "path": "tests/scripts/validate-curriculum.ts",
+      "line": 8,
+      "specifier": "@cyber-school/lesson-runtime"
+    }
+  ],
+  "missingMarkdownLinks": [
+    {
+      "path": "continuity/RESUME_PROTOCOL.md",
+      "line": 10,
+      "target": "./continuity/BLOCKERS.md"
+    }
+  ],
+  "skillFrontmatter": [
+    {
+      "path": ".agents/skills/architecture-design/SKILL.md",
+      "name": "architecture-design",
+      "descriptionPresent": true,
+      "bodyLines": 31
+    },
+    {
+      "path": ".agents/skills/browser-validation/SKILL.md",
+      "name": "browser-validation",
+      "descriptionPresent": true,
+      "bodyLines": 30
+    },
+    {
+      "path": ".agents/skills/gsap-animation/SKILL.md",
+      "name": "gsap-animation",
+      "descriptionPresent": true,
+      "bodyLines": 26
+    },
+    {
+      "path": ".agents/skills/iteration-planning/SKILL.md",
+      "name": "iteration-planning",
+      "descriptionPresent": true,
+      "bodyLines": 27
+    },
+    {
+      "path": ".agents/skills/lesson-design/SKILL.md",
+      "name": "lesson-design",
+      "descriptionPresent": true,
+      "bodyLines": 31
+    },
+    {
+      "path": ".agents/skills/project-handoff/SKILL.md",
+      "name": "project-handoff",
+      "descriptionPresent": true,
+      "bodyLines": 32
+    },
+    {
+      "path": ".agents/skills/threejs-scene/SKILL.md",
+      "name": "threejs-scene",
+      "descriptionPresent": true,
+      "bodyLines": 26
+    },
+    {
+      "path": ".agents/skills/visual-explanation/SKILL.md",
+      "name": "visual-explanation",
+      "descriptionPresent": true,
+      "bodyLines": 27
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 test:guards C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types --test scripts/quality/guards.test.ts
+
+(node:16312) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ accepts complete matching evidence with all actual result fields (73.8402ms)
+✔ rejects a failed validation run (41.2444ms)
+✔ rejects a running validation run (40.2297ms)
+✔ rejects a checklist, a test source or a missing report as evidence (39.4635ms)
+✔ rejects a skipped, failed or missing command (46.4229ms)
+✔ rejects substituted commands even when their exit code is zero (41.9406ms)
+✔ rejects repeated checks replacing an unexecuted check (43.6045ms)
+✔ rejects evidence after code or content changes (121.703ms)
+✔ requires a recoverable Git base (72.6358ms)
+✔ binds evidence to the task ID and its acceptance criteria (69.0525ms)
+✔ rejects missing, modified and empty logs (73.3607ms)
+✔ rejects traversal outside the validation directory (44.2865ms)
+✔ rejects malformed reports and impossible timestamps (60.4093ms)
+✔ Done with all checkboxes and a decorative evidence heading still fails (38.9854ms)
+✔ Done with genuine matching fixture evidence passes, unchecked criteria do not (74.8141ms)
+✔ Ready and Done cannot bypass unfinished dependencies (38.9872ms)
+✔ missing dependencies and cycles are rejected even in Backlog (41.7311ms)
+✔ duplicate task IDs are rejected instead of silently overwritten (43.0521ms)
+✔ publication without a real approval and generated QA evidence is refused (40.2738ms)
+✔ pending content remains authorable, approved publication requires passing evidence (59.9556ms)
+✔ administrative promotion does not stale QA, but changing scientific content does (122.5253ms)
+✔ preflight refuses Node 23, a missing lockfile and global tool fallbacks (39.4478ms)
+✔ before-install preflight accepts supported Node with a pinned manager and lockfile (39.3561ms)
+✔ generated checkpoints become stale on code changes or manual handoff edits (285.7001ms)
+✔ a passed label with recorded errors is not accepted as validation (40.8462ms)
+✔ checkpoint generation does not promote an invalid report to passed (104.7324ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1946.1913

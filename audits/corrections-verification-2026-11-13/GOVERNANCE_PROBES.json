@@ -1,0 +1,48 @@
+{
+  "method": "Original governance script after type erasure; virtual read-only fs overlays in a VM, no task/backlog file modified",
+  "rows": [
+    {
+      "name": "current repository",
+      "expectedValid": true,
+      "actualValid": true,
+      "exitCode": 0,
+      "expectationMet": true,
+      "logs": [
+        "Governance validation passed: 58 markdown file(s), 9 mirrored skill file(s), 3 task(s)."
+      ]
+    },
+    {
+      "name": "Ready with unfinished dependency",
+      "expectedValid": false,
+      "actualValid": false,
+      "exitCode": 1,
+      "expectationMet": true,
+      "logs": [
+        "Governance validation failed:",
+        "- [task-governance] Task TASK-003 (TASK-003-curriculum-graph-viewer.md) is \"Ready\" while dependency TASK-002 has status \"In Progress\"."
+      ]
+    },
+    {
+      "name": "Done with unchecked criteria",
+      "expectedValid": false,
+      "actualValid": false,
+      "exitCode": 1,
+      "expectationMet": true,
+      "logs": [
+        "Governance validation failed:",
+        "- [task-governance] Task TASK-001 (TASK-001-monorepo-bootstrap.md) is \"Done\" but still has unchecked criteria (- [ ]).",
+        "- [task-governance] Task TASK-001 (TASK-001-monorepo-bootstrap.md) is \"Done\" without a \"## Vérifications\" evidence section."
+      ]
+    },
+    {
+      "name": "Done with checked boxes and evidence heading but no actual result",
+      "expectedValid": false,
+      "actualValid": true,
+      "exitCode": 0,
+      "expectationMet": false,
+      "logs": [
+        "Governance validation passed: 58 markdown file(s), 9 mirrored skill file(s), 3 task(s)."
+      ]
+    }
+  ]
+}

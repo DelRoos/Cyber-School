@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "resources": [
+    {
+      "id": "rfc-9293",
+      "title": "RFC 9293: Transmission Control Protocol (TCP)",
+      "publisher": "IETF",
+      "url": "https://datatracker.ietf.org/doc/html/rfc9293",
+      "publishedYear": 2022,
+      "verifiedAt": "2026-11-13",
+      "sectionRef": "Section 3.5 (Establishing a Connection)",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true,
+      "summary": "Spécification officielle consolidée de TCP remplaçant la RFC 793, décrivant l'en-tête TCP, les drapeaux SYN/ACK, les variables SND.NXT/RCV.NXT et l'automate d'états."
+    },
+    {
+      "id": "rfc-6528",
+      "title": "RFC 6528: Defending against Sequence Number Attacks",
+      "publisher": "IETF",
+      "url": "https://datatracker.ietf.org/doc/html/rfc6528",
+      "publishedYear": 2012,
+      "verifiedAt": "2026-11-13",
+      "sectionRef": "Section 3 (Algorithm)",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true,
+      "summary": "Explique pourquoi le numéro de séquence initial (ISN) doit être imprévisible pour éviter l'usurpation de connexion TCP."
+    },
+    {
+      "id": "wireshark-tcp-docs",
+      "title": "Wireshark User's Guide — Building Display Filter Expressions",
+      "publisher": "Wireshark Foundation",
+      "url": "https://www.wireshark.org/docs/wsug_html_chunked/ChWorkBuildDisplayFilterSection.html",
+      "publishedYear": 2024,
+      "verifiedAt": "2026-11-13",
+      "sectionRef": "Section 6.4 (Building Display Filter Expressions)",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true,
+      "summary": "Documentation officielle sur la syntaxe des filtres d'affichage Wireshark permettant d'isoler les drapeaux TCP (ex: tcp.flags.syn == 1)."
+    }
+  ]
+}

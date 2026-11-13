@@ -1,0 +1,12 @@
+{
+  "baselineFiles": 120,
+  "changedInitialFiles": [],
+  "missingInitialFiles": [],
+  "newFilesOutsideAudit": [],
+  "newAuditFilesAtCheck": 35,
+  "scopePreserved": true,
+  "auditMarkdownBrokenLinks": [],
+  "findings": 32,
+  "findingsMissingRequiredFields": [],
+  "requiredReportsPresent": true
+}

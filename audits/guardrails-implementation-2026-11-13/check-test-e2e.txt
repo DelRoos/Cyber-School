@@ -1,0 +1,55 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+corepack.cmd : Error: Cannot find module '@playwright/test'
+Au caractère Ligne:2 : 591
++ ... heck.Split(' '); $guardOutput=& corepack pnpm @guardArgs 2>&1; $guard ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error: Cannot f...laywright/test':String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Require stack:
+- C:\Users\Emerite\Documents\projets\cyber-school\playwright.config.ts
+- C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\common\index.js
+- C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\program.js
+- C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\cli.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1405:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1061:19)
+    at defaultResolve (node:internal/modules/cjs/loader:1083:31)
+    at nextStep (node:internal/modules/customization_hooks:185:26)
+    at resolve (C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\common\index.js:875:19)
+    at nextStep (node:internal/modules/customization_hooks:185:26)
+    at resolveWithHooks (node:internal/modules/customization_hooks:391:10)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1092:25)
+    at Function._load (node:internal/modules/cjs/loader:1215:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1491:12)
+    at require (node:internal/modules/helpers:135:16)
+    at Object.<anonymous> (C:\Users\Emerite\Documents\projets\cyber-school\playwright.config.ts:3:1)
+    at Module._compile (node:internal/modules/cjs/loader:1734:14)
+    at Object.<anonymous> (node:internal/modules/cjs/loader:1899:10)
+    at Module.load (node:internal/modules/cjs/loader:1469:32)
+    at Function._load (node:internal/modules/cjs/loader:1286:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1491:12)
+    at require (node:internal/modules/helpers:135:16)
+    at requireOrImport (C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\common\index.js:1149:18)
+    at loadUserConfig (C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\common\index.js:1334:52)
+    at loadConfig (C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\common\index.js:1341:28)
+    at Object.loadConfigFromFile 
+(C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\common\index.js:1553:10)
+    at runTests (C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\cli\testActions.js:46:18)
+    at _Command.<anonymous> (C:\Users\Emerite\AppData\Roaming\npm\node_modules\playwright\lib\program.js:53:7) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [
+    'C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\playwright.config.ts',
+    'C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js',
+    'C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\program.js',
+    'C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\cli.js'
+  ]
+}
+ ELIFECYCLE  Command failed with exit code 1.

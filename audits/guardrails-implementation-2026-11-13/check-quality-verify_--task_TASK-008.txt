@@ -1,0 +1,31 @@
+﻿ WARN  Unsupported engine: wanted: {"node":"^22.12.0 || ^24.0.0 || ^26.0.0"} (current: {"node":"v23.9.0","pnpm":"10.28.0"})
+
+> cyber-school@0.1.0 quality:verify C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types scripts/quality/run-checks.ts "--task" "TASK-008"
+
+corepack.cmd : (node:10636) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+Au caractère Ligne:2 : 591
++ ... heck.Split(' '); $guardOutput=& corepack pnpm @guardArgs 2>&1; $guard ...
++                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:10636) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10636) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of 
+file:///C:/Users/Emerite/Documents/projets/cyber-school/scripts/quality/run-checks.ts is not specified and it doesn't 
+parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\Emerite\Documents\projets\cyber-school\package.json.
+
+Validation failed: continuity/validation/2026-11-13T20-53-07-096Z-f577a490-007d-4a8d-94ae-069958b748b8/result.json
+[NODE_UNSUPPORTED] Node 23.9.0: use Node 22.12+ (22.x), 24.x or 26.x LTS.
+[LOCKFILE_MISSING] pnpm-lock.yaml missing. A frozen installation and a reviewed lockfile are required; do not 
+regenerate it silently.
+[LOCAL_TOOL_MISSING] Missing local node_modules/.bin/turbo; a global executable is not a substitute.
+[LOCAL_TOOL_MISSING] Missing local node_modules/.bin/tsc; a global executable is not a substitute.
+[LOCAL_TOOL_MISSING] Missing local node_modules/.bin/eslint; a global executable is not a substitute.
+[LOCAL_TOOL_MISSING] Missing local node_modules/.bin/prettier; a global executable is not a substitute.
+[LOCAL_TOOL_MISSING] Missing local node_modules/.bin/playwright; a global executable is not a substitute.
+[WORKSPACE_UNLINKED] The root lesson-runtime workspace dependency is not linked.
+[GIT_BASE_MISSING] No Git commit identifies a recoverable base. Do not claim a completed, validated repository.
+ ELIFECYCLE  Command failed with exit code 1.

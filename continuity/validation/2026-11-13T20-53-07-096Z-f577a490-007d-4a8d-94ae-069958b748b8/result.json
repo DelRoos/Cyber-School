@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-13T20-53-07-096Z-f577a490-007d-4a8d-94ae-069958b748b8",
+  "taskId": "TASK-008",
+  "startedAt": "2026-11-13T20:53:07.096Z",
+  "finishedAt": "2026-11-13T20:53:07.380Z",
+  "status": "failed",
+  "source": {
+    "digest": "24e0b5dcf67b04c68103755402d993a8c2587918e59c407f07731f035c9fc563",
+    "fileCount": 131,
+    "gitHead": null
+  },
+  "criteriaDigest": "b66a3bf4f36b322d67d763894a5f224c6f198c7a82119f48a39d8780753b3959",
+  "environment": {
+    "nodeVersion": "23.9.0",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [],
+  "issues": [
+    {
+      "code": "NODE_UNSUPPORTED",
+      "message": "Node 23.9.0: use Node 22.12+ (22.x), 24.x or 26.x LTS."
+    },
+    {
+      "code": "LOCKFILE_MISSING",
+      "message": "pnpm-lock.yaml missing. A frozen installation and a reviewed lockfile are required; do not regenerate it silently."
+    },
+    {
+      "code": "LOCAL_TOOL_MISSING",
+      "message": "Missing local node_modules/.bin/turbo; a global executable is not a substitute."
+    },
+    {
+      "code": "LOCAL_TOOL_MISSING",
+      "message": "Missing local node_modules/.bin/tsc; a global executable is not a substitute."
+    },
+    {
+      "code": "LOCAL_TOOL_MISSING",
+      "message": "Missing local node_modules/.bin/eslint; a global executable is not a substitute."
+    },
+    {
+      "code": "LOCAL_TOOL_MISSING",
+      "message": "Missing local node_modules/.bin/prettier; a global executable is not a substitute."
+    },
+    {
+      "code": "LOCAL_TOOL_MISSING",
+      "message": "Missing local node_modules/.bin/playwright; a global executable is not a substitute."
+    },
+    {
+      "code": "WORKSPACE_UNLINKED",
+      "message": "The root lesson-runtime workspace dependency is not linked."
+    },
+    {
+      "code": "GIT_BASE_MISSING",
+      "message": "No Git commit identifies a recoverable base. Do not claim a completed, validated repository."
+    }
+  ]
+}

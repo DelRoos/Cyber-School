@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-13T22-08-15-291Z-112a3d8a-6a3a-4832-aa1e-f89bcff5f564",
+  "taskId": "TASK-008",
+  "startedAt": "2026-11-13T22:08:15.291Z",
+  "finishedAt": "2026-11-13T22:08:15.613Z",
+  "status": "failed",
+  "source": {
+    "digest": "82a427d0bd3694ccc887a2ebabd92b4d3cfad119c4e7af9abb075b333e0d818b",
+    "fileCount": 135,
+    "gitHead": null
+  },
+  "criteriaDigest": "ee746d35ed76708017966b7da4befa98c5970384328791372c562b3d21e7b1dd",
+  "environment": {
+    "nodeVersion": "23.9.0",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [],
+  "issues": [
+    {
+      "code": "NODE_UNSUPPORTED",
+      "message": "Node 23.9.0: use Node 22.12+ (22.x), 24.x or 26.x LTS."
+    },
+    {
+      "code": "GIT_BASE_MISSING",
+      "message": "No Git commit identifies a recoverable base. Do not claim a completed, validated repository."
+    }
+  ]
+}

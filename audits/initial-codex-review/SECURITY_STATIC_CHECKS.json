@@ -1,0 +1,12 @@
+{
+  "apps/web/src/components/tcp-handshake-simulator.tsx": [],
+  "packages/animations/src/gsap-scope.ts": [],
+  "apps/web/src/lib/curriculum-data.ts": [],
+  "tests/scripts/validate-curriculum.ts": [],
+  "packages/exercises/src/exercise-card.tsx": [],
+  "destructiveButtonContrast": 3.342443769332081,
+  "wholeInitialSourceScan": {
+    "hits": [],
+    "scope": "all initial .ts, .tsx, .mjs files; static string match plus source review"
+  }
+}

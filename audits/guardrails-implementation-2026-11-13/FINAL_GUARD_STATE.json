@@ -1,0 +1,10 @@
+{
+  "sourceDigestMatchesCheckpoint": true,
+  "continuityIssues": [],
+  "taskStatus": "In Progress",
+  "lessonStatus": "in-review",
+  "recordedValidation": "failed",
+  "checksExecutedByBlockedRunner": 0,
+  "failedEvidenceRejected": true,
+  "proofReference": "continuity/validation/2026-11-13T20-53-07-096Z-f577a490-007d-4a8d-94ae-069958b748b8/result.json"
+}

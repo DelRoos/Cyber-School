@@ -1,0 +1,127 @@
+{
+  "version": "1.0",
+  "domains": [
+    {
+      "id": "networking-and-security",
+      "title": "Réseaux & Cybersécurité",
+      "summary": "Comprendre l'acheminement des données, les protocoles fondamentaux et leurs mécanismes de fiabilité et de défense.",
+      "modules": [
+        {
+          "id": "transport-layer-foundations",
+          "title": "Couche Transport & Fiabilité",
+          "summary": "Comment transformer un réseau IP non fiable en canaux applicatifs ordonnés et fiables.",
+          "chapters": [
+            {
+              "id": "tcp-connection-establishment",
+              "title": "Établissement de connexion TCP",
+              "summary": "Adressage par ports, synchronisation bidirectionnelle et automate d'états TCP.",
+              "conceptIds": [
+                "ip-packet-delivery",
+                "tcp-ports-and-sockets",
+                "tcp-three-way-handshake"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "network-security-essentials",
+          "title": "Fondamentaux de Sécurité Réseau",
+          "summary": "Réutiliser les mécanismes protocolaires pour comprendre les attaques (SYN flood, spoofing) et les défenses.",
+          "chapters": [
+            {
+              "id": "transport-attack-surfaces",
+              "title": "Surfaces d'attaque de la couche Transport",
+              "summary": "Comprendre pourquoi l'état SYN_RCVD et le choix de l'ISN ont des implications critiques en sécurité.",
+              "conceptIds": ["tcp-three-way-handshake", "tcp-syn-flood-resilience"]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "ip-packet-delivery",
+      "title": "Acheminement IP au meilleur effort",
+      "definition": "IP achemine des datagrammes de manière indépendante sans garantie d'ordre, de livraison ou d'absence de duplication.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Expliquer pourquoi la couche réseau IP ne garantit ni l'ordre ni la livraison des paquets"
+      ],
+      "relations": [],
+      "resourceIds": ["rfc-9293"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Identifier trois défauts possibles d'un réseau IP brut (perte, réordonnancement, duplication)"
+      ]
+    },
+    {
+      "id": "tcp-ports-and-sockets",
+      "title": "Ports et sockets TCP",
+      "definition": "Couple adresse IP et numéro de port permettant à un hôte de multiplexer simultanément plusieurs sessions applicatives distinctes.",
+      "prerequisites": ["ip-packet-delivery"],
+      "learningObjectives": [
+        "Distinguer un port d'écoute serveur d'un port éphémère client dans un 4-uplet TCP"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "ip-packet-delivery",
+          "type": "builds_on",
+          "note": "Ajoute le multiplexage applicatif au-dessus du routage IP hôte-à-hôte"
+        }
+      ],
+      "resourceIds": ["rfc-9293"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Identifier les quatre composantes identifiant une connexion TCP unique (IP src, port src, IP dst, port dst)"
+      ]
+    },
+    {
+      "id": "tcp-three-way-handshake",
+      "title": "Protocole TCP et Three-Way Handshake",
+      "definition": "Mécanisme d'ouverture de connexion en trois segments (SYN, SYN-ACK, ACK) synchronisant les numéros de séquence initiaux dans les deux directions.",
+      "prerequisites": ["ip-packet-delivery", "tcp-ports-and-sockets"],
+      "learningObjectives": [
+        "Décrire le rôle exact des segments SYN, SYN-ACK et ACK",
+        "Calculer les numéros de séquence et d'acquittement échangés lors de l'initialisation",
+        "Associer chaque étape aux états TCP CLOSED, LISTEN, SYN_SENT, SYN_RCVD et ESTABLISHED",
+        "Expliquer le comportement en cas de perte du SYN-ACK et le besoin de retransmission"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tcp-ports-and-sockets",
+          "type": "builds_on",
+          "note": "Initialise une session identifiée par un 4-uplet de sockets"
+        }
+      ],
+      "resourceIds": ["rfc-9293", "rfc-6528", "wireshark-tcp-docs"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Ordonner correctement les trois messages du handshake",
+        "Prédire les numéros seq et ack d'un SYN-ACK et d'un ACK à partir d'ISN donnés",
+        "Identifier l'état du serveur tant que le troisième ACK n'est pas reçu"
+      ]
+    },
+    {
+      "id": "tcp-syn-flood-resilience",
+      "title": "Saturation SYN_RCVD et SYN Cookies",
+      "definition": "Analyse de l'épuisement de la file de connexions semi-ouvertes (SYN_RCVD) et des mécanismes de mitigation sans état initial.",
+      "prerequisites": ["tcp-three-way-handshake"],
+      "learningObjectives": [
+        "Relier l'état SYN_RCVD du Three-Way Handshake au vecteur d'attaque SYN Flood"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tcp-three-way-handshake",
+          "type": "applied_in",
+          "note": "Exploite l'allocation d'état lors de l'étape 2 du handshake"
+        }
+      ],
+      "resourceIds": ["rfc-9293", "rfc-6528"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Expliquer comment les SYN cookies évitent de réserver de la mémoire avant la réception du ACK final"
+      ]
+    }
+  ]
+}

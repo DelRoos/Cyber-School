@@ -1,0 +1,24 @@
+{
+  "testFile": "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+  "method": "Read-only resolution and attempted reads of exact fixture paths from the new test; no fixture or source modified",
+  "results": [
+    {
+      "declared": "../../../../resources/sources.json",
+      "resolved": "C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\apps\\resources\\sources.json",
+      "exists": false,
+      "observedReadError": "ENOENT"
+    },
+    {
+      "declared": "../../../../lessons/tcp-three-way-handshake/lesson.json",
+      "resolved": "C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\apps\\lessons\\tcp-three-way-handshake\\lesson.json",
+      "exists": false,
+      "observedReadError": "ENOENT"
+    },
+    {
+      "declared": "../../../../curriculum/networking-foundations.json",
+      "resolved": "C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\apps\\curriculum\\networking-foundations.json",
+      "exists": false,
+      "observedReadError": "ENOENT"
+    }
+  ]
+}

@@ -1,0 +1,602 @@
+[
+  {
+    "path": ".agents/skills/architecture-design/references/adr-template.md",
+    "bytes": 703,
+    "sha256": "dea7f3975b68339c568d9518b5daade019e16aaddea3de827f94d847664e91b2"
+  },
+  {
+    "path": ".agents/skills/architecture-design/SKILL.md",
+    "bytes": 1725,
+    "sha256": "4e78890b1a95e68c6e28b3ea0fe4961242d13c9e671c0d9e0b140d40b1fd5d31"
+  },
+  {
+    "path": ".agents/skills/browser-validation/SKILL.md",
+    "bytes": 1542,
+    "sha256": "bbef281c204eed8198113630ff0fc48f486b55502869504e4485f19674b38c57"
+  },
+  {
+    "path": ".agents/skills/gsap-animation/SKILL.md",
+    "bytes": 1479,
+    "sha256": "8841ab6d09fbab58d9003bbe4b0f753232d1fb4ab9d0d49d7024bdb16f17d5da"
+  },
+  {
+    "path": ".agents/skills/iteration-planning/SKILL.md",
+    "bytes": 1462,
+    "sha256": "fe3c949b8efb82187559609c7daf91633af3e68e7a32960a4932f80d0c92b2a7"
+  },
+  {
+    "path": ".agents/skills/lesson-design/SKILL.md",
+    "bytes": 1766,
+    "sha256": "94201c8105bc25885adf651228725306d09a8b2d8a3a694ed854944eb6b8c1df"
+  },
+  {
+    "path": ".agents/skills/project-handoff/SKILL.md",
+    "bytes": 1700,
+    "sha256": "b4032af3f9ec6d9b4809cfb9c957f274b742f5133977296109201f6bb95e3b57"
+  },
+  {
+    "path": ".agents/skills/threejs-scene/SKILL.md",
+    "bytes": 1515,
+    "sha256": "250872d593a47151dc9f77501fc991e94760ea653c4e8b6a999bc7773edd3158"
+  },
+  {
+    "path": ".agents/skills/visual-explanation/SKILL.md",
+    "bytes": 1548,
+    "sha256": "9e53fe013eeba4c0d2683eae229dffa039b629e415889eba07ead8525cd85698"
+  },
+  {
+    "path": ".claude/agents/architect.md",
+    "bytes": 556,
+    "sha256": "4b5186963fcafbcb784e39e8fd220df0e70d67e29b818a9d154da9075fc0e3d7"
+  },
+  {
+    "path": ".claude/agents/continuity-keeper.md",
+    "bytes": 465,
+    "sha256": "be271f72d4b0e265a6df8d75ea254f71004a4c2e6611ad869304eacfc06ad01b"
+  },
+  {
+    "path": ".claude/agents/frontend-engineer.md",
+    "bytes": 436,
+    "sha256": "68e01f487fccb6b944350d4ec5047b82380d9f65203b71605c616b22dd939560"
+  },
+  {
+    "path": ".claude/agents/pedagogy-designer.md",
+    "bytes": 492,
+    "sha256": "b0fcda0040c125800fcf6571c5e472266794d9afbadd0bf9e2be5083aa8bb3e2"
+  },
+  {
+    "path": ".claude/agents/qa-engineer.md",
+    "bytes": 418,
+    "sha256": "a57a2d16daea83224bebc965d1516eaef161cc783bbf49e22696713d2956c87d"
+  },
+  {
+    "path": ".claude/agents/security-auditor.md",
+    "bytes": 431,
+    "sha256": "bbeeb572b7f44bd6b8d5efa22dd7196303696a1649c3173c7b4c51c77040a02c"
+  },
+  {
+    "path": ".codex/agents/architect.toml",
+    "bytes": 466,
+    "sha256": "0a79e304f39e879c00d6c19a001373209bfe38390e3107df2213f9c51a8b0b43"
+  },
+  {
+    "path": ".codex/agents/continuity_keeper.toml",
+    "bytes": 516,
+    "sha256": "5567931e26888c3c7864f031c5082c2e44c88ce48443895ffa1b2378825719f9"
+  },
+  {
+    "path": ".codex/agents/frontend_engineer.toml",
+    "bytes": 459,
+    "sha256": "64c93b9a4b8cddda00ab82b39940241a8a85edea91e6c801893999d5aa64b104"
+  },
+  {
+    "path": ".codex/agents/pedagogy_designer.toml",
+    "bytes": 581,
+    "sha256": "b761fe535f82988b3b39363a9931d0dda44ca490e69a66a23418521c4320abb7"
+  },
+  {
+    "path": ".codex/agents/qa_engineer.toml",
+    "bytes": 436,
+    "sha256": "06169d628ded4b4daa4621e8e065d1e9921a3592437461175303143a3b69a18c"
+  },
+  {
+    "path": ".codex/agents/security_auditor.toml",
+    "bytes": 435,
+    "sha256": "d46fc6982ce0e2662dd49b96439666b2403f60057d4b7787aa840a786738105c"
+  },
+  {
+    "path": ".gemini/agents/architect.md",
+    "bytes": 404,
+    "sha256": "5ede500fff8d86aba0d0c97ead0cc961c5aa18273b16b5ad05d44143ea6e29ae"
+  },
+  {
+    "path": ".gemini/agents/continuity-keeper.md",
+    "bytes": 355,
+    "sha256": "5a19d50afe21b0ac1ff8af88aec6e9d4d1e0dabfecb129851686c9efe69dab09"
+  },
+  {
+    "path": ".gemini/agents/frontend-engineer.md",
+    "bytes": 405,
+    "sha256": "0eda68a353dcadd37613a443899dd59c0b4f4e1cd2a918b760c7d07a1af44a81"
+  },
+  {
+    "path": ".gemini/agents/pedagogy-designer.md",
+    "bytes": 406,
+    "sha256": "2c2850e24d24cb2132d4eaee2757e120d8e85d9c093d584c9b751bf601162bcf"
+  },
+  {
+    "path": ".gemini/agents/qa-engineer.md",
+    "bytes": 351,
+    "sha256": "40f66ec6c40af3a5d677a9006045d353c784018a420dbadd87ef633066fbe6e3"
+  },
+  {
+    "path": ".gemini/agents/security-auditor.md",
+    "bytes": 373,
+    "sha256": "06d7734f264c73f8f3690543c0bef3cb067c6dfedae179f60a2899725e31df5c"
+  },
+  {
+    "path": ".gemini/settings.json",
+    "bytes": 54,
+    "sha256": "4fb9773d6fd70b0bc397c6bc0b4dbb109c6c1da1117cda2dccbd7796f1055456"
+  },
+  {
+    "path": ".github/workflows/ci.yml",
+    "bytes": 1025,
+    "sha256": "9aa6b40ee8ab5301181b8319d25c8ca069863098018e3498d44731b36d92175d"
+  },
+  {
+    "path": ".gitignore",
+    "bytes": 334,
+    "sha256": "dca6bae578eadfc98522cf442be4c27729bfd7c56cb83105336930331784046a"
+  },
+  {
+    "path": ".prettierignore",
+    "bytes": 87,
+    "sha256": "1c5766a0266a455e4ce639b79ca0e3488f8c2ab3dd875c53e309f01bc35e5006"
+  },
+  {
+    "path": ".prettierrc.json",
+    "bytes": 108,
+    "sha256": "bdcd0722e1db5f22ceba15a5c3c43ed1bf08363c9de7f45bd7d022fc41788695"
+  },
+  {
+    "path": "AGENTS.md",
+    "bytes": 1149,
+    "sha256": "cc5d9499e32cde47582ac260448ca4fe03778d4cfd7df7c5ca966cd519285cdb"
+  },
+  {
+    "path": "apps/web/components.json",
+    "bytes": 436,
+    "sha256": "e804bba7e9768a2850b244b7b2c57e732adcbe8649e6aaf3214a863e2b8e7ab6"
+  },
+  {
+    "path": "apps/web/eslint.config.mjs",
+    "bytes": 194,
+    "sha256": "d092504023e42ddf10a550afc7ca24c8c635e616e2def2a375a86995068ec769"
+  },
+  {
+    "path": "apps/web/next.config.ts",
+    "bytes": 257,
+    "sha256": "33a9ff10f112a35843d37c489fd8b20ed249fb09c3dffbd4263239bd6fb9b955"
+  },
+  {
+    "path": "apps/web/package.json",
+    "bytes": 1036,
+    "sha256": "c71a62dcceea9d0575be4a0f79df9eee83c42c9b6dc64966453b79166fabd427"
+  },
+  {
+    "path": "apps/web/postcss.config.mjs",
+    "bytes": 95,
+    "sha256": "316c0cdb85b16b32476fbaa8f20df8825c6979bf6ada743f9f1c5a66ac096164"
+  },
+  {
+    "path": "apps/web/src/app/globals.css",
+    "bytes": 449,
+    "sha256": "efc9f55c1edbc6029b58a86eca056bafea66d796ea7cb6485489683a5b9c4fc6"
+  },
+  {
+    "path": "apps/web/src/app/layout.tsx",
+    "bytes": 3343,
+    "sha256": "7341f1fce26edac54288d6c0712b3f8850a3ae0e25d9a8e668f18eebbe34c405"
+  },
+  {
+    "path": "apps/web/src/app/lessons/tcp-three-way-handshake/page.tsx",
+    "bytes": 5478,
+    "sha256": "8e650df1bfbf3d5f99eb18abb39748e2dbe1439540e0fbb2d3f945554fcc937a"
+  },
+  {
+    "path": "apps/web/src/app/page.tsx",
+    "bytes": 7442,
+    "sha256": "2468a68b3430495c74d653e07e1bf7bb1f0fdbf51091d8c55d648cf29d03d306"
+  },
+  {
+    "path": "apps/web/src/components/tcp-handshake-simulator.tsx",
+    "bytes": 26130,
+    "sha256": "d80610132b7b05738b335d1eb35fdcdf6d161fc8521f5e9abb35a0ecbff89963"
+  },
+  {
+    "path": "apps/web/src/lib/__tests__/curriculum-data.test.ts",
+    "bytes": 553,
+    "sha256": "642a949300de5e83e57149416292a80c21d12b50399cc9fdc99550fb13134ab3"
+  },
+  {
+    "path": "apps/web/src/lib/curriculum-data.ts",
+    "bytes": 1303,
+    "sha256": "4c10fb2d156e8fc57d3d1e99922af3d9d682515f8079c7e8fec417fdf6f236d6"
+  },
+  {
+    "path": "apps/web/tsconfig.json",
+    "bytes": 463,
+    "sha256": "9310dc75c4c2e78f10e53a28df72c9d425697e8333b847d9987c6eb2da8ec9dc"
+  },
+  {
+    "path": "apps/web/vitest.config.ts",
+    "bytes": 245,
+    "sha256": "d2d6840751333add04f5f5694f83c94ff72c8fd2711613a9e3e895e9d054dfda"
+  },
+  {
+    "path": "CLAUDE.md",
+    "bytes": 1058,
+    "sha256": "fe95138495b9e9ff9693d7a5813fde5cad2949311878885601269a87ea189887"
+  },
+  {
+    "path": "continuity/BLOCKERS.md",
+    "bytes": 610,
+    "sha256": "eef741e49045e840ae6342430cf3138fabbec6ec88591b1d8ea16480889c421e"
+  },
+  {
+    "path": "continuity/CURRENT_STATE.md",
+    "bytes": 1464,
+    "sha256": "91b415c936320d30dd58ee879917edce4bbcda07ef27ec7f6ea0990fc5e3338e"
+  },
+  {
+    "path": "continuity/HANDOFF.md",
+    "bytes": 520,
+    "sha256": "8cc941ed5ee96a1dcedb010fee5e89071883fdb5f4bbc47db28a5ac2c88edeb8"
+  },
+  {
+    "path": "continuity/RESUME_PROTOCOL.md",
+    "bytes": 1771,
+    "sha256": "99460860b6b38ba912de9def6c82ec6b451d8711d4347c0227239eaec1dc74e6"
+  },
+  {
+    "path": "curriculum/networking-foundations.json",
+    "bytes": 5482,
+    "sha256": "b0f4de3fb40f5a9f42eed309b57c09da0a86c8c69a32371e82b2815f1e809b8b"
+  },
+  {
+    "path": "docs/agents/AGENT_GUIDE.md",
+    "bytes": 4930,
+    "sha256": "ba493f209b7c235ad719bfee0230ed3bca1214bd92582e02bd474941b16d6880"
+  },
+  {
+    "path": "docs/agents/ROLES.md",
+    "bytes": 13332,
+    "sha256": "2a77f441d178b201e38f6aa9126b54f60a845e450ad25d526074026ca92ecc92"
+  },
+  {
+    "path": "docs/architecture/OVERVIEW.md",
+    "bytes": 3221,
+    "sha256": "b15ca4fe30b7e4c1effd9d6e6f35290df226951c0d46109c103235cc938bc07e"
+  },
+  {
+    "path": "docs/architecture/PACKAGES_ROADMAP.md",
+    "bytes": 1609,
+    "sha256": "9ee7a3190eb4d11d8e8f892b530fe9033340ea376a8dd1ce08d987b6739c0451"
+  },
+  {
+    "path": "docs/architecture/PEDAGOGICAL_MODEL.md",
+    "bytes": 2035,
+    "sha256": "71a56ce3f3daadcec88ce5e8e72c04e33b854f3befff8acecf5f8857a1e232b7"
+  },
+  {
+    "path": "docs/decisions/ADR-0001-monorepo-pnpm-turborepo.md",
+    "bytes": 1600,
+    "sha256": "480f7990122c5c3499e676eaf5c3e8f196016327fdcd123a15803ae95ea1d6d3"
+  },
+  {
+    "path": "docs/decisions/ADR-0002-nextjs-tailwind-v4-design-system.md",
+    "bytes": 1597,
+    "sha256": "5c1f661555ef12984e170e92fbd62c1ce0f0ad293d8a2d5530b187ca3d0dc63c"
+  },
+  {
+    "path": "docs/decisions/ADR-0003-pedagogical-domain-model-and-lesson-isolation.md",
+    "bytes": 1556,
+    "sha256": "dbb1e4b837ad1e5fb5d07e245176d533f30af64758ad8c1652c67349e5cae3a6"
+  },
+  {
+    "path": "docs/decisions/ADR-0004-cross-agent-continuity-and-skills.md",
+    "bytes": 1680,
+    "sha256": "81a6fdbe59c27c8cbb9561b91614be5be270e2da8d0b2c47d632bef4dda00ad8"
+  },
+  {
+    "path": "docs/requirements/FUNCTIONAL_AND_NON_FUNCTIONAL.md",
+    "bytes": 1862,
+    "sha256": "8ea2a755ca13c234e777d8c9a59406b61ecce207b18fea680e5090bafa2ed5b8"
+  },
+  {
+    "path": "docs/security/AI_ENVIRONMENT_SECURITY.md",
+    "bytes": 2068,
+    "sha256": "0f446aa7ec2e3ca439451ba96fe14ef0cb7796f4f1575b82b6a757ac0a604b97"
+  },
+  {
+    "path": "docs/standards/PEDAGOGICAL_AND_VISUAL_STANDARDS.md",
+    "bytes": 3478,
+    "sha256": "6c36ea6282b2133f62ba7345ddd0e0bc602fb66bcec5c3d0ba6d837ca287370b"
+  },
+  {
+    "path": "docs/vision/VISION.md",
+    "bytes": 1658,
+    "sha256": "67a41a36690d06e1163e50c7d9b80c3633cf788a3b876e3b601d3435a5b5e487"
+  },
+  {
+    "path": "eslint.config.mjs",
+    "bytes": 693,
+    "sha256": "d7621e779aabcd03fb4d9c8880025849662dd7a50a96332ea97eb4f2179f946d"
+  },
+  {
+    "path": "GEMINI.md",
+    "bytes": 1040,
+    "sha256": "eac4a9731be0141c68b633c57b5a6f3cf8b8b2d6e1f0f882d929472a56d82daf"
+  },
+  {
+    "path": "lessons/tcp-three-way-handshake/lesson.json",
+    "bytes": 6431,
+    "sha256": "db52a2d7710b21a380a283328e063aa080ffaa0678e6e0af736c57d61dda4895"
+  },
+  {
+    "path": "package.json",
+    "bytes": 1192,
+    "sha256": "ad04786b489082386ea7990dc5bbe2e15cbb5a689bd19191d16d935ad0ce1a71"
+  },
+  {
+    "path": "packages/animations/eslint.config.mjs",
+    "bytes": 84,
+    "sha256": "69509c37c563ba5eace32f1875a3ecb9c719f87fb5373d7d9831436019e0ea98"
+  },
+  {
+    "path": "packages/animations/package.json",
+    "bytes": 875,
+    "sha256": "31ec214e42feb890d5cd809f63712678ee3ef5709331ea27a614d7a0594cf44e"
+  },
+  {
+    "path": "packages/animations/src/__tests__/animations.test.tsx",
+    "bytes": 756,
+    "sha256": "f6b63097ed0305fd2fa62ad078551c476df80a36b42e9afbc6cadecb6dafcd00"
+  },
+  {
+    "path": "packages/animations/src/gsap-scope.ts",
+    "bytes": 549,
+    "sha256": "f1d3ba7acea33ee1eb40f3d73cff7deb5e8b67ad638d42624807faa805e9c2ab"
+  },
+  {
+    "path": "packages/animations/src/index.ts",
+    "bytes": 224,
+    "sha256": "b4cd0a9f0a85de3574d0aad41b67993bf9830d6061b946f471d332b4c36fa188"
+  },
+  {
+    "path": "packages/animations/src/motion-primitives.tsx",
+    "bytes": 718,
+    "sha256": "b2a929113151e1a126514c4a4a5aeadf9e311106f3545fa43fb0eb3f8fd7a397"
+  },
+  {
+    "path": "packages/animations/src/reduced-motion.ts",
+    "bytes": 814,
+    "sha256": "119fa4235899900513249f773ed4c3d1320463b3ef8db477500d26334e964b84"
+  },
+  {
+    "path": "packages/animations/tsconfig.json",
+    "bytes": 273,
+    "sha256": "4212f90ed83eca05636956f4ae800319c325710cfb9826f5ecfe6fac6c2dcaf2"
+  },
+  {
+    "path": "packages/animations/vitest.config.ts",
+    "bytes": 123,
+    "sha256": "837c8fab2c0a5524322444738cccbdb206e7469d2b700104db091a86f1690d1e"
+  },
+  {
+    "path": "packages/exercises/eslint.config.mjs",
+    "bytes": 84,
+    "sha256": "69509c37c563ba5eace32f1875a3ecb9c719f87fb5373d7d9831436019e0ea98"
+  },
+  {
+    "path": "packages/exercises/package.json",
+    "bytes": 947,
+    "sha256": "df23d3db3becaa20531e8f77fc6b1b55b03d4ec6e5ee15eecdec1c311dd3496e"
+  },
+  {
+    "path": "packages/exercises/src/__tests__/exercises.test.tsx",
+    "bytes": 2909,
+    "sha256": "3c3a964617fabb661c3e9e59e4d948e96ed74c5aa0d0e6c1f31b5f46720c1fbb"
+  },
+  {
+    "path": "packages/exercises/src/exercise-card.tsx",
+    "bytes": 9327,
+    "sha256": "32f9c11f2dbedb9c8732f1f0ce101be7b1cc00fbde0df62966264171f0ae2262"
+  },
+  {
+    "path": "packages/exercises/src/index.ts",
+    "bytes": 76,
+    "sha256": "e84486eed1a289efdc29327434bb668a0285e604f7c508671841cab453c404cb"
+  },
+  {
+    "path": "packages/exercises/tsconfig.json",
+    "bytes": 253,
+    "sha256": "597cf909916fb572d895ec50e98d238d406013bc3cad1c1446c4b9c2a9f2dea2"
+  },
+  {
+    "path": "packages/exercises/vitest.config.ts",
+    "bytes": 123,
+    "sha256": "837c8fab2c0a5524322444738cccbdb206e7469d2b700104db091a86f1690d1e"
+  },
+  {
+    "path": "packages/lesson-runtime/eslint.config.mjs",
+    "bytes": 84,
+    "sha256": "69509c37c563ba5eace32f1875a3ecb9c719f87fb5373d7d9831436019e0ea98"
+  },
+  {
+    "path": "packages/lesson-runtime/package.json",
+    "bytes": 589,
+    "sha256": "62adf45f03b4dba8375418f0a1b6ab1bcd76ab15de4bef3fe4f5fcc9fb068ac5"
+  },
+  {
+    "path": "packages/lesson-runtime/src/__tests__/validator.test.ts",
+    "bytes": 5269,
+    "sha256": "c552d4847c912e383d7d66523e71e920774232ec38385e981c91a736b8f19f6b"
+  },
+  {
+    "path": "packages/lesson-runtime/src/index.ts",
+    "bytes": 63,
+    "sha256": "b06f52f3421a425d3d833d257ff81dbf70eadfc659be5d9cead2ae1dddb81eb2"
+  },
+  {
+    "path": "packages/lesson-runtime/src/schemas.ts",
+    "bytes": 5832,
+    "sha256": "97959f4cf57136836583b50d7a3e46b3889f8348e4de926935a2ef5e8fb47f4f"
+  },
+  {
+    "path": "packages/lesson-runtime/src/validator.ts",
+    "bytes": 5123,
+    "sha256": "201ca0dd50bc805ca534ed1108b136383faeaccd5b130c75e4945c684314e62e"
+  },
+  {
+    "path": "packages/lesson-runtime/tsconfig.json",
+    "bytes": 212,
+    "sha256": "7c4ff1c3828fa5311938f743eba7636909dccf8cd0122c5a2491e4f75b1c2f7b"
+  },
+  {
+    "path": "packages/ui/eslint.config.mjs",
+    "bytes": 84,
+    "sha256": "69509c37c563ba5eace32f1875a3ecb9c719f87fb5373d7d9831436019e0ea98"
+  },
+  {
+    "path": "packages/ui/package.json",
+    "bytes": 1000,
+    "sha256": "0cc8a2de7c954ee2645304e2be2f70d4279ba43a3b5c5a3ca617f97147af2b76"
+  },
+  {
+    "path": "packages/ui/src/__tests__/ui.test.tsx",
+    "bytes": 947,
+    "sha256": "63905463e10094769af97a1db7645cd48153555f336990e83ec7f2047d75bf17"
+  },
+  {
+    "path": "packages/ui/src/components/badge.tsx",
+    "bytes": 1101,
+    "sha256": "9ffaf3d0e7350101bef07d032477173942e15dc4d3531a3741db5ca42692129e"
+  },
+  {
+    "path": "packages/ui/src/components/button.tsx",
+    "bytes": 1682,
+    "sha256": "d6b915f6c34b0bb5ce9f7cc8ec14a728d1d3098397f2be35dedc93fa41e98d57"
+  },
+  {
+    "path": "packages/ui/src/components/card.tsx",
+    "bytes": 1379,
+    "sha256": "cbfa4185a785af06cf2b14af6f3ac121891d8bc9338fe6f110ebc6de6dc65deb"
+  },
+  {
+    "path": "packages/ui/src/components/feedback.tsx",
+    "bytes": 2310,
+    "sha256": "733413d17225c7ff6685304b164f876ca61de6ba6c357b878b2e7a4ff22bd9a4"
+  },
+  {
+    "path": "packages/ui/src/index.ts",
+    "bytes": 476,
+    "sha256": "1f226eb0cbb5cfa0b9f7f53f4b160048a4b4752ef6a09f9697957f08bbcccfdc"
+  },
+  {
+    "path": "packages/ui/src/lib/utils.ts",
+    "bytes": 178,
+    "sha256": "c050546b2aa8551f0bcf180163421271c90bce4d2378799fa05a0e8b24a4e6e9"
+  },
+  {
+    "path": "packages/ui/src/styles/tokens.css",
+    "bytes": 1852,
+    "sha256": "5a98a2e8ecbed27700ed49aa47daca1b40138f8fcbd14e39f13e0431c2608650"
+  },
+  {
+    "path": "packages/ui/tsconfig.json",
+    "bytes": 253,
+    "sha256": "597cf909916fb572d895ec50e98d238d406013bc3cad1c1446c4b9c2a9f2dea2"
+  },
+  {
+    "path": "packages/ui/vitest.config.ts",
+    "bytes": 123,
+    "sha256": "837c8fab2c0a5524322444738cccbdb206e7469d2b700104db091a86f1690d1e"
+  },
+  {
+    "path": "planning/backlog/BACKLOG.md",
+    "bytes": 1764,
+    "sha256": "348bebec15282df586cceb468f7f7517722ab7abf6c6400a4518c5a4a7972138"
+  },
+  {
+    "path": "planning/iterations/ITER-001-foundation.md",
+    "bytes": 889,
+    "sha256": "fae6fbcd539f6a51ad8ef46baa9584e709d2bc96b6a93c28d8c698529a00a875"
+  },
+  {
+    "path": "planning/iterations/ITER-002-curriculum-and-visualizations.md",
+    "bytes": 581,
+    "sha256": "764f25073dc066ec1969438f249ad806feb06940afdf5ec401b9771ab844577d"
+  },
+  {
+    "path": "planning/roadmap.md",
+    "bytes": 1846,
+    "sha256": "af167440c0b674d650e8804e042e585a222681ddad591b7fbc5d680e758d32ce"
+  },
+  {
+    "path": "planning/tasks/TASK-001-monorepo-bootstrap.md",
+    "bytes": 1108,
+    "sha256": "ff20d22e2ee146e48b7d275f9577cc0eb6e40b32e0488d585da7493a7d24138e"
+  },
+  {
+    "path": "planning/tasks/TASK-002-tcp-handshake-demo.md",
+    "bytes": 1122,
+    "sha256": "5d2493bb82a543994e8105c386b846b14c810a80a06873f3ebfcbdbded734d86"
+  },
+  {
+    "path": "planning/tasks/TASK-003-curriculum-graph-viewer.md",
+    "bytes": 972,
+    "sha256": "3dc69eef7cdebf98e3951796ef98a6c0cc9abd13af222de5d78290e7edc0af69"
+  },
+  {
+    "path": "playwright.config.ts",
+    "bytes": 1922,
+    "sha256": "ab1cf224d61ce3cacdc1324dd91fdb416c4fa865625c64d3bb4e48c44402eecd"
+  },
+  {
+    "path": "pnpm-workspace.yaml",
+    "bytes": 41,
+    "sha256": "7b7754bc7d237d1b8593b8cc94f1997ba735a80b0695a6dc6c63ef87749869ed"
+  },
+  {
+    "path": "README.md",
+    "bytes": 2964,
+    "sha256": "7cb57b4ad7be9edb6b5ca4efe2714b13d100d3fcac81f77a44728eff54728c96"
+  },
+  {
+    "path": "resources/sources.json",
+    "bytes": 1460,
+    "sha256": "3d350290f6d04deebc87f2189d211ce8372dcc0f8fa8ca89acb2b70e763289af"
+  },
+  {
+    "path": "tests/e2e/tcp-handshake.spec.ts",
+    "bytes": 4099,
+    "sha256": "6888ede3db60441e9a2e283ceec895d2d45016f7aad5f7e48c7e70ef1451b42e"
+  },
+  {
+    "path": "tests/scripts/validate-curriculum.ts",
+    "bytes": 1511,
+    "sha256": "6a1c4cc9269fdc1b112f3aae654912fbc8e9560efa187de17a72278053d713fa"
+  },
+  {
+    "path": "tsconfig.base.json",
+    "bytes": 581,
+    "sha256": "6baf66b9c1362569f1641f172acd55e634e42443737d0efffba08dbbb9d34448"
+  },
+  {
+    "path": "turbo.json",
+    "bytes": 475,
+    "sha256": "cf771bfb8de1c05fab6a5e39936f05958d104c4a207e0a759f78436dbc4dd928"
+  }
+]

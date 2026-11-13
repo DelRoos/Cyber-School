@@ -1,0 +1,47 @@
+﻿[
+    {
+        "command":  "corepack pnpm install --frozen-lockfile --ignore-scripts",
+        "exitCode":  1,
+        "output":  "Scope: all 6 workspace projects\n ERR_PNPM_NO_LOCKFILE  Cannot install with \"frozen-lockfile\" because pnpm-lock.yaml is absent\n\nNote that in CI environments this setting is true by default. If you still need to run install in such cases, use \"pnpm install --no-frozen-lockfile\""
+    },
+    {
+        "command":  "corepack pnpm typecheck",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 typecheck C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e turbo run typecheck \u0026\u0026 tsc -p tsconfig.checks.json --noEmit\n\n\u0027turbo\u0027 n’est pas reconnu en tant que commande interne\nou externe, un programme exécutable ou un fichier de commandes.\n ELIFECYCLE  Command failed with exit code 1."
+    },
+    {
+        "command":  "corepack pnpm lint",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 lint C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e turbo run lint \u0026\u0026 eslint tests playwright.config.ts eslint.config.mjs\n\n\u0027turbo\u0027 n’est pas reconnu en tant que commande interne\nou externe, un programme exécutable ou un fichier de commandes.\n ELIFECYCLE  Command failed with exit code 1."
+    },
+    {
+        "command":  "corepack pnpm test:unit",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 test:unit C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e turbo run test:unit\n\n\u0027turbo\u0027 n’est pas reconnu en tant que commande interne\nou externe, un programme exécutable ou un fichier de commandes.\n ELIFECYCLE  Command failed with exit code 1."
+    },
+    {
+        "command":  "corepack pnpm build",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 build C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e turbo run build\n\n\u0027turbo\u0027 n’est pas reconnu en tant que commande interne\nou externe, un programme exécutable ou un fichier de commandes.\n ELIFECYCLE  Command failed with exit code 1."
+    },
+    {
+        "command":  "corepack pnpm test:e2e",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 test:e2e C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e playwright test\n\nError: Cannot find module \u0027@playwright/test\u0027\nRequire stack:\n- C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\playwright.config.ts\n- C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js\n- C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\program.js\n- C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\cli.js\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1405:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1061:19)\n    at defaultResolve (node:internal/modules/cjs/loader:1083:31)\n    at nextStep (node:internal/modules/customization_hooks:185:26)\n    at resolve (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js:875:19)\n    at nextStep (node:internal/modules/customization_hooks:185:26)\n    at resolveWithHooks (node:internal/modules/customization_hooks:391:10)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1092:25)\n    at Function._load (node:internal/modules/cjs/loader:1215:37)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1491:12)\n    at require (node:internal/modules/helpers:135:16)\n    at Object.\u003canonymous\u003e (C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\playwright.config.ts:3:1)\n    at Module._compile (node:internal/modules/cjs/loader:1734:14)\n    at Object.\u003canonymous\u003e (node:internal/modules/cjs/loader:1899:10)\n    at Module.load (node:internal/modules/cjs/loader:1469:32)\n    at Function._load (node:internal/modules/cjs/loader:1286:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Module.require (node:internal/modules/cjs/loader:1491:12)\n    at require (node:internal/modules/helpers:135:16)\n    at requireOrImport (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js:1149:18)\n    at loadUserConfig (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js:1334:52)\n    at loadConfig (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js:1341:28)\n    at Object.loadConfigFromFile (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\common\\index.js:1553:10)\n    at runTests (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\cli\\testActions.js:46:18)\n    at _Command.\u003canonymous\u003e (C:\\Users\\Emerite\\AppData\\Roaming\\npm\\node_modules\\playwright\\lib\\program.js:53:7) {\n  code: \u0027MODULE_NOT_FOUND\u0027,\n  requireStack: [\n    \u0027C:\\\\Users\\\\Emerite\\\\Documents\\\\projets\\\\cyber-school\\\\playwright.config.ts\u0027,\n    \u0027C:\\\\Users\\\\Emerite\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\playwright\\\\lib\\\\common\\\\index.js\u0027,\n    \u0027C:\\\\Users\\\\Emerite\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\playwright\\\\lib\\\\program.js\u0027,\n    \u0027C:\\\\Users\\\\Emerite\\\\AppData\\\\Roaming\\\\npm\\\\node_modules\\\\playwright\\\\cli.js\u0027\n  ]\n}\n ELIFECYCLE  Command failed with exit code 1."
+    },
+    {
+        "command":  "corepack pnpm validate:governance",
+        "exitCode":  0,
+        "output":  "\n\u003e cyber-school@0.1.0 validate:governance C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e node --experimental-strip-types tests/scripts/validate-governance.ts\n\n(node:10248) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time\n(Use `node --trace-warnings ...` to show where the warning was created)\nGovernance validation passed: 58 markdown file(s), 9 mirrored skill file(s), 3 task(s).\n(node:10248) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///C:/Users/Emerite/Documents/projets/cyber-school/tests/scripts/validate-governance.ts is not specified and it doesn\u0027t parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to C:\\Users\\Emerite\\Documents\\projets\\cyber-school\\package.json."
+    },
+    {
+        "command":  "corepack pnpm validate:curriculum",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 validate:curriculum C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e turbo run build --filter=@cyber-school/lesson-runtime \u0026\u0026 node --experimental-strip-types tests/scripts/validate-curriculum.ts\n\n\u0027turbo\u0027 n’est pas reconnu en tant que commande interne\nou externe, un programme exécutable ou un fichier de commandes.\n ELIFECYCLE  Command failed with exit code 1."
+    },
+    {
+        "command":  "corepack pnpm format:check",
+        "exitCode":  1,
+        "output":  "\n\u003e cyber-school@0.1.0 format:check C:\\Users\\Emerite\\Documents\\projets\\cyber-school\n\u003e prettier --check .\n\n\u0027prettier\u0027 n’est pas reconnu en tant que commande interne\nou externe, un programme exécutable ou un fichier de commandes.\n ELIFECYCLE  Command failed with exit code 1."
+    }
+]

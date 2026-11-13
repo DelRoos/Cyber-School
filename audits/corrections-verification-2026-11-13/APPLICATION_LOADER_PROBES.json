@@ -1,0 +1,23 @@
+{
+  "method": "Original application loader and source runtime with exact local Zod; import links and virtual two-catalog corpus only in memory; no source/data file changed",
+  "baseline": {
+    "domains": 1,
+    "lessons": 1
+  },
+  "results": [
+    {
+      "case": "two catalogs and two lessons",
+      "domains": 2,
+      "concepts": 5,
+      "lessons": 2,
+      "tcpDemonstratorFound": true,
+      "expected": true,
+      "met": true
+    },
+    {
+      "case": "cyclic data rejected by application loader",
+      "met": true,
+      "message": "Error: Curriculum integrity validation failed: [PREREQUISITE_CYCLE] Prerequisite cycle detected: ip-packet-delivery -> tcp-three-way-handshake -> ip-packet-delivery; [PREREQUISITE_CYCLE] Prerequisite cycle detected: ip-packet-delivery -> tcp-three-way-handshake -> tcp-ports-and-sockets -> ip-packet-delivery"
+    }
+  ]
+}

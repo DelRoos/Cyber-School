@@ -1,0 +1,67 @@
+﻿git.exe : warning: unable to access 'C:\Users\Emerite/.config/git/ignore': Permission denied
+Au caractère Ligne:2 : 38
++ ... og = @(); $auditGitLog += (& git status --short --branch 2>&1); $audi ...
++                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (warning: unable...rmission denied:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+## No commits yet on main
+?? .agents/
+?? .claude/
+?? .codex/
+?? .gemini/
+?? .github/
+?? .gitignore
+?? .prettierignore
+?? .prettierrc.json
+?? AGENTS.md
+?? CLAUDE.md
+?? GEMINI.md
+?? README.md
+?? apps/
+?? audits/
+?? continuity/
+?? curriculum/
+?? docs/
+?? eslint.config.mjs
+?? lessons/
+?? package.json
+?? packages/
+?? planning/
+?? playwright.config.ts
+?? pnpm-workspace.yaml
+?? resources/
+?? tests/
+?? tsconfig.base.json
+?? turbo.json
+git.exe : fatal: your current branch 'main' does not have any commits yet
+Au caractère Ligne:2 : 173
++ ... s-files 2>&1); $auditGitLog += (& git log -n 5 --oneline 2>&1); $audi ...
++                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (fatal: your cur...any commits yet:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+REMOTE NAMES
+v23.9.0
+10.28.0
+codex-cli 0.87.0
+2.1.145 (Claude Code)
+0.64.0
+undo	stable	false
+shell_tool	stable	true
+web_search_request	stable	false
+web_search_cached	experimental	false
+unified_exec	beta	false
+shell_snapshot	beta	false
+child_agents_md	experimental	false
+apply_patch_freeform	experimental	false
+exec_policy	experimental	true
+experimental_windows_sandbox	experimental	false
+elevated_windows_sandbox	experimental	false
+remote_compaction	experimental	true
+remote_models	experimental	false
+powershell_utf8	beta	true
+enable_request_compression	experimental	false
+collab	experimental	false
+tui2	experimental	false
+steer	beta	false

@@ -1,0 +1,18 @@
+﻿
+> cyber-school@0.1.0 validate:governance C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types tests/scripts/validate-governance.ts
+
+corepack.cmd : (node:10248) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+Au caractère Ligne:2 : 604
++ ... ificationOutput = & corepack pnpm @auditVerificationArgs 2>&1; $audit ...
++                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ((node:10248) Ex...nge at any time:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was created)
+Governance validation passed: 58 markdown file(s), 9 mirrored skill file(s), 3 task(s).
+(node:10248) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of 
+file:///C:/Users/Emerite/Documents/projets/cyber-school/tests/scripts/validate-governance.ts is not specified and it 
+doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to C:\Users\Emerite\Documents\projets\cyber-school\package.json.

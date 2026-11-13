@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-11-13T22:45:10.357Z",
+  "activeTaskId": "TASK-008",
+  "sourceDigest": "82a427d0bd3694ccc887a2ebabd92b4d3cfad119c4e7af9abb075b333e0d818b",
+  "gitHead": null,
+  "nextAction": "Résoudre les blocages et échecs du rapport, puis relancer quality:verify ; garder la tâche ouverte.",
+  "validation": {
+    "reference": "continuity/validation/2026-11-13T22-45-10-017Z-6bfcbe93-73a1-46a8-b942-69f072e04b8e/result.json",
+    "status": "failed"
+  },
+  "blockers": [
+    "NODE_UNSUPPORTED",
+    "GIT_BASE_MISSING"
+  ],
+  "documents": {
+    "CURRENT_STATE.md": "a55ca060588e564f27226d68fb5dd480decc9eff53d9779b77a64c5faf3d6680",
+    "HANDOFF.md": "3858c98a7cf11f2b1ffb4273d7f4f6ea572f771d73e06abfd4d9693869ec83e7"
+  }
+}
