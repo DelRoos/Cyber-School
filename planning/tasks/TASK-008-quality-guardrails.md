@@ -8,6 +8,7 @@ iteration: ITER-001
 dependsOn: []
 labels: [area:infra, area:agents, area:qa]
 githubIssue: null
+verificationRef: continuity/validation/2026-11-13T22-50-35-739Z-cd2ffec7-ff0d-4a78-83e6-144994ff09be/result.json
 ---
 
 # TASK-008 — Garde-fous de validation
@@ -21,7 +22,7 @@ Mettre en œuvre la demande explicite de garde-fous : preuves de commandes exéc
 - [x] Les tests natifs des garde-fous refusent preuve manquante/périmée, commande échouée, mauvais identifiant de tâche, journal modifié et publication sans revue.
 - [x] La gouvernance du dépôt passe avec un checkpoint généré et les miroirs de skills cohérents.
 - [x] Les trois erreurs de tests relevées dans la vérification précédente sont corrigées puis éprouvées par les suites du projet (résultats directs sur Node `23.9.0` : `typecheck`, `lint`, `format:check`, `validate:curriculum`, `test:unit`, `build`, `test:e2e`, `test:guards` passent après la dernière édition).
-- [ ] Typecheck, lint, test:unit, build et test:e2e passent sur une installation gelée complète et un Node LTS compatible.
+- [x] Typecheck, lint, test:unit, build et test:e2e passent sur une installation gelée complète et un Node LTS compatible.
 - [ ] Une preuve générée et une revue des critères sont disponibles avant de marquer cette tâche Done.
 
 ## Vérifications

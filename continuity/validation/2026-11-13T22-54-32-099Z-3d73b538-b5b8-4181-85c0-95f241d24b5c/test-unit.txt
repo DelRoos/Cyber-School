@@ -1,0 +1,113 @@
+Command: corepack pnpm test:unit
+Started: 2026-11-13T22:54:45.487Z
+
+
+> cyber-school@0.1.0 test:unit C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run test:unit
+
+
+   • turbo 2.11.11
+   • Packages in scope: @cyber-school/animations, @cyber-school/exercises, @cyber-school/lesson-runtime, @cyber-school/ui, @cyber-school/web
+   • Running test:unit in 5 packages
+   • Remote caching disabled
+
+@cyber-school/lesson-runtime:build: cache hit, replaying logs f74590a17c7be1d3
+@cyber-school/lesson-runtime:build: 
+@cyber-school/lesson-runtime:build: > @cyber-school/lesson-runtime@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:build: > tsc -p tsconfig.json
+@cyber-school/lesson-runtime:build: 
+@cyber-school/ui:build: cache hit, replaying logs 29b65510a3bfaeb5
+@cyber-school/animations:build: cache hit, replaying logs c57be6f0ce7b3202
+@cyber-school/ui:build: 
+@cyber-school/ui:build: > @cyber-school/ui@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:build: > tsc -p tsconfig.json
+@cyber-school/ui:build: 
+@cyber-school/animations:build: 
+@cyber-school/animations:build: > @cyber-school/animations@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:build: > tsc -p tsconfig.json
+@cyber-school/animations:build: 
+@cyber-school/animations:test:unit: cache hit, replaying logs d10d984e78a78d21
+@cyber-school/animations:test:unit: 
+@cyber-school/animations:test:unit: > @cyber-school/animations@0.1.0 test:unit C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:test:unit: > vitest run
+@cyber-school/animations:test:unit: 
+@cyber-school/animations:test:unit: 
+@cyber-school/animations:test:unit: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/Emerite/Documents/projets/cyber-school/packages/animations[39m
+@cyber-school/animations:test:unit: 
+@cyber-school/animations:test:unit:  [32m✓[39m src/__tests__/animations.test.tsx [2m([22m[2m3 tests[22m[2m)[22m[32m 62[2mms[22m[39m
+@cyber-school/animations:test:unit: 
+@cyber-school/animations:test:unit: [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+@cyber-school/animations:test:unit: [2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+@cyber-school/animations:test:unit: [2m   Start at [22m 23:51:59
+@cyber-school/animations:test:unit: [2m   Duration [22m 24.36s[2m (transform 368ms, setup 0ms, collect 9.89s, tests 62ms, environment 12.93s, prepare 649ms)[22m
+@cyber-school/animations:test:unit: 
+@cyber-school/ui:test:unit: cache hit, replaying logs 815a3df81ad02206
+@cyber-school/ui:test:unit: 
+@cyber-school/ui:test:unit: > @cyber-school/ui@0.1.0 test:unit C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:test:unit: > vitest run
+@cyber-school/ui:test:unit: 
+@cyber-school/ui:test:unit: 
+@cyber-school/ui:test:unit: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/Emerite/Documents/projets/cyber-school/packages/ui[39m
+@cyber-school/ui:test:unit: 
+@cyber-school/ui:test:unit:  [32m✓[39m src/__tests__/ui.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[32m 139[2mms[22m[39m
+@cyber-school/ui:test:unit: 
+@cyber-school/ui:test:unit: [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+@cyber-school/ui:test:unit: [2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+@cyber-school/ui:test:unit: [2m   Start at [22m 23:51:59
+@cyber-school/ui:test:unit: [2m   Duration [22m 18.79s[2m (transform 198ms, setup 0ms, collect 4.43s, tests 139ms, environment 12.93s, prepare 285ms)[22m
+@cyber-school/ui:test:unit: 
+@cyber-school/exercises:test:unit: cache hit, replaying logs d530f4298f20057d
+@cyber-school/exercises:test:unit: 
+@cyber-school/exercises:test:unit: > @cyber-school/exercises@0.1.0 test:unit C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:test:unit: > vitest run
+@cyber-school/exercises:test:unit: 
+@cyber-school/exercises:test:unit: 
+@cyber-school/exercises:test:unit: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/Emerite/Documents/projets/cyber-school/packages/exercises[39m
+@cyber-school/exercises:test:unit: 
+@cyber-school/exercises:test:unit:  [32m✓[39m src/__tests__/exercises.test.tsx [2m([22m[2m2 tests[22m[2m)[22m[33m 312[2mms[22m[39m
+@cyber-school/exercises:test:unit: 
+@cyber-school/exercises:test:unit: [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+@cyber-school/exercises:test:unit: [2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+@cyber-school/exercises:test:unit: [2m   Start at [22m 23:51:59
+@cyber-school/exercises:test:unit: [2m   Duration [22m 19.60s[2m (transform 253ms, setup 0ms, collect 4.87s, tests 312ms, environment 12.94s, prepare 670ms)[22m
+@cyber-school/exercises:test:unit: 
+@cyber-school/exercises:build: cache hit, replaying logs 1a89cc964be060aa
+@cyber-school/exercises:build: 
+@cyber-school/exercises:build: > @cyber-school/exercises@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:build: > tsc -p tsconfig.json
+@cyber-school/exercises:build: 
+@cyber-school/lesson-runtime:test:unit: cache hit, replaying logs 158bb9feda486345
+@cyber-school/lesson-runtime:test:unit: 
+@cyber-school/lesson-runtime:test:unit: > @cyber-school/lesson-runtime@0.1.0 test:unit C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:test:unit: > vitest run
+@cyber-school/lesson-runtime:test:unit: 
+@cyber-school/lesson-runtime:test:unit: 
+@cyber-school/lesson-runtime:test:unit: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/Emerite/Documents/projets/cyber-school/packages/lesson-runtime[39m
+@cyber-school/lesson-runtime:test:unit: 
+@cyber-school/lesson-runtime:test:unit:  [32m✓[39m src/__tests__/validator.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+@cyber-school/lesson-runtime:test:unit: 
+@cyber-school/lesson-runtime:test:unit: [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+@cyber-school/lesson-runtime:test:unit: [2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+@cyber-school/lesson-runtime:test:unit: [2m   Start at [22m 23:51:59
+@cyber-school/lesson-runtime:test:unit: [2m   Duration [22m 1.98s[2m (transform 194ms, setup 0ms, collect 390ms, tests 11ms, environment 0ms, prepare 689ms)[22m
+@cyber-school/lesson-runtime:test:unit: 
+@cyber-school/web:test:unit: cache hit, replaying logs d86edb9e5fe28a2f
+@cyber-school/web:test:unit: 
+@cyber-school/web:test:unit: > @cyber-school/web@0.1.0 test:unit C:\Users\Emerite\Documents\projets\cyber-school\apps\web
+@cyber-school/web:test:unit: > vitest run
+@cyber-school/web:test:unit: 
+@cyber-school/web:test:unit: 
+@cyber-school/web:test:unit: [1m[46m RUN [49m[22m [36mv3.2.7 [39m[90mC:/Users/Emerite/Documents/projets/cyber-school/apps/web[39m
+@cyber-school/web:test:unit: 
+@cyber-school/web:test:unit:  [32m✓[39m src/lib/__tests__/curriculum-data.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 89[2mms[22m[39m
+@cyber-school/web:test:unit: 
+@cyber-school/web:test:unit: [2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+@cyber-school/web:test:unit: [2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+@cyber-school/web:test:unit: [2m   Start at [22m 23:52:03
+@cyber-school/web:test:unit: [2m   Duration [22m 1.02s[2m (transform 105ms, setup 0ms, collect 368ms, tests 89ms, environment 0ms, prepare 176ms)[22m
+@cyber-school/web:test:unit: 
+
+ Tasks:    9 successful, 9 total
+Cached:    9 cached, 9 total
+  Time:    80ms >>> FULL TURBO
+

@@ -1,0 +1,63 @@
+Command: corepack pnpm typecheck
+Started: 2026-11-13T22:53:50.886Z
+
+
+> cyber-school@0.1.0 typecheck C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run typecheck && tsc -p tsconfig.checks.json --noEmit
+
+
+   • turbo 2.11.11
+   • Packages in scope: @cyber-school/animations, @cyber-school/exercises, @cyber-school/lesson-runtime, @cyber-school/ui, @cyber-school/web
+   • Running typecheck in 5 packages
+   • Remote caching disabled
+
+@cyber-school/animations:typecheck: cache hit, replaying logs 11ebc4c4e2a185cb
+@cyber-school/animations:typecheck: 
+@cyber-school/animations:typecheck: > @cyber-school/animations@0.1.0 typecheck C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:typecheck: > tsc -p tsconfig.typecheck.json --noEmit
+@cyber-school/animations:typecheck: 
+@cyber-school/ui:typecheck: cache hit, replaying logs e8537d727ed785d8
+@cyber-school/ui:typecheck: 
+@cyber-school/ui:typecheck: > @cyber-school/ui@0.1.0 typecheck C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:typecheck: > tsc -p tsconfig.typecheck.json --noEmit
+@cyber-school/ui:typecheck: 
+@cyber-school/lesson-runtime:typecheck: cache hit, replaying logs 2faa1dd954e15dfd
+@cyber-school/lesson-runtime:typecheck: 
+@cyber-school/lesson-runtime:typecheck: > @cyber-school/lesson-runtime@0.1.0 typecheck C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:typecheck: > tsc -p tsconfig.typecheck.json --noEmit
+@cyber-school/lesson-runtime:typecheck: 
+@cyber-school/lesson-runtime:build: cache hit, replaying logs f74590a17c7be1d3
+@cyber-school/lesson-runtime:build: 
+@cyber-school/lesson-runtime:build: > @cyber-school/lesson-runtime@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:build: > tsc -p tsconfig.json
+@cyber-school/lesson-runtime:build: 
+@cyber-school/ui:build: cache hit, replaying logs 29b65510a3bfaeb5
+@cyber-school/ui:build: 
+@cyber-school/ui:build: > @cyber-school/ui@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:build: > tsc -p tsconfig.json
+@cyber-school/ui:build: 
+@cyber-school/animations:build: cache hit, replaying logs c57be6f0ce7b3202
+@cyber-school/animations:build: 
+@cyber-school/animations:build: > @cyber-school/animations@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:build: > tsc -p tsconfig.json
+@cyber-school/animations:build: 
+@cyber-school/exercises:typecheck: cache hit, replaying logs 62961aabccd5bc36
+@cyber-school/exercises:typecheck: 
+@cyber-school/exercises:typecheck: > @cyber-school/exercises@0.1.0 typecheck C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:typecheck: > tsc -p tsconfig.typecheck.json --noEmit
+@cyber-school/exercises:typecheck: 
+@cyber-school/exercises:build: cache hit, replaying logs 1a89cc964be060aa
+@cyber-school/exercises:build: 
+@cyber-school/exercises:build: > @cyber-school/exercises@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:build: > tsc -p tsconfig.json
+@cyber-school/exercises:build: 
+@cyber-school/web:typecheck: cache hit, replaying logs cf297294b1ab259d
+@cyber-school/web:typecheck: 
+@cyber-school/web:typecheck: > @cyber-school/web@0.1.0 typecheck C:\Users\Emerite\Documents\projets\cyber-school\apps\web
+@cyber-school/web:typecheck: > tsc --noEmit
+@cyber-school/web:typecheck: 
+
+ Tasks:    9 successful, 9 total
+Cached:    9 cached, 9 total
+  Time:    84ms >>> FULL TURBO
+

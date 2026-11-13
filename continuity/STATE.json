@@ -1,20 +1,17 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T22:45:10.357Z",
+  "updatedAt": "2026-11-13T22:56:08.275Z",
   "activeTaskId": "TASK-008",
   "sourceDigest": "82a427d0bd3694ccc887a2ebabd92b4d3cfad119c4e7af9abb075b333e0d818b",
-  "gitHead": null,
-  "nextAction": "Résoudre les blocages et échecs du rapport, puis relancer quality:verify ; garder la tâche ouverte.",
+  "gitHead": "f77c09641838d49b8e66caf7fc2a30c0f8e11a56",
+  "nextAction": "Revoir les critères et la preuve de TASK-008 pour clôture, puis effectuer la revue scientifique humaine (BLK-005) et enchaîner sur TASK-003 (ITER-002).",
   "validation": {
-    "reference": "continuity/validation/2026-11-13T22-45-10-017Z-6bfcbe93-73a1-46a8-b942-69f072e04b8e/result.json",
-    "status": "failed"
+    "reference": "continuity/validation/2026-11-13T22-50-35-739Z-cd2ffec7-ff0d-4a78-83e6-144994ff09be/result.json",
+    "status": "passed"
   },
-  "blockers": [
-    "NODE_UNSUPPORTED",
-    "GIT_BASE_MISSING"
-  ],
+  "blockers": [],
   "documents": {
-    "CURRENT_STATE.md": "a55ca060588e564f27226d68fb5dd480decc9eff53d9779b77a64c5faf3d6680",
-    "HANDOFF.md": "3858c98a7cf11f2b1ffb4273d7f4f6ea572f771d73e06abfd4d9693869ec83e7"
+    "CURRENT_STATE.md": "5bd63425907f1daedb25517dae08fb94ceb4b9b01f1d87a91b928c94cc28c9f4",
+    "HANDOFF.md": "6208ec27613b98059dec05a6bc824f677f4c33158eb656f6b1333fc800ee3afa"
   }
 }

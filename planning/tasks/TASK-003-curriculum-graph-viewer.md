@@ -1,7 +1,7 @@
 ---
 id: TASK-003
 title: Activer packages/visualizations (XYFlow) pour explorer graphiquement le graphe de concepts atomiques
-status: Blocked
+status: Ready
 priority: P1
 complexity: M
 iteration: ITER-002

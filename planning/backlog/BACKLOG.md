@@ -4,9 +4,9 @@
 
 | ID         | Titre                                                                                                  | Itération  | Priorité | Complexité | Dépendances | Labels                                    | Statut        |
 | ---------- | ------------------------------------------------------------------------------------------------------ | ---------- | -------- | ---------- | ----------- | ----------------------------------------- | ------------- |
-| `TASK-001` | Initialiser le monorepo, la gouvernance agents, les ADR, les skills et les packages socle              | `ITER-001` | `P0`     | `L`        | —           | `area:infra`, `area:agents`, `type:setup` | `In Progress` |
-| `TASK-002` | Implémenter le démonstrateur interactif TCP Three-Way Handshake et les tests Playwright                | `ITER-001` | `P0`     | `L`        | `TASK-001`  | `area:web`, `area:lesson`, `area:qa`      | `In Progress` |
-| `TASK-003` | Activer `packages/visualizations` (XYFlow) pour explorer graphiquement le graphe de concepts atomiques | `ITER-002` | `P1`     | `M`        | `TASK-002`  | `area:visualizations`, `area:curriculum`  | `Blocked`     |
+| `TASK-001` | Initialiser le monorepo, la gouvernance agents, les ADR, les skills et les packages socle              | `ITER-001` | `P0`     | `L`        | —           | `area:infra`, `area:agents`, `type:setup` | `Done`        |
+| `TASK-002` | Implémenter le démonstrateur interactif TCP Three-Way Handshake et les tests Playwright                | `ITER-001` | `P0`     | `L`        | `TASK-001`  | `area:web`, `area:lesson`, `area:qa`      | `Done`        |
+| `TASK-003` | Activer `packages/visualizations` (XYFlow) pour explorer graphiquement le graphe de concepts atomiques | `ITER-002` | `P1`     | `M`        | `TASK-002`  | `area:visualizations`, `area:curriculum`  | `Ready`       |
 | `TASK-004` | Développer la leçon complète `tcp-sliding-window-and-congestion` (D3 + simulation interactive)         | `ITER-002` | `P1`     | `L`        | `TASK-003`  | `area:lesson`, `area:visualizations`      | `Backlog`     |
 | `TASK-005` | Ajouter les évaluations cumulatives multi-concepts et la persistance locale de progression apprenant   | `ITER-002` | `P1`     | `M`        | `TASK-002`  | `area:exercises`, `area:web`              | `Backlog`     |
 | `TASK-006` | Activer `packages/3d-scenes` (Three.js + R3F v9) avec harnais de budget performance et fallback WebGL  | `ITER-003` | `P2`     | `L`        | `TASK-003`  | `area:3d`, `area:architecture`            | `Backlog`     |
