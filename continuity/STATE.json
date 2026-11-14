@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-13T23:24:57.780Z",
-  "activeTaskId": "TASK-008",
-  "sourceDigest": "e6df001b8addbc5e95b7acd82d87dcd17284bdd0a7b0970ae73eda595df80544",
-  "gitHead": "1fdf5aeb331636bbcc186c81b584a949b0c8f75d",
-  "nextAction": "Conception complete du cours program-memory-fundamentals validee (docs/courses/program-memory-fundamentals/, curriculum/program-memory-foundations.json, resources/sources.json, ADR-0006 Proposed). Relais Claude Code : demarrer en parallele TASK-009 (Ready) et TASK-013 (Ready), puis TASK-010..012 et assemblage final TASK-014.",
+  "updatedAt": "2026-11-14T00:08:37.317Z",
+  "activeTaskId": "TASK-014",
+  "sourceDigest": "eddf273b5ee1bc8a912c29b1892140d5871b93d7136496c14a86be1ceaef4101",
+  "gitHead": "5b637f49a3378dbf9d3b2ebb547ed9e0b4e87793",
+  "nextAction": "Cours de référence program-memory-fundamentals implémenté et validé (status: in-review). En attente de revue scientifique humaine avant passage à published, ou démarrage de TASK-003 (Ready).",
   "validation": {
-    "reference": "continuity/validation/2026-11-13T23-23-48-154Z-36409115-ea98-4c8a-ba14-aa74f88fcbe3/result.json",
+    "reference": "continuity/validation/2026-11-14T00-07-49-251Z-6d8667cf-2cd8-427d-9545-015b4bfd4a60/result.json",
     "status": "passed"
   },
   "blockers": [],
   "documents": {
-    "CURRENT_STATE.md": "dd23540010226d52b975b07a608f0efcff4cd5b3cfd5c64138b3e882926d92a1",
-    "HANDOFF.md": "2a229bf15495c3de2a5c57456eda7ef6fd6fa8eac9f7893fd4637fec79b49ad7"
+    "CURRENT_STATE.md": "749a35bd0511f19dc7dc065fac2c45ff72accac78f5916b80dbdbcb053ebb8f2",
+    "HANDOFF.md": "69582fd32f7690d984c3ba4a68ad7b32af7d1a79e12e04c7234033d67bba3d57"
   }
 }

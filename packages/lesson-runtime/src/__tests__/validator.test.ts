@@ -259,4 +259,80 @@ describe("validateCurriculumIntegrity & strict Zod schemas", () => {
     expect(codes.has("MISSING_ASSESSMENT_CONCEPT")).toBe(true);
     expect(codes.has("MISSING_ASSESSMENT_EXERCISE")).toBe(true);
   });
+
+  it("validates diagram-probe exercises and rejects invalid targets", () => {
+    const validProbe = LessonManifestSchema.safeParse({
+      version: "1.0",
+      contentRevision: "1.0.0",
+      id: "lesson-probe-test",
+      slug: "lesson-probe-test",
+      title: "Test diagram probe",
+      conceptId: "tcp-three-way-handshake",
+      estimatedMinutes: 5,
+      medium: "2d-animated",
+      mediumJustification: "Schéma 2D interactif adapté aux sondes de zones.",
+      status: "draft",
+      steps: [
+        {
+          id: "step-1",
+          title: "Observation",
+          summary: "Identifier la zone exacte sur le diagramme.",
+          visualFocus: "diagram",
+        },
+      ],
+      exercises: [
+        {
+          kind: "diagram-probe",
+          id: "ex-probe-1",
+          conceptId: "tcp-three-way-handshake",
+          prompt: "Sélectionnez les deux zones représentant les états d'attente.",
+          diagramTitle: "Carte d'états",
+          diagramCaption: "Cliquez sur les zones correspondantes dans le schéma.",
+          allowMultiple: true,
+          explanation: "Les deux extrémités passent en état d'attente pendant l'échange.",
+          zones: [
+            { id: "z1", label: "SYN_SENT", region: "Client", feedback: "Zone valide côté client." },
+            {
+              id: "z2",
+              label: "CLOSED",
+              region: "Client",
+              feedback: "État initial avant connect().",
+            },
+            {
+              id: "z3",
+              label: "SYN_RCVD",
+              region: "Serveur",
+              feedback: "Zone valide côté serveur.",
+            },
+          ],
+          correctZoneIds: ["z1", "z3"],
+        },
+      ],
+      externalLabs: [],
+      resourceIds: ["rfc-9293"],
+    });
+    expect(validProbe.success).toBe(true);
+
+    const badProbe = LessonManifestSchema.safeParse({
+      ...(validProbe.success ? validProbe.data : {}),
+      exercises: [
+        {
+          kind: "diagram-probe",
+          id: "ex-probe-bad",
+          conceptId: "tcp-three-way-handshake",
+          prompt: "Sélectionnez une zone cible.",
+          diagramTitle: "Carte",
+          diagramCaption: "Test de cible unique invalide.",
+          allowMultiple: false,
+          explanation: "Explication suffisamment longue pour passer la longueur minimale.",
+          zones: [
+            { id: "z1", label: "Zone 1", region: "A", feedback: "Feedback valide 1." },
+            { id: "z2", label: "Zone 2", region: "B", feedback: "Feedback valide 2." },
+          ],
+          correctZoneIds: ["z1", "z2"],
+        },
+      ],
+    });
+    expect(badProbe.success).toBe(false);
+  });
 });

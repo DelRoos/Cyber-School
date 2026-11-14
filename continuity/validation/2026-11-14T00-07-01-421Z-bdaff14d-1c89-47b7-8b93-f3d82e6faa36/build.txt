@@ -1,0 +1,72 @@
+Command: corepack pnpm build
+Started: 2026-11-14T00:07:18.374Z
+
+
+> cyber-school@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types scripts/quality/preflight.ts && node --experimental-strip-types tests/scripts/validate-governance.ts && turbo run build
+
+Environment verified: supported Node, pinned package manager, lockfile, Git base and local tools.
+Governance validation passed: 77 markdown file(s), 9 mirrored skill file(s), 10 task(s).
+
+   • turbo 2.11.11
+   • Packages in scope: @cyber-school/animations, @cyber-school/exercises, @cyber-school/lesson-runtime, @cyber-school/ui, @cyber-school/web
+   • Running build in 5 packages
+   • Remote caching disabled
+
+@cyber-school/animations:build: cache hit, replaying logs 84f5e902d0c2058b
+@cyber-school/animations:build: 
+@cyber-school/animations:build: > @cyber-school/animations@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:build: > tsc -p tsconfig.json
+@cyber-school/animations:build: 
+@cyber-school/ui:build: cache hit, replaying logs b786e516780bce12
+@cyber-school/ui:build: 
+@cyber-school/ui:build: > @cyber-school/ui@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:build: > tsc -p tsconfig.json
+@cyber-school/ui:build: 
+@cyber-school/lesson-runtime:build: cache hit, replaying logs 5dbb2650389be574
+@cyber-school/lesson-runtime:build: 
+@cyber-school/lesson-runtime:build: > @cyber-school/lesson-runtime@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:build: > tsc -p tsconfig.json
+@cyber-school/lesson-runtime:build: 
+@cyber-school/exercises:build: cache hit, replaying logs 321fe2c35eb07500
+@cyber-school/exercises:build: 
+@cyber-school/exercises:build: > @cyber-school/exercises@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:build: > tsc -p tsconfig.json
+@cyber-school/exercises:build: 
+@cyber-school/web:build: cache hit, replaying logs 1b7ded7bfa575420
+@cyber-school/web:build: 
+@cyber-school/web:build: > @cyber-school/web@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\apps\web
+@cyber-school/web:build: > next build
+@cyber-school/web:build: 
+@cyber-school/web:build: ▲ Next.js 16.4.6 (Turbopack)
+@cyber-school/web:build: ✓ Running next.config.ts took 60ms
+@cyber-school/web:build: 
+@cyber-school/web:build:   Creating an optimized production build ...
+@cyber-school/web:build: ✓ Compiled successfully in 2.4s
+@cyber-school/web:build:   Running TypeScript ...
+@cyber-school/web:build:   Finished TypeScript in 4.3s ...
+@cyber-school/web:build:   Collecting page data using 3 workers ...
+@cyber-school/web:build:   Generating static pages using 3 workers (0/6) ...
+@cyber-school/web:build:   Generating static pages using 3 workers (1/6) 
+@cyber-school/web:build:   Generating static pages using 3 workers (2/6) 
+@cyber-school/web:build:   Generating static pages using 3 workers (4/6) 
+@cyber-school/web:build: ✓ Generating static pages using 3 workers (6/6) in 792ms
+@cyber-school/web:build:   Finalizing page optimization ...
+@cyber-school/web:build: 
+@cyber-school/web:build: Route (app)
+@cyber-school/web:build: ┌ ○ /
+@cyber-school/web:build: ├ ○ /_not-found
+@cyber-school/web:build: ├ ○ /icon.svg
+@cyber-school/web:build: └   /lessons/[slug]
+@cyber-school/web:build:   ├ ● /lessons/program-memory-fundamentals
+@cyber-school/web:build:   └ ● /lessons/tcp-three-way-handshake
+@cyber-school/web:build: 
+@cyber-school/web:build: 
+@cyber-school/web:build: ○  (Static)  prerendered as static content
+@cyber-school/web:build: ●  (SSG)     prerendered as static HTML (uses generateStaticParams)
+@cyber-school/web:build: 
+
+ Tasks:    5 successful, 5 total
+Cached:    5 cached, 5 total
+  Time:    117ms >>> FULL TURBO
+

@@ -220,10 +220,71 @@ export const SequenceOrderExerciseSchema = z
     }
   });
 
+export const DiagramProbeZoneSchema = z
+  .object({
+    id: z.string().min(1),
+    label: z.string().min(1),
+    region: z.string().min(1),
+    detail: z.string().min(1).optional(),
+    feedback: z.string().min(10),
+  })
+  .strict();
+
+export const DiagramProbeExerciseSchema = z
+  .object({
+    ...BaseExerciseShape,
+    kind: z.literal("diagram-probe"),
+    diagramTitle: z.string().min(3),
+    diagramCaption: z.string().min(10),
+    allowMultiple: z.boolean().optional(),
+    zones: z.array(DiagramProbeZoneSchema).min(2),
+    correctZoneIds: z.array(z.string().min(1)).min(1),
+  })
+  .strict()
+  .superRefine((data, ctx) => {
+    const zoneIds = new Set<string>();
+    for (const zone of data.zones) {
+      if (zoneIds.has(zone.id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Duplicate diagram probe zone id "${zone.id}"`,
+          path: ["zones"],
+        });
+      }
+      zoneIds.add(zone.id);
+    }
+    const seenCorrect = new Set<string>();
+    for (const targetId of data.correctZoneIds) {
+      if (!zoneIds.has(targetId)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `correctZoneIds entry "${targetId}" does not match any zone id`,
+          path: ["correctZoneIds"],
+        });
+      }
+      if (seenCorrect.has(targetId)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Duplicate correctZoneIds entry "${targetId}"`,
+          path: ["correctZoneIds"],
+        });
+      }
+      seenCorrect.add(targetId);
+    }
+    if (!data.allowMultiple && data.correctZoneIds.length !== 1) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Single-select diagram-probe exercises must have exactly 1 correctZoneId",
+        path: ["correctZoneIds"],
+      });
+    }
+  });
+
 export const ExerciseDefinitionSchema = z.discriminatedUnion("kind", [
   MultipleChoiceExerciseSchema,
   SequenceOrderExerciseSchema,
   StatePredictionExerciseSchema,
+  DiagramProbeExerciseSchema,
 ]);
 
 export const AssessmentBlueprintSchema = z
@@ -306,6 +367,8 @@ export type Module = z.infer<typeof ModuleSchema>;
 export type Domain = z.infer<typeof DomainSchema>;
 export type CurriculumCatalog = z.infer<typeof CurriculumCatalogSchema>;
 export type ExternalLabLink = z.infer<typeof ExternalLabLinkSchema>;
+export type DiagramProbeZone = z.infer<typeof DiagramProbeZoneSchema>;
+export type DiagramProbeExercise = z.infer<typeof DiagramProbeExerciseSchema>;
 export type ExerciseDefinition = z.infer<typeof ExerciseDefinitionSchema>;
 export type AssessmentBlueprint = z.infer<typeof AssessmentBlueprintSchema>;
 export type LessonStep = z.infer<typeof LessonStepSchema>;

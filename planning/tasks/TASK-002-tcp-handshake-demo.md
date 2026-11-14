@@ -8,7 +8,7 @@ iteration: ITER-001
 dependsOn: [TASK-001]
 labels: [area:web, area:lesson, area:qa]
 githubIssue: null
-verificationRef: continuity/validation/2026-11-13T23-22-27-777Z-32d83332-93f1-493c-9499-2f64f2f1915e/result.json
+verificationRef: continuity/validation/2026-11-14T00-03-07-255Z-80e89ca7-cefa-4b5e-b67d-21a20837455b/result.json
 ---
 
 # TASK-002 — Démonstrateur interactif TCP Three-Way Handshake

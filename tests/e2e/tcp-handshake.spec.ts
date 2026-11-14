@@ -11,7 +11,10 @@ const lesson = LessonManifestSchema.parse(
   ),
 );
 const firstExercise = lesson.exercises.find((exercise) => exercise.id === "ex-tcp-ack-number");
-if (!firstExercise || firstExercise.kind === "sequence-order")
+if (
+  !firstExercise ||
+  (firstExercise.kind !== "multiple-choice" && firstExercise.kind !== "state-prediction")
+)
   throw new Error("Expected the ACK prediction fixture.");
 const wrongOption = firstExercise.options.find(
   (option) => option.id !== firstExercise.correctOptionId,

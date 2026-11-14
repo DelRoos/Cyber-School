@@ -8,7 +8,7 @@ iteration: ITER-001
 dependsOn: []
 labels: [area:infra, area:agents, type:setup]
 githubIssue: null
-verificationRef: continuity/validation/2026-11-13T23-21-05-812Z-9b63efba-5dfb-401f-a192-b1652a5e0f6b/result.json
+verificationRef: continuity/validation/2026-11-14T00-01-57-666Z-4d806efe-8df1-4cae-8f7a-2789e6d2c152/result.json
 ---
 
 # TASK-001 — Initialisation du monorepo et du socle AI-First

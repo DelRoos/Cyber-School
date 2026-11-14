@@ -1,0 +1,20 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-14T00:07:19.805Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+
+Running 8 tests using 2 workers
+
+  ok 1 [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (6.3s)
+  ok 3 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (1.1s)
+  ok 4 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (905ms)
+  ok 2 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (9.8s)
+  ok 5 [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (2.7s)
+  ok 7 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (1.3s)
+  ok 8 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (2.0s)
+  ok 6 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (7.7s)
+
+  8 passed (25.3s)

@@ -25,18 +25,38 @@ export default function HomePage() {
             l&apos;observation des cas limites et à des exercices de raisonnement vérifiés.
           </p>
           {featuredLesson ? (
-            <div className="flex flex-wrap items-center gap-3 pt-1">
-              <Link
-                href={`/lessons/${featuredLesson.slug}`}
-                className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                Lancer le démonstrateur : {featuredLesson.title}
-                <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </Link>
-              <span className="text-xs font-mono text-muted-foreground">
-                Durée estimée : {featuredLesson.estimatedMinutes} min · Médium :{" "}
-                {featuredLesson.medium}
-              </span>
+            <div className="space-y-3 pt-1">
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  href={`/lessons/${featuredLesson.slug}`}
+                  className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Lancer le démonstrateur : {featuredLesson.title}
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+                <span className="text-xs font-mono text-muted-foreground">
+                  Durée estimée : {featuredLesson.estimatedMinutes} min · Médium :{" "}
+                  {featuredLesson.medium}
+                </span>
+              </div>
+              {lessons
+                .filter((lesson) => lesson.slug !== featuredLesson.slug)
+                .map((lesson) => (
+                  <div key={lesson.id} className="flex flex-wrap items-center gap-3">
+                    <Link
+                      href={`/lessons/${lesson.slug}`}
+                      data-testid={`home-lesson-link-${lesson.slug}`}
+                      className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-primary/40 bg-background px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      Ouvrir le cours complet : {lesson.title}
+                      <ArrowRight className="h-4 w-4 text-primary" aria-hidden="true" />
+                    </Link>
+                    <span className="text-xs font-mono text-muted-foreground">
+                      Durée estimée : {lesson.estimatedMinutes} min · {lesson.exercises.length}{" "}
+                      exercices · {lesson.assessments?.length ?? 0} paliers
+                    </span>
+                  </div>
+                ))}
             </div>
           ) : null}
         </div>
@@ -135,7 +155,12 @@ export default function HomePage() {
                         <ul className="space-y-1.5 text-xs text-muted-foreground">
                           {chapter.conceptIds.map((conceptId) => {
                             const concept = curriculum.concepts.find((c) => c.id === conceptId);
-                            const matchedLesson = lessons.find((l) => l.conceptId === conceptId);
+                            const matchedLesson = lessons.find(
+                              (l) =>
+                                l.conceptId === conceptId ||
+                                l.exercises.some((ex) => ex.conceptId === conceptId) ||
+                                l.assessments?.some((a) => a.conceptIds.includes(conceptId)),
+                            );
                             return (
                               <li
                                 key={conceptId}

@@ -2,16 +2,16 @@
 
 Checkpoint généré par quality:checkpoint ; ne pas modifier ce fichier à la main.
 
-- Mise à jour UTC : 2026-11-13T23:24:57.780Z
-- Tâche active : TASK-008 (In Progress)
-- Base Git : 1fdf5aeb331636bbcc186c81b584a949b0c8f75d
-- Empreinte du code/contenu/configuration : e6df001b8addbc5e95b7acd82d87dcd17284bdd0a7b0970ae73eda595df80544
-- Fichiers contrôlés : 146
-- Dernière validation : passed — [rapport](validation/2026-11-13T23-23-48-154Z-36409115-ea98-4c8a-ba14-aa74f88fcbe3/result.json)
+- Mise à jour UTC : 2026-11-14T00:08:37.317Z
+- Tâche active : TASK-014 (Done)
+- Base Git : 5b637f49a3378dbf9d3b2ebb547ed9e0b4e87793
+- Empreinte du code/contenu/configuration : eddf273b5ee1bc8a912c29b1892140d5871b93d7136496c14a86be1ceaef4101
+- Fichiers contrôlés : 161
+- Dernière validation : passed — [rapport](validation/2026-11-14T00-07-49-251Z-6d8667cf-2cd8-427d-9545-015b4bfd4a60/result.json)
 
 ## Prochaine action
 
-Conception complete du cours program-memory-fundamentals validee (docs/courses/program-memory-fundamentals/, curriculum/program-memory-foundations.json, resources/sources.json, ADR-0006 Proposed). Relais Claude Code : demarrer en parallele TASK-009 (Ready) et TASK-013 (Ready), puis TASK-010..012 et assemblage final TASK-014.
+Cours de référence program-memory-fundamentals implémenté et validé (status: in-review). En attente de revue scientifique humaine avant passage à published, ou démarrage de TASK-003 (Ready).
 
 ## Blocages observés automatiquement
 

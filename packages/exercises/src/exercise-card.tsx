@@ -25,6 +25,7 @@ export interface ExerciseCardProps {
 
 export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
+  const [selectedZoneIds, setSelectedZoneIds] = React.useState<string[]>([]);
   const [orderIds, setOrderIds] = React.useState<string[]>(() =>
     exercise.kind === "sequence-order" ? exercise.items.map((item) => item.id) : [],
   );
@@ -33,35 +34,50 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
 
   const isChoiceExercise =
     exercise.kind === "multiple-choice" || exercise.kind === "state-prediction";
+  const isDiagramProbe = exercise.kind === "diagram-probe";
 
-  const isCorrect = React.useMemo(() => {
-    if (!submitted) return false;
+  const evaluateCorrectness = React.useCallback((): boolean => {
     if (isChoiceExercise) {
       return selectedId === exercise.correctOptionId;
     }
-    return (
-      orderIds.length === exercise.expectedOrder.length &&
-      orderIds.every((id, idx) => id === exercise.expectedOrder[idx])
-    );
-  }, [exercise, isChoiceExercise, orderIds, selectedId, submitted]);
+    if (isDiagramProbe) {
+      if (selectedZoneIds.length !== exercise.correctZoneIds.length) return false;
+      const picked = new Set(selectedZoneIds);
+      return exercise.correctZoneIds.every((id) => picked.has(id));
+    }
+    if (exercise.kind === "sequence-order") {
+      return (
+        orderIds.length === exercise.expectedOrder.length &&
+        orderIds.every((id, idx) => id === exercise.expectedOrder[idx])
+      );
+    }
+    return false;
+  }, [exercise, isChoiceExercise, isDiagramProbe, orderIds, selectedId, selectedZoneIds]);
+
+  const isCorrect = React.useMemo(() => {
+    if (!submitted) return false;
+    return evaluateCorrectness();
+  }, [evaluateCorrectness, submitted]);
 
   const selectedOption = isChoiceExercise
     ? exercise.options.find((opt) => opt.id === selectedId)
     : undefined;
 
+  const selectedZones = isDiagramProbe
+    ? exercise.zones.filter((zone) => selectedZoneIds.includes(zone.id))
+    : [];
+
   function handleSubmit() {
     if (isChoiceExercise && !selectedId) return;
+    if (isDiagramProbe && selectedZoneIds.length === 0) return;
     setSubmitted(true);
-    const nextCorrect = isChoiceExercise
-      ? selectedId === exercise.correctOptionId
-      : orderIds.length === exercise.expectedOrder.length &&
-        orderIds.every((id, idx) => id === exercise.expectedOrder[idx]);
-    onResult?.(exercise.id, nextCorrect);
+    onResult?.(exercise.id, evaluateCorrectness());
   }
 
   function handleReset() {
     setSubmitted(false);
     setSelectedId(null);
+    setSelectedZoneIds([]);
     if (exercise.kind === "sequence-order") {
       setOrderIds(exercise.items.map((item) => item.id));
     }
@@ -70,6 +86,20 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
 
   function handleSelectOption(optionId: string) {
     setSelectedId(optionId);
+    if (submitted) {
+      setSubmitted(false);
+      onResult?.(exercise.id, null);
+    }
+  }
+
+  function handleToggleZone(zoneId: string) {
+    if (!isDiagramProbe) return;
+    setSelectedZoneIds((prev) => {
+      if (!exercise.allowMultiple) {
+        return [zoneId];
+      }
+      return prev.includes(zoneId) ? prev.filter((id) => id !== zoneId) : [...prev, zoneId];
+    });
     if (submitted) {
       setSubmitted(false);
       onResult?.(exercise.id, null);
@@ -97,10 +127,12 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
       ? "Prédiction d'état"
       : exercise.kind === "sequence-order"
         ? "Ordonnancement"
-        : "Compréhension";
+        : exercise.kind === "diagram-probe"
+          ? "Inspection de schéma"
+          : "Compréhension";
 
   return (
-    <Card data-testid={`exercise-card-${exercise.id}`}>
+    <Card id={`exercise-${exercise.id}`} data-testid={`exercise-card-${exercise.id}`}>
       <CardHeader>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge variant="default">
@@ -123,6 +155,12 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
         {exercise.kind === "state-prediction" ? (
           <CardDescription className="rounded-lg border border-border bg-secondary/40 p-3 font-mono text-xs text-foreground">
             {exercise.scenario}
+          </CardDescription>
+        ) : null}
+        {isDiagramProbe ? (
+          <CardDescription className="rounded-lg border border-border bg-secondary/40 p-3 text-xs text-foreground">
+            <span className="font-semibold">{exercise.diagramTitle}</span> —{" "}
+            {exercise.diagramCaption}
           </CardDescription>
         ) : null}
       </CardHeader>
@@ -179,6 +217,53 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
               );
             })}
           </fieldset>
+        ) : isDiagramProbe ? (
+          <fieldset className="space-y-2">
+            <legend className="sr-only">{exercise.diagramTitle}</legend>
+            <div className="grid gap-2 sm:grid-cols-2">
+              {exercise.zones.map((zone) => {
+                const isSelected = selectedZoneIds.includes(zone.id);
+                const isZoneCorrect = submitted && exercise.correctZoneIds.includes(zone.id);
+                const isZoneWrong =
+                  submitted && isSelected && !exercise.correctZoneIds.includes(zone.id);
+
+                return (
+                  <label
+                    key={zone.id}
+                    className={cn(
+                      "relative flex min-h-11 cursor-pointer flex-col gap-1 rounded-lg border px-3.5 py-3 text-left text-sm transition-colors motion-reduce:transition-none has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring",
+                      isSelected
+                        ? "border-primary bg-primary/10 text-foreground"
+                        : "border-border bg-secondary/30 text-secondary-foreground hover:bg-secondary/70",
+                      isZoneCorrect && "border-emerald-500/70 bg-emerald-500/10",
+                      isZoneWrong && "border-rose-500/70 bg-rose-500/10",
+                    )}
+                  >
+                    <input
+                      type={exercise.allowMultiple ? "checkbox" : "radio"}
+                      name={`probe-${exercise.id}`}
+                      value={zone.id}
+                      checked={isSelected}
+                      onChange={() => handleToggleZone(zone.id)}
+                      className="sr-only"
+                    />
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-xs font-semibold text-primary">
+                        {zone.region}
+                      </span>
+                      <Badge variant={isSelected ? "default" : "outline"} className="text-[10px]">
+                        {isSelected ? "Sélectionné" : "Zone"}
+                      </Badge>
+                    </div>
+                    <span className="font-medium leading-snug">{zone.label}</span>
+                    {zone.detail ? (
+                      <span className="font-mono text-xs text-muted-foreground">{zone.detail}</span>
+                    ) : null}
+                  </label>
+                );
+              })}
+            </div>
+          </fieldset>
         ) : (
           <ol className="space-y-2" aria-label="Séquence à ordonner">
             {orderIds.map((id, idx) => {
@@ -222,7 +307,12 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
         )}
 
         <div className="flex flex-wrap items-center gap-2 pt-1">
-          <Button onClick={handleSubmit} disabled={isChoiceExercise && !selectedId}>
+          <Button
+            onClick={handleSubmit}
+            disabled={
+              (isChoiceExercise && !selectedId) || (isDiagramProbe && selectedZoneIds.length === 0)
+            }
+          >
             Vérifier ma réponse
           </Button>
           {submitted ? (
@@ -251,6 +341,15 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
                 <AlertDescription>
                   {selectedOption ? (
                     <p className="mb-1 font-medium">{selectedOption.feedback}</p>
+                  ) : null}
+                  {selectedZones.length > 0 ? (
+                    <ul className="mb-1 space-y-0.5 font-medium">
+                      {selectedZones.map((zone) => (
+                        <li key={zone.id}>
+                          [{zone.region}] {zone.feedback}
+                        </li>
+                      ))}
+                    </ul>
                   ) : null}
                   <p>{exercise.explanation}</p>
                 </AlertDescription>

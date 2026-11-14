@@ -242,6 +242,18 @@ export function validateCurriculumIntegrity(
             context: { lessonId: lesson.id, exerciseId: exercise.id },
           });
         }
+      } else if (exercise.kind === "diagram-probe") {
+        const zoneIds = new Set(exercise.zones.map((z) => z.id));
+        const hasValidTargets =
+          exercise.correctZoneIds.length >= 1 &&
+          exercise.correctZoneIds.every((id) => zoneIds.has(id));
+        if (!hasValidTargets) {
+          issues.push({
+            code: "INVALID_EXERCISE_OPTION",
+            message: `Diagram probe exercise "${exercise.id}" contains unknown correctZoneIds`,
+            context: { lessonId: lesson.id, exerciseId: exercise.id },
+          });
+        }
       }
     }
 

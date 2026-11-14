@@ -71,10 +71,13 @@ export function loadAcademyData(rootDir = findRepoRoot()): AcademyData {
     throw new Error(`Curriculum integrity validation failed: ${summary}`);
   }
 
+  const featuredLesson =
+    lessons.find((lesson) => lesson.slug === "tcp-three-way-handshake") ?? lessons[0];
+
   return {
     curriculum,
     resources,
     lessons,
-    featuredLesson: lessons[0],
+    featuredLesson,
   };
 }

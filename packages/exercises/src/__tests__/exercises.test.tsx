@@ -1,7 +1,7 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import type { ExerciseDefinition } from "@cyber-school/lesson-runtime";
-import { ExerciseCard } from "../index.js";
+import type { AssessmentBlueprint, ExerciseDefinition } from "@cyber-school/lesson-runtime";
+import { AssessmentRunner, ExerciseCard } from "../index.js";
 
 afterEach(() => {
   cleanup();
@@ -83,5 +83,59 @@ describe("@cyber-school/exercises", () => {
     // Changing order after submission notifies parent with null
     fireEvent.click(screen.getByRole("button", { name: "Descendre Client -> Serveur : SYN" }));
     expect(onResult).toHaveBeenLastCalledWith("ex-order", null);
+  });
+
+  it("evaluates diagram-probe exercises and updates AssessmentRunner progress", () => {
+    const probeExercise: ExerciseDefinition = {
+      kind: "diagram-probe",
+      id: "ex-probe",
+      conceptId: "process-memory-segments",
+      prompt: "Sélectionnez la région exécutable en lecture seule.",
+      diagramTitle: "Carte /proc/maps simplifiée",
+      diagramCaption: "Inspectez les permissions de chaque région.",
+      explanation: "Le segment Text porte les permissions r-xp.",
+      zones: [
+        {
+          id: "z-text",
+          label: "Segment Text",
+          region: "0x401000 · r-xp",
+          feedback: "Exact : le code machine est exécutable et protégé en écriture.",
+        },
+        {
+          id: "z-heap",
+          label: "Segment Heap",
+          region: "0x602000 · rw-p",
+          feedback: "Le tas permet la lecture/écriture mais pas l'exécution.",
+        },
+      ],
+      correctZoneIds: ["z-text"],
+    };
+
+    const assessments: AssessmentBlueprint[] = [
+      {
+        id: "assess-mem",
+        title: "Maîtrise Espace Virtuel",
+        conceptIds: ["process-memory-segments"],
+        passingScorePercent: 50,
+        exerciseIds: ["ex-predict-ack", "ex-probe"],
+      },
+    ];
+
+    const onResult = vi.fn();
+    render(
+      <>
+        <ExerciseCard exercise={probeExercise} index={2} onResult={onResult} />
+        <AssessmentRunner
+          assessments={assessments}
+          exercises={[choiceExercise, probeExercise]}
+          scores={{ "ex-predict-ack": false, "ex-probe": true }}
+        />
+      </>,
+    );
+
+    fireEvent.click(screen.getByRole("radio", { name: /Segment Text/i }));
+    fireEvent.click(screen.getByRole("button", { name: "Vérifier ma réponse" }));
+    expect(onResult).toHaveBeenLastCalledWith("ex-probe", true);
+    expect(screen.getByText(/Maîtrisé \(50%\)/i)).toBeTruthy();
   });
 });

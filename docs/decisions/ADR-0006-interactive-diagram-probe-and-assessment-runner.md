@@ -1,6 +1,6 @@
 # ADR-0006 : Exercice interactif de sonde sur diagramme (`diagram-probe`) et lecteur d'évaluation cumulative
 
-- **Status** : Proposed _(en attente de validation humaine / architecte avant modification de `@cyber-school/lesson-runtime` et `@cyber-school/exercises`)_
+- **Status** : Accepted _(Option B retenue — extension rétrocompatible implémentée dans `@cyber-school/lesson-runtime` et `@cyber-school/exercises`)_
 - **Date** : 2026-11-14
 - **Contexte** : Le cours de référence [program-memory-fundamentals](../courses/program-memory-fundamentals/00-FICHE_REFERENCE.md) exige 8 familles d'exercices sans saisie manuelle de code, incluant l'interprétation directe de diagrammes mémoire (`EX-06`, `EX-11`, `EX-13`) et une évaluation cumulative multi-concepts (`EVAL-01` à `EVAL-04`).
 

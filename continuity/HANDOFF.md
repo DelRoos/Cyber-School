@@ -1,14 +1,14 @@
 # Relais actif
 
-Généré le 2026-11-13T23:24:57.780Z (UTC).
+Généré le 2026-11-14T00:08:37.317Z (UTC).
 
-- Tâche : TASK-008 (In Progress)
-- Empreinte testable : e6df001b8addbc5e95b7acd82d87dcd17284bdd0a7b0970ae73eda595df80544
-- Résultat enregistré : passed — [rapport](validation/2026-11-13T23-23-48-154Z-36409115-ea98-4c8a-ba14-aa74f88fcbe3/result.json)
+- Tâche : TASK-014 (Done)
+- Empreinte testable : eddf273b5ee1bc8a912c29b1892140d5871b93d7136496c14a86be1ceaef4101
+- Résultat enregistré : passed — [rapport](validation/2026-11-14T00-07-49-251Z-6d8667cf-2cd8-427d-9545-015b4bfd4a60/result.json)
 
 ## Reprise immédiate
 
-Conception complete du cours program-memory-fundamentals validee (docs/courses/program-memory-fundamentals/, curriculum/program-memory-foundations.json, resources/sources.json, ADR-0006 Proposed). Relais Claude Code : demarrer en parallele TASK-009 (Ready) et TASK-013 (Ready), puis TASK-010..012 et assemblage final TASK-014.
+Cours de référence program-memory-fundamentals implémenté et validé (status: in-review). En attente de revue scientifique humaine avant passage à published, ou démarrage de TASK-003 (Ready).
 
 1. Lire [STATE.json](STATE.json), [CURRENT_STATE.md](CURRENT_STATE.md) et [BLOCKERS.md](BLOCKERS.md).
 2. Exécuter le diagnostic d'environnement ; ne pas installer ni créer un lockfile sans l'autorisation requise.
