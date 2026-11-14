@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-14T08:57:37.747Z",
-  "activeTaskId": "TASK-020",
-  "sourceDigest": "a350dacf16b23387adf21a96e2ca2751c107278caaf34c74cd415fb2cc711744",
-  "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f",
-  "nextAction": "Revue humaine finale de TASK-015 et du cours scientific-reasoning-and-proof (status in-review) avant publication.",
+  "updatedAt": "2026-11-14T11:07:51.017Z",
+  "activeTaskId": "TASK-021",
+  "sourceDigest": "2ce9ba2c8afd45e8607b5f95c531884737a48cc06c89c244da1df70de05127ee",
+  "gitHead": "4e4c79e5232fd4ee36ea9e731ef24255e7515602",
+  "nextAction": "Revue utilisateur de la maquette Explorable Explanation (program-memory-fundamentals) avant déploiement sur tcp-three-way-handshake et scientific-reasoning-and-proof.",
   "validation": {
-    "reference": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/result.json",
+    "reference": "continuity/validation/2026-11-14T11-04-30-392Z-ac95b35b-aa8b-4154-bd4a-d3178841b2a6/result.json",
     "status": "passed"
   },
   "blockers": [],
   "documents": {
-    "CURRENT_STATE.md": "6df732c82c13766831b5b3d9331ece16d56a09fd8340364115cbf78d7f2c7f82",
-    "HANDOFF.md": "fc0f78342970601e1c88ed33da58bf87f52793ae2534e6733205d8f6c204b9d9"
+    "CURRENT_STATE.md": "3667ab6449cb5009431580b506d919741d1ec6d0af382d93723a1edcda055f4a",
+    "HANDOFF.md": "fe669a99fa5f40e998a45aa94667a564342c4f2fb2c4a5eb5c9cbfcdd8936f85"
   }
 }

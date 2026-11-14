@@ -20,6 +20,7 @@
 - [TASK-018 — Explorateur Web `/curriculum` du référentiel V4](../tasks/TASK-018-v4-curriculum-explorer-ui.md)
 - [TASK-019 — Premier lot pilote `TC-00` & cours `scientific-reasoning-and-proof`](../tasks/TASK-019-tc00-pilot-batch-and-reasoning-course.md)
 - [TASK-020 — Animations pédagogiques causales (CTML), skill `pedagogical-animation` & documentation](../tasks/TASK-020-pedagogical-animations-and-skills.md)
+- [TASK-021 — Refonte Explorable Explanation du cours pilote `program-memory-fundamentals`](../tasks/TASK-021-explorable-pilot-program-memory.md)
 
 ## Dossier de conception associé
 

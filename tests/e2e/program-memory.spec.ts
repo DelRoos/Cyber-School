@@ -100,8 +100,18 @@ test.describe("Program Memory Fundamentals interactive course", () => {
       /3 \/ 6 traités/,
     );
 
-    // 8. Check GDB -O0 vs -O2 card & chapter filter
-    await expect(page.getByTestId("gdb-compiler-reality-card")).toBeVisible();
+    // 7b. Verify Chapter 4 Explorable Pointer Simulator
+    await expect(page.getByTestId("vis-pointer-dangling")).toBeVisible();
+    await page.getByTestId("vis-pointer-stage-overwritten").click();
+    await expect(page.getByTestId("vis-pointer-status-badge")).toContainText(
+      /Aliasing silencieux/i,
+    );
+
+    // 8. Check Interactive Compiler -O0 vs -O2 explorer & chapter filter
+    const compilerCard = page.getByTestId("gdb-compiler-reality-card");
+    await expect(compilerCard).toBeVisible();
+    await compilerCard.getByRole("button", { name: /gcc -O2/i }).click();
+    await expect(compilerCard).toContainText(/0 octet sur la pile/i);
     await page.getByTestId("chapter-filter-step-cpu-bytes").click();
     await expect(page.getByTestId("vis-01-cpu-memory")).toBeVisible();
     await expect(page.getByTestId("vis-02-virtual-memory")).toHaveCount(0);

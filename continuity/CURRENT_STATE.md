@@ -2,16 +2,16 @@
 
 Checkpoint généré par quality:checkpoint ; ne pas modifier ce fichier à la main.
 
-- Mise à jour UTC : 2026-11-14T08:57:37.747Z
-- Tâche active : TASK-020 (Done)
-- Base Git : e7dde3b93d69e0956951928a2b49963ab1f2089f
-- Empreinte du code/contenu/configuration : a350dacf16b23387adf21a96e2ca2751c107278caaf34c74cd415fb2cc711744
-- Fichiers contrôlés : 221
-- Dernière validation : passed — [rapport](validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/result.json)
+- Mise à jour UTC : 2026-11-14T11:07:51.017Z
+- Tâche active : TASK-021 (Done)
+- Base Git : 4e4c79e5232fd4ee36ea9e731ef24255e7515602
+- Empreinte du code/contenu/configuration : 2ce9ba2c8afd45e8607b5f95c531884737a48cc06c89c244da1df70de05127ee
+- Fichiers contrôlés : 223
+- Dernière validation : passed — [rapport](validation/2026-11-14T11-04-30-392Z-ac95b35b-aa8b-4154-bd4a-d3178841b2a6/result.json)
 
 ## Prochaine action
 
-Revue humaine finale de TASK-015 et du cours scientific-reasoning-and-proof (status in-review) avant publication.
+Revue utilisateur de la maquette Explorable Explanation (program-memory-fundamentals) avant déploiement sur tcp-three-way-handshake et scientific-reasoning-and-proof.
 
 ## Blocages observés automatiquement
 

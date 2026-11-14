@@ -1,26 +1,14 @@
 "use client";
 
 import * as React from "react";
-import { Info, Layers, ShieldAlert, ShieldCheck } from "lucide-react";
+import { Layers, ShieldAlert, ShieldCheck } from "lucide-react";
 import {
   animateSvgSignalRoutes,
   ConceptTransformBanner,
   useGsapScope,
   usePrefersReducedMotion,
 } from "@cyber-school/animations";
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  cn,
-} from "@cyber-school/ui";
+import { Badge, Button, Card, CardContent, CardHeader, CardTitle, cn } from "@cyber-school/ui";
 import {
   getProcessSegments,
   simulateMemoryAccess,
@@ -29,13 +17,27 @@ import {
 } from "../engines/virtual-memory";
 
 const ACTIONS: Array<{ id: MemoryAccessAction; label: string }> = [
-  { id: "read-text", label: "Lire Text (r-x)" },
-  { id: "write-text", label: "Écrire dans Text" },
-  { id: "alloc-heap", label: "Allouer page Heap" },
-  { id: "exec-stack", label: "Exécuter dans Stack" },
+  { id: "read-text", label: "Lire .text (r-x)" },
+  { id: "write-text", label: "Écrire dans .text" },
+  { id: "alloc-heap", label: "Allouer Heap (rw-)" },
+  { id: "exec-stack", label: "Exécuter Stack" },
   { id: "access-unmapped", label: "Déréférencer NULL (0x0)" },
 ];
 
+const SEGMENT_TO_ACTION: Record<SegmentId, MemoryAccessAction> = {
+  text: "read-text",
+  rodata: "read-text",
+  "data-bss": "read-text",
+  heap: "alloc-heap",
+  mmap: "alloc-heap",
+  stack: "exec-stack",
+};
+
+/**
+ * VIS-02 Explorable Canvas:
+ * - Confusion détruite : croire que deux processus partageant 0x400000 écrasent la même RAM ou qu'un pointeur mappé est toujours écrivable.
+ * - Objets animés : fibres de traduction VA -> MMU (verrous R/W/X) -> cadres physiques RAM ; décalage live ASLR ; choc rouge SIGSEGV sur verrou fermé.
+ */
 export function Vis02VirtualMemory() {
   const [isolationMode, setIsolationMode] = React.useState(true);
   const [activeProcess, setActiveProcess] = React.useState<"P1" | "P2">("P1");
@@ -45,7 +47,6 @@ export function Vis02VirtualMemory() {
 
   const segmentsP1 = React.useMemo(() => getProcessSegments("P1", aslrEnabled), [aslrEnabled]);
   const segmentsP2 = React.useMemo(() => getProcessSegments("P2", aslrEnabled), [aslrEnabled]);
-
   const activeSegments = activeProcess === "P1" ? segmentsP1 : segmentsP2;
   const inspectedSegment =
     activeSegments.find((s) => s.id === selectedSegmentId) ?? activeSegments[0]!;
@@ -61,40 +62,71 @@ export function Vis02VirtualMemory() {
   const isFault =
     mmuResult.outcome === "sigsegv_permission_denied" || mmuResult.outcome === "sigsegv_unmapped";
 
+  const activeRowIndex = Math.max(
+    0,
+    activeSegments.findIndex(
+      (s) =>
+        s.id === (mmuResult.targetSegment !== "none" ? mmuResult.targetSegment : selectedSegmentId),
+    ),
+  );
+  const startY =
+    (activeProcess === "P2" && isolationMode ? 142 : 36) + Math.min(activeRowIndex, 5) * 14;
+  const mmuY = 128;
+  const targetRamY = activeProcess === "P2" ? 182 : 76;
+
   useGsapScope(scopeRef, () => {
     animateSvgSignalRoutes(
       [
         {
           element: mmuBeamRef.current,
-          from: { x: 48, y: 42 },
-          to: isFault ? { x: 185, y: 42 } : { x: 312, y: 42 },
+          from: { x: 204, y: startY },
+          to: isFault ? { x: 358, y: mmuY } : { x: 514, y: targetRamY },
           active: true,
         },
       ],
-      { durationSeconds: 0.45, reducedMotion },
+      { durationSeconds: 0.55, reducedMotion },
     );
-  }, [lastAction, activeProcess, aslrEnabled, isFault, reducedMotion]);
+  }, [lastAction, activeProcess, aslrEnabled, isFault, startY, targetRamY, reducedMotion]);
+
+  function triggerAction(actionId: MemoryAccessAction, proc: "P1" | "P2" = activeProcess) {
+    setActiveProcess(proc);
+    setLastAction(actionId);
+    const next = simulateMemoryAccess(actionId, proc, aslrEnabled);
+    if (next.targetSegment !== "none") {
+      setSelectedSegmentId(next.targetSegment);
+    }
+  }
+
+  const rwxChecks = {
+    r: lastAction !== "access-unmapped",
+    w: lastAction !== "write-text" && lastAction !== "access-unmapped",
+    x: lastAction !== "exec-stack" && lastAction !== "access-unmapped",
+  };
 
   return (
     <div ref={scopeRef}>
-      <Card data-testid="vis-02-virtual-memory">
-        <CardHeader className="space-y-3">
+      <Card data-testid="vis-02-virtual-memory" className="overflow-hidden border-primary/25">
+        <CardHeader className="space-y-3 border-b border-border/60 bg-secondary/15 pb-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div className="flex items-center gap-2">
               <Layers className="h-5 w-5 text-primary" aria-hidden="true" />
-              <CardTitle className="text-lg">
-                VIS-02 · Espace d&apos;adressage virtuel, MMU &amp; segments
+              <CardTitle className="text-base sm:text-lg">
+                Explorer : deux processus isolés face aux verrous{" "}
+                <code className="font-mono">rwx</code> de la MMU
               </CardTitle>
             </div>
             <Badge variant={isFault ? "destructive" : "success"} data-testid="vis02-outcome-badge">
-              {isFault ? "SIGSEGV" : "Traduction MMU valide"}
+              {isFault ? (
+                <span className="inline-flex items-center gap-1">
+                  <ShieldAlert className="h-3.5 w-3.5" aria-hidden="true" /> SIGSEGV bloqué
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1">
+                  <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" /> Traduction MMU OK
+                </span>
+              )}
             </Badge>
           </div>
-          <CardDescription>
-            Inspectez chaque région de <code className="font-mono">/proc/[pid]/maps</code>, observez
-            comment deux processus partagent les mêmes adresses virtuelles sans collision physique,
-            et testez la protection <code className="font-mono">rwx</code>.
-          </CardDescription>
 
           <div className="flex flex-wrap items-center gap-2">
             <Button
@@ -104,7 +136,7 @@ export function Vis02VirtualMemory() {
               onClick={() => setIsolationMode((prev) => !prev)}
               aria-pressed={isolationMode}
             >
-              {isolationMode ? "Isolation P1 ↔ P2 active" : "Vue P1 uniquement"}
+              {isolationMode ? "Isolation P1 ↔ P2" : "P1 seul"}
             </Button>
             <Button
               type="button"
@@ -112,7 +144,7 @@ export function Vis02VirtualMemory() {
               variant={activeProcess === "P1" ? "secondary" : "ghost"}
               onClick={() => setActiveProcess("P1")}
             >
-              Cibler Processus P1
+              Processus P1
             </Button>
             {isolationMode ? (
               <Button
@@ -121,7 +153,7 @@ export function Vis02VirtualMemory() {
                 variant={activeProcess === "P2" ? "secondary" : "ghost"}
                 onClick={() => setActiveProcess("P2")}
               >
-                Cibler Processus P2
+                Processus P2
               </Button>
             ) : null}
             <Button
@@ -130,294 +162,313 @@ export function Vis02VirtualMemory() {
               variant={aslrEnabled ? "secondary" : "outline"}
               onClick={() => setAslrEnabled((prev) => !prev)}
               aria-pressed={aslrEnabled}
+              data-testid="vis02-aslr-toggle"
             >
-              ASLR : {aslrEnabled ? "Activé (bases décalées)" : "Désactivé"}
+              ASLR : {aslrEnabled ? "ON (adresses aléatoires)" : "OFF"}
             </Button>
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 pt-4">
           <ConceptTransformBanner
             stepKey={`${activeProcess}-${lastAction}-${aslrEnabled}`}
-            cause={`${activeProcess} demande ${lastAction} @ ${mmuResult.virtualAddr}`}
-            mechanism={
-              isFault
-                ? "La MMU vérifie les bits de permission / présence et déclenche une interruption matérielle"
-                : `La MMU traduit l'adresse virtuelle via ${mmuResult.pageTableMatch}`
-            }
+            cause={`${activeProcess} · ${lastAction} (${mmuResult.virtualAddr})`}
+            mechanism={mmuResult.explanation}
             effectDelta={
-              mmuResult.physicalFrame ? `RAM → ${mmuResult.physicalFrame}` : "TRAP : SIGSEGV bloqué"
+              mmuResult.physicalFrame ? `RAM → ${mmuResult.physicalFrame}` : "TRAP : SIGSEGV"
             }
             tone={isFault ? "danger" : "success"}
             testId="vis02-transform-banner"
           />
 
-          {/* MMU Address Translation SVG */}
-          <div className="rounded-xl border border-border bg-secondary/20 p-3">
+          {/* Main Interactive MMU Vector Map */}
+          <div className="rounded-xl border border-border bg-background/80 p-3">
             <svg
-              viewBox="0 0 360 84"
-              className="h-20 w-full"
+              viewBox="0 0 720 250"
+              className="h-auto w-full"
               role="img"
-              aria-label={`Traduction MMU ${mmuResult.virtualAddr} vers ${mmuResult.physicalFrame ?? "SIGSEGV"}`}
+              aria-label={`Traduction MMU ${activeProcess} ${mmuResult.virtualAddr} vers ${mmuResult.physicalFrame ?? "SIGSEGV"}`}
             >
+              {/* Virtual Processes Column */}
+              {(isolationMode ? (["P1", "P2"] as const) : (["P1"] as const)).map((pid, pIdx) => {
+                const segs = pid === "P1" ? segmentsP1 : segmentsP2;
+                const yBase = pIdx === 0 ? 18 : 132;
+                const isActiveProc = activeProcess === pid;
+                return (
+                  <g key={pid}>
+                    <rect
+                      x="10"
+                      y={yBase}
+                      width="202"
+                      height="104"
+                      rx="10"
+                      fill="hsl(var(--card))"
+                      stroke={isActiveProc ? "hsl(var(--primary))" : "hsl(var(--border))"}
+                      strokeWidth={isActiveProc ? 1.8 : 1}
+                    />
+                    <text x="22" y={yBase + 18} className="fill-foreground text-[10.5px] font-bold">
+                      {pid} (Adresses virtuelles{aslrEnabled ? " +ASLR" : ""})
+                    </text>
+                    {segs.slice(0, 6).map((seg, sIdx) => {
+                      const sy = yBase + 22 + sIdx * 13.5;
+                      const isTarget =
+                        isActiveProc &&
+                        (mmuResult.targetSegment === seg.id ||
+                          (mmuResult.targetSegment === "none" && selectedSegmentId === seg.id));
+                      return (
+                        <g
+                          key={`${pid}-${seg.id}`}
+                          onClick={() => triggerAction(SEGMENT_TO_ACTION[seg.id], pid)}
+                          className="cursor-pointer"
+                        >
+                          <rect
+                            x="18"
+                            y={sy}
+                            width="186"
+                            height="12"
+                            rx="3"
+                            fill={isTarget ? (isFault ? "#ef4444" : "#84cc16") : "#64748b"}
+                            fillOpacity={isTarget ? 0.25 : 0.12}
+                            stroke={isTarget ? (isFault ? "#ef4444" : "#84cc16") : "transparent"}
+                          />
+                          <text
+                            x="24"
+                            y={sy + 9}
+                            className="fill-foreground font-mono text-[8.5px] font-semibold"
+                          >
+                            .{seg.id} {seg.virtualRange.split("-")[0]}
+                          </text>
+                          <text
+                            x="198"
+                            y={sy + 9}
+                            textAnchor="end"
+                            className="fill-primary font-mono text-[8.5px]"
+                          >
+                            {seg.permissions}
+                          </text>
+                        </g>
+                      );
+                    })}
+                  </g>
+                );
+              })}
+
+              {/* Translation Fiber P1 -> MMU -> RAM */}
+              <path
+                d={`M 212 ${startY} C 275 ${startY}, 275 ${mmuY}, 308 ${mmuY}`}
+                fill="none"
+                stroke={isFault ? "#ef4444" : "#84cc16"}
+                strokeWidth="2.4"
+              />
+              <path
+                d={`M 412 ${mmuY} C 455 ${mmuY}, 465 ${targetRamY}, 512 ${targetRamY}`}
+                fill="none"
+                stroke={isFault ? "#ef4444" : "#84cc16"}
+                strokeWidth="2.4"
+                strokeDasharray={isFault ? "5 4" : undefined}
+              />
+
+              {/* Center MMU Permission Gate */}
               <rect
-                x="8"
-                y="16"
-                width="98"
-                height="52"
-                rx="6"
+                x="308"
+                y="68"
+                width="104"
+                height="120"
+                rx="12"
                 fill="hsl(var(--card))"
-                stroke="hsl(var(--primary))"
-                strokeWidth="1.8"
+                stroke={isFault ? "#ef4444" : "#10b981"}
+                strokeWidth="2.2"
               />
               <text
-                x="57"
-                y="34"
+                x="360"
+                y="88"
                 textAnchor="middle"
-                className="fill-foreground text-[9px] font-semibold"
+                className="fill-foreground text-[11px] font-bold"
               >
-                VA ({activeProcess})
+                MMU Matérielle
               </text>
               <text
-                x="57"
-                y="50"
+                x="360"
+                y="102"
                 textAnchor="middle"
-                className="fill-primary font-mono text-[8.5px]"
+                className="fill-muted-foreground font-mono text-[8.5px]"
               >
-                {mmuResult.virtualAddr}
+                {activeProcess} · {lastAction === "access-unmapped" ? "Page P=0" : "Page P=1"}
               </text>
 
-              <line
-                x1="106"
-                y1="42"
-                x2="136"
-                y2="42"
-                stroke="hsl(var(--primary))"
-                strokeWidth="2"
+              {(["r", "w", "x"] as const).map((bit, bIdx) => {
+                const ok = rwxChecks[bit];
+                const bx = 320 + bIdx * 28;
+                return (
+                  <g key={bit}>
+                    <rect
+                      x={bx}
+                      y="112"
+                      width="24"
+                      height="30"
+                      rx="5"
+                      fill={ok ? "#10b981" : "#ef4444"}
+                      fillOpacity="0.22"
+                      stroke={ok ? "#10b981" : "#ef4444"}
+                    />
+                    <text
+                      x={bx + 12}
+                      y="126"
+                      textAnchor="middle"
+                      className="fill-foreground font-mono text-[10px] font-bold uppercase"
+                    >
+                      {bit}
+                    </text>
+                    <text
+                      x={bx + 12}
+                      y="138"
+                      textAnchor="middle"
+                      className={cn(
+                        "font-mono text-[8px]",
+                        ok ? "fill-emerald-400" : "fill-rose-400",
+                      )}
+                    >
+                      {ok ? "OK" : "NON"}
+                    </text>
+                  </g>
+                );
+              })}
+
+              <text
+                x="360"
+                y="174"
+                textAnchor="middle"
+                className={cn(
+                  "font-mono text-[10px] font-bold",
+                  isFault ? "fill-rose-400" : "fill-emerald-400",
+                )}
+              >
+                {isFault ? "⛔ TRAP SIGSEGV" : "✓ Cadre résolu"}
+              </text>
+
+              {/* Physical RAM Column */}
+              <rect
+                x="512"
+                y="24"
+                width="196"
+                height="202"
+                rx="12"
+                fill="hsl(var(--card))"
+                stroke="hsl(var(--border))"
+                strokeWidth="1.5"
               />
+              <text
+                x="610"
+                y="44"
+                textAnchor="middle"
+                className="fill-primary text-[11px] font-bold uppercase tracking-wider"
+              >
+                RAM Physique (Séparée)
+              </text>
 
               <rect
-                x="138"
-                y="14"
-                width="92"
-                height="56"
-                rx="6"
-                fill={isFault ? "#ef44441a" : "#10b9811a"}
-                stroke={isFault ? "#ef4444" : "#10b981"}
-                strokeWidth="2"
+                x="526"
+                y="56"
+                width="168"
+                height="64"
+                rx="8"
+                fill={activeProcess === "P1" && !isFault ? "#10b98124" : "hsl(var(--secondary))"}
+                stroke={activeProcess === "P1" && !isFault ? "#10b981" : "hsl(var(--border))"}
               />
-              <text
-                x="184"
-                y="34"
-                textAnchor="middle"
-                className="fill-foreground text-[9px] font-bold"
-              >
-                MMU (rwx)
+              <text x="536" y="76" className="fill-foreground font-mono text-[10px] font-bold">
+                Cadre Physique P1
               </text>
-              <text
-                x="184"
-                y="50"
-                textAnchor="middle"
-                className="fill-muted-foreground font-mono text-[8px]"
-              >
-                {isFault ? "Droits refusés !" : "Bit OK · Traduit"}
+              <text x="536" y="94" className="fill-primary font-mono text-[9.5px]">
+                {segmentsP1[0]?.physicalFrame} …
+              </text>
+              <text x="536" y="109" className="fill-muted-foreground text-[8.5px]">
+                Isolé de P2 même si VA identique
               </text>
 
-              <line
-                x1="230"
-                y1="42"
-                x2="262"
-                y2="42"
-                stroke={isFault ? "#ef4444" : "#10b981"}
-                strokeDasharray={isFault ? "4 3" : undefined}
-                strokeWidth="2"
-              />
+              {isolationMode ? (
+                <g>
+                  <rect
+                    x="526"
+                    y="142"
+                    width="168"
+                    height="64"
+                    rx="8"
+                    fill={
+                      activeProcess === "P2" && !isFault ? "#10b98124" : "hsl(var(--secondary))"
+                    }
+                    stroke={activeProcess === "P2" && !isFault ? "#10b981" : "hsl(var(--border))"}
+                  />
+                  <text x="536" y="162" className="fill-foreground font-mono text-[10px] font-bold">
+                    Cadre Physique P2
+                  </text>
+                  <text x="536" y="180" className="fill-primary font-mono text-[9.5px]">
+                    {segmentsP2[0]?.physicalFrame} …
+                  </text>
+                  <text x="536" y="195" className="fill-muted-foreground text-[8.5px]">
+                    Autre zone RAM physique réelle
+                  </text>
+                </g>
+              ) : null}
 
-              <rect
-                x="264"
-                y="16"
-                width="88"
-                height="52"
-                rx="6"
-                fill={isFault ? "#ef444422" : "hsl(var(--card))"}
-                stroke={isFault ? "#ef4444" : "#10b981"}
-                strokeWidth="1.8"
-              />
-              <text
-                x="308"
-                y="34"
-                textAnchor="middle"
-                className="fill-foreground text-[9px] font-semibold"
-              >
-                {isFault ? "Noyau SIGSEGV" : "RAM Physique"}
-              </text>
-              <text
-                x="308"
-                y="50"
-                textAnchor="middle"
-                className="fill-foreground font-mono text-[8.5px]"
-              >
-                {mmuResult.physicalFrame ?? "Accès stoppé"}
-              </text>
-
+              {/* Animated MMU Translation Particle */}
               <circle
                 ref={mmuBeamRef}
-                cx="48"
-                cy="42"
-                r="5.5"
-                fill={isFault ? "#ef4444" : "#10b981"}
+                cx="204"
+                cy={startY}
+                r="6"
+                fill={isFault ? "#ef4444" : "#84cc16"}
               />
             </svg>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-[1.2fr_1fr]">
-            {/* Virtual Segments List */}
-            <div className="min-w-0 space-y-2">
-              <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                <span>Espace virtuel de {activeProcess} (haut → bas)</span>
-                <span>Permissions</span>
-              </div>
-              <div
-                className="space-y-1.5"
-                role="listbox"
-                aria-label="Segments mémoire du processus"
+          {/* Direct Probe Operations + Segment Selector (keeps existing testids) */}
+          <div className="flex flex-wrap gap-1.5" role="group" aria-label="Opérations MMU">
+            {ACTIONS.map((act) => (
+              <Button
+                key={act.id}
+                type="button"
+                size="sm"
+                variant={lastAction === act.id ? "default" : "outline"}
+                onClick={() => triggerAction(act.id)}
+                data-testid={`vis02-action-${act.id}`}
               >
-                {activeSegments.map((seg) => {
-                  const selected = seg.id === selectedSegmentId;
-                  const targetedByFault = isFault && mmuResult.targetSegment === seg.id;
-                  return (
-                    <button
-                      key={seg.id}
-                      type="button"
-                      role="option"
-                      aria-selected={selected}
-                      data-testid={`vis02-seg-${seg.id}`}
-                      onClick={() => setSelectedSegmentId(seg.id)}
-                      className={cn(
-                        "flex min-h-11 w-full flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-left text-xs transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-                        selected
-                          ? "border-primary bg-primary/10 text-foreground"
-                          : "border-border bg-secondary/25 text-secondary-foreground hover:bg-secondary/55",
-                        targetedByFault && "border-rose-500 bg-rose-500/10",
-                      )}
-                    >
-                      <div className="min-w-0 break-words">
-                        <div className="font-semibold text-foreground">{seg.name}</div>
-                        <div className="font-mono text-[11px] text-muted-foreground">
-                          {seg.virtualRange} ·{" "}
-                          {seg.growth === "down"
-                            ? "↓ adresses basses"
-                            : seg.growth === "up"
-                              ? "↑ adresses hautes"
-                              : "taille fixe"}
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <Badge variant="outline" className="font-mono text-[11px]">
-                          {seg.permissions}
-                        </Badge>
-                        {isolationMode ? (
-                          <Badge variant="secondary" className="font-mono text-[10px]">
-                            {seg.physicalFrame}
-                          </Badge>
-                        ) : null}
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* MMU & Action Tester */}
-            <div className="space-y-3">
-              <div className="rounded-xl border border-border bg-secondary/25 p-3.5 space-y-2.5">
-                <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Tester une opération mémoire via la MMU
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {ACTIONS.map((act) => (
-                    <Button
-                      key={act.id}
-                      type="button"
-                      size="sm"
-                      variant={lastAction === act.id ? "default" : "outline"}
-                      onClick={() => {
-                        setLastAction(act.id);
-                        const next = simulateMemoryAccess(act.id, activeProcess, aslrEnabled);
-                        if (next.targetSegment !== "none") {
-                          setSelectedSegmentId(next.targetSegment);
-                        }
-                      }}
-                      data-testid={`vis02-action-${act.id}`}
-                    >
-                      {act.label}
-                    </Button>
-                  ))}
-                </div>
-
-                <div className="rounded-lg border border-border bg-card p-3 font-mono text-xs space-y-1">
-                  <div>
-                    Processus : <strong>{mmuResult.processId}</strong> · Adresse virtuelle :{" "}
-                    <strong>{mmuResult.virtualAddr}</strong>
-                  </div>
-                  <div>Table des pages : {mmuResult.pageTableMatch}</div>
-                  <div
-                    className={
-                      isFault ? "text-rose-400 font-semibold" : "text-emerald-400 font-semibold"
-                    }
-                  >
-                    {mmuResult.physicalFrame
-                      ? `Cadre physique RAM : ${mmuResult.physicalFrame}`
-                      : "Accès matériel bloqué -> Interruption noyau SIGSEGV"}
-                  </div>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-border bg-card/70 p-3.5 space-y-1.5 text-xs">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="font-semibold text-foreground">
-                    Segment inspecté : {inspectedSegment.name}
-                  </span>
-                  <Badge variant="outline" className="font-mono">
-                    {inspectedSegment.permissions}
-                  </Badge>
-                </div>
-                <p className="text-muted-foreground">{inspectedSegment.contentsExample}</p>
-                <div className="rounded border border-border bg-secondary/40 p-2 font-mono text-[11px] text-foreground break-all">
-                  /proc/self/maps : {inspectedSegment.procMapsExample}
-                </div>
-              </div>
-            </div>
+                {act.label}
+              </Button>
+            ))}
           </div>
 
-          <Alert
-            variant={isFault ? "destructive" : "success"}
-            aria-live="polite"
-            aria-atomic="true"
+          <div
+            className="grid gap-1.5 sm:grid-cols-4"
+            role="listbox"
+            aria-label="Segments inspectables"
           >
-            <div className="flex items-start gap-2.5">
-              {isFault ? (
-                <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              ) : (
-                <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              )}
-              <div>
-                <AlertTitle>
-                  {isFault ? "Faute de protection / segmentation" : "Traduction MMU"}
-                </AlertTitle>
-                <AlertDescription>{mmuResult.explanation}</AlertDescription>
-              </div>
-            </div>
-          </Alert>
+            {activeSegments.map((seg) => (
+              <button
+                key={seg.id}
+                type="button"
+                role="option"
+                aria-selected={seg.id === selectedSegmentId}
+                data-testid={`vis02-seg-${seg.id}`}
+                onClick={() => setSelectedSegmentId(seg.id)}
+                className={cn(
+                  "rounded-lg border px-2.5 py-2 text-left text-xs transition-colors",
+                  seg.id === selectedSegmentId
+                    ? "border-primary bg-primary/10 text-foreground"
+                    : "border-border bg-card text-muted-foreground hover:bg-secondary/40",
+                )}
+              >
+                <div className="flex items-center justify-between font-mono font-semibold">
+                  <span>.{seg.id}</span>
+                  <span>{seg.permissions}</span>
+                </div>
+                <div className="truncate font-mono text-[10px] opacity-80">{seg.virtualRange}</div>
+              </button>
+            ))}
+          </div>
 
-          <div className="flex items-start gap-2 rounded-lg border border-border/70 bg-secondary/20 px-3 py-2 text-xs text-muted-foreground">
-            <Info className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-            <span>
-              <strong>Ce que le simulateur simplifie :</strong> Linux x86-64 utilise des adresses
-              virtuelles canoniques 48 bits, des tables de pages à 4/5 niveaux et un cache{" "}
-              <code className="font-mono">TLB</code>. L&apos;isolation par processus et les droits{" "}
-              <code className="font-mono">rwx</code> fonctionnent exactement comme illustré.
-            </span>
+          <div className="rounded-lg border border-border/70 bg-secondary/20 px-3 py-2 font-mono text-[11px] text-muted-foreground">
+            <strong className="text-foreground">/proc/self/maps ({inspectedSegment.name}) :</strong>{" "}
+            {inspectedSegment.procMapsExample}
           </div>
         </CardContent>
       </Card>
