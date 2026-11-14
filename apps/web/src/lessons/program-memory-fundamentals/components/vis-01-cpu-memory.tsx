@@ -3,7 +3,12 @@
 import * as React from "react";
 import gsap from "gsap";
 import { ArrowLeft, ArrowRight, Cpu, Info, Pause, Play, RotateCcw } from "lucide-react";
-import { getStepDuration, useGsapScope, usePrefersReducedMotion } from "@cyber-school/animations";
+import {
+  ConceptTransformBanner,
+  getStepDuration,
+  useGsapScope,
+  usePrefersReducedMotion,
+} from "@cyber-school/animations";
 import {
   Alert,
   AlertDescription,
@@ -77,22 +82,32 @@ export function Vis01CpuMemory() {
     const token = busTokenRef.current;
     if (!token) return;
     if (current.busDirection === "idle") {
-      gsap.set(token, { opacity: 0, attr: { cx: 60 } });
+      gsap.set(token, { opacity: 0, attr: { cx: 80, cy: 52 } });
       return;
     }
-    const fromX = current.busDirection === "data-write" ? 20 : 140;
-    const toX = current.busDirection === "data-write" ? 140 : 20;
+    const isAddrOnly = current.phase === "FETCH";
+    const yPos = isAddrOnly ? 24 : 58;
+    const fromX = current.busDirection === "data-write" ? 20 : 144;
+    const toX = current.busDirection === "data-write" ? 144 : 20;
     const duration = getStepDuration(0.45 / speedMultiplier, reducedMotion);
     if (duration === 0) {
-      gsap.set(token, { opacity: 1, attr: { cx: toX } });
+      gsap.set(token, { opacity: 1, attr: { cx: toX, cy: yPos } });
       return;
     }
     gsap.fromTo(
       token,
-      { opacity: 1, attr: { cx: fromX } },
-      { attr: { cx: toX }, duration, ease: "power2.out" },
+      { opacity: 1, attr: { cx: fromX, cy: yPos } },
+      { attr: { cx: toX, cy: yPos }, duration, ease: "power2.out" },
     );
-  }, [current.stepIndex, current.busDirection, preset, hexValue, reducedMotion, speedMultiplier]);
+  }, [
+    current.stepIndex,
+    current.phase,
+    current.busDirection,
+    preset,
+    hexValue,
+    reducedMotion,
+    speedMultiplier,
+  ]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLElement>) {
     if (e.key === "ArrowRight") {
@@ -196,7 +211,26 @@ export function Vis01CpuMemory() {
         </CardHeader>
 
         <CardContent className="space-y-4">
-          <div className="grid gap-4 lg:grid-cols-[1fr_160px_1.25fr]">
+          <ConceptTransformBanner
+            stepKey={`${preset}-${hexValue}-${current.stepIndex}`}
+            cause={`RIP=${current.rip} · ${current.ir}`}
+            mechanism={
+              current.busDirection === "data-write"
+                ? `Le bus écrit ${current.busData ?? hexValue} vers ${current.busAddr ?? "RAM"} (octet faible en premier)`
+                : current.busDirection === "idle"
+                  ? `Traitement interne ALU (${current.phase})`
+                  : `Lecture via bus depuis ${current.busAddr ?? current.rip}`
+            }
+            effectDelta={
+              current.highlightedBytes.length > 0
+                ? `RAM modifiée : ${current.highlightedBytes.join(", ")}`
+                : `Phase ${current.phase}`
+            }
+            tone={current.busDirection === "data-write" ? "success" : "causal"}
+            testId="vis01-transform-banner"
+          />
+
+          <div className="grid gap-4 lg:grid-cols-[1fr_180px_1.25fr]">
             {/* CPU Registers */}
             <div className="min-w-0 rounded-xl border border-border bg-secondary/25 p-3.5 space-y-3">
               <div className="flex items-center justify-between">
@@ -264,35 +298,52 @@ export function Vis01CpuMemory() {
                 Bus système
               </span>
               <svg
-                viewBox="0 0 160 60"
-                className="my-2 h-14 w-full"
+                viewBox="0 0 164 78"
+                className="my-2 h-20 w-full"
                 role="img"
                 aria-label={`Bus mémoire : ${current.busDirection}`}
               >
+                <text x="12" y="13" className="fill-muted-foreground font-mono text-[8.5px]">
+                  Bus d&apos;adresses ({current.busAddr ?? "—"})
+                </text>
                 <line
                   x1="12"
-                  y1="22"
-                  x2="148"
-                  y2="22"
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  strokeWidth="2"
+                  y1="24"
+                  x2="152"
+                  y2="24"
+                  stroke={current.phase === "FETCH" ? "hsl(var(--primary))" : "currentColor"}
+                  strokeOpacity={current.phase === "FETCH" ? 0.9 : 0.3}
+                  strokeWidth="2.2"
                 />
+                <text x="12" y="45" className="fill-muted-foreground font-mono text-[8.5px]">
+                  Bus de données (
+                  {current.busDirection === "data-write" ? "CPU → RAM" : "RAM → CPU"})
+                </text>
                 <line
                   x1="12"
-                  y1="42"
-                  x2="148"
-                  y2="42"
-                  stroke="currentColor"
-                  strokeOpacity="0.3"
-                  strokeWidth="2"
+                  y1="58"
+                  x2="152"
+                  y2="58"
+                  stroke={
+                    current.busDirection === "data-write"
+                      ? "#10b981"
+                      : current.busDirection !== "idle"
+                        ? "hsl(var(--primary))"
+                        : "currentColor"
+                  }
+                  strokeOpacity={current.busDirection !== "idle" ? 0.9 : 0.3}
+                  strokeWidth="2.5"
                 />
                 <circle
                   ref={busTokenRef}
-                  cx="60"
-                  cy="32"
+                  cx="80"
+                  cy="52"
                   r="7"
-                  fill="var(--color-primary, #38bdf8)"
+                  fill={
+                    current.busDirection === "data-write"
+                      ? "#10b981"
+                      : "var(--color-primary, #38bdf8)"
+                  }
                   opacity="0"
                 />
               </svg>

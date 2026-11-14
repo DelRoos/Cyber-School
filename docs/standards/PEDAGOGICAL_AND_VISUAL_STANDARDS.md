@@ -2,6 +2,8 @@
 
 Ce document fixe le niveau d'exigence minimal de tout futur cours publié sur **Cyber School**.
 
+Toute création ou reprise de cours applique [le contrat de conception](COURSE_AUTHORING.md) : exemple résolu, prédiction, expérience, feedback et bilan. Le [brief du studio](../design/LEARNING_STUDIO.md) fixe les critères visuels et de lecture.
+
 ## 1. Principes pédagogiques fondamentaux
 
 1. **Rendre l'abstrait visible** : Chaque mécanisme invisible (en-têtes réseau, automates d'états, files, pointeurs, transformations) doit disposer d'une représentation visuelle explicite de ses variables clés.
@@ -30,3 +32,12 @@ Lorsqu'une scène 3D est justifiée et intégrée (via `packages/3d-scenes`) :
 - **Textures & rendu** : Textures compressées <= 1024×1024 px par défaut ; `dpr={[1, 2]}` ; aucune allocation d'objet (`new THREE.Vector3`, etc.) dans la boucle `useFrame`.
 - **Cycle de vie mémoire** : Libération explicite (`dispose()`) des géométries, matériaux et textures au démontage.
 - **Accessibilité 3D** : Boutons de pré-réglages caméra accessibles au clavier, panneau texte synchronisé décrivant la scène, et mode fallback statique/2D si WebGL est indisponible.
+
+## 4. Ingénierie cognitive des animations pédagogiques (CTML & Explorable Explanations)
+
+Tout simulateur ou diagramme animé applique le skill `.agents/skills/pedagogical-animation/SKILL.md` ainsi que [le playbook d'animations pédagogiques](../design/PEDAGOGICAL_ANIMATION_PLAYBOOK.md), fondé sur la **théorie cognitive de l'apprentissage multimédia (R. E. Mayer)** et les **_Explorable Explanations_ (Bret Victor)** :
+
+1. **Principe de signalisation (_Signaling_)** : À chaque transition d'état, le schéma doit mettre en évidence visuellement la cause active, le chemin de propagation orienté (flèches / faisceaux / pointeurs) et la conséquence exacte (`avant -> après`).
+2. **Contiguïté spatiale et temporelle** : L'étiquette de transformation causale (`ConceptTransformBanner` ou annotation inline SVG) s'affiche directement sur la zone modifiée au moment même du mouvement.
+3. **Contrôle actif et manipulation directe (_Segmenting & Explorable Explanations_)** : L'apprenant manipule le temps (`Précédent`, `Suivant`, `Lecture/Pause`, clavier) et les paramètres du modèle (`do(X)`, `ASLR`, `coalescing`, perte de paquet), et observe immédiatement la déformation mécanique du schéma.
+4. **Rejet des animations superficielles** : Un point non étiqueté qui se déplace sans lien avec les données du domaine, ou un contrôle interactif sans représentation structurelle du mécanisme (ex. portes logiques, `RSP`, MMU, chunks), est refusé lors de la revue QA.

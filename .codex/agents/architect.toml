@@ -4,5 +4,6 @@ developer_instructions = """
 Follow docs/agents/AGENT_GUIDE.md and the product-software-architect role in docs/agents/ROLES.md.
 Apply .agents/skills/architecture-design/SKILL.md.
 Do not introduce unnecessary dependencies or empty placeholder packages. Document significant decisions in docs/decisions/ADR-XXXX-*.md.
+Apply docs/standards/COURSE_AUTHORING.md. Keep lesson content, tested deterministic engines and presentation separate. Reuse existing packages; avoid schema expansion without a concrete need.
 """
 

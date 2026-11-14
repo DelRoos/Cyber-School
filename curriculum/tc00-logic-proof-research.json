@@ -1,0 +1,197 @@
+{
+  "version": "1.0",
+  "domains": [
+    {
+      "id": "scientific-reasoning-and-methodology",
+      "title": "TC-00 — Logique, preuve et méthode scientifique",
+      "summary": "Construire des explications causales rigoureuses, isoler les variables confondantes, formuler des hypothèses falsifiables et produire des contre-exemples minimaux avant toute spécialisation.",
+      "modules": [
+        {
+          "id": "observation-hypotheses-and-causality",
+          "title": "Observation, hypothèses, causalité et contre-exemples",
+          "summary": "Premier bloc du module V4 TC-00 couvrant les micro-leçons TC00.001 à TC00.008.",
+          "chapters": [
+            {
+              "id": "tc00-causal-foundations",
+              "title": "Observer, contrôler et réfuter sans biais",
+              "summary": "De la donnée brute à l'intervention expérimentale et au contre-exemple minimal.",
+              "conceptIds": [
+                "tc00-observation-vs-interpretation",
+                "tc00-hypothesis-prediction-conclusion",
+                "tc00-falsifiable-hypothesis",
+                "tc00-controlled-variables",
+                "tc00-confounding-variable",
+                "tc00-causal-chain-assumptions",
+                "tc00-correlation-without-causation",
+                "tc00-minimal-counterexample"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "tc00-observation-vs-interpretation",
+      "title": "TC00.001 — Distinguer une observation brute d'une interprétation",
+      "definition": "Une observation brute enregistre un événement mesurable et horodaté sans attribution de cause (ex. : journal serveur indiquant 412 échecs SSH) ; une interprétation ajoute une hypothèse explicative non encore prouvée.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Séparer un fait journalisé vérifiable d'une inférence sur sa cause probable",
+        "Identifier les mots qui introduisent une supposition implicite dans un rapport d'incident"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-hypothesis-prediction-conclusion",
+          "type": "part_of"
+        }
+      ],
+      "resourceIds": ["openstax-intro-stats", "nist-nice-framework"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Classer correctement des énoncés techniques entre observation brute et interprétation"
+      ]
+    },
+    {
+      "id": "tc00-hypothesis-prediction-conclusion",
+      "title": "TC00.002 — Séparer hypothèse, prédiction et conclusion",
+      "definition": "L'hypothèse propose un mécanisme candidat ; la prédiction décrit un résultat observable si l'hypothèse est vraie ; la conclusion n'intervient qu'après confrontation avec le test.",
+      "prerequisites": ["tc00-observation-vs-interpretation"],
+      "learningObjectives": [
+        "Distinguer proposition mécaniste, conséquence testable et verdict après mesure"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-falsifiable-hypothesis",
+          "type": "builds_on"
+        }
+      ],
+      "resourceIds": ["stanford-scientific-method", "openstax-intro-stats"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Reconstruire la séquence méthodologique Observation -> Hypothèse -> Prédiction -> Mesure -> Conclusion"
+      ]
+    },
+    {
+      "id": "tc00-falsifiable-hypothesis",
+      "title": "TC00.003 — Formuler une hypothèse falsifiable",
+      "definition": "Une hypothèse falsifiable énonce explicitement quel résultat observable la réfuterait sans ambiguïté ; une explication compatible avec n'importe quel résultat est intestable.",
+      "prerequisites": ["tc00-hypothesis-prediction-conclusion"],
+      "learningObjectives": [
+        "Transformer une affirmation vague en prédiction testable comportant un critère de réfutation"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-controlled-variables",
+          "type": "applied_in"
+        }
+      ],
+      "resourceIds": ["stanford-scientific-method"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Repérer parmi plusieurs affirmations celle qui admet un critère de réfutation clair"
+      ]
+    },
+    {
+      "id": "tc00-controlled-variables",
+      "title": "TC00.004 — Identifier les variables contrôlées d'une expérience",
+      "definition": "Pour tester l'effet d'un facteur d'intérêt X sur Y, les variables contrôlées sont maintenues constantes entre groupes ou exécutions afin d'éviter qu'elles ne modifient Y.",
+      "prerequisites": ["tc00-falsifiable-hypothesis"],
+      "learningObjectives": [
+        "Identifier les paramètres à fixer entre groupe témoin et groupe test dans un protocole réseau ou système"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-confounding-variable",
+          "type": "contrasts_with"
+        }
+      ],
+      "resourceIds": ["openstax-intro-stats"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Choisir quelle variable doit être maintenue constante pour valider une comparaison A/B"
+      ]
+    },
+    {
+      "id": "tc00-confounding-variable",
+      "title": "TC00.005 — Définir une variable confondante",
+      "definition": "Une variable confondante Z influence simultanément la variable explicative apparente X et la variable mesurée Y, créant une association statistique trompeuse entre X et Y.",
+      "prerequisites": ["tc00-controlled-variables"],
+      "learningObjectives": [
+        "Modéliser une fourche causale Z -> X et Z -> Y expliquant une co-variation artificielle"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-correlation-without-causation",
+          "type": "contrasts_with"
+        }
+      ],
+      "resourceIds": ["openstax-intro-stats"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Prédire l'effet d'une intervention do(X) lorsque X et Y partagent une cause commune Z"
+      ]
+    },
+    {
+      "id": "tc00-causal-chain-assumptions",
+      "title": "TC00.006 — Décrire une chaîne causale et ses hypothèses",
+      "definition": "Une chaîne causale X -> M -> Y relie cause initiale, médiateur et effet sous des hypothèses explicites (temporalité, absence de chemin alternatif, stabilité de l'environnement).",
+      "prerequisites": ["tc00-confounding-variable"],
+      "learningObjectives": [
+        "Expliciter les hypothèses cachées entre chaque maillon d'une explication causale"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-minimal-counterexample",
+          "type": "applied_in"
+        }
+      ],
+      "resourceIds": ["stanford-scientific-method", "nist-nice-framework"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Identifier la condition nécessaire implicite qui invaliderait un maillon de la chaîne"
+      ]
+    },
+    {
+      "id": "tc00-correlation-without-causation",
+      "title": "TC00.007 — Reconnaître une corrélation sans causalité",
+      "definition": "Deux séries d'événements peuvent varier ensemble sur une chronologie sans que l'intervention sur X ne modifie Y, en raison d'une cause commune ou d'un biais d'observation.",
+      "prerequisites": ["tc00-confounding-variable"],
+      "learningObjectives": [
+        "Distinguer association observationnelle P(Y|X) et effet d'intervention P(Y|do(X))"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-causal-chain-assumptions",
+          "type": "builds_on"
+        }
+      ],
+      "resourceIds": ["openstax-intro-stats"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Expliquer pourquoi bloquer ou modifier X ne supprime pas Y en présence d'un confondant Z"
+      ]
+    },
+    {
+      "id": "tc00-minimal-counterexample",
+      "title": "TC00.008 — Construire un contre-exemple minimal",
+      "definition": "Un contre-exemple minimal respecte toutes les prémisses déclarées d'une règle générale mais produit l'issue contraire avec le plus petit nombre possible d'hypothèses auxiliaires.",
+      "prerequisites": ["tc00-causal-chain-assumptions"],
+      "learningObjectives": [
+        "Réfuter une règle universelle (« toujours », « jamais ») en isolant un cas minimal reproductible"
+      ],
+      "relations": [
+        {
+          "targetConceptId": "tc00-falsifiable-hypothesis",
+          "type": "builds_on"
+        }
+      ],
+      "resourceIds": ["stanford-scientific-method", "nist-nice-framework"],
+      "depthLevel": "intermediate",
+      "validationCriteria": [
+        "Sélectionner le jeu minimal de conditions qui invalide une assertion de sécurité trop générale"
+      ]
+    }
+  ]
+}

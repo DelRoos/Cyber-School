@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-14T08-36-01-119Z-ea9a79c1-0145-4423-ac09-1b2c04176874",
+  "taskId": "TASK-016",
+  "startedAt": "2026-11-14T08:36:01.119Z",
+  "finishedAt": "2026-11-14T08:36:41.457Z",
+  "status": "failed",
+  "source": {
+    "digest": "fea9adf32c3e2d98af8cb24c7de0760de14e71411428c60c9d4b52406655ca71",
+    "fileCount": 221,
+    "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f"
+  },
+  "criteriaDigest": "a35cb162b49169d44f144fc5ce9d5d5d5b9b8e505652278d4cbac55e6d35c6c3",
+  "environment": {
+    "nodeVersion": "22.23.5",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [
+    {
+      "name": "test:guards",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:guards"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:36:01.398Z",
+      "finishedAt": "2026-11-14T08:36:08.247Z",
+      "logFile": "continuity/validation/2026-11-14T08-36-01-119Z-ea9a79c1-0145-4423-ac09-1b2c04176874/test-guards.txt",
+      "logSha256": "6f0fce4b59eac4709c0acc2a99c8ab7b68be5735db35e83eabc076e7e66c92a7"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "corepack",
+        "pnpm",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:36:08.272Z",
+      "finishedAt": "2026-11-14T08:36:20.143Z",
+      "logFile": "continuity/validation/2026-11-14T08-36-01-119Z-ea9a79c1-0145-4423-ac09-1b2c04176874/typecheck.txt",
+      "logSha256": "9fbef1bcb03f294611c5c6941f18114bd0a48975a42b04eb02917c1a7d6eca82"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "corepack",
+        "pnpm",
+        "lint"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:36:20.155Z",
+      "finishedAt": "2026-11-14T08:36:34.764Z",
+      "logFile": "continuity/validation/2026-11-14T08-36-01-119Z-ea9a79c1-0145-4423-ac09-1b2c04176874/lint.txt",
+      "logSha256": "d12b5fabfc7feddcee5c2f1306d21b666c8322c99d4e9b835199c444edac3dbe"
+    },
+    {
+      "name": "format:check",
+      "command": [
+        "corepack",
+        "pnpm",
+        "format:check"
+      ],
+      "exitCode": 1,
+      "startedAt": "2026-11-14T08:36:34.776Z",
+      "finishedAt": "2026-11-14T08:36:41.356Z",
+      "logFile": "continuity/validation/2026-11-14T08-36-01-119Z-ea9a79c1-0145-4423-ac09-1b2c04176874/format-check.txt",
+      "logSha256": "5441bd9548e2a680fa86ba5abd45a5f22b6cd3d7c94cbd3709e75f75a0666fa0"
+    }
+  ],
+  "issues": [
+    {
+      "code": "CHECK_FAILED",
+      "message": "format:check failed with exit code 1."
+    },
+    {
+      "code": "SOURCE_CHANGED",
+      "message": "Source changed while checks ran; all evidence is invalidated."
+    }
+  ]
+}

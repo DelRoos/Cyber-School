@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-11-14T00:08:37.317Z",
-  "activeTaskId": "TASK-014",
-  "sourceDigest": "eddf273b5ee1bc8a912c29b1892140d5871b93d7136496c14a86be1ceaef4101",
-  "gitHead": "5b637f49a3378dbf9d3b2ebb547ed9e0b4e87793",
-  "nextAction": "Cours de référence program-memory-fundamentals implémenté et validé (status: in-review). En attente de revue scientifique humaine avant passage à published, ou démarrage de TASK-003 (Ready).",
+  "updatedAt": "2026-11-14T08:57:37.747Z",
+  "activeTaskId": "TASK-020",
+  "sourceDigest": "a350dacf16b23387adf21a96e2ca2751c107278caaf34c74cd415fb2cc711744",
+  "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f",
+  "nextAction": "Revue humaine finale de TASK-015 et du cours scientific-reasoning-and-proof (status in-review) avant publication.",
   "validation": {
-    "reference": "continuity/validation/2026-11-14T00-07-49-251Z-6d8667cf-2cd8-427d-9545-015b4bfd4a60/result.json",
+    "reference": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/result.json",
     "status": "passed"
   },
   "blockers": [],
   "documents": {
-    "CURRENT_STATE.md": "749a35bd0511f19dc7dc065fac2c45ff72accac78f5916b80dbdbcb053ebb8f2",
-    "HANDOFF.md": "69582fd32f7690d984c3ba4a68ad7b32af7d1a79e12e04c7234033d67bba3d57"
+    "CURRENT_STATE.md": "6df732c82c13766831b5b3d9331ece16d56a09fd8340364115cbf78d7f2c7f82",
+    "HANDOFF.md": "fc0f78342970601e1c88ed33da58bf87f52793ae2534e6733205d8f6c204b9d9"
   }
 }

@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "1.0",
+  "missionId": "MISSION-unit-tc00-uncertainty-errors",
+  "unitId": "unit-tc00-uncertainty-errors",
+  "slug": "tc00-uncertainty-and-error",
+  "title": "Erreurs de décision, Bayes, provenance et contradiction",
+  "moduleId": "TC-00",
+  "domainId": "v4-tronc-commun",
+  "microLessons": [
+    {
+      "id": "TC00.009",
+      "title": "Mesurer le risque de faux positif",
+      "provenanceLine": 45
+    },
+    {
+      "id": "TC00.010",
+      "title": "Mesurer le risque de faux négatif",
+      "provenanceLine": 46
+    },
+    {
+      "id": "TC00.011",
+      "title": "Appliquer les probabilités conditionnelles à une alerte",
+      "provenanceLine": 47
+    },
+    {
+      "id": "TC00.012",
+      "title": "Intégrer le taux de base à une décision",
+      "provenanceLine": 48
+    },
+    {
+      "id": "TC00.013",
+      "title": "Distinguer preuve directe et preuve circonstancielle",
+      "provenanceLine": 49
+    },
+    {
+      "id": "TC00.014",
+      "title": "Qualifier la provenance d’une assertion",
+      "provenanceLine": 50
+    },
+    {
+      "id": "TC00.015",
+      "title": "Reconnaître une information de seconde main",
+      "provenanceLine": 51
+    },
+    {
+      "id": "TC00.016",
+      "title": "Confronter deux sources contradictoires",
+      "provenanceLine": 52
+    }
+  ],
+  "prerequisiteUnits": [],
+  "associatedResources": [
+    {
+      "label": "Learning How to Learn (Coursera)",
+      "url": "https://www.coursera.org/learn/learning-how-to-learn",
+      "category": "reference"
+    },
+    {
+      "label": "OpenStax Introductory Statistics",
+      "url": "https://openstax.org/details/books/introductory-statistics",
+      "category": "reference"
+    },
+    {
+      "label": "NIST NICE Framework",
+      "url": "https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center",
+      "category": "reference"
+    }
+  ],
+  "requiredSkills": [
+    "curriculum-production",
+    "lesson-design",
+    "visual-explanation",
+    "browser-validation"
+  ],
+  "deliverablesChecklist": [
+    {
+      "kind": "scientific_sheet",
+      "label": "1. Fiche scientifique et références",
+      "status": "missing"
+    },
+    {
+      "kind": "learning_objectives",
+      "label": "2. Objectifs d'apprentissage",
+      "status": "missing"
+    },
+    {
+      "kind": "pedagogical_structure",
+      "label": "3. Structure pédagogique",
+      "status": "missing"
+    },
+    {
+      "kind": "visual_storyboard",
+      "label": "4. Storyboard visuel",
+      "status": "missing"
+    },
+    {
+      "kind": "animation_spec",
+      "label": "5. Spécification des animations",
+      "status": "missing"
+    },
+    {
+      "kind": "simulation_spec",
+      "label": "6. Spécification des simulations",
+      "status": "missing"
+    },
+    {
+      "kind": "exercise_bank",
+      "label": "7. Banque d'exercices",
+      "status": "missing"
+    },
+    {
+      "kind": "web_implementation",
+      "label": "8. Implémentation Web",
+      "status": "missing"
+    },
+    {
+      "kind": "technical_tests",
+      "label": "9. Tests techniques",
+      "status": "missing"
+    },
+    {
+      "kind": "pedagogical_validation_report",
+      "label": "10. Rapport de validation pédagogique",
+      "status": "missing"
+    },
+    {
+      "kind": "external_labs",
+      "label": "11. Liens vers les laboratoires externes",
+      "status": "missing"
+    },
+    {
+      "kind": "publication_metadata",
+      "label": "12. Informations de publication",
+      "status": "missing"
+    }
+  ],
+  "verificationCommands": [
+    "pnpm v4:audit -- --unit unit-tc00-uncertainty-errors",
+    "pnpm typecheck",
+    "pnpm lint",
+    "pnpm validate:curriculum",
+    "pnpm test:unit",
+    "pnpm test:e2e"
+  ]
+}

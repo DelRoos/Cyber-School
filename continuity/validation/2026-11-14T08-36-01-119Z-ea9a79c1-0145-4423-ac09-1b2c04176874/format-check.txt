@@ -1,0 +1,13 @@
+Command: corepack pnpm format:check
+Started: 2026-11-14T08:36:34.776Z
+
+
+> cyber-school@0.1.0 format:check C:\Users\Emerite\Documents\projets\cyber-school
+> prettier --check .
+
+Checking formatting...
+[[33mwarn[39m] packages/animations/src/__tests__/pedagogical-motion.test.tsx
+[[33mwarn[39m] packages/animations/src/pedagogical-motion.tsx
+[[33mwarn[39m] planning/tasks/TASK-020-pedagogical-animations-and-skills.md
+[[33mwarn[39m] Code style issues found in 3 files. Run Prettier with --write to fix.
+ ELIFECYCLE  Command failed with exit code 1.

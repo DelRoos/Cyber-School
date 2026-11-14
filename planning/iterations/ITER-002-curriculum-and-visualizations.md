@@ -15,6 +15,11 @@
 - [TASK-012 — Simulateurs `VIS-04` (Tas/Chunks/D3) & `VIS-05` (C/Rust/GC)](../tasks/TASK-012-memory-course-heap-and-models-visuals.md)
 - [TASK-013 — Résolution `ADR-0006` & Banque d'exercices sans code](../tasks/TASK-013-memory-course-exercises-and-assessment.md)
 - [TASK-014 — Assemblage final `program-memory-fundamentals` & E2E Playwright](../tasks/TASK-014-memory-course-lesson-assembly-and-e2e.md)
+- [TASK-016 — Importateur V4, schémas Zod et regroupement en unités](../tasks/TASK-016-v4-curriculum-importer-and-units.md)
+- [TASK-017 — Registre de production, CLI V4 et skill curriculum-production](../tasks/TASK-017-v4-production-registry-and-missions.md)
+- [TASK-018 — Explorateur Web `/curriculum` du référentiel V4](../tasks/TASK-018-v4-curriculum-explorer-ui.md)
+- [TASK-019 — Premier lot pilote `TC-00` & cours `scientific-reasoning-and-proof`](../tasks/TASK-019-tc00-pilot-batch-and-reasoning-course.md)
+- [TASK-020 — Animations pédagogiques causales (CTML), skill `pedagogical-animation` & documentation](../tasks/TASK-020-pedagogical-animations-and-skills.md)
 
 ## Dossier de conception associé
 

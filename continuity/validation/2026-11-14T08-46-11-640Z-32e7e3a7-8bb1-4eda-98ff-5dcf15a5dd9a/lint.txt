@@ -1,0 +1,60 @@
+Command: corepack pnpm lint
+Started: 2026-11-14T08:46:23.891Z
+
+
+> cyber-school@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run lint && eslint tests scripts playwright.config.ts eslint.config.mjs
+
+
+   • turbo 2.11.11
+   • Packages in scope: @cyber-school/animations, @cyber-school/exercises, @cyber-school/lesson-runtime, @cyber-school/ui, @cyber-school/web
+   • Running lint in 5 packages
+   • Remote caching disabled
+
+@cyber-school/animations:lint: cache hit, replaying logs b1f5625232407892
+@cyber-school/animations:lint: 
+@cyber-school/animations:lint: > @cyber-school/animations@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:lint: > eslint src
+@cyber-school/animations:lint: 
+@cyber-school/ui:lint: cache hit, replaying logs 5a21a5130185f121
+@cyber-school/ui:lint: 
+@cyber-school/ui:lint: > @cyber-school/ui@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:lint: > eslint src
+@cyber-school/ui:lint: 
+@cyber-school/lesson-runtime:lint: cache hit, replaying logs 5c6a9e57b4ca9e32
+@cyber-school/lesson-runtime:lint: 
+@cyber-school/lesson-runtime:lint: > @cyber-school/lesson-runtime@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:lint: > eslint src
+@cyber-school/lesson-runtime:lint: 
+@cyber-school/ui:build: cache hit, replaying logs 7d16e237d155d05c
+@cyber-school/ui:build: [6n[m]0;C:\Windows\system32\cmd.exe[?25h[25l
+@cyber-school/ui:build: > @cyber-school/ui@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\ui
+@cyber-school/ui:build: > tsc -p tsconfig.json[68X[5;1H[?25h
+@cyber-school/lesson-runtime:build: cache hit, replaying logs 3de8b3bf1b878a65
+@cyber-school/lesson-runtime:build: [6n[m]0;C:\Windows\system32\cmd.exe[?25h[25l
+@cyber-school/lesson-runtime:build: > @cyber-school/lesson-runtime@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:build: > tsc -p tsconfig.json[92X[5;1H[?25h
+@cyber-school/animations:build: cache hit, replaying logs 9d85907243c2e6d1
+@cyber-school/animations:build: 
+@cyber-school/animations:build: > @cyber-school/animations@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\animations
+@cyber-school/animations:build: > tsc -p tsconfig.json
+@cyber-school/animations:build: 
+@cyber-school/exercises:build: cache hit, replaying logs 1d85320b9ccde808
+@cyber-school/exercises:build: [6n[m]0;C:\Windows\system32\cmd.exe[?25h[25l
+@cyber-school/exercises:build: > @cyber-school/exercises@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:build: > tsc -p tsconfig.json[82X[5;1H[?25h
+@cyber-school/web:lint: cache hit, replaying logs cbbfa15b8691567f
+@cyber-school/web:lint: 
+@cyber-school/web:lint: > @cyber-school/web@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school\apps\web
+@cyber-school/web:lint: > eslint .
+@cyber-school/web:lint: 
+@cyber-school/exercises:lint: cache hit, replaying logs d93ee301b08042da
+@cyber-school/exercises:lint: 
+@cyber-school/exercises:lint: > @cyber-school/exercises@0.1.0 lint C:\Users\Emerite\Documents\projets\cyber-school\packages\exercises
+@cyber-school/exercises:lint: > eslint src
+@cyber-school/exercises:lint: 
+
+ Tasks:    9 successful, 9 total
+Cached:    9 cached, 9 total
+  Time:    136ms >>> FULL TURBO
+

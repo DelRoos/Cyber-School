@@ -26,3 +26,8 @@ metadata:
 4. **Maintain GitHub Issues/Projects compatibility**:
    - Include YAML frontmatter (`id`, `title`, `status`, `priority`, `complexity`, `labels`, `iteration`, `dependsOn`) in task files so they map cleanly to GitHub Issues/Projects later.
 5. **Update continuity**: Reflect the active iteration and next `Ready` task in `continuity/CURRENT_STATE.md`.
+6. **Synchronize V4 lots**: When scheduling new curriculum batches, run `corepack pnpm v4:plan -- --limit 3` to select eligible prerequisite-satisfied units and link each unit in `production/registry.json` (`taskIds`).
+
+## Learning studio acceptance
+
+Read docs/standards/COURSE_AUTHORING.md. Plan scientific content, examples, interaction and browser review as concrete deliverables. JSON validity or a screenshot alone does not establish learning quality. Generate continuity with quality:checkpoint.

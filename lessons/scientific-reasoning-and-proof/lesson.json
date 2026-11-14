@@ -1,0 +1,229 @@
+{
+  "version": "1.0",
+  "contentRevision": "1.0.0",
+  "id": "lesson-scientific-reasoning-and-proof",
+  "slug": "scientific-reasoning-and-proof",
+  "title": "Observation, hypothèses, causalité et contre-exemples (TC-00)",
+  "conceptId": "tc00-observation-vs-interpretation",
+  "estimatedMinutes": 25,
+  "medium": "2d-animated",
+  "mediumJustification": "Un graphe causal 2D animé pas-à-pas et un testeur de contre-exemple minimal rendent immédiatement visible la différence entre association observationnelle, variable confondante Z et intervention do(X).",
+  "status": "in-review",
+  "review": {
+    "status": "pending"
+  },
+  "steps": [
+    {
+      "id": "step-observation-hypothesis",
+      "title": "1. Observation brute, interprétation et hypothèse falsifiable (TC00.001–003)",
+      "summary": "Séparer le fait journalisé horodaté d'une explication candidate, ordonner hypothèse/prédiction/conclusion et poser un critère explicite de réfutation.",
+      "visualFocus": "Chronologie de preuves et contrat de réfutabilité"
+    },
+    {
+      "id": "step-controls-confounders",
+      "title": "2. Variables contrôlées et variable confondante Z (TC00.004–005)",
+      "summary": "Manipuler le graphe causal X -> Y sous l'influence d'une cause commune Z (tâche cron du lundi matin) pour comprendre pourquoi la co-variation trompe l'analyste.",
+      "visualFocus": "Graphe causal 2D animé à 3 nœuds (Z -> X, Z -> Y)"
+    },
+    {
+      "id": "step-causal-vs-correlation",
+      "title": "3. Chaîne causale, hypothèses et corrélation sans causalité (TC00.006–007)",
+      "summary": "Comparer la probabilité observationnelle P(Y|X) et l'intervention contrôlée P(Y|do(X)) en maintenant Z constant.",
+      "visualFocus": "Comparateur observation vs intervention contrôlée"
+    },
+    {
+      "id": "step-minimal-counterexample",
+      "title": "4. Contre-exemple minimal face aux règles absolues (TC00.008)",
+      "summary": "Isoler le plus petit jeu de conditions légales qui invalide une généralisation de sécurité (« toute réponse HTTP 200 est authentifiée »).",
+      "visualFocus": "Falsificateur interactif de contre-exemple minimal"
+    }
+  ],
+  "exercises": [
+    {
+      "kind": "multiple-choice",
+      "id": "ex-tc00-01",
+      "conceptId": "tc00-observation-vs-interpretation",
+      "prompt": "Dans un rapport d'incident SOC, quel énoncé constitue une observation brute et non une interprétation ?",
+      "explanation": "Une observation brute rapporte une mesure ou trace horodatée vérifiable telle quelle, sans attribuer d'intention ni de cause mécanique non encore démontrée.",
+      "options": [
+        {
+          "id": "a",
+          "label": "À 08:02:14 UTC, le démon sshd a journalisé 412 échecs d'authentification depuis 10.20.4.18.",
+          "feedback": "Exact : horodatage, service, volume et adresse source proviennent directement du journal sans supposition."
+        },
+        {
+          "id": "b",
+          "label": "Un attaquant externe a mené un brute-force distribué à 08:02 UTC.",
+          "feedback": "Incorrect : « attaquant externe » et « brute-force » interprètent la cause sans écarter un script interne mal configuré."
+        },
+        {
+          "id": "c",
+          "label": "Le serveur SSH est compromis suite à une erreur de rotation de clés.",
+          "feedback": "Incorrect : il s'agit d'une conclusion causale lourde sans preuve d'authentification réussie."
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "kind": "sequence-order",
+      "id": "ex-tc00-02",
+      "conceptId": "tc00-hypothesis-prediction-conclusion",
+      "prompt": "Ordonnez les étapes d'un raisonnement scientifique falsifiable appliqué à une hausse d'alertes réseau.",
+      "explanation": "On part du fait mesuré (observation), puis on propose un mécanisme falsifiable (hypothèse), on déduit une mesure attendue (prédiction), on exécute le test contrôlé avant de conclure.",
+      "items": [
+        { "id": "obs", "label": "Relever le fait brut horodaté dans la télémétrie" },
+        {
+          "id": "hyp",
+          "label": "Formuler une hypothèse mécaniste comportant un critère de réfutation"
+        },
+        { "id": "pred", "label": "Énoncer la prédiction observable si l'hypothèse tient" },
+        { "id": "conc", "label": "Valider ou rejeter l'hypothèse après mesure contrôlée" }
+      ],
+      "expectedOrder": ["obs", "hyp", "pred", "conc"]
+    },
+    {
+      "kind": "state-prediction",
+      "id": "ex-tc00-03",
+      "conceptId": "tc00-correlation-without-causation",
+      "scenario": "Tous les lundis à 08h00, le nouvel agent EDR redémarre et les alertes d'échecs SSH grimpent à 410/h. Vous constatez ensuite qu'un scanner interne de conformité démarre aussi chaque lundi à 08h00. Vous décidez de désactiver l'agent EDR sur un hôte test sans modifier le scanner (do(EDR = OFF)).",
+      "prompt": "Combien d'alertes SSH faut-il s'attendre à observer sur l'hôte test le lundi suivant à 08h00 ?",
+      "explanation": "L'EDR et les alertes SSH partagent une cause commune Z (le scanner cron du lundi 08h00). Intervenir uniquement sur X (EDR) laisse Z intact : le volume d'alertes reste élevé (~410/h).",
+      "options": [
+        {
+          "id": "a",
+          "label": "Environ 410 alertes/h : Z (le scanner cron) continue de déclencher sshd.",
+          "feedback": "Exact : couper une branche d'une fourche causale Z -> X ne bloque pas la branche Z -> Y."
+        },
+        {
+          "id": "b",
+          "label": "Retour immédiat au niveau basal (~5 alertes/h) puisque X était corrélé à Y.",
+          "feedback": "Erreur classique : confondre P(Y|X) et P(Y|do(X)). Sans intervention sur Z, Y ne chute pas."
+        },
+        {
+          "id": "c",
+          "label": "Doublement à ~820 alertes/h par effet rebond du pare-feu.",
+          "feedback": "Incorrect : rien dans le mécanisme décrit ne multiplie les requêtes du scanner."
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "kind": "diagram-probe",
+      "id": "ex-tc00-04",
+      "conceptId": "tc00-confounding-variable",
+      "prompt": "Sur la carte causale simplifiée ci-dessous, sélectionnez le nœud qui joue le rôle de variable confondante Z expliquant à la fois la redémarre EDR et le pic d'alertes SSH.",
+      "diagramTitle": "Graphe causal d'incident du lundi 08h00",
+      "diagramCaption": "Identifiez le nœud source créant la corrélation trompeuse entre X et Y.",
+      "allowMultiple": false,
+      "explanation": "La tâche cron hebdomadaire (lundi 08h00) planifie simultanément la collecte EDR et le scan d'inventaire SSH : c'est la cause commune Z.",
+      "zones": [
+        {
+          "id": "zone-x",
+          "label": "X : Redémarrage agent EDR",
+          "region": "Effet apparent",
+          "feedback": "Incorrect : l'agent EDR ne génère pas les paquets SSH observés ; il est lui-même déclenché le lundi à 08h00."
+        },
+        {
+          "id": "zone-y",
+          "label": "Y : Pic d'échecs SSH (sshd)",
+          "region": "Effet observé",
+          "feedback": "Incorrect : c'est la variable résultat mesurée dans les journaux, pas la cause commune."
+        },
+        {
+          "id": "zone-z",
+          "label": "Z : Planification cron hebdomadaire (lundi 08h00)",
+          "region": "Variable confondante",
+          "feedback": "Exact : Z influence à la fois X et Y, créant une corrélation statistique sans lien causal direct entre EDR et SSH."
+        }
+      ],
+      "correctZoneIds": ["zone-z"]
+    },
+    {
+      "kind": "multiple-choice",
+      "id": "ex-tc00-05",
+      "conceptId": "tc00-causal-chain-assumptions",
+      "prompt": "On propose la chaîne : « Correctif TLS déployé -> baisse immédiate des requêtes 502 ». Quelle hypothèse implicite doit être vérifiée avant d'attribuer la baisse au correctif ?",
+      "explanation": "Une chaîne causale présuppose qu'aucune autre variable (charge trafic, bascule DNS, redémarrage amont) n'a varié au même instant.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Aucun déploiement parallèle ou baisse de trafic client n'a eu lieu sur la même fenêtre.",
+          "feedback": "Exact : contrôler les co-interventions et le volume d'entrée est indispensable pour isoler l'effet du correctif."
+        },
+        {
+          "id": "b",
+          "label": "Le fichier source du serveur web pèse moins de 10 Mo.",
+          "feedback": "Incorrect : la taille du binaire n'est pas une hypothèse causale pertinente pour le taux de 502."
+        },
+        {
+          "id": "c",
+          "label": "Tous les navigateurs clients utilisent exactement la même version de police système.",
+          "feedback": "Incorrect : variable hors chaîne causale pour une erreur proxy 502."
+        }
+      ],
+      "correctOptionId": "a"
+    },
+    {
+      "kind": "state-prediction",
+      "id": "ex-tc00-06",
+      "conceptId": "tc00-minimal-counterexample",
+      "scenario": "Un collègue affirme : « Dans notre API, toute réponse HTTP 200 signifie qu'un jeton JWT valide a été vérifié côté serveur. » Vous disposez des conditions suivantes : C1 = route publique `/healthz` sans middleware d'auth ; C2 = utilisateur utilisant un navigateur Firefox sous Linux ; C3 = latence réseau < 20 ms.",
+      "prompt": "Quel ensemble constitue le contre-exemple minimal qui réfute l'affirmation universelle ?",
+      "explanation": "Un contre-exemple minimal ne garde que les conditions strictement nécessaires pour respecter les prémisses et contredire la conclusion : C1 seule suffit à obtenir un code 200 sans vérification JWT.",
+      "options": [
+        {
+          "id": "a",
+          "label": "Un appel HTTP GET `/healthz` (C1 seule) renvoyant 200 sans aucun jeton JWT.",
+          "feedback": "Exact : C1 suffit à elle seule à réfuter « toute réponse 200 ». Ajouter C2 ou C3 introduit des hypothèses superflues."
+        },
+        {
+          "id": "b",
+          "label": "Exiger simultanément C1 + C2 (Firefox) + C3 (< 20 ms).",
+          "feedback": "Pas minimal : C2 et C3 n'interviennent pas dans la génération d'une réponse 200 et masquent la cause réelle de réfutation."
+        },
+        {
+          "id": "c",
+          "label": "Affirmer qu'aucun contre-exemple n'est possible sans accès administrateur.",
+          "feedback": "Incorrect : une route publique non authentifiée démontre déjà la fausseté de la règle universelle."
+        }
+      ],
+      "correctOptionId": "a"
+    }
+  ],
+  "assessments": [
+    {
+      "id": "assess-tc00-causality",
+      "title": "Palier 1 — Causalité, variables contrôlées et confondantes",
+      "conceptIds": [
+        "tc00-observation-vs-interpretation",
+        "tc00-hypothesis-prediction-conclusion",
+        "tc00-confounding-variable",
+        "tc00-correlation-without-causation"
+      ],
+      "passingScorePercent": 75,
+      "exerciseIds": ["ex-tc00-01", "ex-tc00-02", "ex-tc00-03", "ex-tc00-04"]
+    },
+    {
+      "id": "assess-tc00-falsification",
+      "title": "Palier 2 — Chaînes causales et contre-exemple minimal",
+      "conceptIds": ["tc00-causal-chain-assumptions", "tc00-minimal-counterexample"],
+      "passingScorePercent": 100,
+      "exerciseIds": ["ex-tc00-05", "ex-tc00-06"]
+    }
+  ],
+  "externalLabs": [
+    {
+      "id": "lab-openstax-design-review",
+      "title": "Étude de cas : protocoles d'expérience contrôlée (OpenStax Ch. 1.2)",
+      "provider": "OpenStax",
+      "url": "https://openstax.org/details/books/introductory-statistics",
+      "description": "Relecture autonome d'exemples réels de variables confondantes et de groupes témoins en statistique expérimentale.",
+      "localSteps": [
+        "Repérer la variable d'exposition et la variable résultat dans deux cas du chapitre 1.",
+        "Formuler par écrit le facteur confondant et l'expérience de contrôle associée."
+      ],
+      "estimatedMinutes": 15
+    }
+  ],
+  "resourceIds": ["openstax-intro-stats", "nist-nice-framework", "stanford-scientific-method"]
+}

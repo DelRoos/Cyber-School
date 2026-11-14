@@ -1,0 +1,14 @@
+Command: corepack pnpm format:check
+Started: 2026-11-14T08:00:23.681Z
+
+
+> cyber-school@0.1.0 format:check C:\Users\Emerite\Documents\projets\cyber-school
+> prettier --check .
+
+Checking formatting...
+[[33mwarn[39m] curriculum/v4/imported-curriculum.json
+[[33mwarn[39m] production/registry.json
+[[33mwarn[39m] production/reports/unit-tc00-observation-hypotheses-qa.json
+[[33mwarn[39m] production/units.json
+[[33mwarn[39m] Code style issues found in 4 files. Run Prettier with --write to fix.
+ ELIFECYCLE  Command failed with exit code 1.

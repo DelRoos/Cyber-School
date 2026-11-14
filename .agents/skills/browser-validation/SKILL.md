@@ -29,3 +29,7 @@ metadata:
    - Responsive check at mobile (`375x812`) and desktop (`1280x800`) without unintended horizontal overflow (`scrollWidth <= innerWidth`).
    - Basic performance check (navigation load timing reasonable, no infinite layout loops).
 4. **Report facts only**: Record exact commands run and observed pass/fail counts in `continuity/CURRENT_STATE.md`.
+
+## Learning studio acceptance
+
+Read docs/standards/COURSE_AUTHORING.md. Capture and inspect full pages at 1280x800 and 375x812. Test search, empty results, all navigation, chapter changes, checked-answer retention and invalidation after editing. Check wrong-answer feedback, readable text, focus and source disclosures. Record actual commands and screenshots.

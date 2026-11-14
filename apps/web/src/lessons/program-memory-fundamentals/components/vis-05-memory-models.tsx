@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { ArrowLeft, ArrowRight, GitCompare, Info, RotateCcw } from "lucide-react";
+import { ConceptTransformBanner } from "@cyber-school/animations";
 import {
   Alert,
   AlertDescription,
@@ -165,6 +166,21 @@ export function Vis05MemoryModels() {
       </CardHeader>
 
       <CardContent className="space-y-4">
+        <ConceptTransformBanner
+          stepKey={`${scenario}-${gcFreq}-${current.tick}`}
+          cause={`${SCENARIO_LABELS[scenario]} · t = ${current.tick} (${current.phaseLabel})`}
+          mechanism={current.summary}
+          effectDelta={`C ${current.tracks[0]?.ramUnits ?? 0}% · Rust ${current.tracks[1]?.ramUnits ?? 0}% · GC ${current.tracks[2]?.ramUnits ?? 0}%`}
+          tone={
+            current.tracks.some((t) => t.statusBadge === "leaked" || t.statusBadge === "uaf-risk")
+              ? "danger"
+              : current.tracks.some((t) => t.statusBadge === "compile-blocked")
+                ? "causal"
+                : "success"
+          }
+          testId="vis05-transform-banner"
+        />
+
         {/* 3 Synchronized Columns */}
         <div className="grid gap-3 md:grid-cols-3">
           {current.tracks.map((track) => (
@@ -254,7 +270,10 @@ export function Vis05MemoryModels() {
                     width={barWidth}
                     height="16"
                     rx="3"
-                    className={fillClass}
+                    className={cn(
+                      fillClass,
+                      "transition-all duration-300 motion-reduce:transition-none",
+                    )}
                   />
                   <text x="334" y={y + 14} className="fill-foreground text-[11px] font-mono">
                     {track.ramUnits}% ({track.statusBadge})

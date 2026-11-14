@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-14T08-35-17-740Z-74378a31-48b3-483c-88a9-dbbffa7f5854",
+  "taskId": "TASK-016",
+  "startedAt": "2026-11-14T08:35:17.740Z",
+  "finishedAt": null,
+  "status": "running",
+  "source": {
+    "digest": "19bc9da706e22b7a27a0b5e0dcf1b13405852f59bc16ff5fb8fd93279b96715f",
+    "fileCount": 221,
+    "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f"
+  },
+  "criteriaDigest": "a35cb162b49169d44f144fc5ce9d5d5d5b9b8e505652278d4cbac55e6d35c6c3",
+  "environment": {
+    "nodeVersion": "22.23.5",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [
+    {
+      "name": "test:guards",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:guards"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:35:18.025Z",
+      "finishedAt": "2026-11-14T08:35:24.417Z",
+      "logFile": "continuity/validation/2026-11-14T08-35-17-740Z-74378a31-48b3-483c-88a9-dbbffa7f5854/test-guards.txt",
+      "logSha256": "ee545c5288cb529f5b8f6f16a34f4b0ab83da34920888e0549db4d5132f4adea"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "corepack",
+        "pnpm",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:35:24.437Z",
+      "finishedAt": "2026-11-14T08:35:28.473Z",
+      "logFile": "continuity/validation/2026-11-14T08-35-17-740Z-74378a31-48b3-483c-88a9-dbbffa7f5854/typecheck.txt",
+      "logSha256": "afb06e2ea75040c3bea12dcb9e6bd9b92e44fd21b21a98c4b86773e0e0162a7a"
+    }
+  ],
+  "issues": []
+}

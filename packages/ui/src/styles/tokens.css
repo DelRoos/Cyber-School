@@ -1,29 +1,29 @@
 /* Cyber School Design System Tokens (Tailwind CSS v4 + shadcn-compatible) */
 
 :root {
-  --background: #060b14;
-  --foreground: #f1f5f9;
-  --card: #0c1424;
-  --card-foreground: #f1f5f9;
-  --popover: #0c1424;
-  --popover-foreground: #f1f5f9;
-  --primary: #22d3ee;
-  --primary-foreground: #04101d;
-  --secondary: #172238;
-  --secondary-foreground: #e2e8f0;
-  --muted: #131d31;
-  --muted-foreground: #94a3b8;
-  --accent: #192942;
-  --accent-foreground: #f8fafc;
+  --background: #101312;
+  --foreground: #f0f1e9;
+  --card: #191e1b;
+  --card-foreground: #f0f1e9;
+  --popover: #191e1b;
+  --popover-foreground: #f0f1e9;
+  --primary: #c8ed97;
+  --primary-foreground: #17200d;
+  --secondary: #252d27;
+  --secondary-foreground: #e2e8de;
+  --muted: #202722;
+  --muted-foreground: #a2afa4;
+  --accent: #303b31;
+  --accent-foreground: #f0f1e9;
   --destructive: #be123c;
   --destructive-foreground: #fff1f2;
   --success: #10b981;
   --success-foreground: #032218;
   --warning: #f59e0b;
   --warning-foreground: #1e1302;
-  --border: #1e2d47;
-  --input: #1e2d47;
-  --ring: #38bdf8;
+  --border: #303932;
+  --input: #303932;
+  --ring: #c8ed97;
   --radius: 0.75rem;
 }
 

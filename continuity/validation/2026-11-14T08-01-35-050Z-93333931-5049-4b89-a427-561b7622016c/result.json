@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-14T08-01-35-050Z-93333931-5049-4b89-a427-561b7622016c",
+  "taskId": "TASK-015",
+  "startedAt": "2026-11-14T08:01:35.050Z",
+  "finishedAt": "2026-11-14T08:01:58.874Z",
+  "status": "failed",
+  "source": {
+    "digest": "3ce2996c297bc7268158a3753fb077efba68cadc2d9a5d0540a11befefd2ac14",
+    "fileCount": 213,
+    "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f"
+  },
+  "criteriaDigest": "6887ff0c8b2f583400628d2a4c83a5e8c818ce6dc220497b1ee54ea3f1e13aa2",
+  "environment": {
+    "nodeVersion": "22.23.5",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [
+    {
+      "name": "test:guards",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:guards"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:35.373Z",
+      "finishedAt": "2026-11-14T08:01:43.287Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-35-050Z-93333931-5049-4b89-a427-561b7622016c/test-guards.txt",
+      "logSha256": "b9173e50e318a296d837143f0bfd20c07cb8d8e7420a3fa5ed3d09cc86805d38"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "corepack",
+        "pnpm",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:43.297Z",
+      "finishedAt": "2026-11-14T08:01:47.281Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-35-050Z-93333931-5049-4b89-a427-561b7622016c/typecheck.txt",
+      "logSha256": "136c9741427bff640de075684802c7b03798a9ef974891079ba9411c268693ce"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "corepack",
+        "pnpm",
+        "lint"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:47.293Z",
+      "finishedAt": "2026-11-14T08:01:51.623Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-35-050Z-93333931-5049-4b89-a427-561b7622016c/lint.txt",
+      "logSha256": "14f59edc5f4f81f15f06899ebb6bcb05036650f20544cc08add0f0e33c7725e3"
+    },
+    {
+      "name": "format:check",
+      "command": [
+        "corepack",
+        "pnpm",
+        "format:check"
+      ],
+      "exitCode": 1,
+      "startedAt": "2026-11-14T08:01:51.634Z",
+      "finishedAt": "2026-11-14T08:01:58.786Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-35-050Z-93333931-5049-4b89-a427-561b7622016c/format-check.txt",
+      "logSha256": "31049d228e9be19d88119edea583f5ac93a45888daf8d670a7c71b725f7ad4f4"
+    }
+  ],
+  "issues": [
+    {
+      "code": "CHECK_FAILED",
+      "message": "format:check failed with exit code 1."
+    }
+  ]
+}

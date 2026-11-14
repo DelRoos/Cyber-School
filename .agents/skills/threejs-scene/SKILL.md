@@ -25,3 +25,7 @@ metadata:
    - Include keyboard-accessible camera presets / step controls and a synchronized textual state summary.
    - Provide a graceful WebGL fallback when hardware acceleration or WebGL context is unavailable.
 4. **Verify**: Check console errors, memory stability, and responsiveness with `browser-validation`.
+
+## Learning studio acceptance
+
+Read docs/standards/COURSE_AUTHORING.md. Require a concrete learning reason for depth and a readable text/2D equivalent; never add 3D merely to decorate a course.

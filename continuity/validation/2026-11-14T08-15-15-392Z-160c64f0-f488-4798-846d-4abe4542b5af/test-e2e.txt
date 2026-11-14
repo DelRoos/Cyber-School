@@ -1,0 +1,464 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-14T08:15:48.799Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+
+Running 14 tests using 2 workers
+
+(node:13168) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:9416) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   1 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (13.1s)
+(node:16944) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   3 [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (6.9s)
+(node:1848) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   4 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (6.4s)
+  x   2 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation (30.1s)
+(node:20060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16132) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   6 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (9.1s)
+(node:14408) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   5 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (14.0s)
+(node:18280) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   7 [chromium-desktop] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (7.1s)
+(node:20308) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   8 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (6.2s)
+(node:18812) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  10 [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (6.6s)
+(node:5452) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  11 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (6.6s)
+(node:16804) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  12 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (6.2s)
+(node:7632) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x   9 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation (30.2s)
+  x  13 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (2.0s)
+(node:19472) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  x  14 [chromium-mobile] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (6.7s)
+
+
+  1) [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('output')
+    Expected substring: "43"
+    Received string:    "42en décimal"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('output') with timeout 5000ms
+      - waiting for locator('output')
+        14 × locator resolved to <output aria-live="polite">…</output>
+           - unexpected value "42en décimal"
+
+
+      10 |   await expect(page.getByRole("heading", { level: 1 })).toContainText("Le déclic");
+      11 |   await page.getByRole("button", { name: "Augmenter le nombre" }).click();
+    > 12 |   await expect(page.locator("output")).toContainText("43");
+         |                                        ^
+      13 |   await expect(page.getByLabel("43 en binaire : 00101011")).toBeVisible();
+      14 |   await page.getByRole("button", { name: "Diminuer le nombre" }).focus();
+      15 |   await page.keyboard.press("Enter");
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\learning-studio.spec.ts:12:40
+
+    Error Context: test-results\learning-studio-catalog-di-7bf89-byte-respond-to-the-learner-chromium-desktop\error-context.md
+
+  2) [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Browser logs:
+
+    <launching> C:\Users\Emerite\AppData\Local\ms-playwright\chromium-1248\chrome-win64\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\Emerite\AppData\Local\Temp\playwright_chromiumdev_profile-hBsTt6 --remote-debugging-pipe --no-startup-window
+    <launched> pid=20144
+    [pid=20144] <gracefully close start>
+    Call log:
+      - waiting for getByTestId('exercise-card-ex-mem-01').getByRole('button', { name: /Vérifier/ })
+        - locator resolved to <button disabled type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm h-10 px-4 py-2">Vérifier ma réponse</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        33 × waiting for element to be visible, enabled and stable
+           - element is not enabled
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      47 |   await page.keyboard.press("Space");
+      48 |   await expect(ex.getByRole("radio", { name: /Pendant la phase Fetch/ })).toBeChecked();
+    > 49 |   await ex.getByRole("button", { name: /Vérifier/ }).click();
+         |                                                      ^
+      50 |   await expect(page.getByTestId("exercises-score-badge")).toContainText("1 / 16");
+      51 |   await page.getByTestId("chapter-filter-step-virtual-segments").focus();
+      52 |   await page.keyboard.press("Enter");
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\learning-studio.spec.ts:49:54
+
+    Error Context: test-results\learning-studio-guided-cha-6be18-support-keyboard-navigation-chromium-desktop\error-context.md
+
+  3) [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('vis01-byte-0x1008')
+    Expected substring: "78"
+    Received string:    "0x100810"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('vis01-byte-0x1008') with timeout 5000ms
+      - waiting for getByTestId('vis01-byte-0x1008')
+        14 × locator resolved to <div data-testid="vis01-byte-0x1008" class="rounded-md border px-2 py-1.5 text-center transition-colors motion-reduce:transition-none border-sky-500/40 bg-sky-500/10 text-foreground">…</div>
+           - unexpected value "0x100810"
+
+
+      42 |       await page.keyboard.press("ArrowRight");
+      43 |     }
+    > 44 |     await expect(page.getByTestId("vis01-byte-0x1008")).toContainText("78");
+         |                                                         ^
+      45 |
+      46 |     // 3. VIS-02: Trigger SIGSEGV when writing into .text
+      47 |     await expect(page.getByTestId("vis-02-virtual-memory")).toBeVisible();
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\program-memory.spec.ts:44:57
+
+    Error Context: test-results\program-memory-Program-Mem-d1fd3-uced-motion-and-assessments-chromium-desktop\error-context.md
+
+  4) [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('client-tcp-state')
+    Expected: "SYN_SENT"
+    Received: "CLOSED"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('client-tcp-state') with timeout 5000ms
+      - waiting for getByTestId('client-tcp-state')
+        14 × locator resolved to <span data-testid="client-tcp-state" class="inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors border-border text-muted-foreground">CLOSED</span>
+           - unexpected value "CLOSED"
+
+
+      68 |     const nextButton = page.getByRole("button", { name: "Suivant" });
+      69 |     await nextButton.click();
+    > 70 |     await expect(clientBadge).toHaveText("SYN_SENT");
+         |                               ^
+      71 |     await expect(serverBadge).toHaveText("LISTEN");
+      72 |     await expect(page.getByTestId("diagram-row-syn")).toBeVisible();
+      73 |
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\tcp-handshake.spec.ts:70:31
+
+    Error Context: test-results\tcp-handshake-TCP-Three-Wa-2ac76-ises-with-keyboard-controls-chromium-desktop\error-context.md
+
+  5) [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('diagram-row-syn')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('diagram-row-syn') with timeout 5000ms
+      - waiting for getByTestId('diagram-row-syn')
+
+
+      236 |
+      237 |     await nextButton.click();
+    > 238 |     await expect(page.getByTestId("diagram-row-syn")).toBeVisible();
+          |                                                       ^
+      239 |     const progressTransition = await page
+      240 |       .getByRole("progressbar")
+      241 |       .locator("div")
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\tcp-handshake.spec.ts:238:55
+
+    Error Context: test-results\tcp-handshake-TCP-Three-Wa-d3e33-rs-reduced-motion-is-reduce-chromium-desktop\error-context.md
+
+  6) [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=X5ks9WatrgqPgnhQPdMmJ' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    +   "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=0epzMyUJSE0TwMgSMjkEO' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    + ]
+
+      288 |       fullPage: true,
+      289 |     });
+    > 290 |     expect(consoleErrors).toEqual([]);
+          |                           ^
+      291 |     expect(pageErrors).toEqual([]);
+      292 |   });
+      293 | });
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\tcp-handshake.spec.ts:290:27
+
+    Error Context: test-results\tcp-handshake-TCP-Three-Wa-585a1-overflow-on-mobile-375x812--chromium-desktop\error-context.md
+
+  7) [chromium-desktop] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('v4-unit-card-unit-tc00-observation-hypotheses')
+    Expected substring: "TC00.005"
+    Received string:    "TC-00Revue nécessaire8 micro-leçons · ~25 min · 2d-animatedObservation, hypothèses, causalité et contre-exemplesUnité unit-tc00-observation-hypotheses · Tronc commun — Fondations scientifiques, systèmes & sécuritéOuvrir le coursVoir les micro-leçons"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('v4-unit-card-unit-tc00-observation-hypotheses') with timeout 5000ms
+      - waiting for getByTestId('v4-unit-card-unit-tc00-observation-hypotheses')
+        13 × locator resolved to <div data-testid="v4-unit-card-unit-tc00-observation-hypotheses" class="min-w-0 rounded-xl border border-border bg-card text-card-foreground shadow-sm">…</div>
+           - unexpected value "TC-00Revue nécessaire8 micro-leçons · ~25 min · 2d-animatedObservation, hypothèses, causalité et contre-exemplesUnité unit-tc00-observation-hypotheses · Tronc commun — Fondations scientifiques, systèmes & sécuritéOuvrir le coursVoir les micro-leçons"
+
+
+      34 |     await page.getByTestId("v4-search-input").fill("TC00.005");
+      35 |     await page.getByTestId("v4-expand-unit-tc00-observation-hypotheses").click();
+    > 36 |     await expect(page.getByTestId("v4-unit-card-unit-tc00-observation-hypotheses")).toContainText(
+         |                                                                                     ^
+      37 |       "TC00.005",
+      38 |     );
+      39 |     await page.getByTestId("v4-open-lesson-scientific-reasoning-and-proof").click();
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\v4-factory-and-tc00.spec.ts:36:85
+
+    Error Context: test-results\v4-factory-and-tc00-V4-Cur-e368c-IS-01-VIS-02-and-assessment-chromium-desktop\error-context.md
+
+  8) [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('output')
+    Expected substring: "43"
+    Received string:    "42en décimal"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" locator('output') with timeout 5000ms
+      - waiting for locator('output')
+        14 × locator resolved to <output aria-live="polite">…</output>
+           - unexpected value "42en décimal"
+
+
+      10 |   await expect(page.getByRole("heading", { level: 1 })).toContainText("Le déclic");
+      11 |   await page.getByRole("button", { name: "Augmenter le nombre" }).click();
+    > 12 |   await expect(page.locator("output")).toContainText("43");
+         |                                        ^
+      13 |   await expect(page.getByLabel("43 en binaire : 00101011")).toBeVisible();
+      14 |   await page.getByRole("button", { name: "Diminuer le nombre" }).focus();
+      15 |   await page.keyboard.press("Enter");
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\learning-studio.spec.ts:12:40
+
+    Error Context: test-results\learning-studio-catalog-di-7bf89-byte-respond-to-the-learner-chromium-mobile\error-context.md
+
+  9) [chromium-mobile] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation 
+
+    Test timeout of 30000ms exceeded.
+
+    Error: locator.click: Test timeout of 30000ms exceeded.
+    Browser logs:
+
+    <launching> C:\Users\Emerite\AppData\Local\ms-playwright\chromium-1248\chrome-win64\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,HttpsUpgrades,HttpsFirstBalancedModeAutoEnable,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,AvoidCorsURLLoaderRestartOnRedirect,TcpPortRandomizationWin,OptimizationHints,NetworkTimeServiceQuerying,AimEnabled,PreconnectToSearch,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface,SkipListAccountsWithoutGaiaCookies --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --enable-unsafe-swiftshader --edge-skip-compat-layer-relaunch --disable-stack-profiler --disable-infobars --disable-sync --do-not-de-elevate --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\Users\Emerite\AppData\Local\Temp\playwright_chromiumdev_profile-6QKYSd --remote-debugging-pipe --no-startup-window
+    <launched> pid=19720
+    [pid=19720] <gracefully close start>
+    Call log:
+      - waiting for getByTestId('exercise-card-ex-mem-01').getByRole('button', { name: /Vérifier/ })
+        - locator resolved to <button disabled type="button" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:pointer-events-none disabled:opacity-50 cursor-pointer bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm h-10 px-4 py-2">Vérifier ma réponse</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not enabled
+        - retrying click action
+          - waiting 100ms
+        55 × waiting for element to be visible, enabled and stable
+           - element is not enabled
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      47 |   await page.keyboard.press("Space");
+      48 |   await expect(ex.getByRole("radio", { name: /Pendant la phase Fetch/ })).toBeChecked();
+    > 49 |   await ex.getByRole("button", { name: /Vérifier/ }).click();
+         |                                                      ^
+      50 |   await expect(page.getByTestId("exercises-score-badge")).toContainText("1 / 16");
+      51 |   await page.getByTestId("chapter-filter-step-virtual-segments").focus();
+      52 |   await page.keyboard.press("Enter");
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\learning-studio.spec.ts:49:54
+
+    Error Context: test-results\learning-studio-guided-cha-6be18-support-keyboard-navigation-chromium-mobile\error-context.md
+
+  10) [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('vis01-byte-0x1008')
+    Expected substring: "78"
+    Received string:    "0x100810"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('vis01-byte-0x1008') with timeout 5000ms
+      - waiting for getByTestId('vis01-byte-0x1008')
+        14 × locator resolved to <div data-testid="vis01-byte-0x1008" class="rounded-md border px-2 py-1.5 text-center transition-colors motion-reduce:transition-none border-sky-500/40 bg-sky-500/10 text-foreground">…</div>
+           - unexpected value "0x100810"
+
+
+      42 |       await page.keyboard.press("ArrowRight");
+      43 |     }
+    > 44 |     await expect(page.getByTestId("vis01-byte-0x1008")).toContainText("78");
+         |                                                         ^
+      45 |
+      46 |     // 3. VIS-02: Trigger SIGSEGV when writing into .text
+      47 |     await expect(page.getByTestId("vis-02-virtual-memory")).toBeVisible();
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\program-memory.spec.ts:44:57
+
+    Error Context: test-results\program-memory-Program-Mem-d1fd3-uced-motion-and-assessments-chromium-mobile\error-context.md
+
+  11) [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls 
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator:  getByTestId('client-tcp-state')
+    Expected: "SYN_SENT"
+    Received: "CLOSED"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveText" getByTestId('client-tcp-state') with timeout 5000ms
+      - waiting for getByTestId('client-tcp-state')
+        14 × locator resolved to <span data-testid="client-tcp-state" class="inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium transition-colors border-border text-muted-foreground">CLOSED</span>
+           - unexpected value "CLOSED"
+
+
+      68 |     const nextButton = page.getByRole("button", { name: "Suivant" });
+      69 |     await nextButton.click();
+    > 70 |     await expect(clientBadge).toHaveText("SYN_SENT");
+         |                               ^
+      71 |     await expect(serverBadge).toHaveText("LISTEN");
+      72 |     await expect(page.getByTestId("diagram-row-syn")).toBeVisible();
+      73 |
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\tcp-handshake.spec.ts:70:31
+
+    Error Context: test-results\tcp-handshake-TCP-Three-Wa-2ac76-ises-with-keyboard-controls-chromium-mobile\error-context.md
+
+  12) [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByTestId('diagram-row-syn')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" getByTestId('diagram-row-syn') with timeout 5000ms
+      - waiting for getByTestId('diagram-row-syn')
+
+
+      236 |
+      237 |     await nextButton.click();
+    > 238 |     await expect(page.getByTestId("diagram-row-syn")).toBeVisible();
+          |                                                       ^
+      239 |     const progressTransition = await page
+      240 |       .getByRole("progressbar")
+      241 |       .locator("div")
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\tcp-handshake.spec.ts:238:55
+
+    Error Context: test-results\tcp-handshake-TCP-Three-Wa-d3e33-rs-reduced-motion-is-reduce-chromium-mobile\error-context.md
+
+  13) [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) 
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 4
+
+    - Array []
+    + Array [
+    +   "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=zPBHbprcd8kaU3moBDn50' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    +   "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=Du7J5U9dwJ1i4kC8T03l4' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+    + ]
+
+      288 |       fullPage: true,
+      289 |     });
+    > 290 |     expect(consoleErrors).toEqual([]);
+          |                           ^
+      291 |     expect(pageErrors).toEqual([]);
+      292 |   });
+      293 | });
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\tcp-handshake.spec.ts:290:27
+
+    Error Context: test-results\tcp-handshake-TCP-Three-Wa-585a1-overflow-on-mobile-375x812--chromium-mobile\error-context.md
+
+  14) [chromium-mobile] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('v4-unit-card-unit-tc00-observation-hypotheses')
+    Expected substring: "TC00.005"
+    Received string:    "TC-00Revue nécessaire8 micro-leçons · ~25 min · 2d-animatedObservation, hypothèses, causalité et contre-exemplesUnité unit-tc00-observation-hypotheses · Tronc commun — Fondations scientifiques, systèmes & sécuritéOuvrir le coursVoir les micro-leçons"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('v4-unit-card-unit-tc00-observation-hypotheses') with timeout 5000ms
+      - waiting for getByTestId('v4-unit-card-unit-tc00-observation-hypotheses')
+        14 × locator resolved to <div data-testid="v4-unit-card-unit-tc00-observation-hypotheses" class="min-w-0 rounded-xl border border-border bg-card text-card-foreground shadow-sm">…</div>
+           - unexpected value "TC-00Revue nécessaire8 micro-leçons · ~25 min · 2d-animatedObservation, hypothèses, causalité et contre-exemplesUnité unit-tc00-observation-hypotheses · Tronc commun — Fondations scientifiques, systèmes & sécuritéOuvrir le coursVoir les micro-leçons"
+
+
+      34 |     await page.getByTestId("v4-search-input").fill("TC00.005");
+      35 |     await page.getByTestId("v4-expand-unit-tc00-observation-hypotheses").click();
+    > 36 |     await expect(page.getByTestId("v4-unit-card-unit-tc00-observation-hypotheses")).toContainText(
+         |                                                                                     ^
+      37 |       "TC00.005",
+      38 |     );
+      39 |     await page.getByTestId("v4-open-lesson-scientific-reasoning-and-proof").click();
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\v4-factory-and-tc00.spec.ts:36:85
+
+    Error Context: test-results\v4-factory-and-tc00-V4-Cur-e368c-IS-01-VIS-02-and-assessment-chromium-mobile\error-context.md
+
+  14 failed
+    [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner 
+    [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation 
+    [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments 
+    [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls 
+    [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce 
+    [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) 
+    [chromium-desktop] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment 
+    [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner 
+    [chromium-mobile] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation 
+    [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments 
+    [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls 
+    [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce 
+    [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) 
+    [chromium-mobile] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment 
+ ELIFECYCLE  Command failed with exit code 1.

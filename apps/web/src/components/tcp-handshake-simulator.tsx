@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import type { LessonManifest } from "@cyber-school/lesson-runtime";
 import {
+  ConceptTransformBanner,
   MotionStepPanel,
   getStepDuration,
   useGsapScope,
@@ -437,7 +438,25 @@ export function TcpHandshakeSimulator({ lesson }: TcpHandshakeSimulatorProps) {
           </div>
 
           {/* Animated network channel */}
-          <div className="flex flex-col justify-between rounded-xl border border-border bg-background/80 p-4 lg:col-span-6">
+          <div className="flex flex-col justify-between gap-3 rounded-xl border border-border bg-background/80 p-4 lg:col-span-6">
+            <ConceptTransformBanner
+              stepKey={`${simulateLoss}-${activeFrame.id}`}
+              cause={
+                activeFrame.packet
+                  ? `${activeFrame.packet.flags.join("+")} (seq=${activeFrame.packet.seq}${activeFrame.packet.ack !== null ? `, ack=${activeFrame.packet.ack}` : ""})`
+                  : activeFrame.label
+              }
+              mechanism={activeFrame.packet?.caption ?? activeFrame.title}
+              effectDelta={`${activeFrame.clientState} ↔ ${activeFrame.serverState}`}
+              tone={
+                activeFrame.packet?.direction === "lost-s2c"
+                  ? "danger"
+                  : activeFrame.clientState === "ESTABLISHED"
+                    ? "success"
+                    : "causal"
+              }
+              testId="tcp-transform-banner"
+            />
             <div className="flex items-center justify-between text-xs font-mono text-muted-foreground">
               <span>Client (:54321)</span>
               <span>Canal Réseau IP</span>
@@ -835,9 +854,11 @@ export function TcpHandshakeSimulator({ lesson }: TcpHandshakeSimulatorProps) {
         <Card>
           <CardHeader>
             <CardTitle id="summary-heading" className="text-base">
-              Synthèse structurée du manifeste de leçon (rév. {lesson.contentRevision})
+              Le fil de la connexion, en résumé
             </CardTitle>
-            <CardDescription>{lesson.mediumJustification}</CardDescription>
+            <CardDescription>
+              Retrouvez les messages dans l’ordre et ce que chaque machine sait à ce moment-là.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ol className="space-y-2 text-sm">

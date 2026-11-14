@@ -64,6 +64,8 @@ Consulter impérativement [docs/security/AI_ENVIRONMENT_SECURITY.md](../security
 
 ## 6. Skills, rôles spécialisés et compatibilité CLI
 
+Appliquer [la sélection des skills par domaine](./SKILL_ROUTING.md) : chaque outil dispose des onze compétences du projet et active celles correspondant à la tâche. Les préchargements des rôles complètent cette découverte ; ils ne remplacent pas la sélection des compétences conditionnelles.
+
 - **Source canonique des skills** : `.agents/skills/<skill-name>/SKILL.md` (consommé nativement par Codex et Gemini CLI), reflété octet par octet dans `.claude/skills/` pour Claude Code et contrôlé par `corepack pnpm validate:governance`.
 - **Spécifications des 13 rôles spécialisés** : [docs/agents/ROLES.md](./ROLES.md).
 - **Adaptateurs natifs de sous-agents** : `.codex/agents/`, `.claude/agents/`, `.gemini/agents/`.
@@ -75,6 +77,8 @@ Consulter impérativement [docs/security/AI_ENVIRONMENT_SECURITY.md](../security
 | Google Gemini CLI (`gemini`)     | `0.64.0`                                    | `GEMINI.md` + `.agents/skills/`                          | `.gemini/agents/*.md` (`kind: local`, `tools` explicites) |
 
 ## 7. Garde-fous obligatoires
+
+Toute création ou refonte de cours applique aussi [le contrat de production pédagogique](../standards/COURSE_AUTHORING.md). Pour une interface, lire [le brief visuel](../design/LEARNING_STUDIO.md), utiliser le skill `frontend-design`, puis inspecter les captures réelles avec `browser-validation`. Cette règle est partagée par les adaptateurs des trois outils.
 
 Suivre [QUALITY_GATES.md](../standards/QUALITY_GATES.md). Un échec, une commande absente ou une vérification non exécutée reste un blocage ; ne jamais supprimer une validation, assouplir une assertion ou utiliser un outil global pour fabriquer un succès. Toute source modifiée après les tests invalide la preuve, hors métadonnées administratives explicitement décrites.
 

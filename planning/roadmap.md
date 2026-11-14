@@ -10,10 +10,12 @@
 - Premier démonstrateur interactif : **TCP et le Three-Way Handshake**.
 - Validation complète : Vitest + Playwright + GitHub Actions CI.
 
-### M2 — Explorateur de curriculum, Cours Mémoire de référence & Modules fondateurs (`ITER-002`)
+### M2 — Explorateur de curriculum, Chaîne de production V4 & Cours fondateurs (`ITER-002`)
 
+- Industrialisation du référentiel V4 (`54` modules, `1 122` micro-leçons, `159` unités pédagogiques, `12` états de production, contrat à `12` livrables, CLI `v4:import` / `v4:plan` / `v4:mission` / `v4:audit` et explorateur `/curriculum`).
 - Activation de `packages/visualizations` (XYFlow pour le graphe de concepts atomiques + D3 pour métriques/fenêtres).
-- Conception et implémentation du premier cours complet de référence : **Fonctionnement de la mémoire d'un programme** (`systems-and-memory`, 14 concepts atomiques, `VIS-01..05`).
+- Premier lot pilote V4 sans prérequis (`TC-00`, `TC00.001..TC00.008`) : **Observation, hypothèses, causalité et contre-exemples** (`/lessons/scientific-reasoning-and-proof`).
+- Conception et implémentation du cours complet de référence : **Fonctionnement de la mémoire d'un programme** (`systems-and-memory`, 14 concepts atomiques, `VIS-01..05`).
 - Extension du corpus _Réseaux fondamentaux_ (`ip-packet-delivery`, `tcp-ports-and-sockets`, `tcp-sliding-window`, `dns-resolution`).
 - Évaluations cumulatives multi-concepts et intégration des premiers liens vers laboratoires externes vérifiés.
 

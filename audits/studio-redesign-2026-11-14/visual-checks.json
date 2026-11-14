@@ -1,0 +1,41 @@
+{
+  "rows": [
+    {
+      "name": "home",
+      "device": "desktop",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "name": "memory",
+      "device": "desktop",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "name": "tcp",
+      "device": "desktop",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "name": "home",
+      "device": "mobile",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "name": "memory",
+      "device": "mobile",
+      "status": 200,
+      "overflow": false
+    },
+    {
+      "name": "tcp",
+      "device": "mobile",
+      "status": 200,
+      "overflow": false
+    }
+  ],
+  "errors": []
+}

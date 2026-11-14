@@ -18,20 +18,26 @@ export interface AssessmentRunnerProps {
   assessments: AssessmentBlueprint[];
   exercises: ExerciseDefinition[];
   scores: Record<string, boolean>;
+  onExerciseNavigate?: (exerciseId: string) => void;
 }
 
 /**
  * Evaluates cumulative multi-concept progress from completed lesson exercises
  * against each blueprint's passing threshold without duplicating state.
  */
-export function AssessmentRunner({ assessments, exercises, scores }: AssessmentRunnerProps) {
+export function AssessmentRunner({
+  assessments,
+  exercises,
+  scores,
+  onExerciseNavigate,
+}: AssessmentRunnerProps) {
   if (assessments.length === 0) return null;
 
   return (
     <section
       aria-labelledby="cumulative-assessments-heading"
       data-testid="assessment-runner"
-      className="space-y-4"
+      className="min-w-0 space-y-4"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
@@ -49,7 +55,7 @@ export function AssessmentRunner({ assessments, exercises, scores }: AssessmentR
         </Badge>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2">
         {assessments.map((assessment) => {
           const total = assessment.exerciseIds.length;
           const answeredCount = assessment.exerciseIds.filter(
@@ -61,7 +67,11 @@ export function AssessmentRunner({ assessments, exercises, scores }: AssessmentR
           const passed = allAnswered && scorePercent >= assessment.passingScorePercent;
 
           return (
-            <Card key={assessment.id} data-testid={`assessment-card-${assessment.id}`}>
+            <Card
+              key={assessment.id}
+              data-testid={`assessment-card-${assessment.id}`}
+              className="min-w-0"
+            >
               <CardHeader>
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <CardTitle className="text-base">{assessment.title}</CardTitle>
@@ -93,13 +103,10 @@ export function AssessmentRunner({ assessments, exercises, scores }: AssessmentR
                   aria-label={`Score de ${assessment.title} : ${scorePercent}%`}
                 />
 
-                <div className="flex flex-wrap gap-1.5">
-                  {assessment.conceptIds.map((conceptId) => (
-                    <Badge key={conceptId} variant="secondary" className="font-mono text-[11px]">
-                      {conceptId}
-                    </Badge>
-                  ))}
-                </div>
+                <p className="text-xs text-muted-foreground">
+                  {assessment.conceptIds.length} notions mises en pratique. Retrouvez ci-dessous les
+                  questions à consolider.
+                </p>
 
                 <ul className="space-y-1.5 text-xs">
                   {assessment.exerciseIds.map((exId) => {
@@ -109,6 +116,14 @@ export function AssessmentRunner({ assessments, exercises, scores }: AssessmentR
                       <li key={exId}>
                         <a
                           href={`#exercise-${exId}`}
+                          onClick={
+                            onExerciseNavigate
+                              ? (event) => {
+                                  event.preventDefault();
+                                  onExerciseNavigate(exId);
+                                }
+                              : undefined
+                          }
                           className={cn(
                             "flex items-center justify-between gap-2 rounded-md border px-2.5 py-1.5 transition-colors hover:bg-secondary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                             state === true
@@ -118,7 +133,9 @@ export function AssessmentRunner({ assessments, exercises, scores }: AssessmentR
                                 : "border-border bg-secondary/20 text-muted-foreground",
                           )}
                         >
-                          <span className="truncate font-medium">{ex?.prompt ?? exId}</span>
+                          <span className="min-w-0 flex-1 truncate font-medium">
+                            {ex?.prompt ?? exId}
+                          </span>
                           <span className="inline-flex shrink-0 items-center gap-1 font-mono text-[11px]">
                             {state === true ? (
                               <>

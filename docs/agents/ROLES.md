@@ -3,6 +3,8 @@
 Ce document définit les 13 rôles spécialisés nécessaires au développement de l'académie interactive.
 Un rôle représente une **responsabilité fonctionnelle réutilisable** : selon l'outil utilisé (Codex, Claude Code, Gemini CLI), il peut être incarné par l'agent principal appliquant les skills associés ou délégué à un sous-agent natif (`.codex/agents/`, `.claude/agents/`, `.gemini/agents/`).
 
+Les treize responsabilités appliquent le [contrat de production des cours](../standards/COURSE_AUTHORING.md). Le concepteur pose la question et l'exemple ; le scientifique vérifie les affirmations ; le scénariste relie chaque action à une observation ; le créateur d'exercices explique les erreurs ; le frontend rend le parcours lisible ; la QA manipule réellement le cours. Les autres rôles gardent ces critères dans les contrats, les tâches, les imports et les preuves de continuité. Pour l'interface, utiliser aussi `frontend-design` et le [brief du studio](../design/LEARNING_STUDIO.md).
+
 ---
 
 ## 1. Architecte produit et logiciel (`product-software-architect`)
@@ -62,7 +64,7 @@ Un rôle représente une **responsabilité fonctionnelle réutilisable** : selon
 - **Entrées** : Plan pédagogique de la leçon, contraintes d'accessibilité et critères 2D vs 3D (`docs/standards/PEDAGOGICAL_AND_VISUAL_STANDARDS.md`).
 - **Livrables** : Storyboard visuel, mapping état-modèle-animation, spécification des contrôles interactifs.
 - **Critères de qualité** : Chaque animation sert la compréhension d'un mécanisme (jamais purement décorative), cas limites représentables, sobriété visuelle.
-- **Skills à utiliser** : `visual-explanation`, `lesson-design`.
+- **Skills à utiliser** : `visual-explanation`, `pedagogical-animation`, `lesson-design`.
 - **Conditions de transfert** : Transférer au _Spécialiste animations 2D_ ou au _Spécialiste Three.js et 3D_, ainsi qu'à l'_Ingénieur frontend_.
 
 ## 7. Spécialiste animations 2D (`animation-2d-specialist`)
@@ -72,7 +74,7 @@ Un rôle représente une **responsabilité fonctionnelle réutilisable** : selon
 - **Entrées** : Storyboard du _Concepteur de scénarios visuels_, primitives `@cyber-school/animations`.
 - **Livrables** : Composants animés synchronisés avec l'état de la leçon, contrôles accessibles.
 - **Critères de qualité** : 60 fps ciblés, état déterministe à chaque étape, prise en charge complète de `prefers-reduced-motion` et du contrôle manuel.
-- **Skills à utiliser** : `gsap-animation`, `visual-explanation`.
+- **Skills à utiliser** : `gsap-animation`, `pedagogical-animation`, `visual-explanation`.
 - **Conditions de transfert** : Transférer à l'_Ingénieur frontend_ pour intégration et à l'_Ingénieur QA_ pour validation navigateur.
 
 ## 8. Spécialiste Three.js et 3D (`threejs-3d-specialist`)

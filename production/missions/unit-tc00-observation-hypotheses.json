@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "1.0",
+  "missionId": "MISSION-unit-tc00-observation-hypotheses",
+  "unitId": "unit-tc00-observation-hypotheses",
+  "slug": "scientific-reasoning-and-proof",
+  "title": "Observation, hypothèses, causalité et contre-exemples",
+  "moduleId": "TC-00",
+  "domainId": "v4-tronc-commun",
+  "microLessons": [
+    {
+      "id": "TC00.001",
+      "title": "Distinguer une observation brute d’une interprétation",
+      "provenanceLine": 37
+    },
+    {
+      "id": "TC00.002",
+      "title": "Séparer hypothèse, prédiction et conclusion",
+      "provenanceLine": 38
+    },
+    {
+      "id": "TC00.003",
+      "title": "Formuler une hypothèse falsifiable",
+      "provenanceLine": 39
+    },
+    {
+      "id": "TC00.004",
+      "title": "Identifier les variables contrôlées d’une expérience",
+      "provenanceLine": 40
+    },
+    {
+      "id": "TC00.005",
+      "title": "Définir une variable confondante",
+      "provenanceLine": 41
+    },
+    {
+      "id": "TC00.006",
+      "title": "Décrire une chaîne causale et ses hypothèses",
+      "provenanceLine": 42
+    },
+    {
+      "id": "TC00.007",
+      "title": "Reconnaître une corrélation sans causalité",
+      "provenanceLine": 43
+    },
+    {
+      "id": "TC00.008",
+      "title": "Construire un contre-exemple minimal",
+      "provenanceLine": 44
+    }
+  ],
+  "prerequisiteUnits": [],
+  "associatedResources": [
+    {
+      "label": "Learning How to Learn (Coursera)",
+      "url": "https://www.coursera.org/learn/learning-how-to-learn",
+      "category": "reference"
+    },
+    {
+      "label": "OpenStax Introductory Statistics",
+      "url": "https://openstax.org/details/books/introductory-statistics",
+      "category": "reference"
+    },
+    {
+      "label": "NIST NICE Framework",
+      "url": "https://www.nist.gov/itl/applied-cybersecurity/nice/nice-framework-resource-center",
+      "category": "reference"
+    }
+  ],
+  "requiredSkills": [
+    "curriculum-production",
+    "lesson-design",
+    "visual-explanation",
+    "browser-validation",
+    "gsap-animation"
+  ],
+  "deliverablesChecklist": [
+    {
+      "kind": "scientific_sheet",
+      "label": "1. Fiche scientifique et références",
+      "status": "missing"
+    },
+    {
+      "kind": "learning_objectives",
+      "label": "2. Objectifs d'apprentissage",
+      "status": "missing"
+    },
+    {
+      "kind": "pedagogical_structure",
+      "label": "3. Structure pédagogique",
+      "status": "missing"
+    },
+    {
+      "kind": "visual_storyboard",
+      "label": "4. Storyboard visuel",
+      "status": "missing"
+    },
+    {
+      "kind": "animation_spec",
+      "label": "5. Spécification des animations",
+      "status": "missing"
+    },
+    {
+      "kind": "simulation_spec",
+      "label": "6. Spécification des simulations",
+      "status": "missing"
+    },
+    {
+      "kind": "exercise_bank",
+      "label": "7. Banque d'exercices",
+      "status": "missing"
+    },
+    {
+      "kind": "web_implementation",
+      "label": "8. Implémentation Web",
+      "status": "missing"
+    },
+    {
+      "kind": "technical_tests",
+      "label": "9. Tests techniques",
+      "status": "missing"
+    },
+    {
+      "kind": "pedagogical_validation_report",
+      "label": "10. Rapport de validation pédagogique",
+      "status": "missing"
+    },
+    {
+      "kind": "external_labs",
+      "label": "11. Liens vers les laboratoires externes",
+      "status": "missing"
+    },
+    {
+      "kind": "publication_metadata",
+      "label": "12. Informations de publication",
+      "status": "missing"
+    }
+  ],
+  "verificationCommands": [
+    "pnpm v4:audit -- --unit unit-tc00-observation-hypotheses",
+    "pnpm typecheck",
+    "pnpm lint",
+    "pnpm validate:curriculum",
+    "pnpm test:unit",
+    "pnpm test:e2e"
+  ]
+}

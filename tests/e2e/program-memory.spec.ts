@@ -22,6 +22,8 @@ test.describe("Program Memory Fundamentals interactive course", () => {
     await page.getByTestId("home-lesson-link-program-memory-fundamentals").click();
     await expect(page).toHaveURL(/\/lessons\/program-memory-fundamentals/);
     await expect(page.getByTestId("memory-course-experience")).toBeVisible();
+    await expect(page.getByTestId("vis-02-virtual-memory")).toBeHidden();
+    await page.getByTestId("chapter-filter-all").click();
 
     // Verify no desktop horizontal overflow
     const desktopOverflow = await page.evaluate(

@@ -1,0 +1,203 @@
+Command: corepack pnpm test:guards
+Started: 2026-11-14T08:48:36.513Z
+
+
+> cyber-school@0.1.0 test:guards C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types --test scripts/quality/guards.test.ts scripts/curriculum/v4-pipeline.test.ts
+
+TAP version 13
+# Subtest: v4 importer extracts 54 modules, 1122 micro-lessons, 772 competencies, 9 exams idempotently and preserves registry state
+ok 1 - v4 importer extracts 54 modules, 1122 micro-lessons, 772 competencies, 9 exams idempotently and preserves registry state
+  ---
+  duration_ms: 1092.7513
+  type: 'test'
+  ...
+# Subtest: accepts complete matching evidence with all actual result fields
+ok 2 - accepts complete matching evidence with all actual result fields
+  ---
+  duration_ms: 140.5296
+  type: 'test'
+  ...
+# Subtest: committed completion survives later work but never certifies current sources
+ok 3 - committed completion survives later work but never certifies current sources
+  ---
+  duration_ms: 1769.5054
+  type: 'test'
+  ...
+# Subtest: historical completion rejects modified criteria
+ok 4 - historical completion rejects modified criteria
+  ---
+  duration_ms: 878.4149
+  type: 'test'
+  ...
+# Subtest: historical completion rejects altered logs or evidence
+ok 5 - historical completion rejects altered logs or evidence
+  ---
+  duration_ms: 943.7921
+  type: 'test'
+  ...
+# Subtest: a newly claimed completion cannot reuse a stale committed report
+ok 6 - a newly claimed completion cannot reuse a stale committed report
+  ---
+  duration_ms: 1994.2053
+  type: 'test'
+  ...
+# Subtest: rejects a failed validation run
+ok 7 - rejects a failed validation run
+  ---
+  duration_ms: 79.103
+  type: 'test'
+  ...
+# Subtest: rejects a running validation run
+ok 8 - rejects a running validation run
+  ---
+  duration_ms: 52.0561
+  type: 'test'
+  ...
+# Subtest: rejects a checklist, a test source or a missing report as evidence
+ok 9 - rejects a checklist, a test source or a missing report as evidence
+  ---
+  duration_ms: 177.9961
+  type: 'test'
+  ...
+# Subtest: rejects a skipped, failed or missing command
+ok 10 - rejects a skipped, failed or missing command
+  ---
+  duration_ms: 62.5131
+  type: 'test'
+  ...
+# Subtest: rejects substituted commands even when their exit code is zero
+ok 11 - rejects substituted commands even when their exit code is zero
+  ---
+  duration_ms: 58.9588
+  type: 'test'
+  ...
+# Subtest: rejects repeated checks replacing an unexecuted check
+ok 12 - rejects repeated checks replacing an unexecuted check
+  ---
+  duration_ms: 52.4943
+  type: 'test'
+  ...
+# Subtest: rejects evidence after code or content changes
+ok 13 - rejects evidence after code or content changes
+  ---
+  duration_ms: 87.0924
+  type: 'test'
+  ...
+# Subtest: requires a recoverable Git base
+ok 14 - requires a recoverable Git base
+  ---
+  duration_ms: 50.0076
+  type: 'test'
+  ...
+# Subtest: binds evidence to the task ID and its acceptance criteria
+ok 15 - binds evidence to the task ID and its acceptance criteria
+  ---
+  duration_ms: 50.7407
+  type: 'test'
+  ...
+# Subtest: rejects missing, modified and empty logs
+ok 16 - rejects missing, modified and empty logs
+  ---
+  duration_ms: 58.2618
+  type: 'test'
+  ...
+# Subtest: rejects traversal outside the validation directory
+ok 17 - rejects traversal outside the validation directory
+  ---
+  duration_ms: 52.6762
+  type: 'test'
+  ...
+# Subtest: rejects malformed reports and impossible timestamps
+ok 18 - rejects malformed reports and impossible timestamps
+  ---
+  duration_ms: 59.2873
+  type: 'test'
+  ...
+# Subtest: Done with all checkboxes and a decorative evidence heading still fails
+ok 19 - Done with all checkboxes and a decorative evidence heading still fails
+  ---
+  duration_ms: 51.4829
+  type: 'test'
+  ...
+# Subtest: Done with genuine matching fixture evidence passes, unchecked criteria do not
+ok 20 - Done with genuine matching fixture evidence passes, unchecked criteria do not
+  ---
+  duration_ms: 73.1374
+  type: 'test'
+  ...
+# Subtest: Ready and Done cannot bypass unfinished dependencies
+ok 21 - Ready and Done cannot bypass unfinished dependencies
+  ---
+  duration_ms: 50.792
+  type: 'test'
+  ...
+# Subtest: missing dependencies and cycles are rejected even in Backlog
+ok 22 - missing dependencies and cycles are rejected even in Backlog
+  ---
+  duration_ms: 51.9725
+  type: 'test'
+  ...
+# Subtest: duplicate task IDs are rejected instead of silently overwritten
+ok 23 - duplicate task IDs are rejected instead of silently overwritten
+  ---
+  duration_ms: 52.2799
+  type: 'test'
+  ...
+# Subtest: publication without a real approval and generated QA evidence is refused
+ok 24 - publication without a real approval and generated QA evidence is refused
+  ---
+  duration_ms: 51.4654
+  type: 'test'
+  ...
+# Subtest: pending content remains authorable, approved publication requires passing evidence
+ok 25 - pending content remains authorable, approved publication requires passing evidence
+  ---
+  duration_ms: 64.4433
+  type: 'test'
+  ...
+# Subtest: administrative promotion does not stale QA, but changing scientific content does
+ok 26 - administrative promotion does not stale QA, but changing scientific content does
+  ---
+  duration_ms: 166.017
+  type: 'test'
+  ...
+# Subtest: preflight refuses Node 23, a missing lockfile and global tool fallbacks
+ok 27 - preflight refuses Node 23, a missing lockfile and global tool fallbacks
+  ---
+  duration_ms: 182.2156
+  type: 'test'
+  ...
+# Subtest: before-install preflight accepts supported Node with a pinned manager and lockfile
+ok 28 - before-install preflight accepts supported Node with a pinned manager and lockfile
+  ---
+  duration_ms: 131.0449
+  type: 'test'
+  ...
+# Subtest: generated checkpoints become stale on code changes or manual handoff edits
+ok 29 - generated checkpoints become stale on code changes or manual handoff edits
+  ---
+  duration_ms: 561.7433
+  type: 'test'
+  ...
+# Subtest: a passed label with recorded errors is not accepted as validation
+ok 30 - a passed label with recorded errors is not accepted as validation
+  ---
+  duration_ms: 126.788
+  type: 'test'
+  ...
+# Subtest: checkpoint generation does not promote an invalid report to passed
+ok 31 - checkpoint generation does not promote an invalid report to passed
+  ---
+  duration_ms: 175.8684
+  type: 'test'
+  ...
+1..31
+# tests 31
+# suites 0
+# pass 31
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 8569.083

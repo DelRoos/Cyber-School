@@ -44,17 +44,17 @@ test.describe("TCP Three-Way Handshake interactive demonstrator", () => {
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Comprendre les systèmes et réseaux/i,
+        name: /Le déclic/i,
       }),
     ).toBeVisible();
 
     // 2. Navigate to TCP Three-Way Handshake demonstrator
-    await page.getByRole("link", { name: /Lancer le démonstrateur/i }).click();
+    await page.getByTestId("home-lesson-link-tcp-three-way-handshake").click();
     await expect(page).toHaveURL(/\/lessons\/tcp-three-way-handshake/);
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: /Le protocole TCP et le Three-Way Handshake/i,
+        name: /Trois messages pour se connecter/i,
       }),
     ).toBeVisible();
 

@@ -1,199 +1,104 @@
 import Link from "next/link";
-import { ArrowRight, BookOpen, Cpu, GitBranch, Layers, ShieldAlert } from "lucide-react";
-import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@cyber-school/ui";
+import { ArrowDown, ArrowUpRight, Eye, MousePointer2, MessageCircle } from "lucide-react";
 import { loadAcademyData } from "@/lib/curriculum-data";
+import { CourseCatalog } from "@/components/course-catalog";
+import { MemoryPreview } from "@/components/memory-preview";
 
 export default function HomePage() {
-  const { curriculum, lessons, featuredLesson } = loadAcademyData();
-
+  const { lessons } = loadAcademyData();
   return (
-    <div className="space-y-10">
-      <section className="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card via-card to-secondary/60 p-6 sm:p-10">
-        <div className="max-w-3xl space-y-5">
-          <Badge variant="default">
-            Socle v0.1 ·{" "}
-            {featuredLesson?.status === "published"
-              ? "Leçon revue"
-              : "Démonstrateur en cours de validation"}
-          </Badge>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            Comprendre les systèmes et réseaux par l&apos;expérience interactive
+    <div className="home-page">
+      <section className="home-hero" aria-labelledby="home-heading">
+        <div className="hero-copy">
+          <div className="hero-intro">
+            <span className="signal-dot" /> Un laboratoire pour les esprits curieux
+          </div>
+          <h1 id="home-heading">
+            Le déclic
+            <br />
+            vient en
+            <br />
+            <span className="hero-heading-last">expérimentant.</span>
           </h1>
-          <p className="text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Chaque cours de Cyber School relie un{" "}
-            <strong className="text-foreground">concept atomique</strong> à une simulation animée, à
-            l&apos;observation des cas limites et à des exercices de raisonnement vérifiés.
+          <p>
+            La mémoire, les réseaux, les systèmes. Entrez dans la machine et comprenez enfin ce qui
+            se passe à l’intérieur.
           </p>
-          {featuredLesson ? (
-            <div className="space-y-3 pt-1">
-              <div className="flex flex-wrap items-center gap-3">
-                <Link
-                  href={`/lessons/${featuredLesson.slug}`}
-                  className="inline-flex h-11 items-center gap-2 rounded-lg bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  Lancer le démonstrateur : {featuredLesson.title}
-                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                </Link>
-                <span className="text-xs font-mono text-muted-foreground">
-                  Durée estimée : {featuredLesson.estimatedMinutes} min · Médium :{" "}
-                  {featuredLesson.medium}
-                </span>
-              </div>
-              {lessons
-                .filter((lesson) => lesson.slug !== featuredLesson.slug)
-                .map((lesson) => (
-                  <div key={lesson.id} className="flex flex-wrap items-center gap-3">
-                    <Link
-                      href={`/lessons/${lesson.slug}`}
-                      data-testid={`home-lesson-link-${lesson.slug}`}
-                      className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-primary/40 bg-background px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    >
-                      Ouvrir le cours complet : {lesson.title}
-                      <ArrowRight className="h-4 w-4 text-primary" aria-hidden="true" />
-                    </Link>
-                    <span className="text-xs font-mono text-muted-foreground">
-                      Durée estimée : {lesson.estimatedMinutes} min · {lesson.exercises.length}{" "}
-                      exercices · {lesson.assessments?.length ?? 0} paliers
-                    </span>
-                  </div>
-                ))}
-            </div>
-          ) : null}
+          <div className="hero-actions">
+            <Link href="/lessons/program-memory-fundamentals" className="studio-button">
+              Commencer à explorer <ArrowUpRight size={18} aria-hidden="true" />
+            </Link>
+            <Link href="/curriculum" data-testid="home-curriculum-v4-link" className="text-link">
+              Explorer le parcours
+            </Link>
+            <a href="#courses" className="text-link">
+              Voir les cours <ArrowDown size={15} aria-hidden="true" />
+            </a>
+          </div>
+          <div className="hero-reassurance">
+            <span>Aucune installation</span>
+            <span>À votre rythme</span>
+            <span>Débutants bienvenus</span>
+          </div>
         </div>
+        <MemoryPreview />
       </section>
-
-      <section aria-labelledby="pillars-heading" className="space-y-4">
-        <h2 id="pillars-heading" className="text-xl font-semibold tracking-tight">
-          Architecture pédagogique &amp; technique
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader>
-              <GitBranch className="h-5 w-5 text-primary" aria-hidden="true" />
-              <CardTitle className="text-base">Concepts atomiques</CardTitle>
-              <CardDescription>
-                Graphe de prérequis sans cycles validé par Zod dans{" "}
-                <code className="font-mono text-xs">@cyber-school/lesson-runtime</code>.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <Cpu className="h-5 w-5 text-primary" aria-hidden="true" />
-              <CardTitle className="text-base">Animations synchronisées</CardTitle>
-              <CardDescription>
-                Séquences 2D déterministes via GSAP &amp; Motion avec respect natif de{" "}
-                <code className="font-mono text-xs">prefers-reduced-motion</code>.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <Layers className="h-5 w-5 text-primary" aria-hidden="true" />
-              <CardTitle className="text-base">2D / 3D raisonnée</CardTitle>
-              <CardDescription>
-                La 2D reste prioritaire pour les protocoles ; la 3D est activée uniquement quand la
-                spatialisation éclaire le mécanisme.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <ShieldAlert className="h-5 w-5 text-primary" aria-hidden="true" />
-              <CardTitle className="text-base">Rigueur &amp; cas limites</CardTitle>
-              <CardDescription>
-                Sources primaires (RFC IETF), scénarios de perte/timeout et exercices de prédiction
-                d&apos;état.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+      <section id="courses" className="catalog-section" aria-labelledby="courses-heading">
+        <div className="section-heading">
+          <div>
+            <p className="section-kicker">Votre terrain d’exploration</p>
+            <h2 id="courses-heading">Sous le capot.</h2>
+          </div>
+          <p>
+            Des mécanismes invisibles.
+            <br />
+            Des expériences pour les comprendre.
+          </p>
         </div>
+        <CourseCatalog lessons={lessons} />
       </section>
-
-      {curriculum.domains.map((domain) => {
-        const domainConceptIds = new Set(
-          domain.modules.flatMap((mod) => mod.chapters.flatMap((chapter) => chapter.conceptIds)),
-        );
-        const domainConceptCount = curriculum.concepts.filter((c) =>
-          domainConceptIds.has(c.id),
-        ).length;
-        return (
-          <section key={domain.id} aria-labelledby={`domain-${domain.id}`} className="space-y-4">
-            <div className="flex flex-wrap items-center justify-between gap-2">
+      <section id="method" className="method-section" aria-labelledby="method-heading">
+        <div>
+          <p className="section-kicker">Une autre façon d’apprendre</p>
+          <h2 id="method-heading">
+            Moins de par cœur.
+            <br />
+            Plus de « j’ai compris ».
+          </h2>
+          <p>
+            Chaque expérience part d’une question concrète. Vous observez, vous essayez, puis vous
+            mettez des mots sur le mécanisme.
+          </p>
+        </div>
+        <ol className="method-steps">
+          {[
+            {
+              icon: Eye,
+              title: "Voyez l’invisible",
+              text: "Une explication courte et un exemple résolu pour poser les bases.",
+            },
+            {
+              icon: MousePointer2,
+              title: "Prenez les commandes",
+              text: "Avancez pas à pas, changez une valeur et observez ce qui change.",
+            },
+            {
+              icon: MessageCircle,
+              title: "Faites le lien",
+              text: "Prédisez le résultat et comprenez vos erreurs grâce à un retour expliqué.",
+            },
+          ].map(({ icon: Icon, title, text }, i) => (
+            <li key={title}>
+              <span className="method-number">0{i + 1}</span>
+              <Icon size={20} aria-hidden="true" />
               <div>
-                <h2 id={`domain-${domain.id}`} className="text-xl font-semibold tracking-tight">
-                  Domaine : {domain.title}
-                </h2>
-                <p className="text-sm text-muted-foreground">{domain.summary}</p>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </div>
-              <Badge variant="outline">{domainConceptCount} concepts atomiques indexés</Badge>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              {domain.modules.map((mod) => (
-                <Card key={mod.id}>
-                  <CardHeader>
-                    <div className="flex items-center justify-between gap-2">
-                      <CardTitle className="text-base">{mod.title}</CardTitle>
-                      <Badge variant="secondary">{mod.chapters.length} chapitre(s)</Badge>
-                    </div>
-                    <CardDescription>{mod.summary}</CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {mod.chapters.map((chapter) => (
-                      <div
-                        key={chapter.id}
-                        className="rounded-lg border border-border bg-secondary/35 p-3.5 space-y-2"
-                      >
-                        <div className="flex items-center gap-2 text-sm font-medium">
-                          <BookOpen className="h-4 w-4 text-primary" aria-hidden="true" />
-                          <span>{chapter.title}</span>
-                        </div>
-                        <ul className="space-y-1.5 text-xs text-muted-foreground">
-                          {chapter.conceptIds.map((conceptId) => {
-                            const concept = curriculum.concepts.find((c) => c.id === conceptId);
-                            const matchedLesson = lessons.find(
-                              (l) =>
-                                l.conceptId === conceptId ||
-                                l.exercises.some((ex) => ex.conceptId === conceptId) ||
-                                l.assessments?.some((a) => a.conceptIds.includes(conceptId)),
-                            );
-                            return (
-                              <li
-                                key={conceptId}
-                                className="flex flex-wrap items-center justify-between gap-2"
-                              >
-                                <span>
-                                  <code className="font-mono text-foreground">
-                                    {concept?.title ?? conceptId}
-                                  </code>
-                                </span>
-                                {matchedLesson ? (
-                                  <Link
-                                    href={`/lessons/${matchedLesson.slug}`}
-                                    className="font-medium text-primary underline-offset-4 hover:underline"
-                                  >
-                                    Ouvrir la leçon →
-                                  </Link>
-                                ) : (
-                                  <Badge variant="outline">Planifié</Badge>
-                                )}
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </section>
-        );
-      })}
+            </li>
+          ))}
+        </ol>
+      </section>
     </div>
   );
 }

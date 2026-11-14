@@ -30,6 +30,10 @@ Follow `continuity/RESUME_PROTOCOL.md` strictly:
 ## Handoff Workflow (End of Session or Checkpoint)
 
 1. Never mark a task `Done` unless all acceptance criteria are verified after the final edit.
-2. Update `continuity/CURRENT_STATE.md` with factual status, verified commands, and modified files.
-3. Update `continuity/HANDOFF.md` with exact resume instructions, next recommended task, and remaining gaps.
+2. Generate `continuity/CURRENT_STATE.md` with `quality:checkpoint` from actual state.
+3. Generate `continuity/HANDOFF.md` with the same checkpoint and a concrete next action.
 4. Record any unresolved environment or architectural obstacles in `continuity/BLOCKERS.md`.
+
+## Learning studio acceptance
+
+Read docs/standards/COURSE_AUTHORING.md. CURRENT_STATE.md and HANDOFF.md are generated. Use corepack pnpm quality:checkpoint --task <ID> --next "Exact next action" instead of manual edits. Preserve learning acceptance, inspected screenshot locations and pending scientific reviews.

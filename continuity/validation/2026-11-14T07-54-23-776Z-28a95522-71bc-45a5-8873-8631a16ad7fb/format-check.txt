@@ -1,0 +1,9 @@
+Command: corepack pnpm format:check
+Started: 2026-11-14T07:54:59.967Z
+
+
+> cyber-school@0.1.0 format:check C:\Users\Emerite\Documents\projets\cyber-school
+> prettier --check .
+
+Checking formatting...
+All matched files use Prettier code style!

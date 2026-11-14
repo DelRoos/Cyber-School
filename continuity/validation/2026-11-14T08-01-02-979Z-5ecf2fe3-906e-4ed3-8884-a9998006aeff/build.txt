@@ -1,0 +1,11 @@
+Command: corepack pnpm build
+Started: 2026-11-14T08:01:32.862Z
+
+
+> cyber-school@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types scripts/quality/preflight.ts && node --experimental-strip-types tests/scripts/validate-governance.ts && turbo run build
+
+Environment verified: supported Node, pinned package manager, lockfile, Git base and local tools.
+Governance validation failed:
+- [task-governance] Status drift for TASK-015: BACKLOG.md says "In Progress" vs task file "Done".
+ ELIFECYCLE  Command failed with exit code 1.

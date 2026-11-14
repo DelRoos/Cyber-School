@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff",
+  "taskId": "TASK-016",
+  "startedAt": "2026-11-14T08:01:02.979Z",
+  "finishedAt": "2026-11-14T08:01:40.801Z",
+  "status": "failed",
+  "source": {
+    "digest": "3ce2996c297bc7268158a3753fb077efba68cadc2d9a5d0540a11befefd2ac14",
+    "fileCount": 213,
+    "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f"
+  },
+  "criteriaDigest": "a35cb162b49169d44f144fc5ce9d5d5d5b9b8e505652278d4cbac55e6d35c6c3",
+  "environment": {
+    "nodeVersion": "22.23.5",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [
+    {
+      "name": "test:guards",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:guards"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:03.279Z",
+      "finishedAt": "2026-11-14T08:01:11.170Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/test-guards.txt",
+      "logSha256": "a93d3b28a87043c26127ddee69cda1ec960ba37dcdd9c8051c84eb629c2f9495"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "corepack",
+        "pnpm",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:11.216Z",
+      "finishedAt": "2026-11-14T08:01:15.024Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/typecheck.txt",
+      "logSha256": "f6a29edae0c849e3dfe640bfd66b3876870ac78ac77cefda09cc877602f7fc55"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "corepack",
+        "pnpm",
+        "lint"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:15.039Z",
+      "finishedAt": "2026-11-14T08:01:18.720Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/lint.txt",
+      "logSha256": "4a5d64c160f1ba0498457cb4b49f69be45138759c2f43935a98f4aaf4ff38406"
+    },
+    {
+      "name": "format:check",
+      "command": [
+        "corepack",
+        "pnpm",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:18.731Z",
+      "finishedAt": "2026-11-14T08:01:25.243Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/format-check.txt",
+      "logSha256": "317800a7c2856637b0c2811654e3cdee0490fc9d6560810860a81b75b89498f3"
+    },
+    {
+      "name": "validate:governance",
+      "command": [
+        "corepack",
+        "pnpm",
+        "validate:governance"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:25.251Z",
+      "finishedAt": "2026-11-14T08:01:30.686Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/validate-governance.txt",
+      "logSha256": "c1f83a51ac98eacfd4e736a9cb9b432afa2b9fbbe51de36231007584a84d5a4e"
+    },
+    {
+      "name": "validate:curriculum",
+      "command": [
+        "corepack",
+        "pnpm",
+        "validate:curriculum"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:30.695Z",
+      "finishedAt": "2026-11-14T08:01:31.906Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/validate-curriculum.txt",
+      "logSha256": "c59f2b1176f0584bf905e0b32577f88c19e60792b48c189f842aa62a0a12047e"
+    },
+    {
+      "name": "test:unit",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:unit"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:01:31.917Z",
+      "finishedAt": "2026-11-14T08:01:32.851Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/test-unit.txt",
+      "logSha256": "06913286df3c144bb2e1ae3cd02bd1df467f3ded92c617dde8cb06f4423b2cdf"
+    },
+    {
+      "name": "build",
+      "command": [
+        "corepack",
+        "pnpm",
+        "build"
+      ],
+      "exitCode": 1,
+      "startedAt": "2026-11-14T08:01:32.862Z",
+      "finishedAt": "2026-11-14T08:01:40.684Z",
+      "logFile": "continuity/validation/2026-11-14T08-01-02-979Z-5ecf2fe3-906e-4ed3-8884-a9998006aeff/build.txt",
+      "logSha256": "c7b71d765857b6c153a61b768b18c8c4cf48bc16077bfa7e67ecdd4c1c59162d"
+    }
+  ],
+  "issues": [
+    {
+      "code": "CHECK_FAILED",
+      "message": "build failed with exit code 1."
+    }
+  ]
+}

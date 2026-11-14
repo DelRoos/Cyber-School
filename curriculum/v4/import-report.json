@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "1.0",
+  "sourceFile": "Parcours_Ultra_Atomique_Cybersecurite_Zero_Expert_V4_Ingenierie_Offensive.md",
+  "sourceSha256": "cd47745deb90cfba4473e3a46afe883d62729795545bbfb586a440aae8947b32",
+  "stats": {
+    "moduleCount": 54,
+    "microLessonCount": 1122,
+    "competencyCount": 772,
+    "examCount": 9
+  },
+  "unitsCount": 159,
+  "coverageReport": {
+    "valid": true,
+    "totalMicroLessons": 1122,
+    "assignedMicroLessons": 1122,
+    "missingMicroLessonIds": [],
+    "duplicateAssignments": [],
+    "unknownMicroLessonIds": [],
+    "missingPrerequisiteUnitIds": [],
+    "cycleDetected": false
+  },
+  "anomalies": [
+    {
+      "severity": "info",
+      "code": "PROSE_COUNT_MISMATCH",
+      "message": "La synthèse en ligne 1625 indique 1022 micro-leçons et 53 modules alors que le document en définit 1122 réparties en 54 modules (B-11 et X-01..10 inclus).",
+      "line": 1565
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-01 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1660
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-02 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1685
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-03 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1712
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-04 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1741
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-05 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1768
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-06 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1796
+    },
+    {
+      "severity": "info",
+      "code": "IMPLICIT_SOCLE_PREREQ",
+      "message": "Module TC-07 sans ligne Prérequis en partie 2 : dépendance proposée selon la Partie IX.",
+      "line": 1821
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-01 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1343
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-02 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1364
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-03 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1386
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-04 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1408
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-05 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1430
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-06 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1452
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-07 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1476
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-08 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1498
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-09 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1519
+    },
+    {
+      "severity": "info",
+      "code": "MISSING_PART2_SPEC",
+      "message": "Module X-10 défini dans la partie 1 sans bloc détaillé en partie 2 (dépendances proposées par défaut).",
+      "line": 1540
+    },
+    {
+      "severity": "info",
+      "code": "EX04_OMITS_B11",
+      "message": "EX-04 cite B-01 à B-10 dans le source V4 sans mentionner explicitement B-11.",
+      "line": 3375
+    }
+  ]
+}

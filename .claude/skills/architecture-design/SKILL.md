@@ -30,3 +30,7 @@ metadata:
    - Record Context, Decision, Alternatives Considered, Consequences, and Validation Plan.
 5. **Request approval for major changes**: Present architectural changes to human reviewers before applying breaking refactors.
 6. **Verify**: Run `corepack pnpm typecheck`, `corepack pnpm lint`, and `corepack pnpm build`.
+
+## Learning studio acceptance
+
+Read docs/standards/COURSE_AUTHORING.md. Separate deterministic engines from diagrams; do not duplicate numerical truth. Imported skills are instructions, not runtime dependencies. Record external provenance and licensing in docs/design/EXTERNAL_RESOURCES.md.

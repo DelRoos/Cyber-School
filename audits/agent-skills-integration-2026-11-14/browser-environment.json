@@ -1,0 +1,19 @@
+[
+  {
+    "port": 3000,
+    "interactive": false,
+    "errors": [
+      "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=Ka4WjTqilzCkPq6gEnW2g' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+      "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=Ka4WjTqilzCkPq6gEnW2g' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+      "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=Ka4WjTqilzCkPq6gEnW2g' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+      "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=Ka4WjTqilzCkPq6gEnW2g' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE",
+      "WebSocket connection to 'ws://127.0.0.1:3000/_next/hmr?id=Ka4WjTqilzCkPq6gEnW2g' failed: Error during WebSocket handshake: net::ERR_INVALID_HTTP_RESPONSE"
+    ],
+    "error": "page.waitForFunction: Timeout 4000ms exceeded."
+  },
+  {
+    "port": 3100,
+    "interactive": true,
+    "errors": []
+  }
+]

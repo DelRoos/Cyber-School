@@ -1,0 +1,1401 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: program-memory.spec.ts >> Program Memory Fundamentals interactive course >> navigates from home, exercises all 5 simulators, checks reduced-motion and assessments
+- Location: tests\e2e\program-memory.spec.ts:4:3
+
+# Error details
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Aller au contenu principal" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "Cyber School, accueil" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e9]: cyberschool.
+      - navigation "Navigation principale" [ref=e10]:
+        - link "Les cours" [ref=e11] [cursor=pointer]:
+          - /url: /#courses
+        - link "Cursus V4" [ref=e12] [cursor=pointer]:
+          - /url: /curriculum
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - navigation "Fil d’Ariane" [ref=e15]:
+        - link "Tous les cours" [ref=e16] [cursor=pointer]:
+          - /url: /#courses
+        - generic [aria-hidden] [ref=e19]: /
+        - generic [ref=e20]: Systèmes
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]: Depuis les bases
+          - generic [ref=e25]: 270 min à votre rythme
+          - generic [ref=e29]: Version en revue
+        - heading "Dans la mémoire d’un programme" [level=1] [ref=e30]
+        - paragraph [ref=e31]: Où va une variable ? Que reste-t-il après un appel de fonction ? Suivez les données dans la machine, de la première instruction à la gestion de leur durée de vie.
+      - group [ref=e32]:
+        - 'generic "Avant de commencer : ce qu’il faut savoir" [ref=e33] [cursor=pointer]'
+      - generic [ref=e34]:
+        - complementary "Sommaire du cours" [ref=e35]:
+          - heading "Votre parcours" [level=2] [ref=e37]
+          - navigation "Chapitres" [ref=e38]:
+            - button "01 Comment la machine lit un nombre 35 min · 3 exercices" [ref=e39] [cursor=pointer]:
+              - generic [ref=e40]: "01"
+              - generic [ref=e41]:
+                - text: Comment la machine lit un nombre
+                - generic [ref=e42]: 35 min · 3 exercices
+            - button "02 Pourquoi chaque programme a son espace 40 min · 3 exercices" [ref=e43] [cursor=pointer]:
+              - generic [ref=e44]: "02"
+              - generic [ref=e45]:
+                - text: Pourquoi chaque programme a son espace
+                - generic [ref=e46]: 40 min · 3 exercices
+            - button "03 Suivre un appel de fonction 50 min · 3 exercices" [ref=e47] [cursor=pointer]:
+              - generic [ref=e48]: "03"
+              - generic [ref=e49]:
+                - text: Suivre un appel de fonction
+                - generic [ref=e50]: 50 min · 3 exercices
+            - button "04 Une adresse n’est pas une garantie 40 min · 2 exercices" [ref=e51] [cursor=pointer]:
+              - generic [ref=e52]: "04"
+              - generic [ref=e53]:
+                - text: Une adresse n’est pas une garantie
+                - generic [ref=e54]: 40 min · 2 exercices
+            - button "05 Réserver et libérer de la mémoire 50 min · 2 exercices" [ref=e55] [cursor=pointer]:
+              - generic [ref=e56]: "05"
+              - generic [ref=e57]:
+                - text: Réserver et libérer de la mémoire
+                - generic [ref=e58]: 50 min · 2 exercices
+            - button "06 Qui décide de la durée de vie ? 55 min · 3 exercices" [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: "06"
+              - generic [ref=e61]:
+                - text: Qui décide de la durée de vie ?
+                - generic [ref=e62]: 55 min · 3 exercices
+          - button "Revenir au parcours guidé" [active] [pressed] [ref=e64] [cursor=pointer]
+          - generic [ref=e65]:
+            - generic [ref=e66]: 3 / 16 exercices validés
+            - generic [ref=e67]: Réponses vérifiées pendant cette session.
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - region "Comment la machine lit un nombre" [ref=e70]:
+              - generic [ref=e71]:
+                - paragraph [ref=e72]: Chapitre 1 sur 6 · 35 min environ
+                - heading "Comment la machine lit un nombre" [level=2] [ref=e73]
+                - paragraph [ref=e74]: Quand vous écrivez 42, que contient réellement la mémoire ?
+              - generic [ref=e75]:
+                - heading "L’idée en clair" [level=3] [ref=e76]
+                - paragraph [ref=e77]: Imaginez une longue rangée de cases numérotées. Chaque case contient un octet, soit huit bits. Son numéro est son adresse ; son contenu est sa valeur. Le processeur est la partie de la machine qui suit les instructions pour lire, calculer et écrire dans ces cases.
+              - generic [ref=e78]:
+                - heading "Un exemple, pas à pas" [level=3] [ref=e79]
+                - paragraph [ref=e80]: "Prenons 0x12345678. Le préfixe 0x indique une écriture en base 16 : chaque paire de chiffres représente un octet. Ce nombre occupe quatre cases. Sur x86-64, l’octet de poids faible vient à l’adresse la plus basse : 78 à 0x1008, puis 56, 34 et 12. La valeur du nombre reste la même ; seul l’ordre de rangement change."
+              - generic [ref=e81]: À vous d’expérimenter
+              - paragraph [ref=e84]: Avancez avec « Suivant » jusqu’à l’écriture. Repérez les quatre cases à partir de 0x1008. Avant le dernier pas, prédisez l’octet qui va apparaître dans la première case.
+              - generic "Simulateur VIS-01 CPU Fetch-Decode-Execute et RAM Little-Endian" [ref=e86]:
+                - generic [ref=e87]:
+                  - generic [ref=e88]:
+                    - heading "VIS-01 · Cycle Fetch-Decode-Execute & octets en RAM" [level=3] [ref=e93]
+                    - generic [ref=e94]: "Phase : HALTED"
+                  - paragraph [ref=e95]:
+                    - text: Observez le compteur d'instruction
+                    - code [ref=e96]: RIP
+                    - text: ", les bus et le stockage octet par octet en représentation"
+                    - strong [ref=e97]: little-endian
+                    - text: (x86-64).
+                  - tablist "Programmes VIS-01" [ref=e98]:
+                    - tab "Chargement & Addition" [ref=e99] [cursor=pointer]
+                    - tab "Branchement conditionnel (JZ)" [ref=e100] [cursor=pointer]
+                    - tab "Écriture Little-Endian int32" [selected] [ref=e101] [cursor=pointer]
+                  - generic [ref=e102]:
+                    - generic [ref=e103]:
+                      - generic [ref=e104]: "Valeur 32 bits :"
+                      - button "0x12345678" [ref=e105] [cursor=pointer]
+                      - button "0x00000042" [ref=e106] [cursor=pointer]
+                      - button "0xAABBCCDD" [ref=e107] [cursor=pointer]
+                    - generic [ref=e108]:
+                      - button "Vue int32 groupée" [pressed] [ref=e109] [cursor=pointer]
+                      - button "Vitesse 1x" [ref=e110] [cursor=pointer]
+                - generic [ref=e111]:
+                  - generic [ref=e112]:
+                    - generic [ref=e113]:
+                      - generic [ref=e114]:
+                        - generic [ref=e115]: Processeur (CPU)
+                        - generic [ref=e116]: ZF=0
+                      - generic [ref=e117]:
+                        - generic [ref=e118]:
+                          - generic [ref=e119]: RIP (Instruction Ptr)
+                          - generic [ref=e120]: "0x0048"
+                        - generic [ref=e121]:
+                          - generic [ref=e122]: IR (Décodage)
+                          - generic [ref=e123]: HLT
+                        - generic [ref=e124]:
+                          - generic [ref=e125]: RAX / EAX
+                          - generic [ref=e126]: "0x00000000"
+                        - generic [ref=e127]:
+                          - generic [ref=e128]: RBX / EBX
+                          - generic [ref=e129]: "0x12345678"
+                      - generic [ref=e130]:
+                        - generic [ref=e131]: Instructions (Zone Code 0x0040..)
+                        - list [ref=e132]:
+                          - listitem [ref=e133]:
+                            - generic [ref=e134]: "0x0040"
+                            - generic [ref=e135]: MOV DWORD PTR [0x1008], val
+                          - listitem [ref=e136]:
+                            - generic [ref=e137]: "0x0044"
+                            - generic [ref=e138]: MOV EBX, [0x1008]
+                          - listitem [ref=e139]:
+                            - generic [ref=e140]: "0x0048"
+                            - generic [ref=e141]: HLT
+                    - generic [ref=e142]:
+                      - generic [ref=e143]: Bus système
+                      - 'img "Bus mémoire : idle" [ref=e144]'
+                      - generic [ref=e146]: Bus inactif
+                    - generic [ref=e147]:
+                      - generic [ref=e148]:
+                        - generic [ref=e149]: Mémoire Données (1 case = 1 octet)
+                        - generic [ref=e150]: int32 @0x1008 = 0x12345678 [78 56 34 12]
+                      - generic [ref=e151]:
+                        - generic [ref=e152]:
+                          - generic [ref=e153]: "0x1000"
+                          - generic [ref=e154]: "00"
+                        - generic [ref=e155]:
+                          - generic [ref=e156]: "0x1001"
+                          - generic [ref=e157]: "00"
+                        - generic [ref=e158]:
+                          - generic [ref=e159]: "0x1002"
+                          - generic [ref=e160]: "00"
+                        - generic [ref=e161]:
+                          - generic [ref=e162]: "0x1003"
+                          - generic [ref=e163]: "00"
+                        - generic [ref=e164]:
+                          - generic [ref=e165]: "0x1004"
+                          - generic [ref=e166]: 0A
+                        - generic [ref=e167]:
+                          - generic [ref=e168]: "0x1005"
+                          - generic [ref=e169]: "00"
+                        - generic [ref=e170]:
+                          - generic [ref=e171]: "0x1006"
+                          - generic [ref=e172]: "00"
+                        - generic [ref=e173]:
+                          - generic [ref=e174]: "0x1007"
+                          - generic [ref=e175]: "00"
+                        - generic [ref=e176]:
+                          - generic [ref=e177]: "0x1008"
+                          - generic [ref=e178]: "78"
+                        - generic [ref=e179]:
+                          - generic [ref=e180]: "0x1009"
+                          - generic [ref=e181]: "56"
+                        - generic [ref=e182]:
+                          - generic [ref=e183]: "0x100A"
+                          - generic [ref=e184]: "34"
+                        - generic [ref=e185]:
+                          - generic [ref=e186]: "0x100B"
+                          - generic [ref=e187]: "12"
+                        - generic [ref=e188]:
+                          - generic [ref=e189]: "0x100C"
+                          - generic [ref=e190]: "00"
+                        - generic [ref=e191]:
+                          - generic [ref=e192]: "0x100D"
+                          - generic [ref=e193]: "00"
+                        - generic [ref=e194]:
+                          - generic [ref=e195]: "0x100E"
+                          - generic [ref=e196]: "00"
+                        - generic [ref=e197]:
+                          - generic [ref=e198]: "0x100F"
+                          - generic [ref=e199]: "00"
+                  - generic [ref=e200]:
+                    - generic [ref=e201]:
+                      - button "Précédent" [ref=e202] [cursor=pointer]
+                      - button "Lecture auto" [ref=e205] [cursor=pointer]
+                      - button "Phase suivante" [disabled]
+                      - button "Réinitialiser" [ref=e208] [cursor=pointer]
+                    - generic [ref=e212]: Étape 7 / 7
+                  - status [ref=e213]:
+                    - heading "Explication synchronisée" [level=4] [ref=e214]
+                    - generic [ref=e215]: "Fin de la séquence : la donnée 32 bits en RAM et le registre EBX correspondent."
+                  - generic [ref=e219]:
+                    - strong [ref=e220]: "Ce que le simulateur simplifie :"
+                    - text: un processeur réel sépare ses cœurs de la DRAM via des caches L1/L2/L3, des tampons d'écriture et un pipeline superscalaire. L'ordre exact des octets en little-endian reste toutefois strictement identique.
+              - group [ref=e221]:
+                - generic "Ce que ce modèle simplifie" [ref=e222] [cursor=pointer]
+              - generic [ref=e223]:
+                - heading "Faites le point" [level=3] [ref=e224]
+                - paragraph [ref=e228]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+                - generic [ref=e229]:
+                  - generic [ref=e230]:
+                    - generic [ref=e231]:
+                      - generic [ref=e232]:
+                        - generic [ref=e233]: Exercice 1 · Compréhension
+                        - button "Afficher un indice" [ref=e234] [cursor=pointer]
+                      - heading "À quel instant précis le processeur utilise-t-il le registre PC (RIP sur x86-64) pour savoir quelle opération exécuter ensuite ?" [level=3] [ref=e238]
+                    - generic [ref=e239]:
+                      - group "À quel instant précis le processeur utilise-t-il le registre PC (RIP sur x86-64) pour savoir quelle opération exécuter ensuite ?" [ref=e240]:
+                        - generic [ref=e242] [cursor=pointer]:
+                          - radio "Pendant la phase Fetch, pour lire les octets de l'instruction à l'adresse contenue dans PC/RIP" [checked] [ref=e243]
+                          - generic [ref=e246]: Pendant la phase Fetch, pour lire les octets de l'instruction à l'adresse contenue dans PC/RIP
+                        - generic [ref=e247] [cursor=pointer]:
+                          - radio "Uniquement pendant Execute pour stocker le résultat du calcul" [ref=e248]
+                          - generic [ref=e250]: Uniquement pendant Execute pour stocker le résultat du calcul
+                        - generic [ref=e251] [cursor=pointer]:
+                          - radio "Uniquement lors d'une allocation malloc() sur le tas" [ref=e252]
+                          - generic [ref=e254]: Uniquement lors d'une allocation malloc() sur le tas
+                      - generic [ref=e255]:
+                        - button "Vérifier ma réponse" [ref=e256] [cursor=pointer]
+                        - button "Réessayer" [ref=e257] [cursor=pointer]
+                      - status [ref=e261]:
+                        - generic [ref=e266]:
+                          - heading "Raisonnement exact" [level=4] [ref=e267]
+                          - generic [ref=e268]:
+                            - paragraph [ref=e269]: "Exact : Fetch lit l'instruction depuis la mémoire à l'adresse pointée par PC/RIP, puis RIP avance vers l'instruction suivante."
+                            - paragraph [ref=e270]: PC/RIP contient en permanence l'adresse virtuelle de la prochaine instruction à charger (Fetch) depuis le segment Text.
+                  - generic [ref=e271]:
+                    - generic [ref=e272]:
+                      - generic [ref=e273]:
+                        - generic [ref=e274]: Exercice 2 · Prédiction d'état
+                        - button "Afficher un indice" [ref=e275] [cursor=pointer]
+                      - heading "Dans VIS-01, quel octet est lu à l'adresse 0x1008 après l'écriture little-endian de l'entier 32 bits 0x12345678 à partir de 0x1008 ?" [level=3] [ref=e279]
+                      - paragraph [ref=e280]: "L'instruction `mov dword ptr [0x1008], 0x12345678` s'exécute sur une architecture x86-64 (little-endian)."
+                    - generic [ref=e281]:
+                      - group "Dans VIS-01, quel octet est lu à l'adresse 0x1008 après l'écriture little-endian de l'entier 32 bits 0x12345678 à partir de 0x1008 ?" [ref=e282]:
+                        - generic [ref=e284] [cursor=pointer]:
+                          - radio "0x78 à 0x1008 (et 0x56, 0x34, 0x12 aux adresses 0x1009..0x100B)" [checked] [ref=e285]
+                          - generic [ref=e288]: 0x78 à 0x1008 (et 0x56, 0x34, 0x12 aux adresses 0x1009..0x100B)
+                        - generic [ref=e289] [cursor=pointer]:
+                          - radio "0x12 à 0x1008 (ordre big-endian)" [ref=e290]
+                          - generic [ref=e292]: 0x12 à 0x1008 (ordre big-endian)
+                        - generic [ref=e293] [cursor=pointer]:
+                          - radio "0x00 car un entier ne prend qu'un octet" [ref=e294]
+                          - generic [ref=e296]: 0x00 car un entier ne prend qu'un octet
+                      - generic [ref=e297]:
+                        - button "Vérifier ma réponse" [ref=e298] [cursor=pointer]
+                        - button "Réessayer" [ref=e299] [cursor=pointer]
+                      - status [ref=e303]:
+                        - generic [ref=e308]:
+                          - heading "Raisonnement exact" [level=4] [ref=e309]
+                          - generic [ref=e310]:
+                            - paragraph [ref=e311]: "Exact : l'octet de poids faible 0x78 occupe l'adresse la plus basse 0x1008."
+                            - paragraph [ref=e312]: "Sur x86-64, les valeurs multi-octets sont stockées en little-endian : l'octet le moins significatif (LSB = 0x78) est placé à l'adresse de base."
+                  - generic [ref=e313]:
+                    - generic [ref=e314]:
+                      - generic [ref=e315]:
+                        - generic [ref=e316]: Exercice 3 · Ordonnancement
+                        - button "Afficher un indice" [ref=e317] [cursor=pointer]
+                      - heading "Remettez dans l'ordre chronologique les étapes d'exécution d'une instruction séquentielle dans le processeur." [level=3] [ref=e321]
+                    - generic [ref=e322]:
+                      - list "Séquence à ordonner" [ref=e323]:
+                        - listitem [ref=e324]:
+                          - generic [ref=e325]:
+                            - generic [ref=e326]: "1"
+                            - generic [ref=e327]: "Decode : identifier l'opération et les opérandes"
+                          - generic [ref=e328]:
+                            - 'button "Monter Decode : identifier l''opération et les opérandes" [disabled]'
+                            - 'button "Descendre Decode : identifier l''opération et les opérandes" [ref=e329] [cursor=pointer]'
+                        - listitem [ref=e332]:
+                          - generic [ref=e333]:
+                            - generic [ref=e334]: "2"
+                            - generic [ref=e335]: "Fetch : charger l'instruction pointée par PC/RIP"
+                          - generic [ref=e336]:
+                            - 'button "Monter Fetch : charger l''instruction pointée par PC/RIP" [ref=e337] [cursor=pointer]'
+                            - 'button "Descendre Fetch : charger l''instruction pointée par PC/RIP" [ref=e340] [cursor=pointer]'
+                        - listitem [ref=e343]:
+                          - generic [ref=e344]:
+                            - generic [ref=e345]: "3"
+                            - generic [ref=e346]: "Update PC : faire pointer RIP vers l'instruction suivante"
+                          - generic [ref=e347]:
+                            - 'button "Monter Update PC : faire pointer RIP vers l''instruction suivante" [ref=e348] [cursor=pointer]'
+                            - 'button "Descendre Update PC : faire pointer RIP vers l''instruction suivante" [ref=e351] [cursor=pointer]'
+                        - listitem [ref=e354]:
+                          - generic [ref=e355]:
+                            - generic [ref=e356]: "4"
+                            - generic [ref=e357]: "Execute : calculer dans l'ALU ou accéder à la RAM"
+                          - generic [ref=e358]:
+                            - 'button "Monter Execute : calculer dans l''ALU ou accéder à la RAM" [ref=e359] [cursor=pointer]'
+                            - 'button "Descendre Execute : calculer dans l''ALU ou accéder à la RAM" [disabled]'
+                      - button "Vérifier ma réponse" [ref=e363] [cursor=pointer]
+              - generic [ref=e364]:
+                - heading "À emporter" [level=3] [ref=e365]
+                - paragraph [ref=e366]: Une adresse indique où lire. Un octet indique ce qui est stocké. Pour reconstruire une valeur de plusieurs octets, il faut aussi connaître leur ordre.
+            - region "Pourquoi chaque programme a son espace" [ref=e367]:
+              - generic [ref=e368]:
+                - paragraph [ref=e369]: Chapitre 2 sur 6 · 40 min environ
+                - heading "Pourquoi chaque programme a son espace" [level=2] [ref=e370]
+                - paragraph [ref=e371]: Deux programmes peuvent-ils utiliser la même adresse sans partager la même donnée ?
+              - generic [ref=e372]:
+                - heading "L’idée en clair" [level=3] [ref=e373]
+                - paragraph [ref=e374]: "Oui : une adresse vue par un programme est généralement virtuelle. Le système d’exploitation et le matériel traduisent cette adresse vers la mémoire physique. Chaque processus, c’est-à-dire chaque programme en cours d’exécution, possède ses propres correspondances et permissions."
+              - generic [ref=e375]:
+                - heading "Un exemple, pas à pas" [level=3] [ref=e376]
+                - paragraph [ref=e377]: Pensez à deux immeubles ayant chacun un appartement 12. Le numéro seul ne désigne pas le même logement. De la même façon, l’adresse virtuelle 0x400000 dans deux processus peut désigner des pages physiques différentes. Dans un processus, la zone .text contient normalement les instructions et n’autorise pas leur réécriture ordinaire.
+              - generic [ref=e378]: À vous d’expérimenter
+              - paragraph [ref=e381]: Comparez les processus P1 et P2, puis tentez une écriture dans .text. Prédisez d’abord si la présence d’une adresse suffit à autoriser l’écriture.
+              - generic [ref=e382]:
+                - generic [ref=e383]:
+                  - generic [ref=e384]:
+                    - heading "VIS-02 · Espace d'adressage virtuel, MMU & segments" [level=3] [ref=e390]
+                    - generic [ref=e391]: Traduction MMU valide
+                  - paragraph [ref=e392]:
+                    - text: Inspectez chaque région de
+                    - code [ref=e393]: /proc/[pid]/maps
+                    - text: ", observez comment deux processus partagent les mêmes adresses virtuelles sans collision physique, et testez la protection"
+                    - code [ref=e394]: rwx
+                    - text: .
+                  - generic [ref=e395]:
+                    - button "Isolation P1 ↔ P2 active" [pressed] [ref=e396] [cursor=pointer]
+                    - button "Cibler Processus P1" [ref=e397] [cursor=pointer]
+                    - button "Cibler Processus P2" [ref=e398] [cursor=pointer]
+                    - 'button "ASLR : Désactivé" [ref=e399] [cursor=pointer]'
+                - generic [ref=e400]:
+                  - generic [ref=e401]:
+                    - generic [ref=e402]:
+                      - generic [ref=e403]:
+                        - generic [ref=e404]: Espace virtuel de P1 (haut → bas)
+                        - generic [ref=e405]: Permissions
+                      - listbox "Segments mémoire du processus" [ref=e406]:
+                        - option "Stack (Pile d'appels) 0x7FE000–0x7FFFFF · ↓ adresses basses rw-p RAM 0x0C4000" [ref=e407] [cursor=pointer]:
+                          - generic [ref=e408]:
+                            - generic [ref=e409]: Stack (Pile d'appels)
+                            - generic [ref=e410]: 0x7FE000–0x7FFFFF · ↓ adresses basses
+                          - generic [ref=e411]:
+                            - generic [ref=e412]: rw-p
+                            - generic [ref=e413]: RAM 0x0C4000
+                        - option "Zone mmap & bibliothèques 0x700000–0x708FFF · ↓ adresses basses r-xp / rw-p RAM 0x055000 (partagé)" [ref=e414] [cursor=pointer]:
+                          - generic [ref=e415]:
+                            - generic [ref=e416]: Zone mmap & bibliothèques
+                            - generic [ref=e417]: 0x700000–0x708FFF · ↓ adresses basses
+                          - generic [ref=e418]:
+                            - generic [ref=e419]: r-xp / rw-p
+                            - generic [ref=e420]: RAM 0x055000 (partagé)
+                        - option "Heap (Tas dynamique) 0x602000–0x623FFF · ↑ adresses hautes rw-p RAM 0x08B000" [ref=e421] [cursor=pointer]:
+                          - generic [ref=e422]:
+                            - generic [ref=e423]: Heap (Tas dynamique)
+                            - generic [ref=e424]: 0x602000–0x623FFF · ↑ adresses hautes
+                          - generic [ref=e425]:
+                            - generic [ref=e426]: rw-p
+                            - generic [ref=e427]: RAM 0x08B000
+                        - option "Data & BSS 0x404000–0x405FFF · taille fixe rw-p RAM 0x04A000" [ref=e428] [cursor=pointer]:
+                          - generic [ref=e429]:
+                            - generic [ref=e430]: Data & BSS
+                            - generic [ref=e431]: 0x404000–0x405FFF · taille fixe
+                          - generic [ref=e432]:
+                            - generic [ref=e433]: rw-p
+                            - generic [ref=e434]: RAM 0x04A000
+                        - option "Rodata (Constantes) 0x402000–0x402FFF · taille fixe r--p RAM 0x031000" [ref=e435] [cursor=pointer]:
+                          - generic [ref=e436]:
+                            - generic [ref=e437]: Rodata (Constantes)
+                            - generic [ref=e438]: 0x402000–0x402FFF · taille fixe
+                          - generic [ref=e439]:
+                            - generic [ref=e440]: r--p
+                            - generic [ref=e441]: RAM 0x031000
+                        - option "Text (Code machine) 0x401000–0x401FFF · taille fixe r-xp RAM 0x02F000" [selected] [ref=e442] [cursor=pointer]:
+                          - generic [ref=e443]:
+                            - generic [ref=e444]: Text (Code machine)
+                            - generic [ref=e445]: 0x401000–0x401FFF · taille fixe
+                          - generic [ref=e446]:
+                            - generic [ref=e447]: r-xp
+                            - generic [ref=e448]: RAM 0x02F000
+                    - generic [ref=e449]:
+                      - generic [ref=e450]:
+                        - generic [ref=e451]: Tester une opération mémoire via la MMU
+                        - generic [ref=e452]:
+                          - button "Lire Text (r-x)" [ref=e453] [cursor=pointer]
+                          - button "Écrire dans Text" [ref=e454] [cursor=pointer]
+                          - button "Allouer page Heap" [ref=e455] [cursor=pointer]
+                          - button "Exécuter dans Stack" [ref=e456] [cursor=pointer]
+                          - button "Déréférencer NULL (0x0)" [ref=e457] [cursor=pointer]
+                        - generic [ref=e458]:
+                          - generic [ref=e459]:
+                            - text: "Processus :"
+                            - strong [ref=e460]: P1
+                            - text: "· Adresse virtuelle :"
+                            - strong [ref=e461]: "0x401040"
+                          - generic [ref=e462]: "Table des pages : Page 0x401000 (r-x) -> Cadre 0x02F000"
+                          - generic [ref=e463]: "Cadre physique RAM : 0x02F040"
+                      - generic [ref=e464]:
+                        - generic [ref=e465]:
+                          - generic [ref=e466]: "Segment inspecté : Text (Code machine)"
+                          - generic [ref=e467]: r-xp
+                        - paragraph [ref=e468]: Instructions machine exécutables (main, compute, helper), non modifiables.
+                        - generic [ref=e469]: "/proc/self/maps : 401000-401fff r-xp 00001000 08:01 /usr/bin/app"
+                  - status [ref=e470]:
+                    - generic [ref=e475]:
+                      - heading "Traduction MMU" [level=4] [ref=e476]
+                      - generic [ref=e477]: "Accès autorisé : dans P1, l'adresse virtuelle 0x401040 est traduite par la MMU vers le cadre physique isolé 0x02F040 (droit r=1)."
+                  - generic [ref=e481]:
+                    - strong [ref=e482]: "Ce que le simulateur simplifie :"
+                    - text: Linux x86-64 utilise des adresses virtuelles canoniques 48 bits, des tables de pages à 4/5 niveaux et un cache
+                    - code [ref=e483]: TLB
+                    - text: . L'isolation par processus et les droits
+                    - code [ref=e484]: rwx
+                    - text: fonctionnent exactement comme illustré.
+              - group [ref=e485]:
+                - generic "Ce que ce modèle simplifie" [ref=e486] [cursor=pointer]
+              - generic [ref=e487]:
+                - heading "Faites le point" [level=3] [ref=e488]
+                - paragraph [ref=e492]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+                - generic [ref=e493]:
+                  - generic [ref=e494]:
+                    - generic [ref=e495]:
+                      - generic [ref=e496]:
+                        - generic [ref=e497]: Exercice 4 · Compréhension
+                        - button "Afficher un indice" [ref=e498] [cursor=pointer]
+                      - heading "Deux processus P1 et P2 accèdent chacun à l'adresse virtuelle 0x401000. Pourquoi P1 n'écrase-t-il pas les données de P2 ?" [level=3] [ref=e502]
+                    - generic [ref=e503]:
+                      - group "Deux processus P1 et P2 accèdent chacun à l'adresse virtuelle 0x401000. Pourquoi P1 n'écrase-t-il pas les données de P2 ?" [ref=e504]:
+                        - generic [ref=e506] [cursor=pointer]:
+                          - radio "Chaque processus possède sa propre table des pages qui traduit 0x401000 vers un cadre physique distinct" [ref=e507]
+                          - generic [ref=e509]: Chaque processus possède sa propre table des pages qui traduit 0x401000 vers un cadre physique distinct
+                        - generic [ref=e510] [cursor=pointer]:
+                          - radio "Le CPU met le processus P2 en pause jusqu'à la fin de P1" [ref=e511]
+                          - generic [ref=e513]: Le CPU met le processus P2 en pause jusqu'à la fin de P1
+                        - generic [ref=e514] [cursor=pointer]:
+                          - radio "Le compilateur réécrit automatiquement toutes les adresses de P2 avant le lancement" [ref=e515]
+                          - generic [ref=e517]: Le compilateur réécrit automatiquement toutes les adresses de P2 avant le lancement
+                      - generic [ref=e518]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e519]:
+                    - generic [ref=e520]:
+                      - generic [ref=e521]:
+                        - generic [ref=e522]: Exercice 5 · Compréhension
+                        - button "Afficher un indice" [ref=e523] [cursor=pointer]
+                      - heading "Que déclenche matériellement le CPU + OS lorsqu'un bug tente d'écrire un octet dans le segment Text (.text, permissions r-x) ?" [level=3] [ref=e527]
+                    - generic [ref=e528]:
+                      - group "Que déclenche matériellement le CPU + OS lorsqu'un bug tente d'écrire un octet dans le segment Text (.text, permissions r-x) ?" [ref=e529]:
+                        - generic [ref=e531] [cursor=pointer]:
+                          - radio "Une faute de protection (Segmentation Fault / SIGSEGV) car la page Text n'a pas le droit d'écriture (w)" [ref=e532]
+                          - generic [ref=e534]: Une faute de protection (Segmentation Fault / SIGSEGV) car la page Text n'a pas le droit d'écriture (w)
+                        - generic [ref=e535] [cursor=pointer]:
+                          - radio "L'OS déplace silencieusement la donnée vers le segment BSS" [ref=e536]
+                          - generic [ref=e538]: L'OS déplace silencieusement la donnée vers le segment BSS
+                        - generic [ref=e539] [cursor=pointer]:
+                          - radio "L'instruction devient automatiquement une allocation malloc()" [ref=e540]
+                          - generic [ref=e542]: L'instruction devient automatiquement une allocation malloc()
+                      - generic [ref=e543]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e544]:
+                    - generic [ref=e545]:
+                      - generic [ref=e546]:
+                        - generic [ref=e547]: Exercice 6 · Inspection de schéma
+                        - button "Afficher un indice" [ref=e548] [cursor=pointer]
+                      - 'heading "Pointez sur le schéma la zone mémoire exacte où est stockée une variable globale initialisée `static int port = 443;`." [level=3] [ref=e552]'
+                      - paragraph [ref=e553]: Carte des segments mémoire d'un processus — Sélectionnez la zone correspondant aux variables globales initialisées à une valeur non nulle.
+                    - generic [ref=e554]:
+                      - group "Carte des segments mémoire d'un processus" [ref=e555]:
+                        - generic [ref=e557]:
+                          - generic [ref=e558] [cursor=pointer]:
+                            - radio "0x401000 · r-x Zone Segment Text (.text) Code machine exécutable en lecture seule" [ref=e559]
+                            - generic [ref=e560]:
+                              - generic [ref=e561]: 0x401000 · r-x
+                              - generic [ref=e562]: Zone
+                            - generic [ref=e563]: Segment Text (.text)
+                            - generic [ref=e564]: Code machine exécutable en lecture seule
+                          - generic [ref=e565] [cursor=pointer]:
+                            - radio "0x404000 · rw- Sélectionné Segment Data (.data) Variables globales/statiques initialisées" [checked] [ref=e566]
+                            - generic [ref=e567]:
+                              - generic [ref=e568]: 0x404000 · rw-
+                              - generic [ref=e569]: Sélectionné
+                            - generic [ref=e570]: Segment Data (.data)
+                            - generic [ref=e571]: Variables globales/statiques initialisées
+                          - generic [ref=e572] [cursor=pointer]:
+                            - radio "0x404100 · rw- Zone Segment BSS (.bss) Globales initialisées à 0" [ref=e573]
+                            - generic [ref=e574]:
+                              - generic [ref=e575]: 0x404100 · rw-
+                              - generic [ref=e576]: Zone
+                            - generic [ref=e577]: Segment BSS (.bss)
+                            - generic [ref=e578]: Globales initialisées à 0
+                          - generic [ref=e579] [cursor=pointer]:
+                            - radio "0x7FFF0000 · rw- Zone Pile (Stack) Trames temporaires des fonctions" [ref=e580]
+                            - generic [ref=e581]:
+                              - generic [ref=e582]: 0x7FFF0000 · rw-
+                              - generic [ref=e583]: Zone
+                            - generic [ref=e584]: Pile (Stack)
+                            - generic [ref=e585]: Trames temporaires des fonctions
+                      - generic [ref=e586]:
+                        - button "Vérifier ma réponse" [ref=e587] [cursor=pointer]
+                        - button "Réessayer" [ref=e588] [cursor=pointer]
+                      - status [ref=e592]:
+                        - generic [ref=e597]:
+                          - heading "Raisonnement exact" [level=4] [ref=e598]
+                          - generic [ref=e599]:
+                            - list [ref=e600]:
+                              - listitem [ref=e601]: "[0x404000 · rw-] Exact : `port = 443` a une valeur connue dès le binaire et reste modifiable, donc elle réside dans .data (rw-)."
+                            - paragraph [ref=e602]: "Les variables globales ou `static` initialisées avec une valeur non nulle résident dans le segment `.data` avec permissions `rw-`."
+              - generic [ref=e603]:
+                - heading "À emporter" [level=3] [ref=e604]
+                - paragraph [ref=e605]: "Pour accéder à une donnée, une adresse ne suffit pas : la traduction doit exister et les permissions doivent autoriser l’opération."
+            - region "Suivre un appel de fonction" [ref=e606]:
+              - generic [ref=e607]:
+                - paragraph [ref=e608]: Chapitre 3 sur 6 · 50 min environ
+                - heading "Suivre un appel de fonction" [level=2] [ref=e609]
+                - paragraph [ref=e610]: Comment une fonction retrouve-t-elle son chemin après en avoir appelé une autre ?
+              - generic [ref=e611]:
+                - heading "L’idée en clair" [level=3] [ref=e612]
+                - paragraph [ref=e613]: "La pile d’appels garde les informations nécessaires aux fonctions en cours. Chaque appel peut ajouter une trame : une zone qui contient notamment des données locales et des informations de retour. Au retour, cette zone redevient disponible. Disponible ne signifie pas effacée."
+              - generic [ref=e614]:
+                - heading "Un exemple, pas à pas" [level=3] [ref=e615]
+                - paragraph [ref=e616]: main appelle calculer, qui appelle doubler. La trame de doubler est ajoutée au sommet. Quand doubler termine, calculer reprend ; quand calculer termine, main reprend. Dans le modèle x86-64 présenté, la pile grandit vers les adresses plus basses. RSP repère le sommet ; RBP sert ici de repère dans la trame.
+              - generic [ref=e617]: À vous d’expérimenter
+              - paragraph [ref=e620]: Avancez jusqu’à un appel imbriqué, puis jusqu’au retour. Regardez quelles cases ne sont plus utilisées et vérifiez si leurs octets ont été remis à zéro.
+              - generic "Simulateur VIS-03 Pile d'appels, RSP RBP et pointeur pendant" [ref=e621]:
+                - generic [ref=e622]:
+                  - generic [ref=e623]:
+                    - heading [level=3] [ref=e629]:
+                      - text: VIS-03 · Pile d'appels (
+                      - code [ref=e630]: RSP
+                      - text: /
+                      - code [ref=e631]: RBP
+                      - text: ), ABI & pointeurs pendants
+                    - generic [ref=e632]: "Fonction : main"
+                  - paragraph [ref=e633]:
+                    - text: La pile croît vers les
+                    - strong [ref=e634]: adresses basses
+                    - text: . Au retour (
+                    - code [ref=e635]: RET
+                    - text: ), seul
+                    - code [ref=e636]: RSP
+                    - text: "remonte en O(1) : les octets libérés restent visibles en grisé jusqu'au prochain appel."
+                  - generic [ref=e637]:
+                    - tablist "Scénarios de pile" [ref=e638]:
+                      - tab "Appels imbriqués & résidus" [selected] [ref=e639] [cursor=pointer]
+                      - tab "Pointeur pendant (Dangling)" [ref=e640] [cursor=pointer]
+                      - tab "Stack Overflow (Récursion)" [ref=e641] [cursor=pointer]
+                    - button "Masquer détails ABI" [pressed] [ref=e643] [cursor=pointer]
+                - generic [ref=e644]:
+                  - generic [ref=e645]:
+                    - generic [ref=e646]:
+                      - generic [ref=e647]:
+                        - generic [ref=e648]: Trace d'exécution guidée
+                        - list [ref=e649]:
+                          - listitem [ref=e650]: "1: int main() { int a = 10; return compute(a); }"
+                          - listitem [ref=e651]: "2: int compute(int x) { int y = x * 2; return helper(y); }"
+                          - listitem [ref=e652]: "3: int helper(int z) { int tmp = z + 1; return tmp; }"
+                          - listitem [ref=e653]: "4: // Retour vers compute -> retour vers main -> appel probe()"
+                          - listitem [ref=e654]: "5: int probe() { int uninit; /* lit l'ancienne case ! */ }"
+                      - generic [ref=e655]:
+                        - generic [ref=e656]:
+                          - generic [ref=e657]: RSP (Sommet)
+                          - generic [ref=e658]: "0x7FE8"
+                        - generic [ref=e659]:
+                          - generic [ref=e660]: RBP (Base trame)
+                          - generic [ref=e661]: "0x7FF0"
+                        - generic [ref=e662]:
+                          - generic [ref=e663]: RIP courant
+                          - generic [ref=e664]: "0x401020"
+                      - generic [ref=e665]:
+                        - strong [ref=e666]: "Convention System V AMD64 ABI :"
+                        - text: "Prologue de main : RSP aligné à 16 octets avant tout CALL."
+                    - generic [ref=e667]:
+                      - generic [ref=e668]:
+                        - generic [ref=e669]: Pile d'appels (adresses hautes → basses ↓)
+                        - generic [ref=e670]: 0x7FF0 ↓ 0x7F50
+                      - list [ref=e671]:
+                        - listitem [ref=e672]:
+                          - generic [ref=e673]:
+                            - generic [ref=e674]: "0x7FF0"
+                            - generic [ref=e675]: main
+                            - generic [ref=e676]: Base main (RBP)
+                          - generic [ref=e677]: "0x7FF8"
+                        - listitem [ref=e678]:
+                          - generic [ref=e679]:
+                            - generic [ref=e680]: "0x7FE8"
+                            - generic [ref=e681]: main
+                            - generic [ref=e682]: int a
+                            - generic [ref=e683]: ← RSP
+                          - generic [ref=e684]: "10"
+                  - generic [ref=e685]:
+                    - generic [ref=e686]:
+                      - button "Pas précédent" [disabled]
+                      - button "Pas suivant" [ref=e687] [cursor=pointer]
+                      - button "Réinitialiser" [ref=e690] [cursor=pointer]
+                    - generic [ref=e694]: Étape 1 / 4
+                  - status [ref=e695]:
+                    - heading "État de la pile" [level=4] [ref=e696]
+                    - generic [ref=e697]: "main() crée sa trame à 0x7FF0 et stocke `a = 10` en 0x7FE8. RDI reçoit `10` pour appeler compute(10)."
+                  - generic [ref=e701]:
+                    - strong [ref=e702]: "Ce que le simulateur simplifie :"
+                    - text: en compilation optimisée (
+                    - code [ref=e703]: "-O2"
+                    - text: ), le compilateur peut placer certaines locales uniquement en registres, omettre
+                    - code [ref=e704]: RBP
+                    - text: (
+                    - code [ref=e705]: "-fomit-frame-pointer"
+                    - text: ) et utiliser la Red Zone de 128 octets sous
+                    - code [ref=e706]: RSP
+                    - text: dans les fonctions feuilles Linux x86-64.
+              - group [ref=e707]:
+                - generic "Ce que ce modèle simplifie" [ref=e708] [cursor=pointer]
+              - generic [ref=e709]:
+                - heading "Faites le point" [level=3] [ref=e710]
+                - paragraph [ref=e714]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+                - generic [ref=e715]:
+                  - generic [ref=e716]:
+                    - generic [ref=e717]:
+                      - generic [ref=e718]:
+                        - generic [ref=e719]: Exercice 7 · Ordonnancement
+                        - button "Afficher un indice" [ref=e720] [cursor=pointer]
+                      - 'heading "Ordonnez la séquence exacte de création d''une trame d''activation lors d''un appel `f()` sur x86-64 (System V ABI)." [level=3] [ref=e724]'
+                    - generic [ref=e725]:
+                      - list "Séquence à ordonner" [ref=e726]:
+                        - listitem [ref=e727]:
+                          - generic [ref=e728]:
+                            - generic [ref=e729]: "1"
+                            - generic [ref=e730]: "sub rsp, N : réserver l'espace des variables locales"
+                          - generic [ref=e731]:
+                            - 'button "Monter sub rsp, N : réserver l''espace des variables locales" [disabled]'
+                            - 'button "Descendre sub rsp, N : réserver l''espace des variables locales" [ref=e732] [cursor=pointer]'
+                        - listitem [ref=e735]:
+                          - generic [ref=e736]:
+                            - generic [ref=e737]: "2"
+                            - generic [ref=e738]: "push rbp : sauvegarder le RBP de la fonction appelante"
+                          - generic [ref=e739]:
+                            - 'button "Monter push rbp : sauvegarder le RBP de la fonction appelante" [ref=e740] [cursor=pointer]'
+                            - 'button "Descendre push rbp : sauvegarder le RBP de la fonction appelante" [ref=e743] [cursor=pointer]'
+                        - listitem [ref=e746]:
+                          - generic [ref=e747]:
+                            - generic [ref=e748]: "3"
+                            - generic [ref=e749]: "call f : empiler l'adresse de retour et sauter vers f"
+                          - generic [ref=e750]:
+                            - 'button "Monter call f : empiler l''adresse de retour et sauter vers f" [ref=e751] [cursor=pointer]'
+                            - 'button "Descendre call f : empiler l''adresse de retour et sauter vers f" [ref=e754] [cursor=pointer]'
+                        - listitem [ref=e757]:
+                          - generic [ref=e758]:
+                            - generic [ref=e759]: "4"
+                            - generic [ref=e760]: "mov rbp, rsp : ancrer la base de la nouvelle trame"
+                          - generic [ref=e761]:
+                            - 'button "Monter mov rbp, rsp : ancrer la base de la nouvelle trame" [ref=e762] [cursor=pointer]'
+                            - 'button "Descendre mov rbp, rsp : ancrer la base de la nouvelle trame" [disabled]'
+                      - button "Vérifier ma réponse" [ref=e766] [cursor=pointer]
+                  - generic [ref=e767]:
+                    - generic [ref=e768]:
+                      - generic [ref=e769]:
+                        - generic [ref=e770]: Exercice 8 · Prédiction d'état
+                        - button "Afficher un indice" [ref=e771] [cursor=pointer]
+                      - 'heading "Lorsqu''une fonction se termine par `ret` sans écraser explicitement ses variables locales, que contiennent les octets de son ancienne trame en RAM ?" [level=3] [ref=e775]'
+                      - paragraph [ref=e776]: "Dans VIS-03, étape 4 (`ret` depuis `inner()` vers `outer()`), RSP remonte à l'adresse haute de l'appelant."
+                    - generic [ref=e777]:
+                      - 'group "Lorsqu''une fonction se termine par `ret` sans écraser explicitement ses variables locales, que contiennent les octets de son ancienne trame en RAM ?" [ref=e778]':
+                        - generic [ref=e780] [cursor=pointer]:
+                          - radio "Les anciens octets restent temporairement en mémoire comme données résiduelles jusqu'à réutilisation par un appel futur" [ref=e781]
+                          - generic [ref=e783]: Les anciens octets restent temporairement en mémoire comme données résiduelles jusqu'à réutilisation par un appel futur
+                        - generic [ref=e784] [cursor=pointer]:
+                          - radio "Le CPU efface systématiquement toute la trame à 0x00 au retour" [ref=e785]
+                          - generic [ref=e787]: Le CPU efface systématiquement toute la trame à 0x00 au retour
+                        - generic [ref=e788] [cursor=pointer]:
+                          - radio "L'OS transfère les variables locales sur le tas" [ref=e789]
+                          - generic [ref=e791]: L'OS transfère les variables locales sur le tas
+                      - generic [ref=e792]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e793]:
+                    - generic [ref=e794]:
+                      - generic [ref=e795]:
+                        - generic [ref=e796]: Exercice 11 · Inspection de schéma
+                        - button "Afficher un indice" [ref=e797] [cursor=pointer]
+                      - 'heading "Identifiez sur le schéma de trame x86-64 l''emplacement contenant l''adresse de retour empilée par `CALL`." [level=3] [ref=e801]'
+                      - paragraph [ref=e802]: "Anatomie d'une trame de pile x86-64 — Cliquez sur le slot où `CALL` a enregistré l'adresse de reprise de la fonction appelante."
+                    - generic [ref=e803]:
+                      - group "Anatomie d'une trame de pile x86-64" [ref=e804]:
+                        - generic [ref=e806]:
+                          - generic [ref=e807] [cursor=pointer]:
+                            - radio "Adresse de reprise · 8 octets Zone Slot [RBP + 8] Empilé automatiquement par CALL" [ref=e808]
+                            - generic [ref=e809]:
+                              - generic [ref=e810]: Adresse de reprise · 8 octets
+                              - generic [ref=e811]: Zone
+                            - generic [ref=e812]: Slot [RBP + 8]
+                            - generic [ref=e813]: Empilé automatiquement par CALL
+                          - generic [ref=e814] [cursor=pointer]:
+                            - 'radio "Ancien RBP · 8 octets Zone Slot [RBP] Empilé par `push rbp`" [ref=e815]'
+                            - generic [ref=e816]:
+                              - generic [ref=e817]: Ancien RBP · 8 octets
+                              - generic [ref=e818]: Zone
+                            - generic [ref=e819]: Slot [RBP]
+                            - generic [ref=e820]: "Empilé par `push rbp`"
+                          - generic [ref=e821] [cursor=pointer]:
+                            - 'radio "Variable locale · 4 octets Zone Slot [RBP - 4] Allouée par `sub rsp, 16`" [ref=e822]'
+                            - generic [ref=e823]:
+                              - generic [ref=e824]: Variable locale · 4 octets
+                              - generic [ref=e825]: Zone
+                            - generic [ref=e826]: Slot [RBP - 4]
+                            - generic [ref=e827]: "Allouée par `sub rsp, 16`"
+                      - generic [ref=e828]:
+                        - button "Vérifier ma réponse" [disabled]
+              - generic [ref=e829]:
+                - heading "À emporter" [level=3] [ref=e830]
+                - paragraph [ref=e831]: La durée de vie d’une variable locale se termine avec son contexte. Les anciens octets peuvent rester présents sans que la variable existe encore.
+            - region "Une adresse n’est pas une garantie" [ref=e832]:
+              - generic [ref=e833]:
+                - paragraph [ref=e834]: Chapitre 4 sur 6 · 40 min environ
+                - heading "Une adresse n’est pas une garantie" [level=2] [ref=e835]
+                - paragraph [ref=e836]: Que reste-t-il d’un pointeur quand la donnée qu’il désignait n’existe plus ?
+              - generic [ref=e837]:
+                - heading "L’idée en clair" [level=3] [ref=e838]
+                - paragraph [ref=e839]: "Un pointeur contient une adresse. Lire à travers ce pointeur s’appelle le déréférencer. Ce nombre ne vous dit pas si l’objet est encore vivant. Quand l’objet disparaît, le pointeur peut conserver son adresse : il devient pendant."
+              - generic [ref=e840]:
+                - heading "Un exemple, pas à pas" [level=3] [ref=e841]
+                - paragraph [ref=e842]: Une fonction crée une variable locale contenant 42 et renvoie son adresse. Après le retour, cette variable n’existe plus. Un autre appel réutilise la même zone et y place 99. L’ancien pointeur n’a pas changé, mais il n’autorise plus une lecture valide de la variable d’origine.
+              - generic [ref=e843]: À vous d’expérimenter
+              - paragraph [ref=e846]: Ouvrez le laboratoire de la pile, choisissez « Pointeur pendant », puis avancez jusqu’à la réutilisation de la trame. Revenez à ce chapitre pour répondre aux questions.
+              - generic [ref=e848]:
+                - 'heading "Observation guidée sur la pile : alias et données résiduelles" [level=3] [ref=e849]'
+                - paragraph [ref=e854]:
+                  - text: Utilisez l'onglet
+                  - strong [ref=e855]: Pointeur pendant (Dangling)
+                  - text: du simulateur
+                  - button "Ouvrir le laboratoire de la pile" [ref=e856] [cursor=pointer]
+                  - text: pour observer comment une nouvelle trame peut réutiliser la zone contenant la valeur pointée à
+                  - code [ref=e857]: "0x7FFF0FC0"
+                  - text: .
+              - group [ref=e858]:
+                - generic "Ce que ce modèle simplifie" [ref=e859] [cursor=pointer]
+              - generic [ref=e860]:
+                - heading "Faites le point" [level=3] [ref=e861]
+                - paragraph [ref=e865]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+                - generic [ref=e866]:
+                  - generic [ref=e867]:
+                    - generic [ref=e868]:
+                      - generic [ref=e869]:
+                        - generic [ref=e870]: Exercice 9 · Compréhension
+                        - button "Afficher un indice" [ref=e871] [cursor=pointer]
+                      - 'heading "Soient `int a = 10; int *p = &a; *p = 25;`. Que désigne précisément `*p` ?" [level=3] [ref=e875]'
+                    - generic [ref=e876]:
+                      - 'group "Soient `int a = 10; int *p = &a; *p = 25;`. Que désigne précisément `*p` ?" [ref=e877]':
+                        - generic [ref=e879] [cursor=pointer]:
+                          - 'radio "L''accès en lecture/écriture à la valeur entière stockée à l''adresse contenue dans p (donc `a` devient 25)" [ref=e880]'
+                          - generic [ref=e882]: "L'accès en lecture/écriture à la valeur entière stockée à l'adresse contenue dans p (donc `a` devient 25)"
+                        - generic [ref=e883] [cursor=pointer]:
+                          - radio "L'adresse en mémoire où vit le pointeur p lui-même" [ref=e884]
+                          - generic [ref=e886]: L'adresse en mémoire où vit le pointeur p lui-même
+                        - generic [ref=e887] [cursor=pointer]:
+                          - 'radio "Une copie indépendante de `a` laissant `a` égal à 10" [ref=e888]'
+                          - generic [ref=e890]: "Une copie indépendante de `a` laissant `a` égal à 10"
+                      - generic [ref=e891]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e892]:
+                    - generic [ref=e893]:
+                      - generic [ref=e894]:
+                        - generic [ref=e895]: Exercice 10 · Prédiction d'état
+                        - button "Afficher un indice" [ref=e896] [cursor=pointer]
+                      - 'heading "Une fonction `bad_ptr()` retourne l''adresse `&secret` de sa variable locale sur la pile, puis `other()` est appelée. Que lit `*p` ?" [level=3] [ref=e900]'
+                      - paragraph [ref=e901]: "Dans VIS-03 onglet 'Pointeur pendant', `bad_ptr()` retourne `0x7FFF0FC0` puis `other()` crée sa trame au même emplacement."
+                    - generic [ref=e902]:
+                      - 'group "Une fonction `bad_ptr()` retourne l''adresse `&secret` de sa variable locale sur la pile, puis `other()` est appelée. Que lit `*p` ?" [ref=e903]':
+                        - generic [ref=e905] [cursor=pointer]:
+                          - 'radio "Des données corrompues appartenant désormais à la nouvelle trame de `other()` (comportement indéfini / CWE-825)" [ref=e906]'
+                          - generic [ref=e908]: "Des données corrompues appartenant désormais à la nouvelle trame de `other()` (comportement indéfini / CWE-825)"
+                        - generic [ref=e909] [cursor=pointer]:
+                          - 'radio "Une interruption matérielle instantanée dès la fin de `bad_ptr()`" [ref=e910]'
+                          - generic [ref=e912]: "Une interruption matérielle instantanée dès la fin de `bad_ptr()`"
+                        - generic [ref=e913] [cursor=pointer]:
+                          - 'radio "Toujours l''ancienne valeur de `secret` protégée par le CPU" [ref=e914]'
+                          - generic [ref=e916]: "Toujours l'ancienne valeur de `secret` protégée par le CPU"
+                      - generic [ref=e917]:
+                        - button "Vérifier ma réponse" [disabled]
+              - generic [ref=e918]:
+                - heading "À emporter" [level=3] [ref=e919]
+                - paragraph [ref=e920]: Même adresse ne signifie ni même objet, ni objet vivant. La validité d’un pointeur dépend aussi de la durée de vie de sa cible.
+            - region "Réserver et libérer de la mémoire" [ref=e921]:
+              - generic [ref=e922]:
+                - paragraph [ref=e923]: Chapitre 5 sur 6 · 50 min environ
+                - heading "Réserver et libérer de la mémoire" [level=2] [ref=e924]
+                - paragraph [ref=e925]: Comment conserver des données après le retour d’une fonction ?
+              - generic [ref=e926]:
+                - heading "L’idée en clair" [level=3] [ref=e927]
+                - paragraph [ref=e928]: Une allocation dynamique réserve un bloc dont la durée de vie ne suit pas automatiquement celle de la fonction. Un allocateur organise ces blocs dans le tas. En C, malloc demande un bloc et free le rend disponible. Libérer un bloc ne met pas automatiquement tous les pointeurs qui le désignent à zéro.
+              - generic [ref=e929]:
+                - heading "Un exemple, pas à pas" [level=3] [ref=e930]
+                - paragraph [ref=e931]: "Vous réservez 16 octets et gardez leur adresse dans p. Après free(p), l’allocateur peut attribuer la même zone à q. Relire p est une utilisation après libération, appelée use-after-free : l’adresse a pu rester identique, mais l’ancien objet n’est plus valide."
+              - generic [ref=e932]: À vous d’expérimenter
+              - paragraph [ref=e935]: Comparez une allocation normale et le scénario « Use-After-Free ». Observez les blocs libres puis réutilisés. Distinguez la taille demandée et la place réellement occupée.
+              - generic "Simulateur VIS-04 Tas et Allocateur" [ref=e936]:
+                - generic [ref=e937]:
+                  - generic [ref=e938]:
+                    - heading [level=3] [ref=e950]:
+                      - text: VIS-04 · Tas (
+                      - code [ref=e951]: heap
+                      - text: ), métadonnées d'allocateur & dérives (
+                      - code [ref=e952]: UAF
+                      - text: ", fuite, fragmentation)"
+                    - generic [ref=e953]: Tas cohérent
+                  - paragraph [ref=e954]:
+                    - text: Observez l'en-tête caché de 8 octets (
+                    - code [ref=e955]: taille | A|M|P
+                    - text: ), l'alignement sur 16 octets, la bascule vers
+                    - code [ref=e956]: mmap
+                    - text: pour les gros tampons et la réutilisation d'adresse à l'origine du Use-After-Free.
+                  - group "Scénarios préconfigurés" [ref=e957]:
+                    - button "Cycle sain" [ref=e958] [cursor=pointer]
+                    - button "Fragmentation externe" [ref=e959] [cursor=pointer]
+                    - button "Fuite & Double Free" [ref=e960] [cursor=pointer]
+                    - button "Use-After-Free (CWE-416)" [ref=e961] [cursor=pointer]
+                  - generic [ref=e962]:
+                    - button "malloc(16)" [ref=e963] [cursor=pointer]
+                    - button "malloc(24)" [ref=e965] [cursor=pointer]
+                    - button "malloc(40)" [ref=e967] [cursor=pointer]
+                    - button "malloc(256 Ko → mmap)" [ref=e969] [cursor=pointer]
+                    - 'button "Fusion (Coalescing) : ON" [pressed] [ref=e971] [cursor=pointer]'
+                    - 'button "En-têtes 8 o : Visibles" [pressed] [ref=e972] [cursor=pointer]'
+                    - button "Réinitialiser le tas simulé" [ref=e973] [cursor=pointer]: Reset
+                - generic [ref=e977]:
+                  - generic [ref=e978]:
+                    - generic [ref=e979]:
+                      - generic [ref=e980]: Arène tas simulée (256 o · base 0x602000)
+                      - generic [ref=e981]:
+                        - text: Cliquez sur
+                        - code [ref=e982]: free()
+                        - text: sur n'importe quel bloc (y compris un bloc déjà libéré pour observer un Double Free).
+                    - generic [ref=e984]:
+                      - generic [ref=e985]:
+                        - generic [ref=e986]:
+                          - generic [ref=e987]: Libre (Wilderness)
+                          - generic [ref=e988]: 256 o total
+                        - paragraph [ref=e989]: "payload @ 0x602008 · demandé : 0 o"
+                        - generic [ref=e990]: En-tête [0x602000] = 0x101 (P=1)
+                      - generic [ref=e991]:
+                        - generic [ref=e992]: offset +0 o
+                        - button "free()" [ref=e993] [cursor=pointer]
+                  - generic [ref=e997]:
+                    - generic [ref=e998]:
+                      - heading [level=4] [ref=e999]:
+                        - text: Pointeurs côté Pile (
+                        - code [ref=e1000]: stack -> heap
+                        - text: )
+                      - paragraph [ref=e1001]: Aucun pointeur sur la pile pour l'instant. Allouez un bloc ou chargez un scénario.
+                    - generic [ref=e1002]:
+                      - generic [ref=e1003]:
+                        - heading "Métriques & Fragmentation" [level=4] [ref=e1004]
+                        - generic [ref=e1005]: "Frag. externe : 0%"
+                      - 'img "Répartition du tas : 0% données utiles, 0% surcoût interne, 100% libre, fragmentation externe 0%" [ref=e1006]':
+                        - generic [ref=e1008]: "Utile: 0o (0%) · Surcoût interne: 0o (0%) · Libre: 256o"
+                        - generic [ref=e1009]: "Plus grand bloc libre contigu : 256 o"
+                  - generic [ref=e1010]:
+                    - generic [ref=e1011]: Journal de l'allocateur
+                    - list [ref=e1013]:
+                      - listitem [ref=e1014]: "• Tas initialisé : 256 octets libres contigus à partir de 0x602000."
+                  - status [ref=e1015]:
+                    - heading "Simplification pédagogique vs implémentations réelles" [level=4] [ref=e1018]
+                    - generic [ref=e1019]:
+                      - text: Les allocateurs modernes (
+                      - code [ref=e1020]: glibc ptmalloc2
+                      - text: ","
+                      - code [ref=e1021]: jemalloc
+                      - text: ","
+                      - code [ref=e1022]: mimalloc
+                      - text: ) maintiennent plusieurs arènes par thread, des caches rapides (
+                      - code [ref=e1023]: tcache
+                      - text: /
+                      - code [ref=e1024]: fastbins
+                      - text: ) sans fusion immédiate, et basculent vers
+                      - code [ref=e1025]: mmap
+                      - text: autour de 128 Ko plutôt qu'à 256 o. L'en-tête caché et l'effet de réutilisation (Use-After-Free) restent toutefois fidèles.
+              - group [ref=e1026]:
+                - generic "Ce que ce modèle simplifie" [ref=e1027] [cursor=pointer]
+              - generic [ref=e1028]:
+                - heading "Faites le point" [level=3] [ref=e1029]
+                - paragraph [ref=e1033]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+                - generic [ref=e1034]:
+                  - generic [ref=e1035]:
+                    - generic [ref=e1036]:
+                      - generic [ref=e1037]:
+                        - generic [ref=e1038]: Exercice 12 · Prédiction d'état
+                        - button "Afficher un indice" [ref=e1039] [cursor=pointer]
+                      - 'heading "Pourquoi un appel `malloc(64)` échoue-t-il alors que l''arène dispose encore de 96 octets libres au total dans le scénario ''Fragmentation externe'' de VIS-04 ?" [level=3] [ref=e1043]'
+                      - paragraph [ref=e1044]: "Deux blocs libres de 32 octets chacun sont séparés par un bloc alloué `blkB` de 48 octets qui empêche leur fusion."
+                    - generic [ref=e1045]:
+                      - 'group "Pourquoi un appel `malloc(64)` échoue-t-il alors que l''arène dispose encore de 96 octets libres au total dans le scénario ''Fragmentation externe'' de VIS-04 ?" [ref=e1046]':
+                        - generic [ref=e1048] [cursor=pointer]:
+                          - 'radio "Aucun trou libre contigu n''atteint la taille requise (les blocs libres ne peuvent pas fusionner tant que `blkB` est actif)" [ref=e1049]'
+                          - generic [ref=e1051]: "Aucun trou libre contigu n'atteint la taille requise (les blocs libres ne peuvent pas fusionner tant que `blkB` est actif)"
+                        - generic [ref=e1052] [cursor=pointer]:
+                          - radio "Parce que l'en-tête caché pèse 128 octets à lui seul" [ref=e1053]
+                          - generic [ref=e1055]: Parce que l'en-tête caché pèse 128 octets à lui seul
+                        - generic [ref=e1056] [cursor=pointer]:
+                          - radio "Parce que 64 octets déclenchent toujours un appel mmap() refusé" [ref=e1057]
+                          - generic [ref=e1059]: Parce que 64 octets déclenchent toujours un appel mmap() refusé
+                      - generic [ref=e1060]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e1061]:
+                    - generic [ref=e1062]:
+                      - generic [ref=e1063]:
+                        - generic [ref=e1064]: Exercice 13 · Inspection de schéma
+                        - button "Afficher un indice" [ref=e1065] [cursor=pointer]
+                      - 'heading "Dans l''anatomie d''un chunk sur le tas (VIS-04), identifiez la zone que `malloc()` garde invisible juste avant l''adresse retournée au code utilisateur." [level=3] [ref=e1069]'
+                      - paragraph [ref=e1070]: Structure interne d'un chunk alloué sur le tas — Sélectionnez la zone contenant la taille du chunk et les bits A|M|P.
+                    - generic [ref=e1071]:
+                      - group "Structure interne d'un chunk alloué sur le tas" [ref=e1072]:
+                        - generic [ref=e1074]:
+                          - generic [ref=e1075] [cursor=pointer]:
+                            - radio "0x602000 · 8 octets Zone En-tête [addr - 8] Taille alignée + drapeaux A|M|P" [ref=e1076]
+                            - generic [ref=e1077]:
+                              - generic [ref=e1078]: 0x602000 · 8 octets
+                              - generic [ref=e1079]: Zone
+                            - generic [ref=e1080]: En-tête [addr - 8]
+                            - generic [ref=e1081]: Taille alignée + drapeaux A|M|P
+                          - generic [ref=e1082] [cursor=pointer]:
+                            - radio "0x602008 · N octets Zone Payload utilisateur [addr] Adresse retournée par malloc()" [ref=e1083]
+                            - generic [ref=e1084]:
+                              - generic [ref=e1085]: 0x602008 · N octets
+                              - generic [ref=e1086]: Zone
+                            - generic [ref=e1087]: Payload utilisateur [addr]
+                            - generic [ref=e1088]: Adresse retournée par malloc()
+                          - generic [ref=e1089] [cursor=pointer]:
+                            - 'radio "0x7FFF0FD0 · 8 octets Zone Pointeur sur la pile Variable locale `void *p`" [ref=e1090]'
+                            - generic [ref=e1091]:
+                              - generic [ref=e1092]: 0x7FFF0FD0 · 8 octets
+                              - generic [ref=e1093]: Zone
+                            - generic [ref=e1094]: Pointeur sur la pile
+                            - generic [ref=e1095]: "Variable locale `void *p`"
+                      - generic [ref=e1096]:
+                        - button "Vérifier ma réponse" [disabled]
+              - generic [ref=e1097]:
+                - heading "À emporter" [level=3] [ref=e1098]
+                - paragraph [ref=e1099]: "Réserver, utiliser, libérer : ces trois moments définissent la durée de vie d’un bloc. Une zone libérée peut être réutilisée sans que les anciens pointeurs soient informés."
+            - region "Qui décide de la durée de vie ?" [ref=e1100]:
+              - generic [ref=e1101]:
+                - paragraph [ref=e1102]: Chapitre 6 sur 6 · 55 min environ
+                - heading "Qui décide de la durée de vie ?" [level=2] [ref=e1103]
+                - paragraph [ref=e1104]: Les langages résolvent-ils tous la gestion mémoire de la même façon ?
+              - generic [ref=e1105]:
+                - heading "L’idée en clair" [level=3] [ref=e1106]
+                - paragraph [ref=e1107]: Non. En C, le programmeur gère explicitement de nombreuses libérations. En Rust, les règles de possession encadrent les usages et la libération des valeurs. Un ramasse-miettes traçant repère les objets encore accessibles et peut récupérer les autres plus tard.
+              - generic [ref=e1108]:
+                - heading "Un exemple, pas à pas" [level=3] [ref=e1109]
+                - paragraph [ref=e1110]: "Supposons qu’une valeur passe d’une variable à une autre. Dans le scénario Rust montré, un déplacement transfère la possession : l’ancien nom ne peut plus être utilisé. Le scénario C laisse la responsabilité au programmeur. Le modèle avec ramasse-miettes suit les références encore accessibles."
+              - generic [ref=e1111]: À vous d’expérimenter
+              - paragraph [ref=e1114]: Lancez le scénario « Use after move » et comparez le moment où chaque modèle accepte ou refuse l’opération. Distinguez un refus à la compilation d’un problème observé pendant l’exécution.
+              - generic "Comparateur VIS-05 Gestion manuelle C, Ownership Rust et GC traçant" [ref=e1115]:
+                - generic [ref=e1116]:
+                  - generic [ref=e1117]:
+                    - 'heading "VIS-05 · Comparateur de modèles mémoire : Manuel C vs Ownership Rust vs GC traçant" [level=3] [ref=e1124]'
+                    - generic [ref=e1125]: t = 0 / 6 · Initialisation
+                  - paragraph [ref=e1126]:
+                    - text: "Même scénario métier, trois philosophies d'ingénierie : responsabilité manuelle à l'exécution, preuve statique à la compilation ("
+                    - code [ref=e1127]: borrow checker
+                    - text: ), ou traçage périodique depuis les racines (
+                    - code [ref=e1128]: GC Roots
+                    - text: ).
+                  - generic [ref=e1129]:
+                    - button "Cycle nominal" [ref=e1130] [cursor=pointer]
+                    - button "Oubli de free() / Réf. circulaire" [ref=e1131] [cursor=pointer]
+                    - button "Réutilisation après libération / Move" [ref=e1132] [cursor=pointer]
+                    - 'button "Fréquence GC : Agressif (t=4)" [ref=e1133] [cursor=pointer]'
+                  - generic [ref=e1134]:
+                    - button "Précédent" [disabled]
+                    - button "Suivant" [ref=e1135] [cursor=pointer]
+                    - button "Début" [ref=e1138] [cursor=pointer]
+                    - generic [ref=e1142]:
+                      - generic [ref=e1143]: Timeline
+                      - slider "Position temporelle dans la comparaison" [ref=e1144]: "0"
+                - generic [ref=e1145]:
+                  - generic [ref=e1146]:
+                    - generic [ref=e1147]:
+                      - generic [ref=e1148]:
+                        - generic [ref=e1149]:
+                          - heading "Manuel (C)" [level=4] [ref=e1150]
+                          - generic [ref=e1151]: Initial
+                        - generic [ref=e1152]:
+                          - generic [ref=e1153]: "Pile : (hors portée)"
+                          - generic [ref=e1154]: "Tas : Vide"
+                        - paragraph [ref=e1155]: Prêt.
+                      - generic [ref=e1156]: "Occupation RAM simulée : 0%"
+                    - generic [ref=e1157]:
+                      - generic [ref=e1158]:
+                        - generic [ref=e1159]:
+                          - heading "Ownership / RAII (Rust)" [level=4] [ref=e1160]
+                          - generic [ref=e1161]: Initial
+                        - generic [ref=e1162]:
+                          - generic [ref=e1163]: "Pile : (portée fermée)"
+                          - generic [ref=e1164]: "Tas : Vide"
+                        - paragraph [ref=e1165]: Prêt.
+                      - generic [ref=e1166]: "Occupation RAM simulée : 0%"
+                    - generic [ref=e1167]:
+                      - generic [ref=e1168]:
+                        - generic [ref=e1169]:
+                          - heading "GC Traçant (.NET / JVM)" [level=4] [ref=e1170]
+                          - generic [ref=e1171]: Initial
+                        - generic [ref=e1172]:
+                          - generic [ref=e1173]: "Pile : 0 racine"
+                          - generic [ref=e1174]: "Tas : Vide"
+                        - paragraph [ref=e1175]: Prêt.
+                      - generic [ref=e1176]: "Occupation RAM simulée : 0%"
+                  - generic [ref=e1177]:
+                    - generic [ref=e1178]:
+                      - generic [ref=e1179]: Empreinte RAM comparative à t = 0
+                      - generic [ref=e1180]: "GC Roots actifs : 0"
+                    - 'img "Empreinte RAM à t=0 : C 0%, Rust 0%, GC 0%" [ref=e1181]':
+                      - generic [ref=e1182]:
+                        - generic [ref=e1183]: Manuel C
+                        - generic [ref=e1185]: 0% (freed)
+                      - generic [ref=e1186]:
+                        - generic [ref=e1187]: Rust RAII
+                        - generic [ref=e1189]: 0% (freed)
+                      - generic [ref=e1190]:
+                        - generic [ref=e1191]: GC Traçant
+                        - generic [ref=e1193]: 0% (freed)
+                  - generic [ref=e1194]: "Analyse comparative : Comparez à chaque instant la durée d'occupation RAM et les garanties de sûreté des trois paradigmes."
+                  - status [ref=e1195]:
+                    - heading "Nuance d'architecture" [level=4] [ref=e1198]
+                    - generic [ref=e1199]:
+                      - text: En production,
+                      - code [ref=e1200]: unsafe
+                      - text: en Rust contourne le borrow checker, un GC générationnel ne balaie la majorité des objets courts qu'en Gen0, et le comptage de références pur (sans collecteur de cycles) fuit sur
+                      - code [ref=e1201]: A <-> B
+                      - text: contrairement au GC traçant montré ici.
+              - generic [ref=e1202]:
+                - generic [ref=e1203]:
+                  - heading [level=3] [ref=e1204]:
+                    - text: "Trace réelle comparée : compilateur ("
+                    - code [ref=e1207]: "-O0"
+                    - text: vs
+                    - code [ref=e1208]: "-O2"
+                    - text: ) & GDB
+                  - paragraph [ref=e1209]: Comparez l'image pédagogique (trame complète en RAM) avec la réalité d'un binaire optimisé observée dans Compiler Explorer / GDB en lecture seule.
+                - generic [ref=e1210]:
+                  - generic [ref=e1211]:
+                    - generic [ref=e1212]: Sans optimisation (gcc -O0)
+                    - generic [ref=e1213]: "sub rsp, 16 mov DWORD PTR [rbp-4], 42 ; variable locale stockée sur la pile mov eax, DWORD PTR [rbp-4] ; relue depuis la RAM (gdb) x/4bx $rbp-4 0x7fffffffe3fc: 0x2a 0x00 0x00 0x00 ; little-endian"
+                  - generic [ref=e1214]:
+                    - generic [ref=e1215]: Optimisé (gcc -O2)
+                    - generic [ref=e1216]: mov eax, 42 ; constante pliée directement en registre ret ; aucune trame pile ni adresse &x en RAM ! ; Si vous prenez &x en C mais provoquez un UB, le compilateur peut même ; supprimer une branche jugée impossible.
+              - group [ref=e1217]:
+                - generic "Ce que ce modèle simplifie" [ref=e1218] [cursor=pointer]
+              - generic [ref=e1219]:
+                - heading "Faites le point" [level=3] [ref=e1220]
+                - paragraph [ref=e1224]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+                - generic [ref=e1225]:
+                  - generic [ref=e1226]:
+                    - generic [ref=e1227]:
+                      - generic [ref=e1228]:
+                        - generic [ref=e1229]: Exercice 14 · Compréhension
+                        - button "Afficher un indice" [ref=e1230] [cursor=pointer]
+                      - 'heading "Quel mécanisme exact transforme un `free(user)` suivi d''un `malloc()` de même taille pour `admin` en faille Use-After-Free critique ?" [level=3] [ref=e1234]'
+                    - generic [ref=e1235]:
+                      - 'group "Quel mécanisme exact transforme un `free(user)` suivi d''un `malloc()` de même taille pour `admin` en faille Use-After-Free critique ?" [ref=e1236]':
+                        - generic [ref=e1238] [cursor=pointer]:
+                          - 'radio "L''allocateur recycle le même chunk libre pour `admin` à la même adresse ; l''ancien pointeur `user` devient un alias actif sur l''objet `admin`" [ref=e1239]'
+                          - generic [ref=e1241]: "L'allocateur recycle le même chunk libre pour `admin` à la même adresse ; l'ancien pointeur `user` devient un alias actif sur l'objet `admin`"
+                        - generic [ref=e1242] [cursor=pointer]:
+                          - 'radio "`free(user)` met automatiquement `user = NULL` partout en RAM" [ref=e1243]'
+                          - generic [ref=e1245]: "`free(user)` met automatiquement `user = NULL` partout en RAM"
+                        - generic [ref=e1246] [cursor=pointer]:
+                          - radio "Le noyau change les permissions de l'ancien chunk en lecture seule" [ref=e1247]
+                          - generic [ref=e1249]: Le noyau change les permissions de l'ancien chunk en lecture seule
+                      - generic [ref=e1250]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e1251]:
+                    - generic [ref=e1252]:
+                      - generic [ref=e1253]:
+                        - generic [ref=e1254]: Exercice 15 · Compréhension
+                        - button "Afficher un indice" [ref=e1255] [cursor=pointer]
+                      - heading "Dans le scénario 'Réutilisation après Move / Libération' de VIS-05, comment Rust empêche-t-il le Use-After-Free comparé au C ?" [level=3] [ref=e1259]
+                    - generic [ref=e1260]:
+                      - group "Dans le scénario 'Réutilisation après Move / Libération' de VIS-05, comment Rust empêche-t-il le Use-After-Free comparé au C ?" [ref=e1261]:
+                        - generic [ref=e1263] [cursor=pointer]:
+                          - radio "Le borrow checker bloque la compilation dès qu'une référence tente d'utiliser une ressource après transfert de propriété ou destruction" [ref=e1264]
+                          - generic [ref=e1266]: Le borrow checker bloque la compilation dès qu'une référence tente d'utiliser une ressource après transfert de propriété ou destruction
+                        - generic [ref=e1267] [cursor=pointer]:
+                          - radio "Rust lance un garbage collector traçant en arrière-plan toutes les 10 ms" [ref=e1268]
+                          - generic [ref=e1270]: Rust lance un garbage collector traçant en arrière-plan toutes les 10 ms
+                        - generic [ref=e1271] [cursor=pointer]:
+                          - radio "Rust interdit totalement d'allouer sur le tas" [ref=e1272]
+                          - generic [ref=e1274]: Rust interdit totalement d'allouer sur le tas
+                      - generic [ref=e1275]:
+                        - button "Vérifier ma réponse" [disabled]
+                  - generic [ref=e1276]:
+                    - generic [ref=e1277]:
+                      - generic [ref=e1278]:
+                        - generic [ref=e1279]: Exercice 16 · Compréhension
+                        - button "Afficher un indice" [ref=e1280] [cursor=pointer]
+                      - 'heading "En observant la comparaison `-O0` vs `-O2`, pourquoi une variable locale simple peut-elle ne posséder aucune adresse RAM dans le binaire optimisé ?" [level=3] [ref=e1284]'
+                    - generic [ref=e1285]:
+                      - 'group "En observant la comparaison `-O0` vs `-O2`, pourquoi une variable locale simple peut-elle ne posséder aucune adresse RAM dans le binaire optimisé ?" [ref=e1286]':
+                        - generic [ref=e1288] [cursor=pointer]:
+                          - 'radio "Le compilateur la promeut directement en registre CPU (ex. `eax`) ou la plie en constante tant que son adresse `&x` n''est pas exposée" [ref=e1289]'
+                          - generic [ref=e1291]: "Le compilateur la promeut directement en registre CPU (ex. `eax`) ou la plie en constante tant que son adresse `&x` n'est pas exposée"
+                        - generic [ref=e1292] [cursor=pointer]:
+                          - 'radio "Le compilateur `-O2` déplace toutes les locales vers le segment `.bss`" [ref=e1293]'
+                          - generic [ref=e1295]: "Le compilateur `-O2` déplace toutes les locales vers le segment `.bss`"
+                        - generic [ref=e1296] [cursor=pointer]:
+                          - 'radio "Parce que le tas remplace entièrement la pile sous `-O2`" [ref=e1297]'
+                          - generic [ref=e1299]: "Parce que le tas remplace entièrement la pile sous `-O2`"
+                      - generic [ref=e1300]:
+                        - button "Vérifier ma réponse" [disabled]
+              - generic [ref=e1301]:
+                - heading "À emporter" [level=3] [ref=e1302]
+                - paragraph [ref=e1303]: Chaque modèle fixe des règles différentes pour savoir qui peut utiliser une valeur et quand sa mémoire peut être récupérée. Le code optimisé peut aussi différer fortement de notre dessin pédagogique.
+          - region "Évaluations cumulatives par module" [ref=e1305]:
+            - generic [ref=e1306]:
+              - generic [ref=e1307]:
+                - heading "Évaluations cumulatives par module" [level=2] [ref=e1308]
+                - paragraph [ref=e1309]: Les seuils de maîtrise sont calculés dynamiquement à partir de vos réponses validées aux exercices correspondants.
+              - generic [ref=e1310]: 4 jalon(s) cumulatifs
+            - generic [ref=e1315]:
+              - generic [ref=e1316]:
+                - generic [ref=e1317]:
+                  - generic [ref=e1318]:
+                    - heading "Palier 1 · Exécution CPU, octet & segments virtuels" [level=3] [ref=e1319]
+                    - generic [ref=e1320]: 3 / 6 traités
+                  - paragraph [ref=e1321]: "Seuil requis : 75% · 3 / 6 réponse(s) exacte(s)"
+                - generic [ref=e1322]:
+                  - 'progressbar "Score de Palier 1 · Exécution CPU, octet & segments virtuels : 50%" [ref=e1323]'
+                  - generic [ref=e1325]:
+                    - generic [ref=e1326]: cpu-fetch-decode-execute
+                    - generic [ref=e1327]: memory-addressing-and-bytes
+                    - generic [ref=e1328]: virtual-vs-physical-memory
+                    - generic [ref=e1329]: process-memory-segments
+                  - list [ref=e1330]:
+                    - listitem [ref=e1331]:
+                      - link "À quel instant précis le processeur utilise-t-il le registre PC (RIP sur x86-64) pour savoir quelle opération exécuter ensuite ? Exact" [ref=e1332] [cursor=pointer]:
+                        - /url: "#exercise-ex-mem-01"
+                        - generic [ref=e1333]: À quel instant précis le processeur utilise-t-il le registre PC (RIP sur x86-64) pour savoir quelle opération exécuter ensuite ?
+                        - generic [ref=e1334]: Exact
+                    - listitem [ref=e1338]:
+                      - link "Dans VIS-01, quel octet est lu à l'adresse 0x1008 après l'écriture little-endian de l'entier 32 bits 0x12345678 à partir de 0x1008 ? Exact" [ref=e1339] [cursor=pointer]:
+                        - /url: "#exercise-ex-mem-02"
+                        - generic [ref=e1340]: Dans VIS-01, quel octet est lu à l'adresse 0x1008 après l'écriture little-endian de l'entier 32 bits 0x12345678 à partir de 0x1008 ?
+                        - generic [ref=e1341]: Exact
+                    - listitem [ref=e1345]:
+                      - link "Remettez dans l'ordre chronologique les étapes d'exécution d'une instruction séquentielle dans le processeur. En attente" [ref=e1346] [cursor=pointer]:
+                        - /url: "#exercise-ex-mem-03"
+                        - generic [ref=e1347]: Remettez dans l'ordre chronologique les étapes d'exécution d'une instruction séquentielle dans le processeur.
+                        - generic [ref=e1348]: En attente
+                    - listitem [ref=e1349]:
+                      - link "Deux processus P1 et P2 accèdent chacun à l'adresse virtuelle 0x401000. Pourquoi P1 n'écrase-t-il pas les données de P2 ? En attente" [ref=e1350] [cursor=pointer]:
+                        - /url: "#exercise-ex-mem-04"
+                        - generic [ref=e1351]: Deux processus P1 et P2 accèdent chacun à l'adresse virtuelle 0x401000. Pourquoi P1 n'écrase-t-il pas les données de P2 ?
+                        - generic [ref=e1352]: En attente
+                    - listitem [ref=e1353]:
+                      - link "Que déclenche matériellement le CPU + OS lorsqu'un bug tente d'écrire un octet dans le segment Text (.text, permissions r-x) ? En attente" [ref=e1354] [cursor=pointer]:
+                        - /url: "#exercise-ex-mem-05"
+                        - generic [ref=e1355]: Que déclenche matériellement le CPU + OS lorsqu'un bug tente d'écrire un octet dans le segment Text (.text, permissions r-x) ?
+                        - generic [ref=e1356]: En attente
+                    - listitem [ref=e1357]:
+                      - 'link "Pointez sur le schéma la zone mémoire exacte où est stockée une variable globale initialisée `static int port = 443;`. Exact" [ref=e1358] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-06"
+                        - generic [ref=e1359]: "Pointez sur le schéma la zone mémoire exacte où est stockée une variable globale initialisée `static int port = 443;`."
+                        - generic [ref=e1360]: Exact
+              - generic [ref=e1364]:
+                - generic [ref=e1365]:
+                  - generic [ref=e1366]:
+                    - heading "Palier 2 · Variables, Pile, ABI & Pointeurs pendants" [level=3] [ref=e1367]
+                    - generic [ref=e1368]: 0 / 5 traités
+                  - paragraph [ref=e1369]: "Seuil requis : 75% · 0 / 5 réponse(s) exacte(s)"
+                - generic [ref=e1370]:
+                  - 'progressbar "Score de Palier 2 · Variables, Pile, ABI & Pointeurs pendants : 0%" [ref=e1371]'
+                  - generic [ref=e1372]:
+                    - generic [ref=e1373]: variable-value-vs-address-and-type
+                    - generic [ref=e1374]: call-stack-and-frames
+                    - generic [ref=e1375]: function-prologue-epilogue-and-abi
+                    - generic [ref=e1376]: pointers-and-dereferencing
+                    - generic [ref=e1377]: stack-dangling-pointers-and-overflow
+                  - list [ref=e1378]:
+                    - listitem [ref=e1379]:
+                      - 'link "Ordonnez la séquence exacte de création d''une trame d''activation lors d''un appel `f()` sur x86-64 (System V ABI). En attente" [ref=e1380] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-07"
+                        - generic [ref=e1381]: "Ordonnez la séquence exacte de création d'une trame d'activation lors d'un appel `f()` sur x86-64 (System V ABI)."
+                        - generic [ref=e1382]: En attente
+                    - listitem [ref=e1383]:
+                      - 'link "Lorsqu''une fonction se termine par `ret` sans écraser explicitement ses variables locales, que contiennent les octets de son ancienne trame en RAM ? En attente" [ref=e1384] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-08"
+                        - generic [ref=e1385]: "Lorsqu'une fonction se termine par `ret` sans écraser explicitement ses variables locales, que contiennent les octets de son ancienne trame en RAM ?"
+                        - generic [ref=e1386]: En attente
+                    - listitem [ref=e1387]:
+                      - 'link "Soient `int a = 10; int *p = &a; *p = 25;`. Que désigne précisément `*p` ? En attente" [ref=e1388] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-09"
+                        - generic [ref=e1389]: "Soient `int a = 10; int *p = &a; *p = 25;`. Que désigne précisément `*p` ?"
+                        - generic [ref=e1390]: En attente
+                    - listitem [ref=e1391]:
+                      - 'link "Une fonction `bad_ptr()` retourne l''adresse `&secret` de sa variable locale sur la pile, puis `other()` est appelée. Que lit `*p` ? En attente" [ref=e1392] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-10"
+                        - generic [ref=e1393]: "Une fonction `bad_ptr()` retourne l'adresse `&secret` de sa variable locale sur la pile, puis `other()` est appelée. Que lit `*p` ?"
+                        - generic [ref=e1394]: En attente
+                    - listitem [ref=e1395]:
+                      - 'link "Identifiez sur le schéma de trame x86-64 l''emplacement contenant l''adresse de retour empilée par `CALL`. En attente" [ref=e1396] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-11"
+                        - generic [ref=e1397]: "Identifiez sur le schéma de trame x86-64 l'emplacement contenant l'adresse de retour empilée par `CALL`."
+                        - generic [ref=e1398]: En attente
+              - generic [ref=e1399]:
+                - generic [ref=e1400]:
+                  - generic [ref=e1401]:
+                    - heading "Palier 3 · Tas, Allocateur & Sûreté dynamique" [level=3] [ref=e1402]
+                    - generic [ref=e1403]: 0 / 3 traités
+                  - paragraph [ref=e1404]: "Seuil requis : 75% · 0 / 3 réponse(s) exacte(s)"
+                - generic [ref=e1405]:
+                  - 'progressbar "Score de Palier 3 · Tas, Allocateur & Sûreté dynamique : 0%" [ref=e1406]'
+                  - generic [ref=e1407]:
+                    - generic [ref=e1408]: heap-allocation-and-lifetime
+                    - generic [ref=e1409]: allocator-chunks-bins-and-fragmentation
+                    - generic [ref=e1410]: heap-corruption-uaf-and-leaks
+                  - list [ref=e1411]:
+                    - listitem [ref=e1412]:
+                      - 'link "Pourquoi un appel `malloc(64)` échoue-t-il alors que l''arène dispose encore de 96 octets libres au total dans le scénario ''Fragmentation externe'' de VIS-04 ? En attente" [ref=e1413] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-12"
+                        - generic [ref=e1414]: "Pourquoi un appel `malloc(64)` échoue-t-il alors que l'arène dispose encore de 96 octets libres au total dans le scénario 'Fragmentation externe' de VIS-04 ?"
+                        - generic [ref=e1415]: En attente
+                    - listitem [ref=e1416]:
+                      - 'link "Dans l''anatomie d''un chunk sur le tas (VIS-04), identifiez la zone que `malloc()` garde invisible juste avant l''adresse retournée au code utilisateur. En attente" [ref=e1417] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-13"
+                        - generic [ref=e1418]: "Dans l'anatomie d'un chunk sur le tas (VIS-04), identifiez la zone que `malloc()` garde invisible juste avant l'adresse retournée au code utilisateur."
+                        - generic [ref=e1419]: En attente
+                    - listitem [ref=e1420]:
+                      - 'link "Quel mécanisme exact transforme un `free(user)` suivi d''un `malloc()` de même taille pour `admin` en faille Use-After-Free critique ? En attente" [ref=e1421] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-14"
+                        - generic [ref=e1422]: "Quel mécanisme exact transforme un `free(user)` suivi d'un `malloc()` de même taille pour `admin` en faille Use-After-Free critique ?"
+                        - generic [ref=e1423]: En attente
+              - generic [ref=e1424]:
+                - generic [ref=e1425]:
+                  - generic [ref=e1426]:
+                    - heading "Palier 4 · Modèles C/Rust/GC & réalité matériel/compilateur" [level=3] [ref=e1427]
+                    - generic [ref=e1428]: 0 / 2 traités
+                  - paragraph [ref=e1429]: "Seuil requis : 75% · 0 / 2 réponse(s) exacte(s)"
+                - generic [ref=e1430]:
+                  - 'progressbar "Score de Palier 4 · Modèles C/Rust/GC & réalité matériel/compilateur : 0%" [ref=e1431]'
+                  - generic [ref=e1432]:
+                    - generic [ref=e1433]: manual-vs-raii-vs-gc
+                    - generic [ref=e1434]: compiler-optimizations-and-memory-reality
+                  - list [ref=e1435]:
+                    - listitem [ref=e1436]:
+                      - link "Dans le scénario 'Réutilisation après Move / Libération' de VIS-05, comment Rust empêche-t-il le Use-After-Free comparé au C ? En attente" [ref=e1437] [cursor=pointer]:
+                        - /url: "#exercise-ex-mem-15"
+                        - generic [ref=e1438]: Dans le scénario 'Réutilisation après Move / Libération' de VIS-05, comment Rust empêche-t-il le Use-After-Free comparé au C ?
+                        - generic [ref=e1439]: En attente
+                    - listitem [ref=e1440]:
+                      - 'link "En observant la comparaison `-O0` vs `-O2`, pourquoi une variable locale simple peut-elle ne posséder aucune adresse RAM dans le binaire optimisé ? En attente" [ref=e1441] [cursor=pointer]':
+                        - /url: "#exercise-ex-mem-16"
+                        - generic [ref=e1442]: "En observant la comparaison `-O0` vs `-O2`, pourquoi une variable locale simple peut-elle ne posséder aucune adresse RAM dans le binaire optimisé ?"
+                        - generic [ref=e1443]: En attente
+      - group [ref=e1444]:
+        - 'generic "Pour aller plus loin : sources et laboratoires +" [ref=e1445] [cursor=pointer]'
+  - contentinfo [ref=e1446]:
+    - link "cyberschool ." [ref=e1447] [cursor=pointer]:
+      - /url: /
+      - text: cyberschool
+      - generic [ref=e1448]: .
+    - paragraph [ref=e1449]: Comprendre ce qui se passe sous la surface.
+    - link "Retour aux cours" [ref=e1450] [cursor=pointer]:
+      - /url: /#courses
+  - button "Open Next.js Dev Tools" [ref=e1459] [cursor=pointer]
+  - alert [ref=e1463]: Dans la mémoire d’un programme
+```
+
+# Test source
+
+```ts
+  16  | 
+  17  |     await page.emulateMedia({ reducedMotion: "reduce" });
+  18  | 
+  19  |     // 1. Navigate from Home -> Course
+  20  |     const res = await page.goto("/");
+  21  |     expect(res?.status()).toBe(200);
+  22  |     await page.getByTestId("home-lesson-link-program-memory-fundamentals").click();
+  23  |     await expect(page).toHaveURL(/\/lessons\/program-memory-fundamentals/);
+  24  |     await expect(page.getByTestId("memory-course-experience")).toBeVisible();
+  25  |     await expect(page.getByTestId("vis-02-virtual-memory")).toHaveCount(0);
+  26  |     await page.getByTestId("chapter-filter-all").click();
+  27  | 
+  28  |     // Verify no desktop horizontal overflow
+  29  |     const desktopOverflow = await page.evaluate(
+  30  |       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  31  |     );
+  32  |     expect(desktopOverflow).toBe(false);
+  33  | 
+  34  |     // 2. VIS-01: Step forward through CPU execution & observe little-endian bytes 78 56 34 12
+  35  |     const vis01 = page.getByTestId("vis-01-cpu-memory");
+  36  |     await expect(vis01).toBeVisible();
+  37  |     await page.getByTestId("vis01-next-step").click();
+  38  |     await expect(page.getByTestId("vis01-phase-badge")).not.toHaveText("");
+  39  |     // Step to write completion (total steps ~ 8 in default write preset; press ArrowRight until little-endian 0x1008 updates)
+  40  |     await vis01.focus();
+  41  |     for (let i = 0; i < 10; i++) {
+  42  |       await page.keyboard.press("ArrowRight");
+  43  |     }
+  44  |     await expect(page.getByTestId("vis01-byte-0x1008")).toContainText("78");
+  45  | 
+  46  |     // 3. VIS-02: Trigger SIGSEGV when writing into .text
+  47  |     await expect(page.getByTestId("vis-02-virtual-memory")).toBeVisible();
+  48  |     await page.getByTestId("vis02-action-write-text").click();
+  49  |     await expect(page.getByTestId("vis02-outcome-badge")).toContainText(/SIGSEGV/i);
+  50  | 
+  51  |     // 4. VIS-03: Switch to Dangling Pointer scenario and step until overwrite hazard appears
+  52  |     await expect(page.getByTestId("vis-03-call-stack")).toBeVisible();
+  53  |     await page.getByTestId("vis03-tab-dangling-pointer").click();
+  54  |     for (let i = 0; i < 6; i++) {
+  55  |       const nextBtn = page.getByTestId("vis03-next-step");
+  56  |       if (await nextBtn.isEnabled()) {
+  57  |         await nextBtn.click();
+  58  |       }
+  59  |     }
+  60  |     await expect(page.getByTestId("vis03-hazard-badge")).not.toContainText("Fonction :");
+  61  | 
+  62  |     // 5. VIS-04: Load Use-After-Free preset and verify hazard + SVG chart
+  63  |     await expect(page.getByTestId("vis-04-heap-allocator")).toBeVisible();
+  64  |     await page.getByTestId("vis04-preset-use-after-free").click();
+  65  |     await expect(page.getByTestId("vis04-hazard-badge")).toContainText(/Use-After-Free/i);
+  66  |     await expect(page.getByTestId("vis04-svg-chart")).toBeVisible();
+  67  | 
+  68  |     // 6. VIS-05: Compare use-after-move across C / Rust / GC and inspect Rust compile-blocked
+  69  |     await expect(page.getByTestId("vis-05-memory-models")).toBeVisible();
+  70  |     await page.getByTestId("vis05-scenario-use-after-move").click();
+  71  |     for (let i = 0; i < 4; i++) {
+  72  |       await page.getByTestId("vis05-next-step").click();
+  73  |     }
+  74  |     await expect(page.getByTestId("vis05-status-rust-raii")).toContainText(
+  75  |       /Refusé à la compilation/i,
+  76  |     );
+  77  |     await expect(page.getByTestId("vis05-svg-chart")).toBeVisible();
+  78  | 
+  79  |     // 7. Complete representative exercises (MC, state-prediction, diagram-probe) & check AssessmentRunner
+  80  |     // EX-01 (multiple-choice)
+  81  |     const ex01 = page.getByTestId("exercise-card-ex-mem-01");
+  82  |     await ex01.scrollIntoViewIfNeeded();
+  83  |     await ex01.getByText(/Pendant la phase Fetch/i).click();
+  84  |     await ex01.getByRole("button", { name: /Vérifier/i }).click();
+  85  |     await expect(ex01.getByRole("heading", { name: "Raisonnement exact" })).toBeVisible();
+  86  | 
+  87  |     // EX-02 (state-prediction)
+  88  |     const ex02 = page.getByTestId("exercise-card-ex-mem-02");
+  89  |     await ex02.getByText(/0x78 à 0x1008/i).click();
+  90  |     await ex02.getByRole("button", { name: /Vérifier/i }).click();
+  91  | 
+  92  |     // EX-06 (diagram-probe)
+  93  |     const ex06 = page.getByTestId("exercise-card-ex-mem-06");
+  94  |     await ex06.getByText(/Segment Data \(\.data\)/i).click();
+  95  |     await ex06.getByRole("button", { name: /Vérifier/i }).click();
+  96  |     await expect(ex06.getByRole("heading", { name: "Raisonnement exact" })).toBeVisible();
+  97  | 
+  98  |     // Verify AssessmentRunner updates dynamically
+  99  |     await expect(page.getByTestId("assessment-card-eval-mem-01-execution-segments")).toContainText(
+  100 |       /3 \/ 6 traités/,
+  101 |     );
+  102 | 
+  103 |     // 8. Check GDB -O0 vs -O2 card & chapter filter
+  104 |     await expect(page.getByTestId("gdb-compiler-reality-card")).toBeVisible();
+  105 |     await page.getByTestId("chapter-filter-step-cpu-bytes").click();
+  106 |     await expect(page.getByTestId("vis-01-cpu-memory")).toBeVisible();
+  107 |     await expect(page.getByTestId("vis-02-virtual-memory")).toHaveCount(0);
+  108 |     await page.getByTestId("chapter-filter-all").click();
+  109 |     await expect(page.getByTestId("vis-02-virtual-memory")).toBeVisible();
+  110 | 
+  111 |     // 9. Verify 375x812 responsive mobile viewport without horizontal overflow
+  112 |     await page.setViewportSize({ width: 375, height: 812 });
+  113 |     const mobileOverflow = await page.evaluate(
+  114 |       () => document.documentElement.scrollWidth > document.documentElement.clientWidth,
+  115 |     );
+> 116 |     expect(mobileOverflow).toBe(false);
+      |                            ^ Error: expect(received).toBe(expected) // Object.is equality
+  117 | 
+  118 |     expect(consoleErrors).toEqual([]);
+  119 |     expect(pageErrors).toEqual([]);
+  120 |   });
+  121 | });
+  122 | 
+```

@@ -1,0 +1,8 @@
+Command: corepack pnpm validate:governance
+Started: 2026-11-14T08:15:37.401Z
+
+
+> cyber-school@0.1.0 validate:governance C:\Users\Emerite\Documents\projets\cyber-school
+> node --experimental-strip-types tests/scripts/validate-governance.ts
+
+Governance validation passed: 92 markdown file(s), 13 mirrored skill file(s), 15 task(s).

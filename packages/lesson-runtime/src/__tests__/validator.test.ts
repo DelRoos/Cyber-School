@@ -1,10 +1,17 @@
 import { describe, expect, it } from "vitest";
 import {
+  assertCanPublishRecord,
+  createEmptyDeliverablesRecord,
   CurriculumCatalogSchema,
   LessonManifestSchema,
   ResourceMetadataSchema,
   ResourcesCatalogSchema,
+  V4_DELIVERABLE_KINDS,
+  V4_PRODUCTION_STATES,
+  V4ImportedCurriculumSchema,
+  V4ProductionRegistrySchema,
   validateCurriculumIntegrity,
+  verifyUnitCoverage,
 } from "../index.js";
 
 const validResources = ResourcesCatalogSchema.parse({
@@ -334,5 +341,190 @@ describe("validateCurriculumIntegrity & strict Zod schemas", () => {
       ],
     });
     expect(badProbe.success).toBe(false);
+  });
+});
+
+describe("V4 Curriculum Industrialization contracts", () => {
+  it("exposes all 12 production states and 12 deliverable kinds", () => {
+    expect(V4_PRODUCTION_STATES).toHaveLength(12);
+    expect(V4_DELIVERABLE_KINDS).toHaveLength(12);
+    const empty = createEmptyDeliverablesRecord();
+    for (const kind of V4_DELIVERABLE_KINDS) {
+      expect(empty[kind].status).toBe("missing");
+    }
+  });
+
+  it("verifies unit coverage cleanly and detects missing, duplicate, unknown, and cyclic units", () => {
+    const imported = V4ImportedCurriculumSchema.parse({
+      schemaVersion: "1.0",
+      sourceFile: "Parcours_Ultra_Atomique_Cybersecurite_Zero_Expert_V4_Ingenierie_Offensive.md",
+      sourceSha256: "a".repeat(64),
+      stats: { moduleCount: 1, microLessonCount: 2, competencyCount: 1, examCount: 0 },
+      modules: [
+        {
+          id: "TC-00",
+          title: "Méthode scientifique",
+          domainId: "v4-tronc-commun",
+          domainTitle: "Tronc commun",
+          moduleOrder: 1,
+          microLessonIds: ["TC00.001", "TC00.002"],
+          competencies: [{ id: "TC00.01", title: "Observer sans confondre", line: 1700 }],
+          explicitPrerequisites: [],
+          proposedDependencies: [],
+          resources: [],
+          books: [],
+          hasPart2Spec: true,
+          provenancePart1Line: 20,
+          provenancePart2Line: 1650,
+        },
+      ],
+      microLessons: [
+        {
+          id: "TC00.001",
+          domainId: "v4-tronc-commun",
+          domainTitle: "Tronc commun",
+          moduleId: "TC-00",
+          moduleTitle: "Méthode scientifique",
+          title: "Observation, fait, modèle",
+          position: { moduleOrder: 1, microOrder: 1, globalOrder: 1 },
+          sourceProvenance: {
+            file: "Parcours_Ultra_Atomique_Cybersecurite_Zero_Expert_V4_Ingenierie_Offensive.md",
+            lineStart: 25,
+            lineEnd: 25,
+            sectionHeading: "Module TC-00",
+          },
+          learningObjectives: ["Distinguer observation, hypothèse et modèle"],
+          explicitPrerequisites: [],
+          proposedDependencies: [],
+          linkedCompetencyIds: ["TC00.01"],
+          associatedResources: [],
+          coverageState: "uncovered",
+          productionState: "a_planifier",
+          mappedLessonSlugs: [],
+        },
+        {
+          id: "TC00.002",
+          domainId: "v4-tronc-commun",
+          domainTitle: "Tronc commun",
+          moduleId: "TC-00",
+          moduleTitle: "Méthode scientifique",
+          title: "Causalité vs corrélation",
+          position: { moduleOrder: 1, microOrder: 2, globalOrder: 2 },
+          sourceProvenance: {
+            file: "Parcours_Ultra_Atomique_Cybersecurite_Zero_Expert_V4_Ingenierie_Offensive.md",
+            lineStart: 26,
+            lineEnd: 26,
+            sectionHeading: "Module TC-00",
+          },
+          learningObjectives: ["Identifier une variable confondante"],
+          explicitPrerequisites: [],
+          proposedDependencies: [],
+          linkedCompetencyIds: ["TC00.01"],
+          associatedResources: [],
+          coverageState: "uncovered",
+          productionState: "a_planifier",
+          mappedLessonSlugs: [],
+        },
+      ],
+      exams: [],
+    });
+
+    const validUnits = {
+      schemaVersion: "1.0" as const,
+      units: [
+        {
+          id: "unit-a",
+          slug: "unit-a",
+          title: "Unité A",
+          moduleId: "TC-00",
+          domainId: "v4-tronc-commun",
+          rationale: "Regroupement fondationnel observation et causalité.",
+          microLessonIds: ["TC00.001"],
+          prerequisiteUnitIds: [],
+          recommendedMedium: "2d-animated" as const,
+          estimatedMinutes: 15,
+          groupingStatus: "curated" as const,
+        },
+        {
+          id: "unit-b",
+          slug: "unit-b",
+          title: "Unité B",
+          moduleId: "TC-00",
+          domainId: "v4-tronc-commun",
+          rationale: "Regroupement causalité et preuve.",
+          microLessonIds: ["TC00.002"],
+          prerequisiteUnitIds: ["unit-a"],
+          recommendedMedium: "2d-graph" as const,
+          estimatedMinutes: 15,
+          groupingStatus: "curated" as const,
+        },
+      ],
+    };
+
+    expect(verifyUnitCoverage(imported, validUnits)).toMatchObject({
+      valid: true,
+      totalMicroLessons: 2,
+      assignedMicroLessons: 2,
+      cycleDetected: false,
+    });
+
+    const brokenUnits = {
+      schemaVersion: "1.0" as const,
+      units: [
+        {
+          ...validUnits.units[0]!,
+          microLessonIds: ["TC00.001", "TC00.999"],
+          prerequisiteUnitIds: ["unit-b"],
+        },
+        {
+          ...validUnits.units[1]!,
+          microLessonIds: ["TC00.001"],
+          prerequisiteUnitIds: ["unit-a", "missing-unit"],
+        },
+      ],
+    };
+    const brokenReport = verifyUnitCoverage(imported, brokenUnits);
+    expect(brokenReport.valid).toBe(false);
+    expect(brokenReport.missingMicroLessonIds).toEqual(["TC00.002"]);
+    expect(brokenReport.duplicateAssignments[0]?.microLessonId).toBe("TC00.001");
+    expect(brokenReport.unknownMicroLessonIds).toEqual(["TC00.999"]);
+    expect(brokenReport.missingPrerequisiteUnitIds).toHaveLength(1);
+    expect(brokenReport.cycleDetected).toBe(true);
+  });
+
+  it("blocks publishing a V4 production record without verified deliverables and human sign-off", () => {
+    const registry = V4ProductionRegistrySchema.parse({
+      schemaVersion: "1.0",
+      records: [
+        {
+          unitId: "unit-a",
+          slug: "unit-a",
+          title: "Unité A",
+          moduleId: "TC-00",
+          state: "revue_necessaire",
+          version: "0.1.0",
+          taskIds: ["TASK-018"],
+          deliverables: createEmptyDeliverablesRecord(),
+          validationEvidenceRefs: [],
+          blockerReasons: [],
+          updatedAt: "2026-11-14",
+        },
+      ],
+    });
+
+    const blockers = assertCanPublishRecord(registry.records[0]!, "in-review", false);
+    expect(blockers.length).toBeGreaterThanOrEqual(14);
+
+    const allVerified = createEmptyDeliverablesRecord();
+    for (const kind of V4_DELIVERABLE_KINDS) {
+      allVerified[kind] = { status: "verified", artifactPath: `docs/courses/${kind}.md` };
+    }
+    const publishable = {
+      ...registry.records[0]!,
+      deliverables: allVerified,
+      validationEvidenceRefs: ["continuity/validation/task-018/result.json"],
+    };
+    expect(assertCanPublishRecord(publishable, "published", true)).toEqual([]);
+    expect(assertCanPublishRecord(publishable, "published", false)).toHaveLength(1);
   });
 });

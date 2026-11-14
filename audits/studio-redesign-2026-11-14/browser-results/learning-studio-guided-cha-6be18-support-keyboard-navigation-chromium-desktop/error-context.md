@@ -1,0 +1,338 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: learning-studio.spec.ts >> guided chapters preserve answers and support keyboard navigation
+- Location: tests\e2e\learning-studio.spec.ts:33:1
+
+# Error details
+
+```
+Test timeout of 30000ms exceeded.
+```
+
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Aller au contenu principal" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "Cyber School, accueil" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e9]: cyberschool.
+      - navigation "Navigation principale" [ref=e10]:
+        - link "Les cours" [ref=e11] [cursor=pointer]:
+          - /url: /#courses
+        - link "Cursus V4" [ref=e12] [cursor=pointer]:
+          - /url: /curriculum
+        - link "Notre approche" [ref=e13] [cursor=pointer]:
+          - /url: /#method
+      - link "Commencer" [ref=e14] [cursor=pointer]:
+        - /url: /lessons/program-memory-fundamentals
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - navigation "Fil d’Ariane" [ref=e20]:
+        - link "Tous les cours" [ref=e21] [cursor=pointer]:
+          - /url: /#courses
+        - generic [aria-hidden] [ref=e24]: /
+        - generic [ref=e25]: Systèmes
+      - generic [ref=e26]:
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - generic [ref=e29]: Depuis les bases
+            - generic [ref=e30]: 270 min à votre rythme
+            - generic [ref=e34]: Version en revue
+          - heading "Dans la mémoire d’un programme" [level=1] [ref=e35]
+          - paragraph [ref=e36]: Où va une variable ? Que reste-t-il après un appel de fonction ? Suivez les données dans la machine, de la première instruction à la gestion de leur durée de vie.
+        - generic [ref=e37]:
+          - strong [ref=e38]: "16"
+          - text: exercices pour faire le lien
+      - group [ref=e39]:
+        - 'generic "Avant de commencer : ce qu’il faut savoir" [ref=e40] [cursor=pointer]'
+      - generic [ref=e41]:
+        - complementary "Sommaire du cours" [ref=e42]:
+          - generic [ref=e43]:
+            - heading "Votre parcours" [level=2] [ref=e44]
+            - paragraph [ref=e45]: Un chapitre à la fois. À votre rythme.
+          - navigation "Chapitres" [ref=e46]:
+            - button "01 Comment la machine lit un nombre 35 min · 3 exercices" [ref=e47] [cursor=pointer]:
+              - generic [ref=e48]: "01"
+              - generic [ref=e49]:
+                - text: Comment la machine lit un nombre
+                - generic [ref=e50]: 35 min · 3 exercices
+            - button "02 Pourquoi chaque programme a son espace 40 min · 3 exercices" [ref=e51] [cursor=pointer]:
+              - generic [ref=e52]: "02"
+              - generic [ref=e53]:
+                - text: Pourquoi chaque programme a son espace
+                - generic [ref=e54]: 40 min · 3 exercices
+            - button "03 Suivre un appel de fonction 50 min · 3 exercices" [ref=e55] [cursor=pointer]:
+              - generic [ref=e56]: "03"
+              - generic [ref=e57]:
+                - text: Suivre un appel de fonction
+                - generic [ref=e58]: 50 min · 3 exercices
+            - button "04 Une adresse n’est pas une garantie 40 min · 2 exercices" [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: "04"
+              - generic [ref=e61]:
+                - text: Une adresse n’est pas une garantie
+                - generic [ref=e62]: 40 min · 2 exercices
+            - button "05 Réserver et libérer de la mémoire 50 min · 2 exercices" [ref=e63] [cursor=pointer]:
+              - generic [ref=e64]: "05"
+              - generic [ref=e65]:
+                - text: Réserver et libérer de la mémoire
+                - generic [ref=e66]: 50 min · 2 exercices
+            - button "06 Qui décide de la durée de vie ? 55 min · 3 exercices" [ref=e67] [cursor=pointer]:
+              - generic [ref=e68]: "06"
+              - generic [ref=e69]:
+                - text: Qui décide de la durée de vie ?
+                - generic [ref=e70]: 55 min · 3 exercices
+          - button "Afficher tous les chapitres" [ref=e72] [cursor=pointer]
+          - generic [ref=e73]:
+            - generic [ref=e74]: 0 / 16 exercices validés
+            - generic [ref=e75]: Réponses vérifiées pendant cette session.
+        - generic [ref=e76]:
+          - region "Comment la machine lit un nombre" [ref=e78]:
+            - generic [ref=e79]:
+              - paragraph [ref=e80]: Chapitre 1 sur 6 · 35 min environ
+              - heading "Comment la machine lit un nombre" [level=2] [ref=e81]
+              - paragraph [ref=e82]: Quand vous écrivez 42, que contient réellement la mémoire ?
+            - generic [ref=e83]:
+              - heading "L’idée en clair" [level=3] [ref=e84]
+              - paragraph [ref=e85]: Imaginez une longue rangée de cases numérotées. Chaque case contient un octet, soit huit bits. Son numéro est son adresse ; son contenu est sa valeur. Le processeur est la partie de la machine qui suit les instructions pour lire, calculer et écrire dans ces cases.
+            - generic [ref=e86]:
+              - heading "Un exemple, pas à pas" [level=3] [ref=e87]
+              - paragraph [ref=e88]: "Prenons 0x12345678. Le préfixe 0x indique une écriture en base 16 : chaque paire de chiffres représente un octet. Ce nombre occupe quatre cases. Sur x86-64, l’octet de poids faible vient à l’adresse la plus basse : 78 à 0x1008, puis 56, 34 et 12. La valeur du nombre reste la même ; seul l’ordre de rangement change."
+            - generic [ref=e89]: À vous d’expérimenter
+            - paragraph [ref=e92]: Avancez avec « Suivant » jusqu’à l’écriture. Repérez les quatre cases à partir de 0x1008. Avant le dernier pas, prédisez l’octet qui va apparaître dans la première case.
+            - generic "Simulateur VIS-01 CPU Fetch-Decode-Execute et RAM Little-Endian" [ref=e94]:
+              - generic [ref=e95]:
+                - generic [ref=e96]:
+                  - heading "VIS-01 · Cycle Fetch-Decode-Execute & octets en RAM" [level=3] [ref=e101]
+                  - generic [ref=e102]: "Phase : IDLE"
+                - paragraph [ref=e103]:
+                  - text: Observez le compteur d'instruction
+                  - code [ref=e104]: RIP
+                  - text: ", les bus et le stockage octet par octet en représentation"
+                  - strong [ref=e105]: little-endian
+                  - text: (x86-64).
+                - tablist "Programmes VIS-01" [ref=e106]:
+                  - tab "Chargement & Addition" [ref=e107] [cursor=pointer]
+                  - tab "Branchement conditionnel (JZ)" [ref=e108] [cursor=pointer]
+                  - tab "Écriture Little-Endian int32" [selected] [ref=e109] [cursor=pointer]
+                - generic [ref=e110]:
+                  - generic [ref=e111]:
+                    - generic [ref=e112]: "Valeur 32 bits :"
+                    - button "0x12345678" [ref=e113] [cursor=pointer]
+                    - button "0x00000042" [ref=e114] [cursor=pointer]
+                    - button "0xAABBCCDD" [ref=e115] [cursor=pointer]
+                  - generic [ref=e116]:
+                    - button "Vue int32 groupée" [pressed] [ref=e117] [cursor=pointer]
+                    - button "Vitesse 1x" [ref=e118] [cursor=pointer]
+              - generic [ref=e119]:
+                - generic [ref=e120]:
+                  - generic [ref=e121]:
+                    - generic [ref=e122]:
+                      - generic [ref=e123]: Processeur (CPU)
+                      - generic [ref=e124]: ZF=0
+                    - generic [ref=e125]:
+                      - generic [ref=e126]:
+                        - generic [ref=e127]: RIP (Instruction Ptr)
+                        - generic [ref=e128]: "0x0040"
+                      - generic [ref=e129]:
+                        - generic [ref=e130]: IR (Décodage)
+                        - generic [ref=e131]: —
+                      - generic [ref=e132]:
+                        - generic [ref=e133]: RAX / EAX
+                        - generic [ref=e134]: "0x00000000"
+                      - generic [ref=e135]:
+                        - generic [ref=e136]: RBX / EBX
+                        - generic [ref=e137]: "0x00000000"
+                    - generic [ref=e138]:
+                      - generic [ref=e139]: Instructions (Zone Code 0x0040..)
+                      - list [ref=e140]:
+                        - listitem [ref=e141]:
+                          - generic [ref=e142]: "0x0040"
+                          - generic [ref=e143]: MOV DWORD PTR [0x1008], val
+                        - listitem [ref=e144]:
+                          - generic [ref=e145]: "0x0044"
+                          - generic [ref=e146]: MOV EBX, [0x1008]
+                        - listitem [ref=e147]:
+                          - generic [ref=e148]: "0x0048"
+                          - generic [ref=e149]: HLT
+                  - generic [ref=e150]:
+                    - generic [ref=e151]: Bus système
+                    - 'img "Bus mémoire : idle" [ref=e152]'
+                    - generic [ref=e154]: Bus inactif
+                  - generic [ref=e155]:
+                    - generic [ref=e156]:
+                      - generic [ref=e157]: Mémoire Données (1 case = 1 octet)
+                      - generic [ref=e158]: int32 @0x1008 = 0x00000010 [10 00 00 00]
+                    - generic [ref=e159]:
+                      - generic [ref=e160]:
+                        - generic [ref=e161]: "0x1000"
+                        - generic [ref=e162]: "00"
+                      - generic [ref=e163]:
+                        - generic [ref=e164]: "0x1001"
+                        - generic [ref=e165]: "00"
+                      - generic [ref=e166]:
+                        - generic [ref=e167]: "0x1002"
+                        - generic [ref=e168]: "00"
+                      - generic [ref=e169]:
+                        - generic [ref=e170]: "0x1003"
+                        - generic [ref=e171]: "00"
+                      - generic [ref=e172]:
+                        - generic [ref=e173]: "0x1004"
+                        - generic [ref=e174]: 0A
+                      - generic [ref=e175]:
+                        - generic [ref=e176]: "0x1005"
+                        - generic [ref=e177]: "00"
+                      - generic [ref=e178]:
+                        - generic [ref=e179]: "0x1006"
+                        - generic [ref=e180]: "00"
+                      - generic [ref=e181]:
+                        - generic [ref=e182]: "0x1007"
+                        - generic [ref=e183]: "00"
+                      - generic [ref=e184]:
+                        - generic [ref=e185]: "0x1008"
+                        - generic [ref=e186]: "10"
+                      - generic [ref=e187]:
+                        - generic [ref=e188]: "0x1009"
+                        - generic [ref=e189]: "00"
+                      - generic [ref=e190]:
+                        - generic [ref=e191]: "0x100A"
+                        - generic [ref=e192]: "00"
+                      - generic [ref=e193]:
+                        - generic [ref=e194]: "0x100B"
+                        - generic [ref=e195]: "00"
+                      - generic [ref=e196]:
+                        - generic [ref=e197]: "0x100C"
+                        - generic [ref=e198]: "00"
+                      - generic [ref=e199]:
+                        - generic [ref=e200]: "0x100D"
+                        - generic [ref=e201]: "00"
+                      - generic [ref=e202]:
+                        - generic [ref=e203]: "0x100E"
+                        - generic [ref=e204]: "00"
+                      - generic [ref=e205]:
+                        - generic [ref=e206]: "0x100F"
+                        - generic [ref=e207]: "00"
+                - generic [ref=e208]:
+                  - generic [ref=e209]:
+                    - button "Précédent" [disabled]
+                    - button "Lecture auto" [ref=e210] [cursor=pointer]
+                    - button "Phase suivante" [ref=e213] [cursor=pointer]
+                    - button "Réinitialiser" [ref=e216] [cursor=pointer]
+                  - generic [ref=e220]: Étape 1 / 7
+                - status [ref=e221]:
+                  - heading "Explication synchronisée" [level=4] [ref=e222]
+                  - generic [ref=e223]: "État initial : RIP pointe sur 0x0040 en zone Code. Prêt à écrire 0x12345678 à l'adresse 0x1008."
+                - generic [ref=e227]:
+                  - strong [ref=e228]: "Ce que le simulateur simplifie :"
+                  - text: un processeur réel sépare ses cœurs de la DRAM via des caches L1/L2/L3, des tampons d'écriture et un pipeline superscalaire. L'ordre exact des octets en little-endian reste toutefois strictement identique.
+            - group [ref=e229]:
+              - generic "Ce que ce modèle simplifie" [ref=e230] [cursor=pointer]
+            - generic [ref=e231]:
+              - heading "Faites le point" [level=3] [ref=e232]
+              - paragraph [ref=e236]: Essayez d’expliquer votre choix avant de le vérifier. Les indices sont là si vous bloquez.
+              - generic [ref=e237]:
+                - generic [ref=e238]:
+                  - generic [ref=e239]:
+                    - generic [ref=e240]:
+                      - generic [ref=e241]: Exercice 1 · Compréhension
+                      - button "Afficher un indice" [ref=e242] [cursor=pointer]
+                    - heading "À quel instant précis le processeur utilise-t-il le registre PC (RIP sur x86-64) pour savoir quelle opération exécuter ensuite ?" [level=3] [ref=e246]
+                  - generic [ref=e247]:
+                    - group "À quel instant précis le processeur utilise-t-il le registre PC (RIP sur x86-64) pour savoir quelle opération exécuter ensuite ?" [ref=e248]:
+                      - generic [ref=e250] [cursor=pointer]:
+                        - radio "Pendant la phase Fetch, pour lire les octets de l'instruction à l'adresse contenue dans PC/RIP" [ref=e251]
+                        - generic [ref=e253]: Pendant la phase Fetch, pour lire les octets de l'instruction à l'adresse contenue dans PC/RIP
+                      - generic [ref=e254] [cursor=pointer]:
+                        - radio "Uniquement pendant Execute pour stocker le résultat du calcul" [ref=e255]
+                        - generic [ref=e257]: Uniquement pendant Execute pour stocker le résultat du calcul
+                      - generic [ref=e258] [cursor=pointer]:
+                        - radio "Uniquement lors d'une allocation malloc() sur le tas" [ref=e259]
+                        - generic [ref=e261]: Uniquement lors d'une allocation malloc() sur le tas
+                    - generic [ref=e262]:
+                      - button "Vérifier ma réponse" [disabled]
+                - generic [ref=e263]:
+                  - generic [ref=e264]:
+                    - generic [ref=e265]:
+                      - generic [ref=e266]: Exercice 2 · Prédiction d'état
+                      - button "Afficher un indice" [ref=e267] [cursor=pointer]
+                    - heading "Dans VIS-01, quel octet est lu à l'adresse 0x1008 après l'écriture little-endian de l'entier 32 bits 0x12345678 à partir de 0x1008 ?" [level=3] [ref=e271]
+                    - paragraph [ref=e272]: "L'instruction `mov dword ptr [0x1008], 0x12345678` s'exécute sur une architecture x86-64 (little-endian)."
+                  - generic [ref=e273]:
+                    - group "Dans VIS-01, quel octet est lu à l'adresse 0x1008 après l'écriture little-endian de l'entier 32 bits 0x12345678 à partir de 0x1008 ?" [ref=e274]:
+                      - generic [ref=e276] [cursor=pointer]:
+                        - radio "0x78 à 0x1008 (et 0x56, 0x34, 0x12 aux adresses 0x1009..0x100B)" [ref=e277]
+                        - generic [ref=e279]: 0x78 à 0x1008 (et 0x56, 0x34, 0x12 aux adresses 0x1009..0x100B)
+                      - generic [ref=e280] [cursor=pointer]:
+                        - radio "0x12 à 0x1008 (ordre big-endian)" [ref=e281]
+                        - generic [ref=e283]: 0x12 à 0x1008 (ordre big-endian)
+                      - generic [ref=e284] [cursor=pointer]:
+                        - radio "0x00 car un entier ne prend qu'un octet" [ref=e285]
+                        - generic [ref=e287]: 0x00 car un entier ne prend qu'un octet
+                    - generic [ref=e288]:
+                      - button "Vérifier ma réponse" [disabled]
+                - generic [ref=e289]:
+                  - generic [ref=e290]:
+                    - generic [ref=e291]:
+                      - generic [ref=e292]: Exercice 3 · Ordonnancement
+                      - button "Afficher un indice" [ref=e293] [cursor=pointer]
+                    - heading "Remettez dans l'ordre chronologique les étapes d'exécution d'une instruction séquentielle dans le processeur." [level=3] [ref=e297]
+                  - generic [ref=e298]:
+                    - list "Séquence à ordonner" [ref=e299]:
+                      - listitem [ref=e300]:
+                        - generic [ref=e301]:
+                          - generic [ref=e302]: "1"
+                          - generic [ref=e303]: "Decode : identifier l'opération et les opérandes"
+                        - generic [ref=e304]:
+                          - 'button "Monter Decode : identifier l''opération et les opérandes" [disabled]'
+                          - 'button "Descendre Decode : identifier l''opération et les opérandes" [ref=e305] [cursor=pointer]'
+                      - listitem [ref=e308]:
+                        - generic [ref=e309]:
+                          - generic [ref=e310]: "2"
+                          - generic [ref=e311]: "Fetch : charger l'instruction pointée par PC/RIP"
+                        - generic [ref=e312]:
+                          - 'button "Monter Fetch : charger l''instruction pointée par PC/RIP" [ref=e313] [cursor=pointer]'
+                          - 'button "Descendre Fetch : charger l''instruction pointée par PC/RIP" [ref=e316] [cursor=pointer]'
+                      - listitem [ref=e319]:
+                        - generic [ref=e320]:
+                          - generic [ref=e321]: "3"
+                          - generic [ref=e322]: "Update PC : faire pointer RIP vers l'instruction suivante"
+                        - generic [ref=e323]:
+                          - 'button "Monter Update PC : faire pointer RIP vers l''instruction suivante" [ref=e324] [cursor=pointer]'
+                          - 'button "Descendre Update PC : faire pointer RIP vers l''instruction suivante" [ref=e327] [cursor=pointer]'
+                      - listitem [ref=e330]:
+                        - generic [ref=e331]:
+                          - generic [ref=e332]: "4"
+                          - generic [ref=e333]: "Execute : calculer dans l'ALU ou accéder à la RAM"
+                        - generic [ref=e334]:
+                          - 'button "Monter Execute : calculer dans l''ALU ou accéder à la RAM" [ref=e335] [cursor=pointer]'
+                          - 'button "Descendre Execute : calculer dans l''ALU ou accéder à la RAM" [disabled]'
+                    - button "Vérifier ma réponse" [ref=e339] [cursor=pointer]
+            - generic [ref=e340]:
+              - heading "À emporter" [level=3] [ref=e341]
+              - paragraph [ref=e342]: Une adresse indique où lire. Un octet indique ce qui est stocké. Pour reconstruire une valeur de plusieurs octets, il faut aussi connaître leur ordre.
+          - generic [ref=e343]:
+            - button "Précédent" [disabled] [ref=e344]
+            - generic [ref=e347]: 1 / 6
+            - button "Chapitre suivant" [ref=e348] [cursor=pointer]
+      - group [ref=e351]:
+        - 'generic "Pour aller plus loin : sources et laboratoires +" [ref=e352] [cursor=pointer]'
+  - contentinfo [ref=e353]:
+    - link "cyberschool ." [ref=e354] [cursor=pointer]:
+      - /url: /
+      - text: cyberschool
+      - generic [ref=e355]: .
+    - paragraph [ref=e356]: Comprendre ce qui se passe sous la surface.
+    - link "Retour aux cours" [ref=e357] [cursor=pointer]:
+      - /url: /#courses
+  - button "Open Next.js Dev Tools" [ref=e366] [cursor=pointer]
+  - alert [ref=e370]
+```

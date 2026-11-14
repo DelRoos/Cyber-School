@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import { AlertTriangle, Boxes, Info, Plus, RotateCcw, Trash2 } from "lucide-react";
+import { ConceptTransformBanner } from "@cyber-school/animations";
 import {
   Alert,
   AlertDescription,
@@ -203,6 +204,33 @@ export function Vis04HeapAllocator() {
       </CardHeader>
 
       <CardContent className="space-y-4">
+        <ConceptTransformBanner
+          stepKey={`${state.hazard}-${state.chunks.length}-${state.coalescingEnabled}-${metrics.requestedPayloadBytes}`}
+          cause={
+            activePreset
+              ? `Scénario : ${PRESET_LABELS[activePreset]}`
+              : `Fusion (Coalescing) ${state.coalescingEnabled ? "ON" : "OFF"}`
+          }
+          mechanism={
+            state.hazard === "uaf"
+              ? "L'allocateur réattribue le chunk libéré à ptrB tandis que ptrA pointe toujours dessus"
+              : state.hazard === "external-fragmentation"
+                ? "Les trous libres sont dispersés et ne peuvent pas être fusionnés en un bloc contigu"
+                : state.hazard === "double-free"
+                  ? "free() appelé deux fois sur le même chunk corrompt la liste libre"
+                  : "Découpage/fusion de chunks alignés sur 16 octets avec en-tête de 8 o"
+          }
+          effectDelta={`Alloué ${payloadPct}% · Perte interne ${internalPct}% · Libre ${freePct}%`}
+          tone={
+            state.hazard === "none"
+              ? "causal"
+              : state.hazard === "external-fragmentation" || state.hazard === "leak"
+                ? "warning"
+                : "danger"
+          }
+          testId="vis04-transform-banner"
+        />
+
         {/* Managed Arena Bar (Linear Memory Chunks) */}
         <div className="space-y-2 rounded-lg border bg-card p-3">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">

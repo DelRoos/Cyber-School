@@ -1,6 +1,6 @@
 ---
 name: lesson-design
-description: Design and structure an interactive lesson anchored in the atomic concept graph (Domain -> Module -> Chapter -> AtomicConcept -> Lesson -> Exercises -> Assessments -> ExternalLabs). Use when authoring curriculum entries, lesson manifests, or comprehension exercises.
+description: Design and structure an interactive lesson anchored in the atomic concept graph (Domain, Module, Chapter, AtomicConcept, Lesson, Exercises, Assessments, ExternalLabs). Use when authoring curriculum entries, lesson manifests, or comprehension exercises.
 metadata:
   owner: instructional-engineer
   version: "1.0"
@@ -30,3 +30,8 @@ metadata:
    - Write targeted feedback for every wrong option explaining the misconception.
 5. **Validate**:
    - Run `corepack pnpm validate:curriculum` and unit tests in `packages/lesson-runtime` and `packages/exercises`.
+   - When authoring a V4 pedagogical unit, follow `curriculum-production` (`production/missions/<unitId>.md` and `corepack pnpm v4:audit -- --unit <unitId>`) to satisfy all 12 deliverables without promoting past `in-review` / `revue_necessaire` before human review.
+
+## Learning studio acceptance
+
+Read docs/standards/COURSE_AUTHORING.md. Require a concrete question, defined vocabulary, a worked example with numbers matching the actual simulator, a prediction and misconception-specific feedback. Verify precise primary sources and model limits. Schema validity is not teaching quality.

@@ -1,0 +1,57 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-14T08:46:47.274Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+
+Running 14 tests using 2 workers
+
+  ok  1 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (12.8s)
+  x   2 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation (11.9s)
+  ok  3 [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (3.3s)
+  ok  5 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (1.4s)
+  ok  6 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (844ms)
+  ok  7 [chromium-desktop] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (2.0s)
+  ok  4 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (7.0s)
+  ok  8 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (1.8s)
+  ok  9 [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (4.2s)
+  ok 10 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation (4.1s)
+  ok 12 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (1.0s)
+  ok 13 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (962ms)
+  ok 14 [chromium-mobile] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (2.0s)
+  ok 11 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (7.2s)
+
+
+  1) [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation 
+
+    Error: expect(locator).toBeFocused() failed
+
+    Locator:  getByRole('heading', { name: 'Pourquoi chaque programme a son espace' })
+    Expected: focused
+    Received: inactive
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeFocused" getByRole('heading', { name: 'Pourquoi chaque programme a son espace' }) with timeout 5000ms
+      - waiting for getByRole('heading', { name: 'Pourquoi chaque programme a son espace' })
+        14 × locator resolved to <h2 tabindex="-1" id="step-virtual-segments-heading">Pourquoi chaque programme a son espace</h2>
+           - unexpected value "inactive"
+
+
+      53 |   await expect(
+      54 |     page.getByRole("heading", { name: "Pourquoi chaque programme a son espace" }),
+    > 55 |   ).toBeFocused();
+         |     ^
+      56 |   await expect(page.getByTestId("vis-02-virtual-memory")).toBeVisible();
+      57 |   await first.click();
+      58 |   await expect(ex.getByRole("radio", { name: /Pendant la phase Fetch/ })).toBeChecked();
+        at C:\Users\Emerite\Documents\projets\cyber-school\tests\e2e\learning-studio.spec.ts:55:5
+
+    Error Context: test-results\learning-studio-guided-cha-6be18-support-keyboard-navigation-chromium-desktop\error-context.md
+
+  1 failed
+    [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation 
+  13 passed (39.5s)
+ ELIFECYCLE  Command failed with exit code 1.

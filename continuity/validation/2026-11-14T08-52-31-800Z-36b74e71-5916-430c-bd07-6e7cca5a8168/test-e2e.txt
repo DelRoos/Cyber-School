@@ -1,0 +1,26 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-14T08:53:09.478Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+
+Running 14 tests using 2 workers
+
+  ok  1 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (10.0s)
+  ok  2 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation (10.0s)
+  ok  3 [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (4.2s)
+  ok  5 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (1.3s)
+  ok  6 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (1.1s)
+  ok  7 [chromium-desktop] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (2.1s)
+  ok  4 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (8.7s)
+  ok  9 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (8.4s)
+  ok  8 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:37:1 › guided chapters preserve answers and support keyboard navigation (9.3s)
+  ok 10 [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (3.4s)
+  ok 12 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (968ms)
+  ok 13 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (833ms)
+  ok 14 [chromium-mobile] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (1.8s)
+  ok 11 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (6.8s)
+
+  14 passed (40.7s)

@@ -28,7 +28,10 @@ Pour une tâche Done, renseigner le champ de frontmatter `verificationRef` avec 
 - critères explicites cochés, sans critère restant ;
 - rapport réussi concernant cette tâche et l'empreinte de ses critères ;
 - neuf commandes obligatoires réussies, journaux présents et intacts ;
-- empreinte du code/contenu/configuration actuelle identique à celle testée et base Git cohérente.
+- pour une nouvelle clôture, empreinte actuelle identique à celle testée et base Git cohérente ;
+- pour une clôture historique déjà enregistrée dans Git, tâche Done, critères, rapport réussi et ses neuf journaux inchangés par rapport à HEAD. Ce contrôle conserve l'historique, sans certifier les sources nouvelles.
+
+Une tâche passée ne redevient pas inachevée à chaque nouvelle fonctionnalité. Le contrôle historique exige que sa clôture et toutes ses preuves soient déjà commitées ; il refuse une nouvelle clôture avec une preuve périmée, des critères modifiés ou des journaux remplacés. La validation du code actuel, le checkpoint et la publication restent strictement liés à l'empreinte actuelle : ils n'utilisent jamais cette exception historique.
 
 Une section Vérifications, un fichier `.spec.ts`, une affirmation d'agent ou un rapport failed ne remplace aucun de ces contrôles. Ne jamais fabriquer ou éditer le JSON pour contourner un échec. Le runner ne marque pas les tâches Done automatiquement ; une revue des critères reste nécessaire.
 

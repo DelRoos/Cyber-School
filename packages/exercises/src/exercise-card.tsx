@@ -132,7 +132,7 @@ export function ExerciseCard({ exercise, index, onResult }: ExerciseCardProps) {
           : "Compréhension";
 
   return (
-    <Card id={`exercise-${exercise.id}`} data-testid={`exercise-card-${exercise.id}`}>
+    <Card id={`exercise-${exercise.id}`} tabIndex={-1} data-testid={`exercise-card-${exercise.id}`}>
       <CardHeader>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <Badge variant="default">

@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "runId": "2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce",
+  "taskId": "TASK-020",
+  "startedAt": "2026-11-14T08:55:49.910Z",
+  "finishedAt": "2026-11-14T08:57:10.074Z",
+  "status": "passed",
+  "source": {
+    "digest": "a350dacf16b23387adf21a96e2ca2751c107278caaf34c74cd415fb2cc711744",
+    "fileCount": 221,
+    "gitHead": "e7dde3b93d69e0956951928a2b49963ab1f2089f"
+  },
+  "criteriaDigest": "45c071605a27268312516d6cfd277a0df029ffabed5322ae0cbba8788ef1dd5b",
+  "environment": {
+    "nodeVersion": "22.23.5",
+    "platform": "win32",
+    "packageManager": "pnpm@10.28.0"
+  },
+  "checks": [
+    {
+      "name": "test:guards",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:guards"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:55:50.208Z",
+      "finishedAt": "2026-11-14T08:55:56.708Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/test-guards.txt",
+      "logSha256": "857d3c2adf6605bfb44ce1dbc3ca64ebbb9aa2d104a401c19ac7392444495c81"
+    },
+    {
+      "name": "typecheck",
+      "command": [
+        "corepack",
+        "pnpm",
+        "typecheck"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:55:56.719Z",
+      "finishedAt": "2026-11-14T08:56:00.655Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/typecheck.txt",
+      "logSha256": "f577302689f703d34e197cd40586867f3551566a0aaacd68bce56aa0e343c762"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "corepack",
+        "pnpm",
+        "lint"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:00.679Z",
+      "finishedAt": "2026-11-14T08:56:04.731Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/lint.txt",
+      "logSha256": "59aae4060771089f9b0c9cb13b5103519c0a35a6c971662441eda1c4f35982cd"
+    },
+    {
+      "name": "format:check",
+      "command": [
+        "corepack",
+        "pnpm",
+        "format:check"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:04.744Z",
+      "finishedAt": "2026-11-14T08:56:11.379Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/format-check.txt",
+      "logSha256": "82c418afec72b8e2ab54049a302a2abd2f82e18ebee3d6f61f250146876c7cf3"
+    },
+    {
+      "name": "validate:governance",
+      "command": [
+        "corepack",
+        "pnpm",
+        "validate:governance"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:11.388Z",
+      "finishedAt": "2026-11-14T08:56:16.756Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/validate-governance.txt",
+      "logSha256": "44753ad740c562f0057cfd19789bdc1eb4d563990a207966ff7c766087e447d4"
+    },
+    {
+      "name": "validate:curriculum",
+      "command": [
+        "corepack",
+        "pnpm",
+        "validate:curriculum"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:16.767Z",
+      "finishedAt": "2026-11-14T08:56:17.912Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/validate-curriculum.txt",
+      "logSha256": "e27b45cf9351d248fdbb2c44c90ac2203d2aa2e3c78d3414a9c63ee3045fe0d6"
+    },
+    {
+      "name": "test:unit",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:unit"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:17.924Z",
+      "finishedAt": "2026-11-14T08:56:18.998Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/test-unit.txt",
+      "logSha256": "c059e3877c9b961898f14218cd95ebc28e3eac0f92f3b19276992fcdb44cddb4"
+    },
+    {
+      "name": "build",
+      "command": [
+        "corepack",
+        "pnpm",
+        "build"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:19.012Z",
+      "finishedAt": "2026-11-14T08:56:25.001Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/build.txt",
+      "logSha256": "f3fed35ded1bd169b3ae991e7bfe0a628ba611257b5cc8c2492d0c024a7dd46f"
+    },
+    {
+      "name": "test:e2e",
+      "command": [
+        "corepack",
+        "pnpm",
+        "test:e2e"
+      ],
+      "exitCode": 0,
+      "startedAt": "2026-11-14T08:56:25.012Z",
+      "finishedAt": "2026-11-14T08:57:09.954Z",
+      "logFile": "continuity/validation/2026-11-14T08-55-49-910Z-00601fe0-731b-488d-8b3d-3fa6f19324ce/test-e2e.txt",
+      "logSha256": "3af2f92b850010494291d2d330556e5cab7b5ed11ce7aa3f5732c31984b4f0a8"
+    }
+  ],
+  "issues": []
+}

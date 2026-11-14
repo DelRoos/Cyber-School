@@ -359,6 +359,55 @@ export function verifyEvidence(
   }
 }
 
+/** A committed completion is a historical fact, not certification of today's source. */
+export function verifyTaskCompletion(root: string, task: Task, source: Snapshot): Issue[] {
+  const current = verifyEvidence(root, task.verificationRef, { source, task });
+  if (current.length === 0) return current;
+  try {
+    if (!source.gitHead || !/^[a-f0-9]{40,64}$/.test(source.gitHead) || !task.verificationRef)
+      return current;
+    const committed = (relative: string): string =>
+      execFileSync("git", ["show", `${source.gitHead}:${relative}`], {
+        cwd: root,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+        maxBuffer: 20 * 1024 * 1024,
+      }).replaceAll("\r\n", "\n");
+    const taskText = committed(`planning/tasks/${task.fileName}`);
+    const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n([\s\S]*)$/.exec(taskText);
+    const field = (name: string): string =>
+      new RegExp(`^${name}:\\s*(.*)$`, "m")
+        .exec(match?.[1] ?? "")?.[1]
+        ?.trim()
+        .replace(/^["']|["']$/g, "") ?? "";
+    if (
+      field("id") !== task.id ||
+      field("status") !== "Done" ||
+      field("verificationRef") !== task.verificationRef ||
+      criteriaDigest({ ...task, body: match?.[2] ?? "" }) !== criteriaDigest(task)
+    )
+      return current;
+    const referencePath = validationFile(root, task.verificationRef, true);
+    const raw = fs.readFileSync(referencePath, "utf8");
+    if (committed(task.verificationRef) !== raw.replaceAll("\r\n", "\n")) return current;
+    const evidence = JSON.parse(raw) as Evidence;
+    // Recheck all metadata, task criteria, ancestry, nine checks and log hashes.
+    const historical = verifyEvidence(root, task.verificationRef, {
+      source: { ...source, digest: evidence.source.digest },
+      task,
+    });
+    if (historical.length) return current;
+    for (const check of evidence.checks) {
+      const logPath = validationFile(root, check.logFile);
+      if (committed(check.logFile) !== fs.readFileSync(logPath, "utf8").replaceAll("\r\n", "\n"))
+        return current;
+    }
+    return [];
+  } catch {
+    return current;
+  }
+}
+
 export function validateTasks(root: string, tasks: Map<string, Task>, source: Snapshot): Issue[] {
   const issues: Issue[] = [];
   const visiting = new Set<string>(),
@@ -399,7 +448,7 @@ export function validateTasks(root: string, tasks: Map<string, Task>, source: Sn
           message: `${task.id}: explicit checked acceptance criteria are required.`,
         });
       issues.push(
-        ...verifyEvidence(root, task.verificationRef, { source, task }).map((i) => ({
+        ...verifyTaskCompletion(root, task, source).map((i) => ({
           ...i,
           message: `${task.id}: ${i.message}`,
         })),

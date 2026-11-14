@@ -1,0 +1,12 @@
+Command: corepack pnpm format:check
+Started: 2026-11-14T08:01:51.634Z
+
+
+> cyber-school@0.1.0 format:check C:\Users\Emerite\Documents\projets\cyber-school
+> prettier --check .
+
+Checking formatting...
+[warn] planning/backlog/BACKLOG.md
+[warn] planning/tasks/TASK-015-learning-studio-redesign.md
+[warn] Code style issues found in 2 files. Run Prettier with --write to fix.
+ ELIFECYCLE  Command failed with exit code 1.

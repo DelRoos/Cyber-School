@@ -1,0 +1,42 @@
+{
+  "unitId": "unit-tc00-observation-hypotheses",
+  "slug": "scientific-reasoning-and-proof",
+  "passedTechnicalChecks": true,
+  "readyForHumanReview": false,
+  "canPublish": false,
+  "microLessonsExpected": 8,
+  "exerciseCount": 6,
+  "exerciseKinds": ["multiple-choice", "sequence-order", "state-prediction", "diagram-probe"],
+  "hasAssessment": true,
+  "resourceCitationsCount": 3,
+  "verifiedOrReadyDeliverables": [
+    "scientific_sheet",
+    "learning_objectives",
+    "pedagogical_structure",
+    "visual_storyboard",
+    "animation_spec",
+    "simulation_spec",
+    "exercise_bank",
+    "web_implementation",
+    "technical_tests",
+    "external_labs"
+  ],
+  "missingDeliverables": ["pedagogical_validation_report", "publication_metadata"],
+  "findings": [],
+  "publicationBlockers": [
+    "La publication exige un manifeste lesson.json 'published' approuvé humainement.",
+    "Aucune preuve d'exécution (validationEvidenceRefs) enregistrée.",
+    "Livrable requis non vérifié : 1. Fiche scientifique et références.",
+    "Livrable requis non vérifié : 2. Objectifs d'apprentissage.",
+    "Livrable requis non vérifié : 3. Structure pédagogique.",
+    "Livrable requis non vérifié : 4. Storyboard visuel.",
+    "Livrable requis non vérifié : 5. Spécification des animations.",
+    "Livrable requis non vérifié : 6. Spécification des simulations.",
+    "Livrable requis non vérifié : 7. Banque d'exercices.",
+    "Livrable requis non vérifié : 8. Implémentation Web.",
+    "Livrable requis non vérifié : 9. Tests techniques.",
+    "Livrable requis non vérifié : 10. Rapport de validation pédagogique.",
+    "Livrable requis non vérifié : 11. Liens vers les laboratoires externes.",
+    "Livrable requis non vérifié : 12. Informations de publication."
+  ]
+}

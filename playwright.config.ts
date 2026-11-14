@@ -29,6 +29,9 @@ function detectChromiumExecutable(): string | undefined {
 }
 
 const executablePath = detectChromiumExecutable();
+const e2ePort = process.env.PLAYWRIGHT_PORT ?? "3210";
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? `http://127.0.0.1:${e2ePort}`;
+const useExternalServer = Boolean(process.env.PLAYWRIGHT_BASE_URL);
 
 export default defineConfig({
   testDir: "./tests/e2e",
@@ -37,7 +40,7 @@ export default defineConfig({
   retries: process.env.CI ? 1 : 0,
   reporter: "list",
   use: {
-    baseURL: "http://127.0.0.1:3000",
+    baseURL,
     trace: "on-first-retry",
     ...(executablePath ? { launchOptions: { executablePath } } : {}),
   },
@@ -51,10 +54,14 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"], viewport: { width: 375, height: 812 } },
     },
   ],
-  webServer: {
-    command: "corepack pnpm --filter @cyber-school/web start",
-    url: "http://127.0.0.1:3000",
-    reuseExistingServer: !process.env.CI,
-    timeout: 60_000,
-  },
+  ...(useExternalServer
+    ? {}
+    : {
+        webServer: {
+          command: `corepack pnpm --filter @cyber-school/web exec next start --hostname 127.0.0.1 --port ${e2ePort}`,
+          url: baseURL,
+          reuseExistingServer: false,
+          timeout: 60_000,
+        },
+      }),
 });

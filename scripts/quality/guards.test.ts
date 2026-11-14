@@ -3,6 +3,7 @@ import { afterEach, test } from "node:test";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+import { execFileSync } from "node:child_process";
 import {
   REQUIRED_CHECKS,
   criteriaDigest,
@@ -14,6 +15,7 @@ import {
   validatePublications,
   validateTasks,
   verifyEvidence,
+  verifyTaskCompletion,
   type Evidence,
   type Snapshot,
   type Task,
@@ -88,6 +90,66 @@ function fixture() {
 test("accepts complete matching evidence with all actual result fields", () => {
   const f = fixture();
   assert.deepEqual(verifyEvidence(f.root, f.reference, { source: f.source, task: f.task }), []);
+});
+
+function committedCompletion() {
+  const f = fixture();
+  const git = (...args: string[]) => execFileSync("git", args, { cwd: f.root, stdio: "ignore" });
+  const commit = () => {
+    git("add", ".");
+    git(
+      "-c",
+      "user.name=QA Fixture",
+      "-c",
+      "user.email=qa@example.invalid",
+      "-c",
+      "core.autocrlf=false",
+      "commit",
+      "-m",
+      "QA fixture",
+    );
+  };
+  git("init");
+  commit();
+  f.evidence.source = snapshot(f.root);
+  f.task.status = "Done";
+  f.task.verificationRef = f.reference;
+  fs.writeFileSync(
+    path.join(f.root, "planning/tasks/example.md"),
+    `---\nid: TASK-999\nstatus: Done\ndependsOn: []\nverificationRef: ${f.reference}\n---\n${f.task.body}`,
+  );
+  f.save();
+  commit();
+  fs.appendFileSync(path.join(f.root, "source.ts"), "export const nextFeature = true;\n");
+  return { ...f, current: snapshot(f.root) };
+}
+
+test("committed completion survives later work but never certifies current sources", () => {
+  const f = committedCompletion();
+  assert.deepEqual(verifyTaskCompletion(f.root, f.task, f.current), []);
+  assert.ok(verifyEvidence(f.root, f.reference, { source: f.current, task: f.task }).length);
+});
+
+test("historical completion rejects modified criteria", () => {
+  const f = committedCompletion();
+  f.task.body += "\n- [x] An additional requirement\n";
+  assert.ok(verifyTaskCompletion(f.root, f.task, f.current).length);
+});
+
+test("historical completion rejects altered logs or evidence", () => {
+  const f = committedCompletion();
+  const log = f.evidence.checks[0]!;
+  fs.appendFileSync(path.join(f.root, log.logFile), "changed");
+  // Even a matching replacement hash cannot rewrite the committed history.
+  log.logSha256 = sha256(fs.readFileSync(path.join(f.root, log.logFile)));
+  f.save();
+  assert.ok(verifyTaskCompletion(f.root, f.task, f.current).length);
+});
+
+test("a newly claimed completion cannot reuse a stale committed report", () => {
+  const f = committedCompletion();
+  f.task.fileName = "uncommitted-task.md";
+  assert.ok(verifyTaskCompletion(f.root, f.task, f.current).length);
 });
 
 for (const status of ["failed", "running"] as const)
