@@ -1,104 +1,155 @@
 import Link from "next/link";
-import { ArrowDown, ArrowUpRight, Eye, MousePointer2, MessageCircle } from "lucide-react";
-import { loadAcademyData } from "@/lib/curriculum-data";
-import { CourseCatalog } from "@/components/course-catalog";
-import { MemoryPreview } from "@/components/memory-preview";
+import { ArrowDown, ArrowUpRight, Shield, Terminal, Zap } from "lucide-react";
+import { loadV4ExplorerData } from "@/lib/v4-catalog";
+import { HeroAtmosphereCanvas } from "@/components/hero-atmosphere-canvas";
+import { HeroLabWorkbench } from "@/components/hero-lab-workbench";
+import { LandingConceptMarquee } from "@/components/landing-concept-marquee";
+import { LandingCurriculumRoadmap } from "@/components/landing-curriculum-roadmap";
+import { LandingFaq } from "@/components/landing-faq";
+import { LandingMethodSandbox } from "@/components/landing-method-sandbox";
+import { LandingMotionShell } from "@/components/landing-motion-shell";
+import { LandingParcoursGrid } from "@/components/landing-parcours-grid";
 
 export default function HomePage() {
-  const { lessons } = loadAcademyData();
+  const explorer = loadV4ExplorerData();
+  const domainModules = new Map<string, Set<string>>();
+  for (const unit of explorer.units) {
+    if (!domainModules.has(unit.domainId)) domainModules.set(unit.domainId, new Set());
+    domainModules.get(unit.domainId)?.add(unit.moduleId);
+  }
+  const moduleCountsByDomain = Object.fromEntries(
+    [...domainModules.entries()].map(([id, mods]) => [id, mods.size]),
+  );
+
   return (
-    <div className="home-page">
-      <section className="home-hero" aria-labelledby="home-heading">
-        <div className="hero-copy">
-          <div className="hero-intro">
-            <span className="signal-dot" /> Un laboratoire pour les esprits curieux
+    <LandingMotionShell>
+      <div className="home-page container-rails">
+        <span className="rail-tick rail-tick-tl" aria-hidden="true" />
+        <span className="rail-tick rail-tick-tr" aria-hidden="true" />
+
+        <section className="home-hero" aria-labelledby="home-heading">
+          <HeroAtmosphereCanvas />
+          <div className="hero-ambient-spotlight" aria-hidden="true" />
+          <div className="hero-backdrop-grid" aria-hidden="true" />
+
+          <div className="hero-copy">
+            <p className="hero-kicker" data-hero-animate>
+              <span className="hero-kicker-dot" aria-hidden="true" />
+              Plateforme d&apos;apprentissage en cybersécurité
+            </p>
+
+            <h1 id="home-heading" data-hero-animate>
+              Apprenez la cybersécurité.
+              <br />
+              <span className="hero-h1-accent">Le déclic</span> vient de la machine.
+            </h1>
+
+            <p data-hero-animate>
+              Une plateforme complète pour apprendre la cybersécurité de zéro jusqu&apos;aux
+              mécanismes d&apos;attaque et de défense. Ce qui nous différencie&nbsp;: notre
+              méthodologie active et nos moyens visuels pour comprendre chaque système de
+              l&apos;intérieur.
+            </p>
+
+            <div className="hero-actions" data-hero-animate>
+              <Link href="/parcours" className="studio-button" data-magnetic="0.14">
+                <span>Commencer</span>
+                <span className="cta-badge" aria-hidden="true">
+                  <ArrowUpRight size={15} />
+                </span>
+              </Link>
+              <a href="#courses" className="secondary-button">
+                Voir les parcours <ArrowDown size={15} aria-hidden="true" />
+              </a>
+            </div>
+
+            <ul className="hero-proof-strip" aria-label="Ce qui nous différencie" data-hero-animate>
+              <li>
+                <Terminal size={14} aria-hidden="true" />
+                <span>Un socle, quatre branches</span>
+              </li>
+              <li>
+                <Zap size={14} aria-hidden="true" />
+                <span>Méthodologie active</span>
+              </li>
+              <li>
+                <Shield size={14} aria-hidden="true" />
+                <span>Moyens visuels intégrés</span>
+              </li>
+            </ul>
           </div>
-          <h1 id="home-heading">
-            Le déclic
-            <br />
-            vient en
-            <br />
-            <span className="hero-heading-last">expérimentant.</span>
-          </h1>
-          <p>
-            La mémoire, les réseaux, les systèmes. Entrez dans la machine et comprenez enfin ce qui
-            se passe à l’intérieur.
-          </p>
-          <div className="hero-actions">
-            <Link href="/lessons/program-memory-fundamentals" className="studio-button">
-              Commencer à explorer <ArrowUpRight size={18} aria-hidden="true" />
-            </Link>
-            <Link href="/curriculum" data-testid="home-curriculum-v4-link" className="text-link">
-              Explorer le parcours
-            </Link>
-            <a href="#courses" className="text-link">
-              Voir les cours <ArrowDown size={15} aria-hidden="true" />
-            </a>
+
+          <HeroLabWorkbench />
+        </section>
+
+        <LandingConceptMarquee />
+
+        <section className="reality-strip" aria-label="Ce qui rend l'apprentissage différent">
+          <div className="reality-item">
+            <h2>Apprendre dès zéro</h2>
+            <p>
+              Chaque notion démarre par les bases exactes : aucun prérequis en programmation ni
+              configuration Linux préalable n&apos;est demandé.
+            </p>
           </div>
-          <div className="hero-reassurance">
-            <span>Aucune installation</span>
-            <span>À votre rythme</span>
-            <span>Débutants bienvenus</span>
+          <div className="reality-item">
+            <h2>Notre méthodologie active</h2>
+            <p>
+              Plutôt que de lire passivement, vous observez le modèle, modifiez ses paramètres et
+              validez votre raisonnement étape par étape.
+            </p>
           </div>
-        </div>
-        <MemoryPreview />
-      </section>
-      <section id="courses" className="catalog-section" aria-labelledby="courses-heading">
-        <div className="section-heading">
+          <div className="reality-item">
+            <h2>Des moyens visuels concrets</h2>
+            <p>
+              Registres, droits mémoire, pile d&apos;appels et échanges TCP prennent vie dans votre
+              navigateur pour ancrer durablement chaque concept.
+            </p>
+          </div>
+        </section>
+
+        <LandingMethodSandbox />
+
+        <section id="courses" className="catalog-section" aria-labelledby="courses-heading">
+          <div className="section-heading">
+            <div>
+              <p className="section-eyebrow">Les parcours</p>
+              <h2 id="courses-heading">Les parcours pour maîtriser la cybersécurité.</h2>
+            </div>
+            <p className="section-aside">
+              Un tronc commun, quatre branches et des modules transversaux pour compléter un acquis
+              précis. Avancez selon vos prérequis et votre objectif.
+            </p>
+          </div>
+
+          <LandingParcoursGrid
+            domains={explorer.domains}
+            moduleCountsByDomain={moduleCountsByDomain}
+          />
+        </section>
+
+        <LandingCurriculumRoadmap />
+
+        <LandingFaq />
+
+        <section className="closing-cta spotlight-surface" aria-labelledby="closing-cta-heading">
+          <div className="workbench-beam" aria-hidden="true" />
           <div>
-            <p className="section-kicker">Votre terrain d’exploration</p>
-            <h2 id="courses-heading">Sous le capot.</h2>
+            <p className="section-eyebrow">Démarrer maintenant</p>
+            <h2 id="closing-cta-heading">
+              Apprenez la cybersécurité en voyant enfin comment chaque mécanisme fonctionne.
+            </h2>
           </div>
-          <p>
-            Des mécanismes invisibles.
-            <br />
-            Des expériences pour les comprendre.
-          </p>
-        </div>
-        <CourseCatalog lessons={lessons} />
-      </section>
-      <section id="method" className="method-section" aria-labelledby="method-heading">
-        <div>
-          <p className="section-kicker">Une autre façon d’apprendre</p>
-          <h2 id="method-heading">
-            Moins de par cœur.
-            <br />
-            Plus de « j’ai compris ».
-          </h2>
-          <p>
-            Chaque expérience part d’une question concrète. Vous observez, vous essayez, puis vous
-            mettez des mots sur le mécanisme.
-          </p>
-        </div>
-        <ol className="method-steps">
-          {[
-            {
-              icon: Eye,
-              title: "Voyez l’invisible",
-              text: "Une explication courte et un exemple résolu pour poser les bases.",
-            },
-            {
-              icon: MousePointer2,
-              title: "Prenez les commandes",
-              text: "Avancez pas à pas, changez une valeur et observez ce qui change.",
-            },
-            {
-              icon: MessageCircle,
-              title: "Faites le lien",
-              text: "Prédisez le résultat et comprenez vos erreurs grâce à un retour expliqué.",
-            },
-          ].map(({ icon: Icon, title, text }, i) => (
-            <li key={title}>
-              <span className="method-number">0{i + 1}</span>
-              <Icon size={20} aria-hidden="true" />
-              <div>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </section>
-    </div>
+          <div className="closing-cta-actions">
+            <Link href="/parcours" className="studio-button" data-magnetic="0.14">
+              <span>Commencer</span>
+              <span className="cta-badge" aria-hidden="true">
+                <ArrowUpRight size={15} />
+              </span>
+            </Link>
+          </div>
+        </section>
+      </div>
+    </LandingMotionShell>
   );
 }

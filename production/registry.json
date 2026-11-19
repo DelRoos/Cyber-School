@@ -2,69 +2,106 @@
   "schemaVersion": "1.0",
   "records": [
     {
-      "unitId": "unit-tc00-observation-hypotheses",
-      "slug": "scientific-reasoning-and-proof",
-      "title": "Observation, hypothèses, causalité et contre-exemples",
+      "unitId": "unit-tc00-observation-interpretation",
+      "slug": "observation-et-interpretation",
+      "title": "Distinguer une observation d’une interprétation",
       "moduleId": "TC-00",
-      "state": "revue_necessaire",
+      "state": "a_planifier",
       "version": "0.1.0",
-      "taskIds": ["TASK-019"],
-      "lessonSlug": "scientific-reasoning-and-proof",
+      "taskIds": ["TASK-026"],
       "deliverables": {
         "scientific_sheet": {
-          "status": "ready",
-          "artifactPath": "docs/courses/scientific-reasoning-and-proof/COURSE_DOSSIER.md"
+          "status": "missing"
         },
         "learning_objectives": {
-          "status": "ready",
-          "artifactPath": "curriculum/tc00-logic-proof-research.json"
+          "status": "missing"
         },
         "pedagogical_structure": {
-          "status": "ready",
-          "artifactPath": "docs/courses/scientific-reasoning-and-proof/COURSE_DOSSIER.md"
+          "status": "missing"
         },
         "visual_storyboard": {
-          "status": "ready",
-          "artifactPath": "docs/courses/scientific-reasoning-and-proof/COURSE_DOSSIER.md"
+          "status": "missing"
         },
         "animation_spec": {
-          "status": "ready",
-          "artifactPath": "apps/web/src/lessons/scientific-reasoning-and-proof/components/vis-01-causal-confounder.tsx"
+          "status": "missing"
         },
         "simulation_spec": {
-          "status": "ready",
-          "artifactPath": "apps/web/src/lessons/scientific-reasoning-and-proof/engines/causal-reasoning.ts"
+          "status": "missing"
         },
         "exercise_bank": {
-          "status": "ready",
-          "artifactPath": "lessons/scientific-reasoning-and-proof/lesson.json"
+          "status": "missing"
         },
         "web_implementation": {
-          "status": "ready",
-          "artifactPath": "apps/web/src/lessons/scientific-reasoning-and-proof/reasoning-course-experience.tsx"
+          "status": "missing"
         },
         "technical_tests": {
-          "status": "ready",
-          "artifactPath": "tests/e2e/v4-factory-and-tc00.spec.ts"
+          "status": "missing"
         },
         "pedagogical_validation_report": {
-          "status": "draft",
-          "artifactPath": "docs/courses/scientific-reasoning-and-proof/COURSE_DOSSIER.md",
-          "notes": "En attente de revue scientifique et humaine"
+          "status": "missing"
         },
         "external_labs": {
-          "status": "ready",
-          "artifactPath": "lessons/scientific-reasoning-and-proof/lesson.json"
+          "status": "missing"
         },
         "publication_metadata": {
-          "status": "draft",
-          "artifactPath": "lessons/scientific-reasoning-and-proof/lesson.json",
-          "notes": "status=in-review / review.status=pending"
+          "status": "missing"
         }
       },
       "validationEvidenceRefs": [],
       "blockerReasons": [],
-      "updatedAt": "2026-11-14"
+      "updatedAt": "2026-11-15",
+      "notes": "Cours et leçon retirés à la demande de l’utilisateur ; aucune leçon publiée pour l’instant."
+    },
+    {
+      "unitId": "unit-tc00-observation-hypotheses",
+      "slug": "scientific-reasoning-and-proof",
+      "title": "Hypothèses, causalité et contre-exemples",
+      "moduleId": "TC-00",
+      "state": "a_planifier",
+      "version": "0.1.0",
+      "taskIds": ["TASK-019"],
+      "deliverables": {
+        "scientific_sheet": {
+          "status": "missing"
+        },
+        "learning_objectives": {
+          "status": "missing"
+        },
+        "pedagogical_structure": {
+          "status": "missing"
+        },
+        "visual_storyboard": {
+          "status": "missing"
+        },
+        "animation_spec": {
+          "status": "missing"
+        },
+        "simulation_spec": {
+          "status": "missing"
+        },
+        "exercise_bank": {
+          "status": "missing"
+        },
+        "web_implementation": {
+          "status": "missing"
+        },
+        "technical_tests": {
+          "status": "missing"
+        },
+        "pedagogical_validation_report": {
+          "status": "missing"
+        },
+        "external_labs": {
+          "status": "missing"
+        },
+        "publication_metadata": {
+          "status": "missing"
+        }
+      },
+      "validationEvidenceRefs": [],
+      "blockerReasons": [],
+      "updatedAt": "2026-11-15",
+      "notes": "Ancien prototype retiré du catalogue à la demande de l’utilisateur. Archive locale : audits/first-lesson-reset/previous-courses.zip. À produire selon la méthode pilote."
     },
     {
       "unitId": "unit-tc00-uncertainty-errors",
@@ -73,7 +110,7 @@
       "moduleId": "TC-00",
       "state": "a_planifier",
       "version": "0.1.0",
-      "taskIds": [],
+      "taskIds": ["TASK-023"],
       "deliverables": {
         "scientific_sheet": {
           "status": "missing"
@@ -114,7 +151,8 @@
       },
       "validationEvidenceRefs": [],
       "blockerReasons": [],
-      "updatedAt": "2026-11-14"
+      "updatedAt": "2026-11-15",
+      "notes": "Ancien prototype retiré du catalogue à la demande de l’utilisateur. Archive locale : audits/first-lesson-reset/previous-courses.zip. À produire selon la méthode pilote."
     },
     {
       "unitId": "unit-tc00-evidence-calibration",
@@ -321,10 +359,9 @@
       "slug": "tc-01-04",
       "title": "TC-01 — Unité 4 (TC01.022..TC01.028)",
       "moduleId": "TC-01",
-      "state": "revue_necessaire",
+      "state": "a_planifier",
       "version": "1.0.0",
       "taskIds": [],
-      "lessonSlug": "program-memory-fundamentals",
       "deliverables": {
         "scientific_sheet": {
           "status": "missing"
@@ -348,9 +385,7 @@
           "status": "missing"
         },
         "web_implementation": {
-          "status": "ready",
-          "artifactPath": "lessons/program-memory-fundamentals/lesson.json",
-          "notes": "Cours existant antérieur à V4 relié comme pont pédagogique."
+          "status": "missing"
         },
         "technical_tests": {
           "status": "missing"
@@ -367,8 +402,8 @@
       },
       "validationEvidenceRefs": [],
       "blockerReasons": [],
-      "updatedAt": "2026-11-14",
-      "notes": "Pont vers la leçon existante lessons/program-memory-fundamentals/lesson.json (in-review)."
+      "updatedAt": "2026-11-15",
+      "notes": "Ancien prototype retiré du catalogue à la demande de l’utilisateur. Archive locale : audits/first-lesson-reset/previous-courses.zip. À produire selon la méthode pilote."
     },
     {
       "unitId": "unit-tc-02-01",
@@ -675,10 +710,9 @@
       "slug": "tc-03-03",
       "title": "TC-03 — Unité 3 (TC03.017..TC03.024)",
       "moduleId": "TC-03",
-      "state": "revue_necessaire",
+      "state": "a_planifier",
       "version": "1.1.0",
       "taskIds": [],
-      "lessonSlug": "tcp-three-way-handshake",
       "deliverables": {
         "scientific_sheet": {
           "status": "missing"
@@ -702,9 +736,7 @@
           "status": "missing"
         },
         "web_implementation": {
-          "status": "ready",
-          "artifactPath": "lessons/tcp-three-way-handshake/lesson.json",
-          "notes": "Cours existant antérieur à V4 relié comme pont pédagogique."
+          "status": "missing"
         },
         "technical_tests": {
           "status": "missing"
@@ -721,8 +753,8 @@
       },
       "validationEvidenceRefs": [],
       "blockerReasons": [],
-      "updatedAt": "2026-11-14",
-      "notes": "Pont vers la leçon existante lessons/tcp-three-way-handshake/lesson.json (in-review)."
+      "updatedAt": "2026-11-15",
+      "notes": "Ancien prototype retiré du catalogue à la demande de l’utilisateur. Archive locale : audits/first-lesson-reset/previous-courses.zip. À produire selon la méthode pilote."
     },
     {
       "unitId": "unit-tc-03-04",

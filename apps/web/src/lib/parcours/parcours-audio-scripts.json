@@ -1,0 +1,176 @@
+{
+  "version": "1.0",
+  "recommendedModel": "gemini-2.5-pro-preview-tts",
+  "tracks": {
+    "v4-tronc-commun": {
+      "voiceName": "Kore",
+      "cues": [
+        {
+          "id": "tc-intro",
+          "title": "Vue d'ensemble du Tronc commun",
+          "sectionId": "parcours-hero",
+          "spokenText": "Bienvenue dans le Tronc commun. Ici, on ne commence pas par des outils magiques : on construit ensemble un modèle exact de la machine, depuis le raisonnement causal et l'octet en mémoire jusqu'aux protocoles réseau et aux frontières de sécurité."
+        },
+        {
+          "id": "tc-node-logique",
+          "title": "Étape 1 · Logique, preuve et contre-exemple",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "TC-00",
+          "spokenText": "Premier étage : Logique et preuve. Avant de toucher un terminal, vous apprenez à distinguer une corrélation trompeuse d'une vraie cause mécanique, et à réfuter une fausse piste par un contre-exemple minimal."
+        },
+        {
+          "id": "tc-node-binaire",
+          "title": "Étape 2 · Représentation binaire et mémoire vive",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "TC-01",
+          "spokenText": "Deuxième étage : la représentation binaire et le calcul. Vous observez comment un nombre vit réellement dans les registres du processeur, comment la pile et le tas évoluent pendant un appel de fonction, et pourquoi une mémoire libérée conserve encore ses octets."
+        },
+        {
+          "id": "tc-node-systeme",
+          "title": "Étape 3 · Systèmes Linux, Windows et isolation",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "TC-02",
+          "spokenText": "Troisième étage : les systèmes d'exploitation. Vous voyez comment le noyau isole les processus, protège la mémoire virtuelle avec les tables de pages et applique les droits d'accès avant qu'aucun service réseau ne démarre."
+        },
+        {
+          "id": "tc-node-reseau",
+          "title": "Étape 4 · Réseaux de l'électricité jusqu'à HTTP",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "TC-03",
+          "spokenText": "Quatrième étage : les réseaux. Vous suivez chaque message sur le fil, de l'adressage Ethernet à la poignée de main TCP en trois temps, afin de prédire ce qui bloque lorsqu'un paquet se perd."
+        },
+        {
+          "id": "tc-node-web-crypto",
+          "title": "Étapes 5 à 8 · Web, Algo, Cryptographie et Sécurité",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "TC-07",
+          "spokenText": "Enfin, les étages cinq à huit relient le Web et les API, l'algorithmique, les mathématiques cryptographiques et les méthodologies de sécurité pour vous permettre de poser de vraies frontières de confiance."
+        },
+        {
+          "id": "tc-calibrator",
+          "title": "Positionnement rapide et validation finale",
+          "sectionId": "parcours-positionnement",
+          "spokenText": "Vous pouvez répondre aux trois questions de positionnement juste ici pour repérer votre point de départ idéal, ou cliquer directement sur le premier module disponible pour manipuler dès maintenant."
+        }
+      ]
+    },
+    "v4-branche-a": {
+      "voiceName": "Charon",
+      "cues": [
+        {
+          "id": "a-intro",
+          "title": "Chaîne de confiance applicative",
+          "sectionId": "parcours-hero",
+          "spokenText": "Ce parcours suit le trajet exact d'une requête applicative moderne : depuis l'application mobile ou le navigateur client, à travers les API et la logique financière, jusqu'aux modèles et agents d'intelligence artificielle."
+        },
+        {
+          "id": "a-node-web",
+          "title": "Frontière 1 · Web et API complexes",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "A-01",
+          "spokenText": "Tout commence sur les mécanismes Web et API : sessions, autorisations par objet, workflows multi-étapes et conditions de concurrence capables de rompre une transaction."
+        },
+        {
+          "id": "a-node-mobile",
+          "title": "Frontière 2 · Écosystèmes Android et iOS",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "A-03",
+          "spokenText": "Ensuite, vous inspectez les clients mobiles Android et iOS : stockage local, permissions, échanges réseau et séparation stricte entre ce que le téléphone affiche et ce que le serveur vérifie."
+        },
+        {
+          "id": "a-node-fintech",
+          "title": "Frontière 3 · Fintech et AI Red Team",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "A-09",
+          "spokenText": "Les modules de pointe portent sur les systèmes de paiement et sur l'audit d'agents IA, là où une injection indirecte peut détourner des outils privilégiés si les frontières de confiance manquent."
+        }
+      ]
+    },
+    "v4-branche-b": {
+      "voiceName": "Fenrir",
+      "cues": [
+        {
+          "id": "b-intro",
+          "title": "Double progression Infra et Binaire",
+          "sectionId": "parcours-hero",
+          "spokenText": "Le parcours Offensive et Recherche réunit deux voies qui finissent par se rejoindre : d'un côté l'infrastructure d'entreprise et Active Directory, de l'autre l'architecture machine en C, l'assembleur et la rétro-ingénierie."
+        },
+        {
+          "id": "b-node-ad",
+          "title": "Voie Infra · Active Directory et Privilèges",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "B-02",
+          "spokenText": "Sur la voie infrastructure, vous apprenez à lire les graphes de délégation et d'identité sous Windows et Linux, et à relier chaque mouvement simulé aux traces observables par la défense."
+        },
+        {
+          "id": "b-node-bin",
+          "title": "Voie Binaire · Assembleur, Reverse et Vulnérabilités",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "B-07",
+          "spokenText": "En parallèle, vous descendez au niveau assembleur pour analyser des programmes compilés, comprendre la cause exacte d'un crash mémoire et documenter la remise en état en laboratoire."
+        }
+      ]
+    },
+    "v4-branche-c": {
+      "voiceName": "Aoede",
+      "cues": [
+        {
+          "id": "c-intro",
+          "title": "De l'indice ouvert jusqu'à la preuve",
+          "sectionId": "parcours-hero",
+          "spokenText": "Le parcours OSINT, Fraudes et Forensics enseigne la discipline de la preuve numérique : vérifier avant d'affirmer, conserver chaque copie de façon intègre et ne jamais confondre un indice technique avec une identité civile."
+        },
+        {
+          "id": "c-node-osint",
+          "title": "Étape 1 · Vérification et campagnes de fraude",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "C-01",
+          "spokenText": "Vous démarrez par l'OSINT et l'analyse des fraudes numériques régionales, en recoupant comptes, infrastructures et horodatages sans céder aux fausses pistes."
+        },
+        {
+          "id": "c-node-dfir",
+          "title": "Étape 2 · Forensics disque, mémoire et protection",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "C-05",
+          "spokenText": "Vous passez ensuite à l'acquisition forensique, à l'analyse mémoire et réseau, puis aux protocoles d'attribution critique et de protection des personnes ciblées par la surveillance abusive."
+        }
+      ]
+    },
+    "v4-branche-d": {
+      "voiceName": "Kore",
+      "cues": [
+        {
+          "id": "d-intro",
+          "title": "Cycle complet d'une mission encadrée",
+          "sectionId": "parcours-hero",
+          "spokenText": "Pratique professionnelle, Gouvernance et Qualité fait passer de la compétence technique au niveau d'exigence d'un cabinet : cadrer le périmètre légal, superviser un copilote IA et défendre un rapport reproductible."
+        },
+        {
+          "id": "d-node-mission",
+          "title": "Du contrat jusqu'à la revue contradictoire",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "D-01",
+          "spokenText": "Chaque module suit le cycle d'une mission réelle jusqu'à l'examen intégrateur combinant audit technique et enquête sur fraude devant un jury contradictoire."
+        }
+      ]
+    },
+    "v4-approfondissements": {
+      "voiceName": "Charon",
+      "cues": [
+        {
+          "id": "x-intro",
+          "title": "Constellation de modules transversaux",
+          "sectionId": "parcours-hero",
+          "spokenText": "Les approfondissements transversaux fonctionnent à la carte : chaque spécialisation prolonge un acquis du Tronc commun ou d'une branche pour explorer les sujets les plus récents."
+        },
+        {
+          "id": "x-node-cloud",
+          "title": "Méthodes conceptuelles, Cloud et IA",
+          "sectionId": "parcours-carte",
+          "activeNodeId": "X-01",
+          "spokenText": "Vous pouvez cibler la méthode d'apprentissage conceptuel, la sécurité des navigateurs et du Cloud, la détection des preuves synthétiques ou l'audit du code généré par intelligence artificielle."
+        }
+      ]
+    }
+  }
+}

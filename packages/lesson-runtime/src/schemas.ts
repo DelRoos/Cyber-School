@@ -127,6 +127,7 @@ export const ExerciseOptionSchema = z
 const BaseExerciseShape = {
   id: StableIdSchema,
   conceptId: StableIdSchema,
+  chapterId: StableIdSchema.optional(),
   prompt: z.string().min(10),
   hint: z.string().min(5).optional(),
   explanation: z.string().min(15),

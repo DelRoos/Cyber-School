@@ -1,0 +1,40 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-14T14:04:16.920Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+[WebServer] (node:14860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:21448) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 16 tests using 2 workers
+
+(node:17288) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:10856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (15.5s)
+  ok  1 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:51:1 › guided chapters preserve answers and support keyboard navigation (16.8s)
+  ok  3 [chromium-desktop] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (5.0s)
+  ok  5 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (2.0s)
+  ok  6 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (1.2s)
+  ok  4 [chromium-desktop] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (7.5s)
+  ok  8 [chromium-desktop] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (2.4s)
+(node:10688) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [chromium-desktop] › tests\e2e\understanding-alerts-and-evidence.spec.ts:3:1 › complete course teaches detection, base rates and provenance (4.9s)
+(node:20916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  9 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › catalog discovery and the first byte respond to the learner (2.3s)
+  ok 11 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:51:1 › guided chapters preserve answers and support keyboard navigation (3.2s)
+  ok 10 [chromium-mobile] › tests\e2e\program-memory.spec.ts:4:3 › Program Memory Fundamentals interactive course › navigates from home, exercises all 5 simulators, checks reduced-motion and assessments (4.3s)
+  ok 13 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:217:3 › TCP Three-Way Handshake interactive demonstrator › snaps cleanly when prefers-reduced-motion is reduce (2.2s)
+  ok 14 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:261:3 › TCP Three-Way Handshake interactive demonstrator › renders cleanly without horizontal overflow on mobile (375x812) (1.4s)
+  ok 12 [chromium-mobile] › tests\e2e\tcp-handshake.spec.ts:26:3 › TCP Three-Way Handshake interactive demonstrator › renders nominal, auto-play, SYN-ACK loss and four exercises with keyboard controls (7.1s)
+  ok 15 [chromium-mobile] › tests\e2e\understanding-alerts-and-evidence.spec.ts:3:1 › complete course teaches detection, base rates and provenance (4.5s)
+  ok 16 [chromium-mobile] › tests\e2e\v4-factory-and-tc00.spec.ts:4:3 › V4 Curriculum Factory Explorer & TC-00 Pilot Course › explores /curriculum V4 catalog, filters eligible TC-00 units, opens scientific-reasoning-and-proof, exercises VIS-01/VIS-02 and assessment (2.7s)
+
+  16 passed (55.9s)

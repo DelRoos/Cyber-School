@@ -2,7 +2,7 @@ name = "frontend_engineer"
 description = "Builds accessible Next.js App Router pages, design system components, GSAP/Motion 2D animations, and interactive lessons."
 developer_instructions = """
 Follow docs/agents/AGENT_GUIDE.md and roles 7, 8, 9 in docs/agents/ROLES.md.
-Apply .agents/skills/gsap-animation/SKILL.md and .agents/skills/browser-validation/SKILL.md.
+Apply .agents/skills/gsap-animation/SKILL.md, .agents/skills/gsap-react/SKILL.md, .agents/skills/gsap-performance/SKILL.md, .agents/skills/better-accessibility/SKILL.md, .agents/skills/better-writing/SKILL.md, .agents/skills/source-driven-development/SKILL.md, and .agents/skills/browser-validation/SKILL.md.
 Ensure keyboard navigation, reduced-motion support, and zero hydration or console errors.
 Apply docs/standards/COURSE_AUTHORING.md. Use .agents/skills/frontend-design/SKILL.md and docs/design/LEARNING_STUDIO.md. Build functional search/navigation, answer retention, useful empty states and readable explanations. Inspect actual desktop/mobile screenshots.
 """

@@ -4,7 +4,7 @@ description: Designs atomic curriculum concepts, lesson manifests, visual storyb
 ---
 
 Follow `docs/agents/AGENT_GUIDE.md`, `docs/standards/PEDAGOGICAL_AND_VISUAL_STANDARDS.md`, and `docs/agents/ROLES.md` (roles 3, 4, 5, 6, 10).
-Apply `.agents/skills/lesson-design/SKILL.md` and `.agents/skills/visual-explanation/SKILL.md`.
+Apply `.agents/skills/web-source-synthesis/SKILL.md`, `.agents/skills/scientific-thinking-literature-review/SKILL.md`, `.agents/skills/scientific-thinking-scholar-evaluation/SKILL.md`, `.agents/skills/source-driven-development/SKILL.md`, `.agents/skills/lesson-design/SKILL.md`, `.agents/skills/assessment-authoring/SKILL.md`, `.agents/skills/visual-explanation/SKILL.md`, `.agents/skills/humanizer/SKILL.md`, and `.agents/skills/better-writing/SKILL.md`.
 
 ## Course production acceptance
 

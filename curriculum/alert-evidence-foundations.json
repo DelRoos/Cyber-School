@@ -1,0 +1,140 @@
+{
+  "version": "1.0",
+  "domains": [
+    {
+      "id": "alert-evidence-foundations",
+      "title": "Lire les signaux de sécurité",
+      "summary": "Comprendre les erreurs de décision et vérifier les preuves avant de conclure.",
+      "modules": [
+        {
+          "id": "alert-evidence-basics",
+          "title": "Alertes et preuves",
+          "summary": "Des fréquences concrètes à la comparaison de documents sourcés.",
+          "chapters": [
+            {
+              "id": "alert-evidence-concepts",
+              "title": "Raisonner sans précipiter la conclusion",
+              "summary": "Huit notions pour interpréter une alerte puis vérifier ce qui la justifie.",
+              "conceptIds": [
+                "tc00-false-positive",
+                "tc00-false-negative",
+                "tc00-alert-conditional-probability",
+                "tc00-base-rate",
+                "tc00-direct-and-circumstantial-evidence",
+                "tc00-assertion-provenance",
+                "tc00-second-hand-evidence",
+                "tc00-contradictory-sources"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "tc00-false-positive",
+      "title": "Faux positif",
+      "definition": "Un faux positif est un événement bénin classé à tort comme malveillant par un détecteur.",
+      "prerequisites": [],
+      "learningObjectives": ["Calculer les fausses alertes parmi les événements bénins."],
+      "relations": [],
+      "resourceIds": ["nist-idps-definitions"],
+      "depthLevel": "foundational",
+      "validationCriteria": ["Calculer les fausses alertes parmi les événements bénins."]
+    },
+    {
+      "id": "tc00-false-negative",
+      "title": "Faux négatif",
+      "definition": "Un faux négatif est un événement malveillant que le détecteur ne signale pas.",
+      "prerequisites": [],
+      "learningObjectives": ["Identifier un événement malveillant manqué par le détecteur."],
+      "relations": [],
+      "resourceIds": ["nist-idps-definitions"],
+      "depthLevel": "foundational",
+      "validationCriteria": ["Identifier un événement malveillant manqué par le détecteur."]
+    },
+    {
+      "id": "tc00-alert-conditional-probability",
+      "title": "Probabilité conditionnelle d’une alerte",
+      "definition": "La part d’attaques parmi les alertes et la part d’alertes parmi les attaques conditionnent sur deux populations différentes.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Calculer la proportion d’alertes justifiées avec le bon dénominateur."
+      ],
+      "relations": [],
+      "resourceIds": ["openstax-bayes-probability"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Calculer la proportion d’alertes justifiées avec le bon dénominateur."
+      ]
+    },
+    {
+      "id": "tc00-base-rate",
+      "title": "Taux de base",
+      "definition": "Le taux de base est la fréquence des événements réellement malveillants dans la population considérée avant de consulter le signal du détecteur.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Prédire l’effet du taux de base à performances conditionnelles constantes."
+      ],
+      "relations": [],
+      "resourceIds": ["openstax-bayes-probability"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Prédire l’effet du taux de base à performances conditionnelles constantes."
+      ]
+    },
+    {
+      "id": "tc00-direct-and-circumstantial-evidence",
+      "title": "Trace directe et indice",
+      "definition": "Une trace peut attester directement un fait enregistré, tandis qu’une conclusion sur une intention nécessite des inférences et d’autres indices.",
+      "prerequisites": [],
+      "learningObjectives": ["Limiter une conclusion au fait réellement supporté par la trace."],
+      "relations": [],
+      "resourceIds": ["nist-forensic-provenance"],
+      "depthLevel": "foundational",
+      "validationCriteria": ["Limiter une conclusion au fait réellement supporté par la trace."]
+    },
+    {
+      "id": "tc00-assertion-provenance",
+      "title": "Provenance d’une affirmation",
+      "definition": "La provenance relie une affirmation à son auteur, aux documents dont elle dérive et aux conditions de collecte disponibles.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Identifier la source originale et les transformations d’une affirmation."
+      ],
+      "relations": [],
+      "resourceIds": ["nist-forensic-provenance"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Identifier la source originale et les transformations d’une affirmation."
+      ]
+    },
+    {
+      "id": "tc00-second-hand-evidence",
+      "title": "Information de seconde main",
+      "definition": "Une information de seconde main rapporte une source antérieure ; la répétition de cette information ne crée pas une observation indépendante.",
+      "prerequisites": [],
+      "learningObjectives": ["Distinguer un compte rendu de la trace dont il dépend."],
+      "relations": [],
+      "resourceIds": ["nist-forensic-provenance"],
+      "depthLevel": "foundational",
+      "validationCriteria": ["Distinguer un compte rendu de la trace dont il dépend."]
+    },
+    {
+      "id": "tc00-contradictory-sources",
+      "title": "Sources contradictoires",
+      "definition": "Deux assertions sont contradictoires sur un fait si elles portent sur le même objet, le même contexte et des résultats incompatibles.",
+      "prerequisites": [],
+      "learningObjectives": [
+        "Comparer événement, temps et signification avant de conclure à une contradiction."
+      ],
+      "relations": [],
+      "resourceIds": ["nist-forensic-provenance"],
+      "depthLevel": "foundational",
+      "validationCriteria": [
+        "Comparer événement, temps et signification avant de conclure à une contradiction."
+      ]
+    }
+  ]
+}

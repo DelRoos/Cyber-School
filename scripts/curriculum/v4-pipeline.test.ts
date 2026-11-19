@@ -7,11 +7,51 @@ import { fileURLToPath } from "node:url";
 import { V4ProductionRegistrySchema, verifyUnitCoverage } from "@cyber-school/lesson-runtime";
 import { runV4Import } from "./v4-import.ts";
 import { generateMissionBriefs } from "./v4-mission.ts";
-import { V4_SOURCE_FILENAME } from "./v4-parser.ts";
+import { parseV4CurriculumMarkdown, V4_SOURCE_FILENAME } from "./v4-parser.ts";
 import { computePlanSummary, loadV4PlanningState } from "./v4-plan.ts";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const tempDirs: string[] = [];
+
+test("transversal anchor proposals match their V4 subject and remain proposals", () => {
+  const markdown = readFileSync(path.join(REPO_ROOT, V4_SOURCE_FILENAME), "utf8");
+  const { curriculum } = parseV4CurriculumMarkdown(markdown);
+  const expected: Record<string, string> = {
+    "X-01": "TC-00",
+    "X-02": "A-01",
+    "X-03": "A-01",
+    "X-04": "A-01",
+    "X-05": "A-05",
+    "X-06": "A-08",
+    "X-07": "A-03",
+    "X-08": "C-01",
+    "X-09": "C-12",
+    "X-10": "TC-05",
+  };
+  for (const [moduleId, targetId] of Object.entries(expected)) {
+    const module = curriculum.modules.find((item) => item.id === moduleId);
+    assert.deepEqual(module?.explicitPrerequisites, []);
+    assert.equal(module?.proposedDependencies[0]?.targetId, targetId);
+    assert.equal(module?.proposedDependencies[0]?.status, "proposed");
+  }
+  const preservedDependencies = new Map([
+    [
+      "X-09",
+      [
+        {
+          targetId: "C-11",
+          targetKind: "module" as const,
+          status: "proposed" as const,
+          rationale: "Rapprochement éditorial conservé.",
+        },
+      ],
+    ],
+  ]);
+  const preserved = parseV4CurriculumMarkdown(markdown, {
+    preservedDependencies,
+  }).curriculum.modules.find((module) => module.id === "X-09");
+  assert.deepEqual(preserved?.proposedDependencies, preservedDependencies.get("X-09"));
+});
 
 afterEach(() => {
   for (const dir of tempDirs.splice(0)) {
@@ -58,7 +98,7 @@ test("v4 importer extracts 54 modules, 1122 micro-lessons, 772 competencies, 9 e
   assert.deepEqual(
     plan.eligibleNextUnits.map((u) => u.unitId),
     [
-      "unit-tc00-observation-hypotheses",
+      "unit-tc00-observation-interpretation",
       "unit-tc00-uncertainty-errors",
       "unit-tc00-evidence-calibration",
     ],
@@ -89,7 +129,15 @@ test("v4 importer extracts 54 modules, 1122 micro-lessons, 772 competencies, 9 e
   assert.deepEqual(preserved?.taskIds, ["TASK-018"]);
   assert.equal(preserved?.deliverables.scientific_sheet.status, "ready");
 
-  const mission = generateMissionBriefs(["unit-tc00-observation-hypotheses"], tmpRoot);
+  const mission = generateMissionBriefs(["unit-tc00-observation-interpretation"], tmpRoot);
   assert.equal(mission.briefs.length, 1);
-  assert.equal(mission.briefs[0]?.microLessons.length, 8);
+  assert.deepEqual(
+    mission.briefs[0]?.microLessons.map((lesson) => lesson.id),
+    ["TC00.001"],
+  );
+  assert.deepEqual(
+    state.units.units.find((unit) => unit.id === "unit-tc00-observation-hypotheses")
+      ?.microLessonIds,
+    ["TC00.002", "TC00.003", "TC00.004", "TC00.005", "TC00.006", "TC00.007", "TC00.008"],
+  );
 });

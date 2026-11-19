@@ -3,6 +3,7 @@ node_modules/
 .pnpm-store/
 
 # Build & caches
+.cache/
 .next/
 out/
 dist/
@@ -22,11 +23,42 @@ blob-report/
 !.env.example
 *.pem
 *.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.crt
+*.cer
+credentials.json
+*service-account*.json
+*service_account*.json
+*.secrets.yaml
+*.secrets.json
+.npmrc
 
-# OS & Editors
+# Python & TTS scratch artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.wav
+
+# OS, Editors & Temporary Files
 .DS_Store
 Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
 *.log
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
 npm-debug.log*
 pnpm-debug.log*
 

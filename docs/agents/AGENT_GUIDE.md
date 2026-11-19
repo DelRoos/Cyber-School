@@ -64,7 +64,7 @@ Consulter impérativement [docs/security/AI_ENVIRONMENT_SECURITY.md](../security
 
 ## 6. Skills, rôles spécialisés et compatibilité CLI
 
-Appliquer [la sélection des skills par domaine](./SKILL_ROUTING.md) : chaque outil dispose des onze compétences du projet et active celles correspondant à la tâche. Les préchargements des rôles complètent cette découverte ; ils ne remplacent pas la sélection des compétences conditionnelles.
+Appliquer [la sélection des skills par domaine](./SKILL_ROUTING.md) : chaque outil dispose des compétences partagées du projet et active celles correspondant à la tâche. Pour produire une page de cours complète, utiliser `course-page-production` et [le workflow commun](../curriculum/COMPLETE_COURSE_WORKFLOW.md). Les préchargements des rôles complètent cette découverte ; ils ne remplacent pas la sélection des compétences conditionnelles.
 
 - **Source canonique des skills** : `.agents/skills/<skill-name>/SKILL.md` (consommé nativement par Codex et Gemini CLI), reflété octet par octet dans `.claude/skills/` pour Claude Code et contrôlé par `corepack pnpm validate:governance`.
 - **Spécifications des 13 rôles spécialisés** : [docs/agents/ROLES.md](./ROLES.md).

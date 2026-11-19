@@ -34,7 +34,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Sujet de cours ou question technique, `docs/security/AI_ENVIRONMENT_SECURITY.md`.
 - **Livrables** : Fiches de ressources dans `resources/`, synthèses sourcées dans `docs/`.
 - **Critères de qualité** : Sources primaires officielles privilégiées, URL et versions vérifiées, aucune injection d'instructions non fiables recopiée dans les prompts.
-- **Skills à utiliser** : `lesson-design`, `architecture-design`.
+- **Skills à utiliser** : `web-source-synthesis`, `scientific-thinking-literature-review`, `source-driven-development`, `lesson-design`, `architecture-design`.
 - **Conditions de transfert** : Transférer à l'_Expert scientifique du domaine_ pour validation de l'exactitude, puis à l'_Ingénieur pédagogique_.
 
 ## 4. Expert scientifique du domaine (`domain-scientist`)
@@ -44,7 +44,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Sources indexées (`resources/`), brouillons de concepts (`curriculum/`) et de leçons (`lessons/`).
 - **Livrables** : Validation scientifique annotée, liste des invariants et cas limites à couvrir, corrections terminologiques.
 - **Critères de qualité** : Zéro erreur factuelle, distinction claire entre modèle simplifié et réalité complète, cas limites documentés.
-- **Skills à utiliser** : `lesson-design`, `visual-explanation`.
+- **Skills à utiliser** : `scientific-thinking-scholar-evaluation`, `source-driven-development`, `doubt-driven-development`, `lesson-design`, `visual-explanation`.
 - **Conditions de transfert** : Transférer à l'_Ingénieur pédagogique_ et au _Concepteur de scénarios visuels_ après validation des faits et invariants.
 
 ## 5. Ingénieur pédagogique (`instructional-engineer`)
@@ -54,7 +54,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Référentiel existant (`curriculum/`), validation de l'_Expert scientifique du domaine_, `docs/standards/PEDAGOGICAL_AND_VISUAL_STANDARDS.md`.
 - **Livrables** : Concepts atomiques validés par Zod, plan progressif de leçon (`lessons/<slug>/lesson.json`), spécification des points de contrôle.
 - **Critères de qualité** : Prérequis explicites sans cycles, progression du concret vers l'abstrait, réutilisation de concepts existants sans duplication.
-- **Skills à utiliser** : `lesson-design`, `iteration-planning`.
+- **Skills à utiliser** : `lesson-design`, `humanizer`, `better-writing`, `iteration-planning`.
 - **Conditions de transfert** : Transférer au _Concepteur de scénarios visuels_ et au _Concepteur d'exercices_.
 
 ## 6. Concepteur de scénarios visuels (`visual-scenario-designer`)
@@ -74,7 +74,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Storyboard du _Concepteur de scénarios visuels_, primitives `@cyber-school/animations`.
 - **Livrables** : Composants animés synchronisés avec l'état de la leçon, contrôles accessibles.
 - **Critères de qualité** : 60 fps ciblés, état déterministe à chaque étape, prise en charge complète de `prefers-reduced-motion` et du contrôle manuel.
-- **Skills à utiliser** : `gsap-animation`, `pedagogical-animation`, `visual-explanation`.
+- **Skills à utiliser** : `gsap-animation`, `gsap-react`, `gsap-performance`, `pedagogical-animation`, `visual-explanation`.
 - **Conditions de transfert** : Transférer à l'_Ingénieur frontend_ pour intégration et à l'_Ingénieur QA_ pour validation navigateur.
 
 ## 8. Spécialiste Three.js et 3D (`threejs-3d-specialist`)
@@ -94,7 +94,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Maquettes/spécifications, composants d'animation, exercices, design system (`packages/ui`).
 - **Livrables** : Pages Next.js, composants réutilisables, styles Tailwind v4 conformes aux tokens.
 - **Critères de qualité** : Typage strict, zéro erreur d'hydratation, responsive mobile/desktop, navigation clavier et sémantique HTML/ARIA impeccables.
-- **Skills à utiliser** : `architecture-design`, `gsap-animation`, `browser-validation`.
+- **Skills à utiliser** : `architecture-design`, `source-driven-development`, `gsap-animation`, `gsap-react`, `gsap-performance`, `better-accessibility`, `better-writing`, `browser-validation`.
 - **Conditions de transfert** : Transférer à l'_Ingénieur QA_ pour tests automatisés et validation visuelle.
 
 ## 10. Concepteur d'exercices (`exercise-designer`)
@@ -104,7 +104,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Objectifs d'apprentissage du concept atomique, cas limites validés par l'expert scientifique.
 - **Livrables** : Définitions d'exercices conformes à `ExerciseSchema` et composants interactifs accessibles.
 - **Critères de qualité** : Chaque mauvaise réponse donne un feedback ciblé expliquant l'erreur de raisonnement ; navigation clavier complète.
-- **Skills à utiliser** : `lesson-design`, `browser-validation`.
+- **Skills à utiliser** : `assessment-authoring`, `lesson-design`, `better-writing`, `better-accessibility`, `browser-validation`.
 - **Conditions de transfert** : Transférer à l'_Ingénieur frontend_ et à l'_Ingénieur QA_.
 
 ## 11. Ingénieur QA (`qa-engineer`)
@@ -114,7 +114,7 @@ Les treize responsabilités appliquent le [contrat de production des cours](../s
 - **Entrées** : Critères d'acceptation de la tâche, code modifié, scripts CI.
 - **Livrables** : Suites de tests exécutables (`tests/`), rapport factuel des commandes exécutées et de leurs résultats.
 - **Critères de qualité** : Aucun test déclaré réussi sans exécution post-modification, couverture des flux interactifs, zéro erreur console.
-- **Skills à utiliser** : `browser-validation`, `project-handoff`.
+- **Skills à utiliser** : `browser-validation`, `better-accessibility`, `project-handoff`.
 - **Conditions de transfert** : Renvoyer au rôle implémenteur en cas d'échec, ou transférer à l'_Auditeur sécurité_ / _Responsable de la continuité documentaire_.
 
 ## 12. Auditeur sécurité (`security-auditor`)

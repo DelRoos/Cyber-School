@@ -1,0 +1,1063 @@
+<Part id="part-1-faits-et-recoupement" number="1" title="Séparez le fait mesuré du scénario supposé" quizTitle="Quiz : Distinguer une observation d'une interprétation">
+  <PartSummary>
+    De l'alerte critique de 08:15 UTC chez TechNova jusqu'à la rédaction d'un ticket d'analyste irréprochable : maîtrisez l'autopsie des logs, les 3 angles morts d'un capteur, le recoupement multi-sources et la défense contre les biais cognitifs.
+  </PartSummary>
+  <QuizIntro>
+    Validez vos réflexes sur 12 mises en situation concrètes (logs SSH, pare-feu, antivirus, horloges NTP, journaux absents et pièges DNS). Chaque mauvaise option correspond à une vraie erreur de terrain. Seuil de validation : 75 %.
+  </QuizIntro>
+
+  <Chapter id="ch-1-decomposez-alerte" number="1" title="Autopsiez une alerte avant d'agir" subtitle="Crise de 08:15 UTC · Alerte vs log · IP privée RFC 1918 · 7 slides" estimatedMinutes="7">
+
+    <Scene id="ch1-s1-crise" title="Le dilemme de 08:15 UTC chez TechNova">
+      <Focus>
+        - Lundi 08:15 UTC, matin des virements de paie chez TechNova
+        - Couper srv-paie-01 à tort bloque 300 salaires ; ignorer un intrus expose la paie
+        - Réflexe d'analyste : revenir au fait mesuré avant toute action d'urgence
+      </Focus>
+
+      <Slide layout="hero-dilemma">
+        kicker: "TechNova · LUNDI 08:15 UTC · JOUR DE PAIE"
+        headline: "Couper le serveur tout de suite ou laisser tourner ?"
+        alertBadge: "ALERTE CRITIQUE · RÈGLE R-AUTH-04"
+        alertText: "Un attaquant externe tente de pirater le compte de Claire Moreau par force brute depuis 10.24.8.19 sur srv-paie-01."
+        leftStake:
+          label: "Si vous coupez à tort"
+          detail: "300 virements de salaires bloqués et crise interne immédiate."
+          tone: warning
+        rightStake:
+          label: "Si vous ignorez une vraie attaque"
+          detail: "Accès potentiel aux données bancaires et aux paies de l'entreprise."
+          tone: danger
+      </Slide>
+
+      <Banner variant="welcome" />
+
+      ## Pourquoi la précipitation est l'ennemie n°1 en cybersécurité
+
+      Lundi matin, **08:15 UTC**, chez **TechNova**. C'est le matin des virements de paie. Sur votre console de supervision, un bandeau rouge clignote :
+
+      > « ALERTE CRITIQUE · 08:15 UTC — Un attaquant externe tente de pirater le compte de Claire Moreau par force brute depuis 10.24.8.19 sur srv-paie-01 »
+      > -- Console de sécurité TechNova · Règle R-AUTH-04
+
+      Votre responsable vous appelle aussitôt : **« On coupe `srv-paie-01` et on bloque le compte de Claire maintenant ? »**
+
+      C'est exactement dans cette minute de pression que se joue le métier d'analyste. Couper le serveur par panique sur une fausse piste bloque trois cents salaires. Balayer l'alerte sans vérifier expose les données bancaires si un intrus agit vraiment.
+
+      <Callout kind="information" title="Votre objectif dans ce cours">
+        Vous allez acquérir la discipline complète qui évite ces deux fautes : **autopsier une alerte**, **lire un vrai journal système**, **repérer les 3 angles morts d'un capteur**, **recouper des sources indépendantes** et **rédiger un ticket professionnel en 3 volets**.
+      </Callout>
+
+      <AudioScript style="engaged and steady">
+        Mettez-vous à votre bureau, lundi matin, huit heures quinze UTC, chez TechNova. <short pause> C'est le jour des virements de paie. D'un seul coup, la console de sécurité passe au rouge : « Un attaquant externe tente de pirater le compte de Claire Moreau par force brute depuis 10.24.8.19 sur srv-paie-01. » Votre responsable décroche le téléphone : on coupe le serveur tout de suite ? <short pause> Respirez. Si vous coupez sur un faux diagnostic, trois cents collègues n'ont pas leur salaire. Si vous ignorez une vraie compromission, vous exposez toute la paie. Ce cours existe pour une seule raison : vous donner une méthode solide pour décider à partir des faits réels, jamais à partir de la panique.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch1-s2-alerte-vs-log" title="Ne confondez jamais une alerte et un journal brut">
+      <Focus>
+        - Un journal (log) enregistre des paramètres techniques neutres à la seconde près
+        - Une alerte est une phrase pré-écrite déclenchée par une règle simple
+        - Règle NIST SP 800-92 : toujours remonter au journal brut avant de qualifier
+      </Focus>
+
+      <Slide layout="contrast-split">
+        leftTitle: "L'alerte (traduction automatique)"
+        leftTone: danger
+        leftItems:
+          - "Règle écrite des mois plus tôt par un humain"
+          - "Déclenchée par un simple seuil (ex. 3 échecs en 10 s)"
+          - "Plaque un récit dramatique (« attaquant », « force brute »)"
+          - "Point de départ d'enquête — jamais une preuve"
+        rightTitle: "Le journal brut / log (mesure primaire)"
+        rightTone: fact
+        rightItems:
+          - "Écrit directement par le service sur le serveur"
+          - "Horodatage, programme, résultat, compte, IP source"
+          - "Aucun adjectif, aucune émotion, aucune hypothèse"
+          - "Base indispensable pour vérifier ce qui s'est passé"
+        verdict: "NIST SP 800-92 : l'alerte vous dit où regarder ; seul le journal brut vous dit ce qui a été enregistré."
+      </Slide>
+
+      ## Une alerte n'est pas un fait : c'est une règle pré-écrite
+
+      Avant d'appuyer sur le moindre bouton, séparez deux réalités que presque tous les débutants mélangent :
+
+      - **Le journal (`log`) :** le fichier d'historique brut écrit directement par un programme sur le serveur. Il enregistre uniquement des grandeurs techniques neutres, ligne par ligne.
+      - **L'alerte :** un texte automatique déclenché par une règle de supervision — par exemple : *« si 3 mots de passe échouent en moins de 10 secondes, afficher : attaque externe par force brute »*.
+
+      Le texte alarmant que vous lisez à 08:15 UTC a donc été rédigé **des mois avant l'incident**, par quelqu'un qui ne voit même pas votre situation actuelle.
+
+      <Callout kind="warning" title="Référence officielle · NIST SP 800-92">
+        Le guide **NIST SP 800-92** (*Guide to Computer Security Log Management*) pose le principe fondateur : un outil d'alerte sert à prioriser votre attention, jamais à remplacer l'examen de l'entrée de journal brute.
+      </Callout>
+
+      <AudioScript style="clear and steady">
+        Voici la première séparation qui fait la différence entre un débutant et un analyste fiable : une alerte n'est pas un fait. <short pause> Un journal — qu'on appelle un log — est le registre brut écrit directement par le service sur le serveur. Il note des paramètres froids, sans commentaire. Une alerte, au contraire, n'est qu'une étiquette automatique déclenchée par un petit calcul, par exemple : trois refus en dix secondes égale bannière rouge « force brute ». Ce texte a été écrit des mois plus tôt par quelqu'un qui ne connaît pas votre incident de ce matin. Selon le standard NIST SP 800-92, l'alerte sert uniquement à vous dire où regarder : vous devez toujours revenir au journal brut avant d'ouvrir la bouche.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch1-s3-autopsie-faits" title="5 données mesurées face à 2 inventions de l'alerte">
+      <Focus>
+        - 5 champs réels : heure UTC, service sshd, refus de mot de passe, compte c.moreau, IP 10.24.8.19
+        - 2 ajouts non prouvés : « attaquant externe » et « piratage par force brute »
+        - Extraire les champs avant tout commentaire bloque la sur-interprétation
+      </Focus>
+
+      <Slide layout="log-spotlight">
+        sourceLabel: "Alerte R-AUTH-04 vs relevé réel de srv-paie-01"
+        lines:
+          - "08:14:02 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19"
+          - "08:14:05 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19"
+          - "08:14:09 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19"
+        highlights:
+          - token: "08:14:02 UTC"
+            label: "1. Horodatage"
+            explanation: "3 essais en 7 secondes enregistrés par l'horloge du serveur."
+            tone: fact
+          - token: "service=sshd"
+            label: "2. Capteur"
+            explanation: "Le programme d'accès distant SSH qui a reçu les demandes."
+            tone: fact
+          - token: "AUTH_FAILURE"
+            label: "3. Résultat"
+            explanation: "Mot de passe refusé : l'accès n'a pas été accordé."
+            tone: fact
+          - token: "account=c.moreau"
+            label: "4. Compte demandé"
+            explanation: "Texte transmis dans la requête — pas l'identité physique de l'auteur."
+            tone: info
+          - token: "10.24.8.19"
+            label: "5. IP source"
+            explanation: "Adresse réseau privée interne à l'entreprise — pas Internet."
+            tone: warning
+      </Slide>
+
+      ## Séparez au scalpel ce qui est écrit de ce qui est inventé
+
+      Quand vous comparez le bandeau d'alerte aux trois lignes réellement écrites par `srv-paie-01`, le verdict saute aux yeux :
+
+      - **5 faits réellement consignés :** les 3 horodatages (`08:14:02`, `08:14:05`, `08:14:09 UTC`), le programme `sshd`, le refus `AUTH_FAILURE`, le nom de compte demandé `c.moreau` et l'adresse réseau `10.24.8.19`.
+      - **2 ajouts purement supposés par l'alerte :** les mots **« attaquant externe »** et **« pirater par force brute »** n'existent nulle part dans le journal du serveur.
+
+      <AudioScript style="clear and steady">
+        Mettons maintenant l'alerte rouge et le journal du serveur côte à côte. <short pause> Dans la machine, il n'y a que cinq choses, et pas une de plus : trois horaires espacés de sept secondes, le service sshd, le code de refus AUTH_FAILURE, la chaîne c.moreau demandée comme compte, et l'adresse IP 10.24.8.19. Où sont les mots « attaquant externe » ? Absents. Où sont les mots « piratage par force brute » ? Absents eux aussi. L'alerte a pris cinq briques neutres et a construit toute une histoire autour.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch1-s4-ip-interne" title="Reconnaissez une adresse interne en 2 secondes (RFC 1918)">
+      <Focus>
+        - 3 plages privées internes définies par RFC 1918 : 10.x, 172.16-31.x et 192.168.x
+        - Elles fonctionnent comme un numéro de poste interne dans un immeuble
+        - 10.24.8.19 contredit directement l'affirmation « attaquant externe »
+      </Focus>
+
+      <Slide layout="rule-manifesto">
+        axiom: "10.24.8.19 est une adresse privée interne (RFC 1918) — le mot « externe » est déjà contredit."
+        subtext: "Mémorisez les 3 plages privées réservées aux réseaux internes : comme un numéro de poste dans un immeuble, elles ne viennent pas directement d'Internet."
+        pillars:
+          - label: "Plage 10.x.x.x"
+            detail: "De 10.0.0.0 à 10.255.255.255 — très courante en entreprise. C'est ici que se trouve 10.24.8.19."
+          - label: "Plage 172.16 à 172.31"
+            detail: "De 172.16.0.0 à 172.31.255.255 — souvent dédiée aux serveurs et services internes."
+          - label: "Plage 192.168.x.x"
+            detail: "De 192.168.0.0 à 192.168.255.255 — familière sur les réseaux domestiques et petits bureaux."
+      </Slide>
+
+      ## L'indice immédiat que l'alerte a raté : `10.24.8.19`
+
+      Sur un réseau, une **adresse IP** joue le rôle d'un numéro de téléphone pour acheminer les messages d'une machine à l'autre. Comme dans un immeuble d'entreprise qui a des numéros de postes internes (`poste 402`) distincts des numéros publics joignables depuis la rue, le standard Internet **RFC 1918** réserve **trois plages d'adresses IP privées** aux réseaux internes :
+
+      - **`10.0.0.0` à `10.255.255.255` (notée `10.0.0.0/8`, c'est-à-dire toutes les adresses commençant par `10.`) :** très répandue dans les grands réseaux d'entreprises — c'est le cas de **`10.24.8.19`**.
+      - **`172.16.0.0` à `172.31.255.255` (`172.16.0.0/12`) :** souvent utilisée pour les serveurs ou environnements internes.
+      - **`192.168.0.0` à `192.168.255.255` (`192.168.0.0/16`) :** familière sur les box domestiques et petits bureaux.
+
+      Dire « attaquant externe » à la vue de `10.24.8.19` est donc **factuellement faux** : le paquet arrive bien d'une machine située sur le réseau interne de TechNova. *(En revanche, cela ne blanchit pas l'incident : une machine interne peut tout à fait être compromise ou mal configurée !)*
+
+      <AudioScript style="engaged and steady">
+        Regardez un premier réflexe d'expert que vous pouvez retenir dès aujourd'hui. <short pause> L'alerte prétendait : « attaquant externe ». Pourtant, l'adresse source est 10.24.8.19. En réseau, selon le standard RFC 1918, toute adresse qui commence par 10, par 192.168 ou entre 172.16 et 172.31 est une adresse privée interne — un peu comme un numéro de poste téléphonique interne dans un bureau, non joignable directement depuis Internet. En deux secondes, vous venez déjà de prendre l'alerte en flagrant délit d'erreur ! Attention toutefois : interne ne veut pas dire inoffensif. Une machine interne peut aussi avoir été détournée. Mais on vient déjà de nettoyer une fausse certitude.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch1-s5-deux-pieges" title="Évitez les deux erreurs symétriques : panique et complaisance">
+      <Focus>
+        - Sur-interprétation hostile : accuser une attaque sans preuve -> coupures coûteuses
+        - Sur-interprétation bénigne : conclure « faute de frappe » sans preuve -> intrusion ratée
+        - Les deux violent la même règle : inventer une cause non mesurée
+      </Focus>
+
+      <Slide layout="contrast-split">
+        leftTitle: "Piège A · Sur-interprétation hostile"
+        leftTone: danger
+        leftItems:
+          - "« C'est forcément un pirate en force brute ! »"
+          - "Réflexe : couper srv-paie-01 et bloquer Claire"
+          - "Conséquence : 300 salaires bloqués pour un script mal réglé"
+        rightTitle: "Piège B · Sur-interprétation bénigne"
+        rightTone: warning
+        rightItems:
+          - "« Ce sont juste 3 fautes de frappe de Claire ! »"
+          - "Réflexe : fermer l'alerte sans rien vérifier"
+          - "Conséquence : si un intrus agit depuis 10.24.8.19, il passe inaperçu"
+        verdict: "Une supposition rassurante est tout aussi interdite dans les faits qu'une supposition alarmiste."
+      </Slide>
+
+      ## Ni paranoïaque, ni naïf : factuel
+
+      Beaucoup de débutants pensent que « ne pas sur-interpréter » signifie « minimiser l'alerte ». C'est faux. **Deux pièges symétriques** cassent une analyse :
+
+      1. **La sur-interprétation hostile :** écrire « tentative d'intrusion » à partir de 3 refus de mot de passe. Vous déclenchez une crise sur une hypothèse non vérifiée.
+      2. **La sur-interprétation bénigne :** écrire « Claire Moreau a fait 3 fautes de frappe » pour rassurer vite. Vous fermez les yeux sur une vraie piste interne sans aucune preuve.
+
+      Dans les deux cas, vous avez remplacé le fait mesuré par une histoire inventée.
+
+      <AudioScript style="clear and steady">
+        Méfiez-vous maintenant d'une erreur que presque tout le monde commet au début. Quand on dit de ne pas sur-interpréter, certains se disent : « d'accord, donc ce n'est pas grave, c'est juste Claire qui a tapé trop vite ». Non ! <short pause> Affirmer « c'est une faute de frappe de Claire » sans preuve est exactement la même faute logique qu'affirmer « c'est un pirate ». L'une vous fait couper le serveur de paie à tort ; l'autre vous fait fermer l'alerte pendant qu'un intrus travaille tranquillement. Un vrai analyste n'est ni alarmiste, ni naïf : il reste strictement collé aux faits mesurés tant que les preuves manquent.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch1-s6-atelier-autopsie" title="Atelier : autopsiez l'alerte et testez votre réflexe" pauseForAction="true">
+      <Focus>
+        - Inspectez chaque bloc du schéma : 5 données mesurées vs 2 conclusions hâtives
+        - Cliquez sur « Attaquant externe » et « Force brute » pour lire la réfutation
+        - Validez la vérification rapide avant de passer au bilan du chapitre
+      </Focus>
+
+      ## À vous d'autopsier le message de 08:15 UTC
+
+      Cliquez sur les différents jetons du schéma ci-dessous pour inspecter chaque fait mesuré et chaque ajout supposé de l'alerte, puis répondez à la vérification rapide :
+
+      <Visual id="signal-autopsy" caption="Schéma 1 · Autopsie du signal : 5 données mesurées face aux 2 ajouts supposés de l'alerte." />
+
+      <MicroCheck id="mc-ch1-autopsy" prompt="Dans l'alerte « Un attaquant externe tente de pirater c.moreau par force brute depuis 10.24.8.19 », quel indice contredit directement le mot « externe » ?" correct="mc-ch1-rfc1918">
+        <Option id="mc-ch1-rfc1918" feedback="Exact : la plage 10.0.0.0/8 (RFC 1918) désigne un réseau privé interne. Parler d'attaquant externe sur cette seule base est factuellement faux.">L'adresse 10.24.8.19 appartient à la plage d'adresses privées internes (10.0.0.0/8).</Option>
+        <Option id="mc-ch1-three-fails" feedback="Non : le nombre d'essais (3) ne dit rien sur l'origine interne ou externe du réseau émetteur.">Le fait qu'il n'y ait eu que trois tentatives en sept secondes.</Option>
+        <Option id="mc-ch1-account-name" feedback="Non : un attaquant externe peut très bien viser le nom d'une salariée si un service est exposé. C'est la plage IP qui indique le réseau interne.">Le fait que le compte visé porte le nom d'une salariée de l'entreprise.</Option>
+        <Explain>Contrôler la nature de l'adresse IP avant de répéter « externe » évite une erreur grossière dès la première minute d'analyse.</Explain>
+      </MicroCheck>
+
+      <AudioScript style="calm, warm and steady">
+        C'est à vous de manipuler. <short pause> Sur le schéma qui s'affiche, cliquez sur les blocs rouges « attaquant externe » et « force brute » pour voir exactement pourquoi ils ne figurent pas dans la trace, puis répondez à la question rapide juste dessous. Je mets la voix off en pause pour vous laisser tester tranquillement.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch1-s7-synthese-ch1" title="Bilan du chapitre 1 : la règle d'or de l'autopsie">
+      <Focus>
+        - Revenir au log brut avant de répéter une alerte
+        - Vérifier les plages privées RFC 1918 en 2 secondes
+        - Bloquer à la fois la panique et la complaisance
+      </Focus>
+
+      <Slide layout="rule-manifesto">
+        axiom: "Une alerte ouvre une vérification ; seul le journal brut fixe les faits."
+        subtext: "Chapitre 1 validé · Vous savez désormais décomposer une alerte avant d'agir."
+        pillars:
+          - label: "1. Source avant récit"
+            detail: "Toujours ouvrir le log brut au lieu de recopier le titre rouge d'une console."
+          - label: "2. Réflexe RFC 1918"
+            detail: "Repérer 10.x, 172.16-31.x et 192.168.x pour ne pas confondre réseau interne et Internet."
+          - label: "3. Double garde-fou"
+            detail: "Refuser autant l'accusation hâtive que l'excuse rassurante sans preuve."
+      </Slide>
+
+      <Summary transition="Ouvrons maintenant le vrai fichier /var/log/auth.log sur srv-paie-01 au chapitre 2 pour lire une ligne OpenSSH complète et découvrir les 3 angles morts de tout capteur.">
+        - Une alerte automatique applique une règle pré-écrite ; elle extrapole souvent au-delà des données mesurées.
+        - L'observation brute isole uniquement les 5 champs consignés (horodatage UTC, capteur, verdict, compte demandé, IP source).
+        - L'adresse `10.24.8.19` appartient à la plage privée RFC 1918 (`10.0.0.0/8`), ce qui réfute immédiatement « attaquant externe ».
+        - Sur-interprétation hostile (panique) et sur-interprétation bénigne (complaisance) sont deux visages de la même erreur.
+      </Summary>
+
+      <AudioScript style="calm, warm and steady">
+        Voici l'axiome à graver en fin de chapitre 1 : une alerte ouvre une vérification, seul le journal brut fixe les faits. <short pause> Vous savez maintenant séparer une règle automatique d'une mesure réelle, reconnaître une adresse privée interne en un coup d'œil et éviter autant la panique que la naïveté. Passons au chapitre 2 pour ouvrir le vrai fichier système de srv-paie-01 et comprendre les trois grands angles morts de tout capteur informatique.
+      </AudioScript>
+    </Scene>
+
+  </Chapter>
+
+  <Chapter id="ch-2-mesure-et-angles-morts" number="2" title="Lisez ce qu'un capteur mesure vraiment" subtitle="Anatomie OpenSSH · Les 3 angles morts · Exemple résolu · 7 slides" estimatedMinutes="8">
+
+    <Scene id="ch2-s1-log-openssh" title="Décryptez une vraie ligne /var/log/auth.log">
+      <Focus>
+        - Lire les 5 repères exacts d'une entrée OpenSSH réelle sous Linux
+        - Distinguer compte existant (Failed password for c.moreau) et compte inexistant (invalid user)
+        - Repérer les processus enfants (18420, 18423, 18427) et ports éphémères : 3 connexions distinctes
+      </Focus>
+
+      <Slide layout="log-spotlight">
+        sourceLabel: "srv-paie-01 : /var/log/auth.log (format OpenSSH réel)"
+        lines:
+          - "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2"
+          - "Oct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2"
+          - "Oct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2"
+        highlights:
+          - token: "sshd[18420]"
+            label: "Programme & PID"
+            explanation: "Le service OpenSSH (démon réseau) ouvre un numéro de processus enfant par connexion (18420, 18423, 18427)."
+            tone: fact
+          - token: "Failed password for c.moreau"
+            label: "Verdict & compte existant"
+            explanation: "Mot de passe refusé. Si le compte n'existait pas, OpenSSH écrirait « invalid user »."
+            tone: info
+          - token: "port 42118"
+            label: "Port éphémère client"
+            explanation: "42118, 42120, 42124 : trois ouvertures de connexion réseau (TCP) successives en 7 secondes."
+            tone: warning
+      </Slide>
+
+      ## Ouvrez la trace primaire sur `srv-paie-01`
+
+      Sur un serveur Linux réel, les connexions d'administration à distance passent par **SSH** (*Secure Shell*), géré par le service **`sshd`** (*SSH daemon*). Voici exactement ce qu'il consigne dans `/var/log/auth.log` :
+
+      <Terminal label="srv-paie-01 : /var/log/auth.log">
+
+Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2
+Oct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2
+Oct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2
+
+</Terminal>
+
+      Chaque fragment technique correspond à une mesure précise :
+
+      1. **Horodatage (`08:14:02` UTC) :** heure de l'horloge locale en temps universel **UTC** (sans ambiguïté de fuseau horaire).
+      2. **Machine et service (`srv-paie-01 sshd[18420]`) :** serveur récepteur, démon `sshd` et son numéro de processus (**PID**), qui change à chaque nouvelle connexion (`18420`, `18423`, `18427`).
+      3. **Verdict (`Failed password for c.moreau`) :** mot de passe non valide. *(Détail terrain précieux : lorsque le nom demandé n'existe même pas sur le serveur, OpenSSH ajoute `invalid user` devant le nom.)*
+      4. **Compte demandé (`c.moreau`) :** identifiant texte soumis par le client dans sa requête réseau.
+      5. **Origine réseau (`from 10.24.8.19 port 42118`) :** adresse IP vue par le serveur et **port éphémère** temporaire côté client. Comme ce port change trois fois (`42118`, `42120`, `42124`), il s'agit de trois connexions réseau (**TCP**, le protocole de liaison fiable entre deux machines) séparées.
+
+      <AudioScript style="clear and steady">
+        Entrons dans le vif du sujet en ouvrant le vrai fichier /var/log/auth.log sur srv-paie-01. <short pause> Regardez les trois lignes qui s'affichent : huit heures quatorze zéro deux, zéro cinq, et zéro neuf UTC. À chaque tentative, le service sshd crée un processus enfant — 18420, 18423 puis 18427 — et note : Failed password for c.moreau from 10.24.8.19, avec un port différent à chaque ligne : 42118, 42120, puis 42124. Deux détails précieux à remarquer tout de suite : d'abord, l'absence des mots « invalid user » indique que le compte c.moreau existe bien sur ce serveur ; ensuite, les trois ports et processus différents prouvent trois nouvelles connexions successives, pas trois essais dans la même fenêtre ouverte. Voilà tout ce que le serveur a enregistré.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch2-s2-angle-mort-amont" title="Angle mort n°1 : la cécité amont du capteur">
+      <Focus>
+        - Un capteur réseau ne voit jamais ce qui déclenche l'envoi de l'autre côté du câble
+        - Analogie bornée : un trottoir mouillé peut venir de la pluie, de la voirie ou d'une fuite
+        - Erreur humaine, script automatique et intrusion produisent la même trace sshd
+      </Focus>
+
+      <Slide layout="mechanism-flow">
+        nodes:
+          - title: "1. Amont inconnu"
+            detail: "Clavier de Claire, script cron ou session shell sur 10.24.8.19"
+            zone: upstream
+          - title: "2. Frontière réseau opaque"
+            detail: "Le câble ne transporte que des paquets SSH, jamais l'intention ni les mains"
+            zone: boundary
+          - title: "3. Capteur sshd (srv-paie-01)"
+            detail: "Vérifie la correspondance identifiant + mot de passe reçu"
+            zone: sensor
+          - title: "4. Trace identique"
+            detail: "Failed password for c.moreau from 10.24.8.19"
+            zone: output
+        blindSpotLabel: "Zone invisible pour sshd : humain, script ou intrus ?"
+        takeaway: "Plusieurs causes amont incompatibles convergent vers exactement la même ligne de journal."
+      </Slide>
+
+      ## Angle mort n°1 : ce qui se passe avant le câble réseau est invisible
+
+      Imaginez que vous sortez de chez vous le matin et que le trottoir est mouillé. Vos yeux mesurent un seul fait : **de l'eau recouvre le bitume**. Une averse nocturne, le passage d'une arroseuse municipale ou une fuite de canalisation laissent exactement la même trace.
+
+      *(Limite de l'analogie : un serveur consigne des champs numériques bien plus structurés qu'un trottoir, mais dès qu'on remonte vers la cause humaine ou logicielle en amont, l'impasse logique est identique.)*
+
+      Le démon `sshd` est **aveugle à l'amont** : il reçoit une requête réseau et compare le mot de passe reçu au secret attendu. Il ne sait jamais si la commande a été tapée par un humain, déclenchée par une tâche automatique ou lancée par un attaquant.
+
+      <AudioScript style="clear and steady">
+        Pourquoi ces trois lignes ne suffisent-elles pas à trouver le coupable ? À cause du premier grand angle mort de tout capteur : la cécité amont. <short pause> Pensez au trottoir mouillé en sortant de chez vous : l'eau sur le sol est un fait indiscutable, mais elle ne vous dit jamais s'il a plu, si la voirie a nettoyé la rue ou si un tuyau a fui. Regardez la chaîne mécanique devant vous : à gauche, la machine qui émet — clavier humain, script automatique ou session suspecte. Au milieu, le mur opaque du câble réseau. À droite, le capteur sshd qui ne reçoit que des paquets. Peu importe ce qui se passe à gauche : la ligne écrite à droite est strictement identique.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch2-s3-angle-mort-nat" title="Angle mort n°2 : une adresse IP peut cacher plusieurs machines (NAT)">
+      <Focus>
+        - Sur un réseau réel, une passerelle NAT ou un relais regroupe des dizaines de postes sous 1 seule IP
+        - L'IP vue par le serveur est celle du dernier équipement qui a transmis le paquet
+        - Règle pro : 1 adresse IP dans un log ≠ automatiquement 1 machine unique ni 1 personne
+      </Focus>
+
+      <Slide layout="mechanism-flow">
+        nodes:
+          - title: "50 postes ou appareils"
+            detail: "Employés, imprimantes, serveurs derrière un même bureau ou Wi-Fi"
+            zone: upstream
+          - title: "Passerelle NAT / Relais"
+            detail: "Remplace toutes les adresses internes par une seule adresse de sortie partagée"
+            zone: boundary
+          - title: "Serveur distant"
+            detail: "Ne voit que l'adresse IP de la passerelle dans son journal"
+            zone: sensor
+          - title: "Faux raccourci à éviter"
+            detail: "Accuser un unique utilisateur sur la seule base d'une IP partagée"
+            zone: output
+        blindSpotLabel: "Masquage réseau : qui est derrière la passerelle ?"
+        takeaway: "Une adresse IP identifie un point d'émission vu par le récepteur, pas automatiquement une personne physique."
+      </Slide>
+
+      ## Angle mort n°2 : le masquage réseau (`NAT` et relais)
+
+      Chez TechNova, `10.24.8.19` est une IP interne directe. Mais sur le terrain, vous rencontrerez constamment un deuxième piège : le **NAT** (*Network Address Translation*, une passerelle qui partage une seule adresse IP de sortie entre des dizaines de postes — exactement comme votre box Internet à la maison partage une seule adresse publique entre votre téléphone, votre ordinateur et votre télévision).
+
+      <Callout kind="warning" title="Conséquence directe en lecture de journaux">
+        Lorsqu'un trafic traverse un équipement **NAT** ou un serveur relais (**proxy**), le serveur de destination enregistre **l'adresse IP de l'équipement intermédiaire**, pas celle du poste d'origine. Pour identifier la vraie machine, il faut recouper les journaux de la passerelle (avec l'heure exacte et le port source !).
+      </Callout>
+
+      <AudioScript style="clear and steady">
+        Voici le deuxième angle mort qu'il faut connaître dès le début : une adresse IP ne correspond pas toujours à une seule machine, et encore moins à une seule personne. <short pause> Pensez à votre box Internet à la maison : votre téléphone, votre ordinateur et celui de vos proches sortent tous sur Internet avec la même adresse IP publique grâce à un mécanisme appelé NAT. En entreprise, c'est pareil derrière un Wi-Fi invité, un VPN ou un serveur relais. Le serveur qui reçoit la connexion note l'IP de la passerelle, sans voir laquelle des cinquante machines derrière a envoyé la demande. Retenez cette nuance : une IP dans un journal identifie un point réseau vu par le capteur, jamais une carte d'identité.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch2-s4-angle-mort-declaratif" title="Angle mort n°3 : méfiez-vous des données déclaratives">
+      <Focus>
+        - Certains champs d'un log recopient un texte choisi librement par l'émetteur
+        - Exemples : le compte demandé (c.moreau / root) ou un nom d'hôte inverse DNS (PTR)
+        - Le fait mesuré est « le capteur a reçu cette chaîne », jamais « cette identité est vraie »
+      </Focus>
+
+      <Slide layout="contrast-split">
+        leftTitle: "Donnée déclarative (contrôlée par l'émetteur)"
+        leftTone: warning
+        leftItems:
+          - "account=c.moreau ou account=root dans un paquet SSH"
+          - "Nom inverse DNS (PTR) : « serveur-officiel-securite.example »"
+          - "N'importe qui peut inscrire un nom rassurant ou usurpé"
+        rightTitle: "Fait réellement certifié par le capteur"
+        rightTone: fact
+        rightItems:
+          - "« Le client a transmis la chaîne c.moreau »"
+          - "« Le serveur DNS inverse a renvoyé cette chaîne de texte »"
+          - "L'authenticité demande toujours une vérification croisée"
+        verdict: "Un capteur enregistre fidèlement ce qu'on lui envoie — y compris un mensonge si le champ est déclaratif."
+      </Slide>
+
+      ## Angle mort n°3 : ce que l'émetteur choisit d'écrire lui-même
+
+      Dernier piège subtil : un journal peut être **100 % exact** tout en contenant une **information trompeuse**, simplement parce que le champ recopie un texte librement choisi par l'émetteur !
+
+      - **Le champ `account` (`c.moreau`, `root`) :** n'importe quel programme peut envoyer la chaîne `c.moreau` ou `admin` au serveur. Le fait mesuré est : *« cette chaîne a été soumise »*, jamais *« Claire Moreau est au clavier »*.
+      - **Le nom d'hôte inverse (`PTR DNS`) :** certains outils traduisent une IP en nom lisible (par exemple `update-officiel-securite.example`). Or, le détenteur d'une plage d'adresses IP peut écrire **n'importe quel texte** dans son enregistrement PTR sans aucun contrôle officiel !
+
+      <AudioScript style="clear and steady">
+        Troisième angle mort, et c'est l'un des pièges préférés des attaquants : les données déclaratives. <short pause> Un journal peut enregistrer une information de façon parfaitement honnête, tout en recopiant un texte inventé par celui qui se connecte. Quand le log écrit account égale c.moreau, il prouve uniquement que cette chaîne de caractères a voyagé dans la demande. Même chose pour le DNS inverse — le champ PTR — qui associe un nom lisible à une adresse IP : celui qui possède l'adresse peut très bien la baptiser « serveur-officiel-mises-a-jour » pour endormir votre vigilance. Le fait mesuré, c'est toujours « le capteur a reçu cette chaîne », jamais « ce nom est digne de confiance ».
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch2-s5-exemple-resolu-ssh" title="Exemple résolu : autopsie pas à pas de la ligne OpenSSH">
+      <Focus>
+        - Étape 1 : nommer le fichier et le serveur exacts
+        - Étape 2 : distinguer compte demandé et identité réelle
+        - Étape 3 : mesurer le rythme sans plaquer l'étiquette « force brute »
+      </Focus>
+
+      ## Exemple résolu : décomposer une ligne sans glisser dans l'interprétation
+
+      Suivons la méthode exacte sur la première entrée de `srv-paie-01`, en explicitant **pourquoi** chaque geste protège votre analyse :
+
+      <WorkedExample title="Décomposer la ligne de 08:14:02 UTC sans sur-interpréter" conclusion="Une seule source (sshd) établit 5 champs mesurés et laisse 3 hypothèses compatibles ouvertes — zéro cause n'est encore prouvée.">
+        <Start>Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2</Start>
+        <Step why="Lors d'une vraie crise avec plusieurs terminaux ouverts, une note sans source exacte devient inutilisable cinq minutes plus tard.">Notez d'abord la source complète : `/var/log/auth.log` sur `srv-paie-01` (service `sshd`, PID `18420`).</Step>
+        <Step why="Le champ account est déclaratif : n'importe quel script ou opérateur peut soumettre la chaîne c.moreau.">Relevez le résultat (`Failed password`) et le compte demandé (`c.moreau`) sans jamais écrire que « Claire Moreau a échoué ».</Step>
+        <Step why="Un script en boucle de réessai automatique ou une saisie rapide génèrent facilement 3 connexions en 7 secondes.">Notez le rythme mesuré (3 connexions sur ports `42118`, `42120`, `42124` entre `08:14:02` et `08:14:09 UTC` depuis l'IP interne `10.24.8.19`), puis ouvrez les hypothèses au lieu de conclure.</Step>
+      </WorkedExample>
+
+      <AudioScript style="calm, warm and steady">
+        Regardons comment un analyste applique tout cela en pratique sur notre exemple résolu. <short pause> Étape un : on commence toujours par nommer le fichier et la machine exacts — auth.log sur srv-paie-01 — pour que n'importe quel collègue puisse vérifier notre constat. Étape deux : on rapporte le résultat, Failed password, et le compte demandé, c.moreau, sans jamais écrire « Claire s'est trompée ». Étape trois : on note la cadence — trois connexions distinctes en sept secondes depuis l'adresse privée 10.24.8.19 — et on s'arrête là pour les faits. Cinq données solides, zéro supposition.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch2-s6-atelier-capteur" title="Atelier : prédisez et éprouvez l'invariance du capteur" pauseForAction="true">
+      <Focus>
+        - Prédisez avant de cliquer : que change sshd si un script remplace Claire ?
+        - Basculez les 3 causes amont sur le schéma interactif juste ici
+        - Vérifiez votre réponse avec la question rapide
+      </Focus>
+
+      <Banner variant="practice" />
+
+      <Practice title="À vous de jouer : éprouvez la frontière du capteur" solutionSummary="Les 4 champs hors horodatage (service, event, account, source_ip) restent 100 % identiques : sshd ne voit pas comment la connexion a été déclenchée sur 10.24.8.19.">
+        <Context>
+          Avant de toucher aux boutons ci-dessous, formulez votre prédiction : si un script de sauvegarde remplace Claire Moreau au clavier depuis `10.24.8.19` avec le même mot de passe refusé, quels champs changent dans le journal de `srv-paie-01` ?
+        </Context>
+        <Steps>
+          - Cliquez successivement sur les **3 causes amont** (Erreur humaine, Script automatique, Tentative suspecte) dans le schéma interactif ci-dessous.
+          - Observez la ligne écrite dans `/var/log/auth.log` à droite du schéma.
+          - Confirmez votre constat avec la vérification rapide.
+        </Steps>
+      </Practice>
+
+      <Visual id="sensor-boundary" caption="Schéma 2 · Frontière du capteur : trois causes amont opposées produisent exactement la même ligne sur srv-paie-01." />
+
+      <MicroCheck id="mc-ch2-invariance" prompt="Si un script automatique remplace une frappe manuelle au clavier depuis 10.24.8.19 avec le même mot de passe refusé, que change sshd dans son journal ?" correct="mc-ch2-none">
+        <Option id="mc-ch2-none" feedback="Exact. Le démon sshd n'a accès qu'aux paquets réseau reçus : les quatre champs d'identification restent strictement identiques.">Rien dans les 4 champs d'identification (service, résultat, compte, IP source) : la trace reste identique.</Option>
+        <Option id="mc-ch2-code" feedback="Non : le protocole SSH ne signale pas au serveur si le client est piloté par un clavier ou par une tâche planifiée.">Le code d'événement indique désormais un échec d'automatisation au lieu d'une erreur utilisateur.</Option>
+        <Option id="mc-ch2-user" feedback="Non : le champ account indique le compte cible demandé sur srv-paie-01, jamais le programme local exécuté sur 10.24.8.19.">Le champ compte affiche le nom du script à la place de c.moreau.</Option>
+        <Explain>C'est l'inobservabilité de l'amont : plusieurs causes opposées produisent la même trace dans un capteur isolé.</Explain>
+      </MicroCheck>
+
+      <AudioScript style="calm, warm and steady">
+        Testez maintenant ce mécanisme vous-même. <short pause> Avant de cliquer, faites votre prédiction : si un script automatique remplace une erreur au clavier sur 10.24.8.19 avec le même mot de passe refusé, est-ce que le journal de srv-paie-01 change ? Basculez les trois boutons du schéma devant vous, vérifiez la ligne produite à droite, puis répondez à la vérification rapide. Je marque une pause active.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch2-s7-synthese-ch2" title="Bilan du chapitre 2 : les 3 angles morts à garder en tête">
+      <Focus>
+        - Cécité amont : le capteur ne voit jamais la cause locale ni l'intention
+        - Masquage réseau : NAT et relais peuvent regrouper plusieurs postes derrière 1 IP
+        - Données déclaratives : compte demandé et PTR sont choisis par l'émetteur
+      </Focus>
+
+      <Slide layout="rule-manifesto">
+        axiom: "Un capteur ne raconte pas ce qui s'est passé : il mesure ce qui a atteint son interface."
+        subtext: "Chapitre 2 validé · Vous connaissez les 3 angles morts de tout journal système."
+        pillars:
+          - label: "1. Cécité amont"
+            detail: "Erreur humaine, script périmé et intrusion peuvent laisser exactement la même trace."
+          - label: "2. Masquage NAT / relais"
+            detail: "Une IP source peut représenter une passerelle partagée par des dizaines de postes."
+          - label: "3. Champs déclaratifs"
+            detail: "account= ou un nom PTR ne prouvent jamais l'identité réelle sans recoupement."
+      </Slide>
+
+      <Summary transition="Puisqu'une seule source laisse trois causes plausibles ouvertes, apprenons au chapitre 3 à recouper des sources véritablement indépendantes sans tomber dans les pièges du terrain.">
+        - Une entrée OpenSSH réelle livre 5 repères factuels (UTC, serveur/PID, verdict, compte demandé, IP/port éphémère).
+        - Trois angles morts bornent tout capteur unique : cécité amont, partage d'IP (NAT/relais) et champs déclaratifs (`account`, `PTR`).
+        - Pour passer du doute à une conclusion défendable, il faut interroger des sources indépendantes.
+      </Summary>
+
+      <AudioScript style="calm, warm and steady">
+        Retenez la leçon du chapitre 2 en une phrase : un capteur ne raconte pas ce qui s'est passé, il mesure ce qui a touché sa porte réseau. <short pause> Vous connaissez désormais ses trois angles morts : la cécité amont, le partage d'adresse NAT et les champs déclaratifs. Allons maintenant au chapitre 3 voir comment croiser plusieurs sources indépendantes pour trancher sans jamais deviner.
+      </AudioScript>
+    </Scene>
+
+  </Chapter>
+
+  <Chapter id="ch-3-recoupez-sources" number="3" title="Recoupez des sources indépendantes pour trancher" subtitle="Indépendance · Entonnoir · Laboratoire 2D · NTP, absence de trace & biais · 8 slides" estimatedMinutes="10">
+
+    <Scene id="ch3-s1-trois-hypotheses" title="Ouvrez toutes les hypothèses compatibles avant d'enquêter">
+      <Focus>
+        - Avec 1 source seule (sshd), 3 hypothèses réalistes expliquent la trace
+        - H1 : faute de frappe de Claire · H2 : script automatique périmé · H3 : session interactive suspecte
+        - Lister pistes bénignes ET hostiles dès le départ évite de chercher un coupable à tout prix
+      </Focus>
+
+      <Slide layout="elimination-board">
+        sourceLabel: "Source 1 seule : /var/log/auth.log sur srv-paie-01"
+        activeSourceCount: "1 / 3 sources · 3 pistes ouvertes"
+        hypotheses:
+          - code: "H1"
+            title: "Erreur de frappe de Claire Moreau"
+            status: open
+            reason: "Compatible avec 3 refus en 7 secondes sur le compte c.moreau."
+          - code: "H2"
+            title: "Script de sauvegarde avec ancien mot de passe"
+            status: open
+            reason: "Une boucle de retry automatique produit exactement 3 connexions rapides."
+          - code: "H3"
+            title: "Session interactive ouverte sur 10.24.8.19"
+            status: open
+            reason: "Un opérateur ou attaquant interne peut tester c.moreau depuis cette machine."
+      </Slide>
+
+      ## Posez les 3 hypothèses sur la table avant d'ouvrir une autre fenêtre
+
+      Avec le journal `sshd` seul, nous savons une chose capitale : **il est impossible de trancher**. En revanche, nous pouvons recenser proprement les **trois hypothèses réalistes** capables de générer exactement ces trois lignes :
+
+      - **Piste H1 (Erreur humaine) :** Claire Moreau saisit trois fois un mauvais mot de passe depuis son poste.
+      - **Piste H2 (Automatisme périmé) :** un script ou une tâche planifiée tente de se connecter avec un ancien mot de passe expiré.
+      - **Piste H3 (Session interactive sur `10.24.8.19`) :** une personne connectée sur `10.24.8.19` tente d'accéder manuellement au serveur de paie.
+
+      <AudioScript style="clear and steady">
+        À l'entrée du chapitre 3, nous avons nos cinq faits mesurés, mais aucune certitude sur la cause. Que fait un analyste rigoureux ? Il commence par poser sur la table toutes les hypothèses compatibles — les bénignes comme les hostiles. <short pause> Ici, trois pistes expliquent parfaitement nos trois lignes : H1, Claire Moreau fait des fautes de frappe ; H2, un script de sauvegarde utilise un mot de passe périmé ; H3, quelqu'un teste le compte depuis une session interactive ouverte sur 10.24.8.19. Tant que nous n'avons qu'une seule source, ces trois cartes restent toutes ouvertes.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s2-independance-sources" title="Attention : deux alertes du même journal ne font pas deux sources !">
+      <Focus>
+        - Un piège fréquent en supervision : croire que 2 alertes sur auth.log se confirment mutuellement
+        - Si deux outils lisent le même fichier, ils ne forment qu'une seule source
+        - Une source indépendante observe la scène depuis une autre machine ou un autre référentiel
+      </Focus>
+
+      <Slide layout="contrast-split">
+        leftTitle: "Faux recoupement (même source)"
+        leftTone: danger
+        leftItems:
+          - "Alerte R-AUTH-04 + Alerte « Compte critique »"
+          - "Toutes deux déclenchées par les mêmes 3 lignes d'auth.log"
+          - "Résultat : 0 information nouvelle, toujours 3 pistes ouvertes"
+        rightTitle: "Vrai recoupement indépendant"
+        rightTone: fact
+        rightItems:
+          - "Source 1 : /var/log/auth.log sur srv-paie-01 (récepteur)"
+          - "Source 2 : Inventaire réseau CMDB (rôle réel des machines)"
+          - "Source 3 : Journaux locaux de 10.24.8.19 (tâches planifiées et sessions)"
+        verdict: "NIST SP 800-61r3 : croisez des sources qui observent la réalité sous des angles indépendants."
+      </Slide>
+
+      ## Qu'est-ce qu'une source véritablement indépendante ?
+
+      Avant de recouper, déjouez un piège très courant sur les consoles de supervision : voir **deux alertes différentes** (par exemple *« 3 échecs SSH »* et *« Accès sur serveur critique »*) et croire que l'une confirme l'autre.
+
+      Si les deux alertes lisent le **même** fichier `/var/log/auth.log`, vous n'avez **toujours qu'une seule source**. Pour savoir s'il a vraiment plu sur le trottoir mouillé, vous ne prenez pas deux photos du même trottoir : vous regardez le toit des voitures ou un pluviomètre.
+
+      <Callout kind="information" title="Critère d'indépendance">
+        Une deuxième source est indépendante lorsqu'elle provient d'un **autre système, d'un autre capteur ou d'une autre machine** (ici : l'inventaire réseau **CMDB**, puis les journaux locaux de la machine émettrice `10.24.8.19`).
+      </Callout>
+
+      <AudioScript style="clear and steady">
+        Avant même d'ouvrir une deuxième source, évitez un piège dans lequel tombent énormément d'analystes juniors : croire que deux alertes rouges dans la console se confirment mutuellement. <short pause> Si la console affiche deux alertes calculées à partir des mêmes trois lignes d'auth.log, vous n'avez pas deux preuves : vous avez juste le même témoignage répété deux fois ! Une source vraiment indépendante observe la scène depuis un autre endroit — comme l'inventaire des machines de l'entreprise ou les journaux de la machine qui a émis la connexion.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s3-filtre-cmdb" title="Source 2 (CMDB) : H1 est réfutée, mais H2 et H3 restent ouvertes !">
+      <Focus>
+        - Inventaire réseau (CMDB) : 10.24.8.19 = srv-backup-interne (serveur en baie, sans clavier)
+        - Poste de bureau de Claire Moreau = 10.24.2.45 -> H1 immédiatement éliminée
+        - Piège subtil : connaître le rôle « sauvegarde » ne prouve pas encore H2 (H3 reste possible)
+      </Focus>
+
+      <Slide layout="elimination-board">
+        sourceLabel: "Source 2 activée : Inventaire réseau (CMDB)"
+        activeSourceCount: "2 / 3 sources · 1 réfutée, 2 pistes ouvertes"
+        hypotheses:
+          - code: "H1"
+            title: "Erreur de frappe depuis le poste de Claire"
+            status: refuted
+            reason: "Contredite : Claire utilise 10.24.2.45 ; 10.24.8.19 est un serveur sans clavier en salle machine."
+          - code: "H2"
+            title: "Script de sauvegarde automatique expiré"
+            status: open
+            reason: "Plausible sur srv-backup-interne, mais non prouvée sans lire /var/log/cron."
+          - code: "H3"
+            title: "Session interactive ouverte sur 10.24.8.19"
+            status: open
+            reason: "Reste possible : un opérateur ou attaquant peut rebondir depuis ce serveur."
+      </Slide>
+
+      ## Pourquoi l'inventaire élimine H1 mais ne suffit pas encore
+
+      Ouvrons la **Source 2**, la **CMDB** (*Configuration Management Database*, le registre officiel qui associe chaque adresse IP à son équipement physique) :
+
+      - `10.24.2.45` est le poste de bureau de Claire Moreau.
+      - `10.24.8.19` est **`srv-backup-interne`**, un serveur de sauvegarde rangé en baie dans la salle machine, sans écran ni clavier.
+
+      **Résultat :** l'hypothèse **H1** (faute de frappe directe de Claire sur son poste) est **réfutée par un fait matériel**.
+
+      <Callout kind="question" title="Puisque 10.24.8.19 est le serveur de sauvegarde, H2 est-elle prouvée ?">
+        **Non !** C'est le piège n°1 de l'étape 2. Le rôle habituel d'un serveur ne prouve jamais quel processus a agi à `08:14 UTC`. Une session shell interactive ouverte à distance sur `srv-backup-interne` (**H3**) reste parfaitement possible tant que ses journaux locaux n'ont pas été consultés.
+      </Callout>
+
+      <AudioScript style="clear and steady">
+        Passons à l'action avec la source 2 : la CMDB, c'est-à-dire l'inventaire officiel des machines du réseau. <short pause> Que nous apprend-elle ? Le poste de bureau de Claire est en 10.24.2.45, tandis que 10.24.8.19 est srv-backup-interne, un serveur de sauvegarde enfermé en salle machine, sans clavier. Boum : l'hypothèse H1 est éliminée net ! Mais arrêtez-vous une seconde avant de crier victoire. Beaucoup d'élèves se disent ici : « super, c'est le serveur de sauvegarde, donc c'est forcément le script H2 ! » Eh bien non ! Savoir à quoi sert habituellement un serveur ne prouve pas qui l'utilisait à huit heures quatorze. Un attaquant ou un administrateur connecté en session interactive dessus reste tout à fait possible. Il nous faut donc une troisième source.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s4-filtre-local" title="Source 3 (journaux de 10.24.8.19) : départager Cas 3A et Cas 3B">
+      <Focus>
+        - Ouvrir deux journaux locaux sur 10.24.8.19 : le planificateur (/var/log/cron + log backup) ET les sessions locales (wtmp / audit-sessions)
+        - Cas 3A : le script de sauvegarde tourne à 08:14:00 et aucune session humaine active -> H2 corroborée
+        - Cas 3B : aucune tâche planifiée, mais une session shell interactive active -> H3 corroborée
+      </Focus>
+
+      <Slide layout="elimination-board">
+        sourceLabel: "Source 3 : journaux locaux de 10.24.8.19 (exemple Cas 3A)"
+        activeSourceCount: "3 / 3 sources · 1 hypothèse corroborée"
+        hypotheses:
+          - code: "H1"
+            title: "Erreur de frappe depuis le poste de Claire"
+            status: refuted
+            reason: "Déjà écartée par l'inventaire CMDB (poste de Claire = 10.24.2.45)."
+          - code: "H2"
+            title: "Script de sauvegarde automatique expiré"
+            status: corroborated
+            reason: "Cas 3A : /var/log/cron et sync-paie-backup.log confirment le script à 08:14:00 + 0 session humaine."
+          - code: "H3"
+            title: "Session interactive ouverte sur 10.24.8.19"
+            status: refuted
+            reason: "Écartée dans le Cas 3A (mais devient la piste corroborée dans le Cas 3B si les sessions montrent un shell actif !)."
+      </Slide>
+
+      ## L'entonnoir complet : observer ce qui change entre Cas 3A et Cas 3B
+
+      Sur la machine émettrice `10.24.8.19`, nous vérifions deux traces locales complémentaires : le journal du planificateur automatique **`/var/log/cron`** (et le journal du script `backup-sync.sh` / `sync-paie-backup.log`), ainsi que l'historique des sessions utilisateurs (**`wtmp` / `audit-sessions.log`**). Deux issues opposées deviennent immédiatement discernables :
+
+      - **Cas 3A :** `/var/log/cron` montre l'exécution planifiée du script de sauvegarde (`backup-sync.sh` / `sync-paie-backup`) à `08:14:00 UTC` (deux secondes avant le premier refus sur `srv-paie-01`), le journal applicatif affiche une erreur de mot de passe, et aucune session interactive n'est ouverte → **H2 est corroborée** (inutile de couper la paie : on renouvelle le secret du script).
+      - **Cas 3B :** aucune tâche planifiée à `08:14`, mais une session shell interactive ouverte à `08:13:55 UTC` sur `10.24.8.19` lance trois connexions SSH vers `srv-paie-01` → **H3 est corroborée** (là, une escalade sécurité immédiate s'impose !).
+
+      <Visual id="refutation-funnel" caption="Schéma 3 · Entonnoir de réfutation multi-sources : comparez Cas 3A (H2), Cas 3B (H3) et l'impact d'une dérive NTP." />
+
+      <AudioScript style="clear and steady">
+        Ouvrons maintenant la troisième source directement sur la machine émettrice 10.24.8.19 : d'un côté le journal du planificateur cron et du script de sauvegarde, de l'autre l'historique des sessions ouvertes. <short pause> Deux mondes se séparent alors proprement. Dans le cas 3A, le script de sauvegarde démarre à huit heures quatorze zéro zéro — deux secondes avant les refus — et personne n'est connecté en session interactive : l'hypothèse H2 est corroborée, et vous venez de sauver les virements de paie d'une coupure inutile. Dans le cas 3B, aucune sauvegarde n'a tourné, mais un terminal interactif est bien actif sur le serveur : c'est H3 qui survit, et vous déclenchez une vraie escalade de sécurité avec des preuves solides.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s5-laboratoire-reel" title="Laboratoire déterministe : testez Cas 3A, Cas 3B et la conclusion prématurée" pauseForAction="true">
+      <Focus>
+        - Changez la cause amont avec Source 1 seule : 5 champs et 3 pistes restent figés
+        - Testez la case « Affirmer comme fait prouvé sans réserve » avant recoupement -> alerte conclusion prématurée
+        - Basculez entre Inventaire (Source 2), Cas 3A (H2) et Cas 3B (H3)
+      </Focus>
+
+      <Banner variant="practice" />
+
+      <Practice title="À vous de jouer : pilotez le laboratoire déterministe à 3 sources" experienceId="observation-workbench" solutionSummary="Avec 1 source seule, affirmer une cause produit une conclusion non soutenue. La Source 2 (CMDB) élimine H1 (3 -> 2 pistes), puis la Source 3 tranche entre H2 (Cas 3A) et H3 (Cas 3B).">
+        <Context>
+          Manipulez le moteur d'enquête complet ci-dessous. Contrairement à un schéma statique, ce banc d'essai vous permet de comparer les deux dénouements opposés (**Cas 3A** vs **Cas 3B**) et de vérifier les limites du modèle simulé.
+        </Context>
+        <Steps>
+          - Laissez la **Source 1 seule** active et changez la cause amont : vérifiez que le compteur reste à `5 champs` et `3 pistes`.
+          - Sélectionnez une hypothèse et cochez **Affirmer comme fait prouvé sans réserve ni mention des limites** sans recoupement : observez le verdict de conclusion prématurée, puis décochez.
+          - Activez la **Source 2 (Inventaire CMDB)** : passez à `2 / 3` sources et `2 pistes`.
+          - Testez enfin la **Source 3 · Cas 3A** (corroboration H2) puis la **Source 3 · Cas 3B** (corroboration H3).
+        </Steps>
+      </Practice>
+
+      <AudioScript style="calm, warm and steady">
+        À vous les commandes du véritable laboratoire interactif ! <short pause> Faites quatre manipulations précises : d'abord, changez la cause amont avec une seule source et vérifiez que le log reste bloqué à cinq champs et trois pistes. Ensuite, cochez la case « affirmer comme fait prouvé sans réserve » trop tôt pour voir l'erreur logique apparaître. Enfin, activez l'inventaire CMDB, puis comparez le cas 3A et le cas 3B pour voir comment la conclusion bascule selon la preuve locale. Je mets la voix en pause : prenez votre temps.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s6-piege-ntp" title="Piège terrain n°1 : comment la dérive NTP inverse la cause et l'effet">
+      <Focus>
+        - Afficher « UTC » supprime l'erreur de fuseau horaire, PAS le retard d'une horloge locale
+        - 6 secondes de dérive entre 2 serveurs font apparaître la conséquence AVANT la cause
+        - Réflexe NIST SP 800-92 : toujours contrôler le statut NTP avant une chronologie à la seconde
+      </Focus>
+
+      <Slide layout="timeline-shift">
+        driftNote: "Scénario réel : l'horloge du serveur applicatif retarde de 6 secondes faute de synchronisation NTP."
+        apparentOrder:
+          - time: "09:12:02 UTC"
+            host: "srv-app-01 (horloge -6 s)"
+            event: "Événement B : ouverture de session applicative"
+          - time: "09:12:05 UTC"
+            host: "vpn-gateway (horloge juste)"
+            event: "Événement A : connexion VPN entrante"
+        realOrder:
+          - time: "09:12:05 UTC"
+            host: "vpn-gateway"
+            event: "1. Connexion VPN entrante (vraie cause)"
+          - time: "09:12:08 UTC"
+            host: "srv-app-01 (corrigé +6 s)"
+            event: "2. Session applicative (3 secondes APRÈS le VPN)"
+        lesson: "Sans contrôle NTP, un analyste croit que B a précédé A et bâtit un scénario chronologique entièrement faux."
+      </Slide>
+
+      ## Pourquoi « UTC » ne garantit pas que deux serveurs ont la même heure
+
+      Croiser deux journaux issus de machines distinctes repose sur une hypothèse cachée : **les deux serveurs vivent à la même seconde**.
+
+      Or, l'horloge interne d'un ordinateur dérive naturellement si elle n'est pas recalée en continu par le protocole **NTP** (*Network Time Protocol*). Même si les deux fichiers affichent bien **UTC**, un simple retard de **6 secondes** sur un serveur applicatif suffit à faire apparaître l'effet (`09:12:02 UTC`) **avant** sa propre cause (`09:12:05 UTC` sur la passerelle VPN) !
+
+      <Callout kind="warning" title="Réflexe chronologique (NIST SP 800-92)">
+        Avant d'affirmer que l'événement B s'est produit avant l'événement A sur deux machines différentes, vérifiez l'état de synchronisation **NTP** (et méfiez-vous aussi de l'heure de réception dans une console centrale, décalée par la mise en tampon des agents).
+      </Callout>
+
+      <AudioScript style="clear and steady">
+        Regardez maintenant un piège qui piège même des professionnels aguerris : la dérive d'horloge NTP. <short pause> Imaginez deux journaux, tous les deux en UTC. La passerelle VPN note une connexion à neuf heures douze zéro cinq, et le serveur applicatif note une action à neuf heures douze zéro deux. Piège classique : on croit que l'action sur le serveur a eu lieu trois secondes avant le VPN ! Pourtant, si l'horloge du serveur applicatif retarde de seulement six secondes parce que NTP n'est plus synchronisé, l'action s'est en réalité produite à zéro huit — trois secondes après le VPN. Ne l'oubliez jamais : UTC règle le fuseau horaire, pas la justesse de la montre.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s7-absence-et-integrite" title="Piège terrain n°2 : un journal vide ne prouve jamais l'innocuité">
+      <Focus>
+        - Absence de trace locale ≠ preuve d'absence d'événement
+        - 4 causes possibles : service d'audit arrêté, disque saturé, règle manquante ou effacement local
+        - Protection NIST SP 800-92 : collecte déportée en continu vers un serveur central protégé
+      </Focus>
+
+      <Slide layout="contrast-split">
+        leftTitle: "Ce qu'un journal local vide NE prouve PAS"
+        leftTone: danger
+        leftItems:
+          - "« Il est prouvé qu'aucune anomalie n'a eu lieu »"
+          - "Le service d'audit (auditd) a pu être arrêté ou mal configuré"
+          - "Le disque local a pu saturer et stopper l'écriture"
+          - "Un attaquant privilégié a pu tronquer le fichier local"
+        rightTitle: "La posture professionnelle (NIST SP 800-92)"
+        rightTone: fact
+        rightItems:
+          - "Constater sobrement : « aucune entrée dans ce fichier local »"
+          - "Vérifier que le service tournait et couvrait bien l'action"
+          - "Recouper la copie centralisée envoyée en temps réel (SIEM)"
+          - "Ne pas conclure non plus à un effacement malveillant sans indice"
+        verdict: "Absence de preuve dans un capteur local ne vaut jamais preuve d'absence dans la réalité."
+      </Slide>
+
+      ## L'absence de trace est un angle mort, pas un certificat d'innocence
+
+      Autre raccourci dangereux : ouvrir `/var/log/audit/audit.log` sur un serveur Linux, n'y trouver aucune ligne suspecte et conclure *« il est prouvé que rien ne s'est passé »*.
+
+      Un fichier local vide sur une plage horaire prouve uniquement qu'**aucune ligne n'y figure aujourd'hui**. Plusieurs causes doivent être vérifiées : le service de journalisation arrêté, une règle d'audit absente, un disque plein, ou une altération locale. *(Et symétriquement, un fichier vide ne prouve pas non plus un effacement malveillant tant qu'on n'a pas vérifié la santé du service !)*
+
+      C'est pour préserver l'intégrité des observations que **NIST SP 800-92** recommande d'expédier les journaux en continu vers un serveur central de collecte (**SIEM**, *Security Information and Event Management*) protégé contre la modification (stockage en écriture seule dit **WORM**, *Write Once Read Many*, qu'un attaquant sur la machine source ne peut pas effacer).
+
+      <AudioScript style="clear and steady">
+        Deuxième piège de terrain très fréquent : ouvrir un fichier de journal local, le voir vide ou calme, et conclure aussitôt que tout va bien. <short pause> En enquête, l'absence de trace dans un capteur ne prouve jamais l'absence d'événement. Le service d'audit a pu s'arrêter, le disque être saturé, la règle de journalisation manquer, ou quelqu'un ayant des privilèges a pu nettoyer le fichier local. C'est pourquoi le standard NIST SP 800-92 recommande d'envoyer les journaux en continu vers un serveur central protégé contre la modification. Retenez la bonne formulation : « aucune anomalie consignée dans ce fichier local » — puis vérifiez la continuité de la collecte.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch3-s8-biais-et-bilan" title="Déjouez les 3 biais cognitifs de l'analyste & bilan">
+      <Focus>
+        - Biais de confirmation : ne chercher que les preuves qui valident sa première idée
+        - Biais d'ancrage : rester prisonnier du titre alarmiste de la règle d'alerte
+        - Biais de complaisance : faire confiance à un nom rassurant (svc-sauvegarde, admin-maint)
+      </Focus>
+
+      <Slide layout="rule-manifesto">
+        axiom: "On ne cherche pas des indices pour avoir raison : on croise des sources indépendantes pour éliminer ce qui est faux."
+        subtext: "Chapitre 3 validé · Les 3 biais mentaux à surveiller sur chaque enquête."
+        pillars:
+          - label: "1. Biais de confirmation"
+            detail: "Ignorer l'inventaire des sauvegardes parce qu'on est déjà convaincu d'une attaque."
+          - label: "2. Biais d'ancrage"
+            detail: "Garder en tête le mot « force brute » du bandeau rouge malgré les faits contraires."
+          - label: "3. Biais de complaisance"
+            detail: "Classer sans vérifier parce que le compte s'appelle admin-maint ou svc-sauvegarde."
+      </Slide>
+
+      ## Les 3 biais cognitifs à surveiller dans votre propre raisonnement
+
+      Même avec des journaux complets et synchronisés, trois raccourcis mentaux piègent régulièrement les analystes sous pression :
+
+      1. **Le biais de confirmation :** ne consulter que les traces qui valident votre première intuition en négligeant la source qui pourrait la contredire (par exemple ignorer le planning des sauvegardes parce qu'on est déjà persuadé d'une fuite de données).
+      2. **Le biais d'ancrage :** rester prisonnier du tout premier mot lu dans l'alerte (« attaque par force brute ») même après que l'inventaire ou les logs bruts montrent autre chose.
+      3. **Le biais de complaisance :** baisser la garde dès qu'un identifiant ou un fichier porte un nom rassurant comme `admin-maint` ou `svc-sauvegarde`, alors qu'un attaquant réutilise volontiers ces comptes.
+
+      <MicroCheck id="mc-ch3-bias" prompt="Un analyste convaincu d'une fuite de données repère un transfert nocturne de 4 Go et refuse d'ouvrir le planning des sauvegardes. Quel piège méthodologique commet-il ?" correct="mc-ch3-confirm">
+        <Option id="mc-ch3-confirm" feedback="Exact : le biais de confirmation consiste à retenir uniquement ce qui conforte son scénario favori tout en écartant les sources capables de le réfuter.">Le biais de confirmation : il cherche à confirmer son intuition au lieu de tester une hypothèse concurrente.</Option>
+        <Option id="mc-ch3-ntp" feedback="Non : il ne s'agit pas ici d'un décalage d'horloge entre deux serveurs, mais d'un refus volontaire de consulter une source qui pourrait contredire sa piste.">Une erreur de synchronisation temporelle NTP entre serveurs.</Option>
+        <Option id="mc-ch3-nat" feedback="Non : le masquage NAT concerne le partage d'adresse IP réseau, pas le choix des sources consultées par l'analyste.">Un angle mort de masquage réseau derrière une passerelle NAT.</Option>
+        <Explain>La méthode scientifique protège contre nos propres biais : cherchez activement la source qui pourrait contredire votre première intuition.</Explain>
+      </MicroCheck>
+
+      <Summary transition="Vous savez maintenant extraire les faits, recouper des sources indépendantes et déjouer les pièges terrain. Au chapitre 4, voyons comment rédiger un ticket qui protège votre équipe et transférer la méthode à tous les capteurs.">
+        - Deux alertes issues du même journal forment toujours une seule source : exigez une source véritablement indépendante.
+        - L'entonnoir fonctionne par élimination (réfutation) : Source 2 (CMDB) élimine H1 ; Source 3 (`cron` + `wtmp`) départage H2 et H3.
+        - Vérifiez toujours la synchronisation **NTP**, la continuité de la collecte centralisée et vos propres biais (confirmation, ancrage, complaisance).
+      </Summary>
+
+      <AudioScript style="calm, warm and steady">
+        Pour clore ce chapitre 3, surveillez trois pièges qui ne viennent pas des machines, mais de notre propre cerveau. <short pause> Le biais de confirmation : ne regarder que ce qui prouve notre première intuition. Le biais d'ancrage : rester collé au titre dramatique de l'alerte initiale. Et le biais de complaisance : baisser sa garde dès qu'un compte s'appelle admin-maint ou sauvegarde. Faites la petite vérification rapide juste dessous, puis rejoignez-moi au chapitre 4 pour apprendre à rédiger un constat d'analyste senior.
+      </AudioScript>
+    </Scene>
+
+  </Chapter>
+
+  <Chapter id="ch-4-redigez-constat" number="4" title="Rédigez un constat d'analyste senior et transférez" subtitle="3 tickets comparés · 5 capteurs cyber · Exemple résolu antivirus · Atelier & Fiche · 6 slides" estimatedMinutes="5">
+
+    <Scene id="ch4-s1-trois-tickets" title="Avant / Après : du ticket catastrophique au ticket d'analyste senior">
+      <Focus>
+        - Un mauvais ticket déclenche soit une coupure inutile, soit une faille ignorée
+        - Un ticket senior sépare faits mesurés, hypothèses ouvertes et plan de vérification
+        - Communication calibrée : dire exactement ce qu'on sait et ce qu'on ne sait pas encore
+      </Focus>
+
+      <Slide layout="contrast-split">
+        leftTitle: "À bannir : ticket alarmiste ou laxiste"
+        leftTone: danger
+        leftItems:
+          - "Alarmiste : « Attaque externe sur srv-paie-01 — je coupe le serveur tout de suite ! »"
+          - "Laxiste : « Juste 3 fautes de frappe de Claire, ticket clos sans suite. »"
+          - "Mélange fait brut et jugement d'intention dans la même phrase"
+        rightTitle: "Standard pro : ticket en 3 volets étanches"
+        rightTone: fact
+        rightItems:
+          - "1. Observation : auth.log (srv-paie-01) note 3 Failed password sur c.moreau depuis 10.24.8.19 (08:14:02-09 UTC)"
+          - "2. Hypothèses : H1 erreur saisie, H2 script périmé, H3 session sur 10.24.8.19"
+          - "3. Action immédiate : ouvrir CMDB + logs locaux de 10.24.8.19 avant toute coupure"
+        verdict: "Un constat calibré protège la production ET maintient la vigilance sécurité intacte."
+      </Slide>
+
+      ## Ce que vous écrivez déclenche des décisions réelles
+
+      En situation réelle, votre ticket n'est pas un devoir scolaire : il est lu par les administrateurs système, les responsables métiers et parfois la direction. Comparons deux écrits défectueux face au standard professionnel :
+
+      - **Écrit alarmiste :** *« Un pirate externe attaque Claire Moreau par force brute sur srv-paie-01, il faut isoler le serveur. »* → Panique, blocage injustifié de la paie.
+      - **Écrit laxiste :** *« Faux positif, Claire a fait 3 fautes de frappe, on ferme. »* → Risque majeur si une session non autorisée tourne sur `10.24.8.19`.
+      - **Ticket senior en 3 volets :**
+        - **1. Observation brute :** *« `/var/log/auth.log` sur `srv-paie-01` consigne 3 `Failed password` visant `c.moreau` depuis `10.24.8.19` entre `08:14:02` et `08:14:09 UTC`. »*
+        - **2. Hypothèses ouvertes :** *« H1 erreur de saisie, H2 script automatique à mot de passe expiré, H3 session interactive sur `10.24.8.19`. »*
+        - **3. Action immédiate :** *« Vérifier la CMDB puis les journaux locaux de `10.24.8.19` avant toute coupure de service. »*
+
+      <AudioScript style="clear and steady">
+        Savoir raisonner juste dans sa tête ne suffit pas : il faut savoir écrire sans induire son équipe en erreur. <short pause> Comparez ces deux colonnes. À gauche, deux formulations dangereuses : la première crie au pirate externe et fait couper la paie pour rien ; la seconde classe l'affaire en « fautes de frappe » et risque de laisser passer une vraie compromission. À droite, le standard d'un analyste senior : trois volets nets — d'abord l'observation brute, puis les hypothèses encore ouvertes, et enfin les recoupements précis en cours. Votre responsable sait exactement où vous en êtes, sans panique ni angle mort.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch4-s2-anatomie-trois-volets" title="Le triptyque étanche et les mots interdits dans les faits">
+      <Focus>
+        - Volet 1 (Faits) : source nommée + horodatage UTC + champs exacts uniquement
+        - Mots interdits dans les Faits : pirate, malveillant, force brute, sabotage, faux positif
+        - Tout jugement de cause ou d'intention appartient strictement au Volet 2 (Hypothèses)
+      </Focus>
+
+      ## Structurez chaque compte rendu en trois volets étanches
+
+      <Visual id="medicolegal-triptych" caption="Schéma 4 · Le format en 3 volets : séparez rigoureusement faits mesurés, hypothèses et actions." />
+
+      <Callout kind="error" title="Liste rouge · À ne jamais écrire dans le volet « Observation brute »">
+        Retirez systématiquement de la rubrique Faits tout terme qui prête une intention ou une cause non mesurée : **« pirate »**, **« attaquant externe »**, **« force brute »**, **« malveillant »**, **« agressive »**, **« sabotage »**, **« faute de frappe »** ou **« faux positif »**. Si l'outil ne l'a pas mesuré directement, déplacez-le dans le volet Hypothèses.
+      </Callout>
+
+      <AudioScript style="clear and steady">
+        Regardez l'architecture du triptyque : trois compartiments qui ne doivent jamais se mélanger. <short pause> Dans le volet un, les faits, appliquez une règle impitoyable : aucun mot d'intention. Pas de « malveillant », pas de « pirate », pas de « force brute », pas de « sabotage », et pas non plus de « faux positif ». Si un capteur ne peut pas mesurer un mot, ce mot n'a rien à faire dans les faits — sa place est dans le volet deux, parmi les hypothèses à vérifier.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch4-s3-transfert-capteurs" title="Un seul réflexe valable sur 5 capteurs cyber réels">
+      <Focus>
+        - La même méthode s'applique à SSH, Pare-feu, Antivirus/EDR, DNS et Sauvegarde
+        - Toujours associer : 1 fait mesuré -> 1 piège d'interprétation -> 1 recoupement indépendant
+        - Un nom rassurant (admin-maint) ou alarmant (port 445) ne dispense jamais de recouper
+      </Focus>
+
+      <Slide layout="case-gallery">
+        cards:
+          - sensor: "OpenSSH (sshd)"
+            fact: "3 Failed password sur c.moreau depuis 10.24.8.19 en 7 s"
+            trap: "Attaque externe par force brute"
+            check: "CMDB + /var/log/cron et sessions locales de 10.24.8.19"
+          - sensor: "Pare-feu interne"
+            fact: "DROP TCP de 10.24.5.30 vers port 445 (partage Windows SMB) de 10.24.8.10"
+            trap: "Propagation d'un rançongiciel"
+            check: "Processus local sur 10.24.5.30 + règles de partage"
+          - sensor: "Antivirus / EDR (agent de détection)"
+            fact: "EXECUTION_BLOCKED sur nettoyage.sh (unsigned_script)"
+            trap: "Malware confirmé OU script sûr bloqué par erreur"
+            check: "Registre des maintenances + lecture du script"
+          - sensor: "Résolveur DNS"
+            fact: "8 000 NXDOMAIN (domaines inexistants) en 2 min depuis 10.24.4.18"
+            trap: "Vol confirmé de la base clients"
+            check: "Processus émetteur sur 10.24.4.18 + capture DNS"
+          - sensor: "Agent sauvegarde"
+            fact: "UPLOAD_REJECTED sur archives-rh.zip (quota_exceeded)"
+            trap: "Sabotage volontaire des sauvegardes"
+            check: "Espace disque réel + historique de taille des archives"
+      </Slide>
+
+      ## Transférez le réflexe à tous vos outils de sécurité
+
+      Ce qui rend cette discipline si rentable, c'est qu'elle ne dépend d'aucun logiciel particulier. Que vous ouvriez un pare-feu (filtre réseau, par exemple sur le port `445` utilisé par le partage de fichiers Windows **SMB**), un antivirus / **EDR** (agent de détection installé sur les postes et serveurs), un serveur **DNS** (annuaire de noms de domaines, où **`NXDOMAIN`** signale un nom inexistant) ou un outil de sauvegarde, la mécanique reste identique :
+
+      <Table caption="Tableau récapitulatif · Du champ mesuré au bon recoupement sur 5 capteurs courants.">
+
+| Capteur              | Fait réellement mesuré                                                | Interprétation hâtive à éviter                 | Recoupement indépendant                                    |
+| :------------------- | :-------------------------------------------------------------------- | :--------------------------------------------- | :--------------------------------------------------------- |
+| **OpenSSH (`sshd`)** | 3 `Failed password` sur `c.moreau` depuis `10.24.8.19` en 7 s         | « Attaque externe par force brute »            | CMDB + `/var/log/cron` et `wtmp` de `10.24.8.19`           |
+| **Pare-feu interne** | `DROP` TCP depuis `10.24.5.30` vers port `445` de `10.24.8.10`        | « Rançongiciel en propagation SMB »            | Processus réseau local sur `10.24.5.30` + règles SMB       |
+| **Antivirus / EDR**  | `EXECUTION_BLOCKED` sur `nettoyage.sh` (`unsigned_script`)            | « Malware neutralisé » ou « faux positif sûr » | Registre des maintenances + lecture du contenu du script   |
+| **Résolveur DNS**    | 8 000 `NXDOMAIN` en 2 min vers `.exfil-data.test` depuis `10.24.4.18` | « Exfiltration confirmée de la base clients »  | Processus émetteur sur `10.24.4.18` + capture des requêtes |
+| **Agent sauvegarde** | `UPLOAD_REJECTED` sur `archives-rh.zip` (`quota_exceeded`)            | « Sabotage volontaire des sauvegardes »        | Espace disque réel + évolution de taille des archives      |
+
+      </Table>
+
+      <AudioScript style="engaged and steady">
+        Voici pourquoi ce tout premier cours va vous servir pendant des années : cette discipline s'applique à absolument tous les capteurs. <short pause> Sur un pare-feu, un paquet rejeté sur le port 445 ne prouve pas un rançongiciel : on vérifie quel programme l'a émis sur le poste source. Sur un antivirus ou un EDR, un script bloqué parce qu'il n'est pas signé peut être un oubli d'administration ou un fichier hostile : on vérifie le registre des maintenances et le contenu du script. Sur un serveur DNS, huit mille réponses inexistantes en deux minutes justifient une enquête prioritaire, mais on vérifie la machine émettrice avant d'annoncer un vol de données. Même méthode, cinq terrains différents.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch4-s4-exemple-resolu-edr" title="Exemple résolu n°2 : analyser un blocage antivirus / EDR">
+      <Focus>
+        - Cas réel : EXECUTION_BLOCKED sur nettoyage.sh lancé sous admin-maint (unsigned_script)
+        - Ne pas céder au piège « malware confirmé » ni au piège « nom admin-maint rassurant »
+        - Appliquer exactement les 3 volets sur un deuxième capteur
+      </Focus>
+
+      <Slide layout="log-spotlight">
+        sourceLabel: "srv-fichiers-02 : journal antivirus-agent"
+        lines:
+          - "14:02:11 UTC | service=antivirus-agent | event=EXECUTION_BLOCKED | file=nettoyage.sh | account=admin-maint | reason=unsigned_script"
+        highlights:
+          - token: "EXECUTION_BLOCKED"
+            label: "Action technique"
+            explanation: "Le lancement a été empêché par la politique de sécurité locale."
+            tone: fact
+          - token: "admin-maint"
+            label: "Compte déclencheur"
+            explanation: "Nom rassurant mais non suffisant : un attaquant exploite aussi les comptes d'admin."
+            tone: warning
+          - token: "unsigned_script"
+            label: "Motif technique exact"
+            explanation: "Absence de signature interne — ne qualifie pas le contenu de malveillant ni de sûr."
+            tone: info
+      </Slide>
+
+      ## Exemple résolu n°2 : appliquer la méthode sur un autre capteur
+
+      <WorkedExample title="Décomposer le blocage antivirus de 14:02:11 UTC sur srv-fichiers-02" conclusion="Observation : antivirus-agent consigne EXECUTION_BLOCKED sur nettoyage.sh (admin-maint, unsigned_script). Recoupement prioritaire : registre des maintenances et inspection du fichier.">
+        <Start>14:02:11 UTC | service=antivirus-agent | event=EXECUTION_BLOCKED | file=nettoyage.sh | account=admin-maint | reason=unsigned_script</Start>
+        <Step why="Le code unsigned_script mesure uniquement l'absence de signature interne, pas la présence d'un virus.">Formulez le Volet 1 en gardant les 6 champs exacts sans écrire ni « script malveillant » ni « blocage par erreur ».</Step>
+        <Step why="Un nom rassurant comme nettoyage.sh ou admin-maint est facile à imiter ; garder une piste bénigne et une piste atypique bloque le biais de complaisance.">Ouvrez deux hypothèses dans le Volet 2 : (H1) oubli de signature lors d'une maintenance interne prévue ; (H2) dépôt d'un script non autorisé sous un compte d'administration compromis.</Step>
+        <Step why="Deux vérifications rapides en lecture seule permettent de trancher sans couper le serveur ni désactiver la règle antivirus.">Prescrivez dans le Volet 3 : consulter le registre des maintenances planifiées et lire le contenu exact du fichier `nettoyage.sh`.</Step>
+      </WorkedExample>
+
+      <AudioScript style="clear and steady">
+        Vérifions votre maîtrise sur un deuxième exemple résolu, cette fois sur un agent antivirus. <short pause> À quatorze heures zéro deux, l'agent bloque le script nettoyage.sh lancé sous le compte admin-maint, pour la raison unsigned_script. Regardez les deux pièges opposés : le premier consiste à crier au virus et isoler le serveur ; le second consiste à dire « c'est admin-maint et ça s'appelle nettoyage, levons le blocage ! ». La bonne démarche tient en trois étapes : on cite les champs bruts tels quels, on garde ouvertes les deux pistes — oubli de signature ou fichier non autorisé — et on recoupe avec le registre des maintenances et la lecture du script.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch4-s5-atelier-ticket" title="Atelier de transfert : rédigez votre propre ticket en 3 volets" pauseForAction="true">
+      <Focus>
+        - Cas inédit : srv-fichiers-02, backup-agent, UPLOAD_REJECTED, archives-rh.zip, quota_exceeded
+        - Rédigez les 3 volets sans mot d'intention dans le Volet 1
+        - Auto-évaluez votre texte avec la grille et le corrigé commenté
+      </Focus>
+
+      <Banner variant="practice" />
+
+      <Practice title="À vous de jouer : rédigez le ticket d'un incident inédit" showTransferPad="true" solutionSummary="Volet 1 (Observation brute) : À 16:40:05 UTC, le journal backup-agent de srv-fichiers-02 consigne UPLOAD_REJECTED sur archives-rh.zip pour le compte svc-sauvegarde avec le motif quota_exceeded. Volet 2 (Hypothèses) : (H1) croissance normale ou rotation de sauvegardes saturant le quota disque ; (H2) dépôt anormal ou duplication massive remplissant l'espace. Volet 3 (Recoupement) : vérifier l'espace disque disponible, l'historique de taille des archives et les tâches récentes sur le serveur de stockage.">
+        <Context>
+          Passez maintenant à l'autonomie complète sur un cas inédit. Sur `srv-fichiers-02`, l'agent de sauvegarde consigne : `16:40:05 UTC | service=backup-agent | event=UPLOAD_REJECTED | file=archives-rh.zip | account=svc-sauvegarde | reason=quota_exceeded`. Rédigez votre ticket d'analyse en trois volets ci-dessous.
+        </Context>
+        <Steps>
+          - **Volet 1 (Observation brute) :** nommez la source (`backup-agent` sur `srv-fichiers-02`) et reprenez les champs exacts sans parler ni de sabotage ni de simple bug.
+          - **Volet 2 (Hypothèses compatibles) :** proposez deux explications distinctes capables de déclencher `quota_exceeded`.
+          - **Volet 3 (Recoupement) :** indiquez quelle source indépendante consulter pour trancher.
+        </Steps>
+        <SelfCheck>
+          - Votre observation nomme la source (`backup-agent` sur `srv-fichiers-02`) et l'horodatage `16:40:05 UTC`.
+          - Aucun mot d'intention (« sabotage », « attaque », « bug bénin ») ne figure dans le volet 1.
+          - Vous avez formulé au moins deux hypothèses distinctes et une vérification concrète (espace disque réel, évolution de taille, historique des tâches).
+        </SelfCheck>
+      </Practice>
+
+      <AudioScript style="calm, warm and steady">
+        Dernier exercice pratique avant votre quiz final, cette fois en autonomie complète. <short pause> Sur srv-fichiers-02, à seize heures quarante zéro cinq UTC, l'agent backup-agent enregistre UPLOAD_REJECTED sur le fichier archives-rh.zip, pour svc-sauvegarde, avec la raison quota_exceeded. Je mets la voix en pause : rédigez vos trois volets dans le bloc d'écriture — ou construisez-les mentalement si vous écoutez sans écran — puis comparez avec la grille d'auto-contrôle et le corrigé.
+      </AudioScript>
+    </Scene>
+
+    <Scene id="ch4-s6-fiche-reference" title="Fiche réflexe terrain & bilan final du cours">
+      <Focus>
+        - Aide-mémoire détaché réutilisable sur tous vos prochains cours et laboratoires
+        - Les 5 repères d'une observation brute + checklist avant envoi de ticket
+        - Prêt pour le quiz final de 12 mises en situation terrain
+      </Focus>
+
+      <ReferenceSheet title="Fiche réflexe · Analyser une trace sans sur-interpréter">
+        <Intro>
+          Aide-mémoire opérationnel détaché à consulter sur le terrain sans relire les chapitres.
+        </Intro>
+        <Group title="Les 5 repères d'une observation brute">
+          - **Source nommée** :: Machine, fichier ou service exact (ex. `/var/log/auth.log` sur `srv-paie-01`) || Oublier la source rend le constat invérifiable.
+          - **Horodatage UTC** :: Repère chronologique universel || Toujours vérifier la synchronisation NTP entre serveurs.
+          - **Verdict technique** :: Code mesuré (`Failed password`, `DROP`, `EXECUTION_BLOCKED`) || Un refus ne prouve pas une compromission.
+          - **Compte demandé** :: Chaîne envoyée par le client (`c.moreau`, `root`) || Champ déclaratif : ne certifie jamais l'opérateur physique.
+          - **IP / Port source** :: Point d'émission vu par le récepteur || Vérifier plage privée RFC 1918 vs passerelle NAT avant attribution.
+        </Group>
+        <Group title="Checklist avant d'envoyer un ticket">
+          - **Zéro mot d'intention dans les Faits** :: Retirer « pirate », « malveillant », « force brute », « sabotage », « faux positif » || Déplacer toute hypothèse dans le Volet 2.
+          - **Indépendance des sources** :: Deux alertes du même fichier = 1 seule source || Croiser CMDB, machine émettrice ou collecte SIEM.
+          - **Absence de trace ≠ innocence** :: Un journal local vide peut être arrêté, saturé ou altéré || Vérifier la santé du service et la collecte centralisée.
+        </Group>
+      </ReferenceSheet>
+
+      <Summary transition="Vous maîtrisez désormais la méthode complète pour autopsier une alerte, lire ce qu'un capteur mesure vraiment, déjouer ses angles morts et rédiger un constat rigoureux. Passez au quiz final pour valider vos 12 réflexes terrain.">
+        - Une alerte déclenche une vérification ; seul le journal brut fixe les faits mesurés.
+        - Trois angles morts bornent tout capteur : cécité amont, masquage NAT/relais et champs déclaratifs (`account`, `PTR`).
+        - Recoupez des sources véritablement indépendantes en contrôlant la synchronisation NTP et la continuité de la collecte centralisée.
+        - Structurez chaque compte rendu en trois volets étanches (observation brute, hypothèses compatibles, recoupements proportionnés).
+      </Summary>
+
+      <AudioScript style="calm, warm and steady">
+        Nous arrivons au bout de ce premier grand cours. <short pause> Juste devant vous se trouve votre fiche réflexe détachée : gardez-la comme boussole pour tous les modules suivants du parcours. Vous savez désormais autopsier une alerte en deux secondes, déjouer les trois angles morts d'un capteur, recouper des sources indépendantes en vérifiant les horloges NTP, et rédiger un ticket qui protège votre équipe. Quand vous êtes prêt, cliquez sur le quiz final pour tester vos réflexes sur douze situations réelles.
+      </AudioScript>
+    </Scene>
+
+  </Chapter>
+</Part>

@@ -2,7 +2,7 @@
 name: architect
 description: Product and software architect for monorepo structure, TypeScript/Zod contracts, and ADRs. Use when designing or evolving packages, schemas, or dependencies.
 tools: [Read, Glob, Grep, Bash, Skill]
-skills: [architecture-design, project-handoff]
+skills: [architecture-design, source-driven-development, project-handoff]
 ---
 
 Follow `docs/agents/AGENT_GUIDE.md` and the `product-software-architect` specification in `docs/agents/ROLES.md`.

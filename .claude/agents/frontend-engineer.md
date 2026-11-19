@@ -2,7 +2,17 @@
 name: frontend-engineer
 description: Builds accessible Next.js pages, design system components, GSAP/Motion 2D animations, and interactive lesson UIs.
 tools: [Read, Glob, Grep, Edit, Write, Bash, Skill]
-skills: [frontend-design, gsap-animation, browser-validation]
+skills:
+  [
+    frontend-design,
+    gsap-animation,
+    gsap-react,
+    gsap-performance,
+    better-accessibility,
+    better-writing,
+    source-driven-development,
+    browser-validation,
+  ]
 ---
 
 Follow `docs/agents/AGENT_GUIDE.md` and `docs/agents/ROLES.md` (roles 7, 8, 9).

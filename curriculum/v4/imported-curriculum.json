@@ -7138,9 +7138,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -7178,7 +7178,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -7214,9 +7214,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -7252,9 +7252,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -7404,9 +7404,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -7441,9 +7441,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -7496,10 +7496,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
-      "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
+      "unitId": "unit-tc00-observation-interpretation",
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.002",
@@ -7543,10 +7543,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.003",
@@ -7590,10 +7590,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.004",
@@ -7637,10 +7637,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.005",
@@ -7684,10 +7684,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.006",
@@ -7731,10 +7731,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.007",
@@ -7778,10 +7778,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.008",
@@ -7825,10 +7825,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "covered",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc00-observation-hypotheses",
-      "mappedLessonSlugs": ["scientific-reasoning-and-proof"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC00.009",
@@ -9765,10 +9765,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC01.023",
@@ -9819,10 +9819,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC01.024",
@@ -9873,10 +9873,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC01.025",
@@ -9927,10 +9927,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC01.026",
@@ -9981,10 +9981,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC01.027",
@@ -10035,10 +10035,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC01.028",
@@ -10089,10 +10089,10 @@
           "category": "reference"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-01-04",
-      "mappedLessonSlugs": ["program-memory-fundamentals"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC02.001",
@@ -12987,10 +12987,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.018",
@@ -13056,10 +13056,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.019",
@@ -13125,10 +13125,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.020",
@@ -13194,10 +13194,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.021",
@@ -13263,10 +13263,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.022",
@@ -13332,10 +13332,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.023",
@@ -13401,10 +13401,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.024",
@@ -13470,10 +13470,10 @@
           "category": "external-lab"
         }
       ],
-      "coverageState": "partial",
-      "productionState": "revue_necessaire",
+      "coverageState": "uncovered",
+      "productionState": "a_planifier",
       "unitId": "unit-tc-03-03",
-      "mappedLessonSlugs": ["tcp-three-way-handshake"]
+      "mappedLessonSlugs": []
     },
     {
       "id": "TC03.025",
@@ -64532,9 +64532,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64570,9 +64570,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64608,9 +64608,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64646,9 +64646,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64684,9 +64684,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64722,9 +64722,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64760,9 +64760,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64798,9 +64798,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64836,9 +64836,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64874,9 +64874,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64912,9 +64912,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64950,9 +64950,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -64988,9 +64988,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -65026,9 +65026,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -65064,9 +65064,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-01",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+          "rationale": "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
           "status": "proposed"
         }
       ],
@@ -65104,7 +65104,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65142,7 +65142,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65180,7 +65180,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65218,7 +65218,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65256,7 +65256,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65294,7 +65294,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65332,7 +65332,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65370,7 +65370,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65408,7 +65408,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65446,7 +65446,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65484,7 +65484,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65522,7 +65522,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65560,7 +65560,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65598,7 +65598,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65636,7 +65636,7 @@
         {
           "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+          "rationale": "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
           "status": "proposed"
         }
       ],
@@ -65672,9 +65672,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65710,9 +65710,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65748,9 +65748,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65786,9 +65786,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65824,9 +65824,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65862,9 +65862,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65900,9 +65900,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65938,9 +65938,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -65976,9 +65976,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66014,9 +66014,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66052,9 +66052,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66090,9 +66090,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66128,9 +66128,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66166,9 +66166,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66204,9 +66204,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "TC-05",
+          "targetId": "A-01",
           "targetKind": "module",
-          "rationale": "Spécification et revue critique du code produit avec copilote IA.",
+          "rationale": "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
           "status": "proposed"
         }
       ],
@@ -66242,9 +66242,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66280,9 +66280,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66318,9 +66318,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66356,9 +66356,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66394,9 +66394,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66432,9 +66432,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66470,9 +66470,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66508,9 +66508,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66546,9 +66546,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66584,9 +66584,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66622,9 +66622,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66660,9 +66660,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66698,9 +66698,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66736,9 +66736,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -66774,9 +66774,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-01",
+          "targetId": "A-05",
           "targetKind": "module",
-          "rationale": "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+          "rationale": "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
           "status": "proposed"
         }
       ],
@@ -68560,9 +68560,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68598,9 +68598,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68636,9 +68636,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68674,9 +68674,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68712,9 +68712,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68750,9 +68750,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68788,9 +68788,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68826,9 +68826,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68864,9 +68864,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68902,9 +68902,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68940,9 +68940,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -68978,9 +68978,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -69016,9 +69016,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -69054,9 +69054,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "B-02",
+          "targetId": "C-12",
           "targetKind": "module",
-          "rationale": "Surfaces cloud-native, conteneurs et orchestrateurs.",
+          "rationale": "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
           "status": "proposed"
         }
       ],
@@ -69092,9 +69092,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69130,9 +69130,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69168,9 +69168,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69206,9 +69206,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69244,9 +69244,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69282,9 +69282,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69320,9 +69320,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69358,9 +69358,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69396,9 +69396,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69434,9 +69434,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69472,9 +69472,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69510,9 +69510,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69548,9 +69548,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],
@@ -69586,9 +69586,9 @@
       "explicitPrerequisites": [],
       "proposedDependencies": [
         {
-          "targetId": "C-12",
+          "targetId": "TC-05",
           "targetKind": "module",
-          "rationale": "OPSEC, hygiène opérationnelle et protection des personnes.",
+          "rationale": "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
           "status": "proposed"
         }
       ],

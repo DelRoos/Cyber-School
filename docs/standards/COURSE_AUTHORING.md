@@ -31,7 +31,7 @@ Ce déroulé est une décision de conception du projet. Il s'appuie notamment su
 
 ## Expérience et mise en page
 
-Lire le [brief du studio](../design/LEARNING_STUDIO.md). La prose principale vise au moins 14 px sur mobile, un interligne généreux et environ 50–75 caractères par ligne. Les adresses et légendes peuvent être plus petites si elles restent lisibles. Ne pas compresser le cours pour faire tenir toutes ses notions dans un écran.
+Lire le [brief du studio](../design/LEARNING_STUDIO.md) et la [charte rédactionnelle des chapitres](./CHAPTER_EDITORIAL_CHARTER.md) (titres à l'impératif d'action, fil rouge par module V4, paragraphes courts, blocs sémantiques typés et clôture `En résumé`). La prose principale vise au moins 14 px sur mobile, un interligne généreux et environ 50–75 caractères par ligne. Les adresses et légendes peuvent être plus petites si elles restent lisibles. Ne pas compresser le cours pour faire tenir toutes ses notions dans un écran.
 
 Le mode guidé expose une étape, un exemple et une tâche identifiables. La lecture complète est disponible. Changer de chapitre conserve les réponses de la session. L'état courant, le score et les contrôles ont des intitulés explicites. Un chapitre visité n'est pas un chapitre maîtrisé.
 

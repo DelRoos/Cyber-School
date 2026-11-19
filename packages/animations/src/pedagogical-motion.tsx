@@ -50,9 +50,9 @@ export function ConceptTransformBanner({
         data-testid={testId}
         role="status"
         aria-live="polite"
-        className={`flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-xs ${TONE_CLASSES[tone]}`}
+        className={`flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2 text-sm ${TONE_CLASSES[tone]}`}
       >
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
+        <div className="flex min-w-0 grow basis-full flex-wrap items-center gap-x-2 gap-y-1 sm:basis-64">
           <span className="inline-flex shrink-0 items-center rounded bg-background/80 px-1.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wide border border-border">
             {TONE_LABELS[tone]}
           </span>
@@ -63,7 +63,7 @@ export function ConceptTransformBanner({
           <span className="text-muted-foreground">{mechanism}</span>
         </div>
         {effectDelta ? (
-          <span className="shrink-0 rounded border border-border bg-background/90 px-2 py-0.5 font-mono text-[11px] font-medium text-foreground">
+          <span className="max-w-full break-words rounded border border-border bg-background/90 px-2 py-0.5 font-mono text-[11px] font-medium text-foreground">
             {effectDelta}
           </span>
         ) : null}

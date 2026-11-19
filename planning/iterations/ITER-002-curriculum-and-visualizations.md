@@ -21,7 +21,16 @@
 - [TASK-019 — Premier lot pilote `TC-00` & cours `scientific-reasoning-and-proof`](../tasks/TASK-019-tc00-pilot-batch-and-reasoning-course.md)
 - [TASK-020 — Animations pédagogiques causales (CTML), skill `pedagogical-animation` & documentation](../tasks/TASK-020-pedagogical-animations-and-skills.md)
 - [TASK-021 — Refonte Explorable Explanation du cours pilote `program-memory-fundamentals`](../tasks/TASK-021-explorable-pilot-program-memory.md)
+- [TASK-022 — Refonte complète de la landing page et suppression des IDs internes (`TC-00`, `unit-*`)](../tasks/TASK-022-landing-page-and-no-internal-ids.md)
 
 ## Dossier de conception associé
+
+- [TASK-026 — Première leçon complète et méthode pilote](../tasks/TASK-026-first-complete-lesson-pilot.md)
+
+- [TASK-025 — Carte Parcours alignée sur le V4](../tasks/TASK-025-align-parcours-with-v4.md)
+
+- [TASK-024 — Refonte de l’orientation et des pages Parcours](../tasks/TASK-024-parcours-experience-redesign.md)
+
+- [TASK-023 — Workflow de production des pages de cours complètes](../tasks/TASK-023-complete-course-page-workflow.md)
 
 - [Conception complète du cours Mémoire des Programmes](../../docs/courses/program-memory-fundamentals/00-FICHE_REFERENCE.md)

@@ -1,0 +1,2612 @@
+{
+  "schemaVersion": "1.0",
+  "lessonId": "lesson-observation-et-interpretation",
+  "unitId": "unit-tc00-observation-interpretation",
+  "audience": "Débutants complets (aucun prérequis technique).",
+  "levelLabel": "Fondamental",
+  "introduction": "À 08:15 UTC, une alerte critique accuse un attaquant externe de forcer le serveur de paie. Maîtrisez la méthode complète d'analyse : autopsier une alerte, lire une vraie trace OpenSSH, déjouer les 3 angles morts d'un capteur, recouper des sources indépendantes et rédiger un ticket d'analyste irréprochable.",
+  "overviewNarrative": [
+    "En cybersécurité, une mauvaise interprétation prise sous pression coûte souvent plus cher que l'incident lui-même : couper un serveur de paie sur une fausse alerte bloque les salaires, tandis que classer un signal comme « faux positif » sans vérifier laisse un intrus agir librement.",
+    "Les consoles de supervision traduisent presque toujours des lignes techniques neutres en récits alarmistes : « attaquant externe », « force brute », « exfiltration ». Si vous recopiez ce récit sans revenir au journal brut, vous enquêtez sur une fiction.",
+    "Dans ce cours complet (4 chapitres, **28 slides visuelles interactives** et **2 exemples résolus**), vous prenez en main le premier incident de **TechNova** sur `srv-paie-01`. Vous allez lire de vraies lignes OpenSSH, identifier les 3 angles morts de tout capteur, manipuler un laboratoire déterministe à 3 sources, éviter le piège des horloges NTP et rédiger un constat en 3 volets.",
+    "Choisissez librement votre format : **Mode Lecture** (manuel éditorial complet et aéré) ou **Mode Écoute guidée** (présentation visuelle dynamique de 28 slides rythmées par la voix mentor, conçue pour tout comprendre sans avoir besoin de lire de longs paragraphes)."
+  ],
+  "learningObjectives": [
+    "Séparer dans une alerte les champs réellement mesurés par la machine des suppositions ajoutées par une règle automatique.",
+    "Lire les 5 repères d'une vraie entrée OpenSSH et expliquer les 3 angles morts d'un capteur (cécité amont, adresse partagée NAT/relais, données déclaratives).",
+    "Recouper des sources véritablement indépendantes (CMDB, journaux de la machine émettrice) en déjouant la dérive d'horloge NTP, l'absence trompeuse de trace et les 3 biais cognitifs d'enquête.",
+    "Rédiger un constat d'analyste en 3 volets (observation brute, hypothèses compatibles, recoupements proportionnés) transférable à 5 familles de capteurs."
+  ],
+  "prerequisites": [
+    "Aucun prérequis technique : chaque terme (`log`, `UTC`, `sshd`, `RFC 1918`, `NAT`, `CMDB`, `NTP`, `PTR`) est expliqué concrètement dès sa première apparition."
+  ],
+  "chapters": [
+    {
+      "id": "chapter-observation-vs-interpretation",
+      "title": "Séparez le fait mesuré du scénario supposé",
+      "estimatedMinutes": 30,
+      "question": "Lundi à 08:15 UTC, une alerte affirme : « Un attaquant externe tente de pirater Claire Moreau par force brute depuis 10.24.8.19 ». Le journal de srv-paie-01 ne montre que 3 refus de mot de passe en 7 secondes. Que sait-on réellement, et qu'est-ce qui a été inventé ?",
+      "objective": "Isoler les 5 champs bruts d'un relevé système, reconnaître les 3 angles morts d'un capteur, recouper des sources indépendantes et rédiger un constat rigoureux.",
+      "explanation": [
+        "Un service serveur ne voit jamais la personne derrière le clavier ni son intention : il n'enregistre que les paramètres techniques reçus sur son interface réseau.",
+        "Une observation brute nomme sa source et restitue exactement les champs enregistrés. Toute attribution d'auteur, d'intention ou de provenance non mesurée est une hypothèse à tester par recoupement indépendant."
+      ],
+      "workedExample": {
+        "title": "Autopsie des 3 lignes de 08:14 UTC sur srv-paie-01",
+        "startingPoint": "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2\nOct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2\nOct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2",
+        "steps": [
+          "Isoler les 5 champs mesurés : horodatage UTC (08:14:02 à 08:14:09), service sshd, résultat Failed password, compte demandé c.moreau et IP privée interne 10.24.8.19.",
+          "Écarter les deux ajouts non prouvés de l'alerte (« attaquant externe » est contredit par la plage privée RFC 1918 ; « force brute » suppose une intention non mesurée).",
+          "Ouvrir trois hypothèses compatibles (H1 erreur humaine, H2 script de sauvegarde expiré, H3 session shell sur 10.24.8.19) puis les filtrer via la CMDB et les journaux locaux de 10.24.8.19."
+        ],
+        "conclusion": "Avec 1 source (sshd), 3 hypothèses restent ouvertes. Le croisement de la CMDB puis des journaux locaux de 10.24.8.19 permet seul d'écarter les pistes incompatibles."
+      },
+      "predictionExerciseId": "ex-obs-01-prediction",
+      "experience": {
+        "componentId": "observation-workbench",
+        "instruction": "1. Laissez le journal sshd seul actif et changez la cause amont sur 10.24.8.19. 2. Activez l'inventaire réseau (Source 2). 3. Comparez les journaux locaux (Cas 3A et Cas 3B) et observez l'impact d'une conclusion prématurée.",
+        "observe": "Le relevé sshd reste strictement identique quelle que soit la cause amont simulée, tandis que les pistes compatibles passent de 3 à 2 puis à 1 lorsque des sources indépendantes sont recoupées.",
+        "modelLimits": "Modèle borné à 5 champs normalisés, 3 hypothèses candidates et 3 sources locales. En production, contrôlez systématiquement la synchronisation horaire NTP, les équipements NAT/relais intermédiaires et l'intégrité de la collecte centralisée."
+      },
+      "practiceExerciseIds": [
+        "ex-obs-02-classification",
+        "ex-obs-05-corroboration",
+        "ex-obs-03-sequence",
+        "ex-obs-04-transfer",
+        "ex-obs-06-account-meaning",
+        "ex-obs-07-vocabulary-bias",
+        "ex-obs-08-firewall-drop",
+        "ex-obs-09-corroboration-local-cron",
+        "ex-obs-12-ntp-drift",
+        "ex-obs-13-absence-of-log",
+        "ex-obs-16-reverse-dns-trap"
+      ],
+      "misconception": {
+        "claim": "Qualifier trois refus rapides de « tentative d'intrusion » dès l'observation brute est plus prudent en sécurité.",
+        "correction": "Au contraire : injecter une conclusion non vérifiée dans les faits déclenche des coupures de service inutiles ou oriente l'équipe sur une fausse piste. Séparez toujours le fait brut des hypothèses à tester."
+      },
+      "takeaway": "Structurez chaque analyse en trois volets : (1) observation brute attribuée à sa source, (2) hypothèses compatibles bénignes et hostiles, (3) sources indépendantes à recouper.",
+      "transferQuestion": "Sur le serveur interne srv-fichiers-02, le programme de sauvegarde enregistre : 16:40:05 UTC | service=backup-agent | event=UPLOAD_REJECTED | file=archives-rh.zip | account=svc-sauvegarde | reason=quota_exceeded. Rédigez (1) l'observation brute stricte, (2) deux hypothèses compatibles et (3) la source indépendante à consulter pour trancher.",
+      "resourceIds": [
+        "nist-sp800-92-logs",
+        "nist-sp800-61r3-analysis",
+        "ngss-practices-2013",
+        "rfc-1918"
+      ],
+      "conceptIds": ["tc00-observation-vs-interpretation"],
+      "microLessonIds": ["TC00.001"]
+    }
+  ],
+  "courseParts": [
+    {
+      "id": "part-1-faits-et-recoupement",
+      "number": 1,
+      "title": "Séparez le fait mesuré du scénario supposé",
+      "summary": "De l'alerte critique de 08:15 UTC chez TechNova jusqu'à la rédaction d'un ticket d'analyste irréprochable : maîtrisez l'autopsie des logs, les 3 angles morts d'un capteur, le recoupement multi-sources et la défense contre les biais cognitifs.",
+      "chapters": [
+        {
+          "id": "ch-1-decomposez-alerte",
+          "number": 1,
+          "title": "Autopsiez une alerte avant d'agir",
+          "subtitle": "Crise de 08:15 UTC · Alerte vs log · IP privée RFC 1918 · 7 slides",
+          "estimatedMinutes": 7,
+          "blocks": [
+            {
+              "type": "banner",
+              "variant": "welcome"
+            },
+            {
+              "type": "heading",
+              "text": "Pourquoi la précipitation est l'ennemie n°1 en cybersécurité"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Lundi matin, **08:15 UTC**, chez **TechNova**. C'est le matin des virements de paie. Sur votre console de supervision, un bandeau rouge clignote :"
+              ]
+            },
+            {
+              "type": "quote",
+              "paragraphs": [
+                "« ALERTE CRITIQUE · 08:15 UTC — Un attaquant externe tente de pirater le compte de Claire Moreau par force brute depuis 10.24.8.19 sur srv-paie-01 »"
+              ],
+              "attribution": "Console de sécurité TechNova · Règle R-AUTH-04"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Votre responsable vous appelle aussitôt : **« On coupe `srv-paie-01` et on bloque le compte de Claire maintenant ? »**",
+                "C'est exactement dans cette minute de pression que se joue le métier d'analyste. Couper le serveur par panique sur une fausse piste bloque trois cents salaires. Balayer l'alerte sans vérifier expose les données bancaires si un intrus agit vraiment."
+              ]
+            },
+            {
+              "type": "callout",
+              "kind": "information",
+              "title": "Votre objectif dans ce cours",
+              "body": "Vous allez acquérir la discipline complète qui évite ces deux fautes : **autopsier une alerte**, **lire un vrai journal système**, **repérer les 3 angles morts d'un capteur**, **recouper des sources indépendantes** et **rédiger un ticket professionnel en 3 volets**."
+            },
+            {
+              "type": "heading",
+              "text": "Une alerte n'est pas un fait : c'est une règle pré-écrite"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Avant d'appuyer sur le moindre bouton, séparez deux réalités que presque tous les débutants mélangent :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "Le journal (`log`) :",
+                  "detail": "le fichier d'historique brut écrit directement par un programme sur le serveur. Il enregistre uniquement des grandeurs techniques neutres, ligne par ligne."
+                },
+                {
+                  "lead": "L'alerte :",
+                  "detail": "un texte automatique déclenché par une règle de supervision — par exemple : *« si 3 mots de passe échouent en moins de 10 secondes, afficher : attaque externe par force brute »*."
+                }
+              ]
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Le texte alarmant que vous lisez à 08:15 UTC a donc été rédigé **des mois avant l'incident**, par quelqu'un qui ne voit même pas votre situation actuelle."
+              ]
+            },
+            {
+              "type": "callout",
+              "kind": "warning",
+              "title": "Référence officielle · NIST SP 800-92",
+              "body": "Le guide **NIST SP 800-92** (*Guide to Computer Security Log Management*) pose le principe fondateur : un outil d'alerte sert à prioriser votre attention, jamais à remplacer l'examen de l'entrée de journal brute."
+            },
+            {
+              "type": "heading",
+              "text": "Séparez au scalpel ce qui est écrit de ce qui est inventé"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Quand vous comparez le bandeau d'alerte aux trois lignes réellement écrites par `srv-paie-01`, le verdict saute aux yeux :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "5 faits réellement consignés :",
+                  "detail": "les 3 horodatages (`08:14:02`, `08:14:05`, `08:14:09 UTC`), le programme `sshd`, le refus `AUTH_FAILURE`, le nom de compte demandé `c.moreau` et l'adresse réseau `10.24.8.19`."
+                },
+                {
+                  "lead": "2 ajouts purement supposés par l'alerte :",
+                  "detail": "les mots **« attaquant externe »** et **« pirater par force brute »** n'existent nulle part dans le journal du serveur."
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "L'indice immédiat que l'alerte a raté : `10.24.8.19`"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Sur un réseau, une **adresse IP** joue le rôle d'un numéro de téléphone pour acheminer les messages d'une machine à l'autre. Comme dans un immeuble d'entreprise qui a des numéros de postes internes (`poste 402`) distincts des numéros publics joignables depuis la rue, le standard Internet **RFC 1918** réserve **trois plages d'adresses IP privées** aux réseaux internes :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "`10.0.0.0` à `10.255.255.255` (notée `10.0.0.0/8`, c'est-à-dire toutes les adresses commençant par `10.`) :",
+                  "detail": "très répandue dans les grands réseaux d'entreprises — c'est le cas de **`10.24.8.19`**."
+                },
+                {
+                  "lead": "`172.16.0.0` à `172.31.255.255` (`172.16.0.0/12`) :",
+                  "detail": "souvent utilisée pour les serveurs ou environnements internes."
+                },
+                {
+                  "lead": "`192.168.0.0` à `192.168.255.255` (`192.168.0.0/16`) :",
+                  "detail": "familière sur les box domestiques et petits bureaux."
+                }
+              ]
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Dire « attaquant externe » à la vue de `10.24.8.19` est donc **factuellement faux** : le paquet arrive bien d'une machine située sur le réseau interne de TechNova. *(En revanche, cela ne blanchit pas l'incident : une machine interne peut tout à fait être compromise ou mal configurée !)*"
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Ni paranoïaque, ni naïf : factuel"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Beaucoup de débutants pensent que « ne pas sur-interpréter » signifie « minimiser l'alerte ». C'est faux. **Deux pièges symétriques** cassent une analyse :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": true,
+              "items": [
+                {
+                  "lead": "La sur-interprétation hostile :",
+                  "detail": "écrire « tentative d'intrusion » à partir de 3 refus de mot de passe. Vous déclenchez une crise sur une hypothèse non vérifiée."
+                },
+                {
+                  "lead": "La sur-interprétation bénigne :",
+                  "detail": "écrire « Claire Moreau a fait 3 fautes de frappe » pour rassurer vite. Vous fermez les yeux sur une vraie piste interne sans aucune preuve."
+                }
+              ]
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Dans les deux cas, vous avez remplacé le fait mesuré par une histoire inventée."
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "À vous d'autopsier le message de 08:15 UTC"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Cliquez sur les différents jetons du schéma ci-dessous pour inspecter chaque fait mesuré et chaque ajout supposé de l'alerte, puis répondez à la vérification rapide :"
+              ]
+            },
+            {
+              "type": "diagram",
+              "diagramId": "signal-autopsy",
+              "caption": "Schéma 1 · Autopsie du signal : 5 données mesurées face aux 2 ajouts supposés de l'alerte."
+            },
+            {
+              "type": "micro-check",
+              "id": "mc-ch1-autopsy",
+              "prompt": "Dans l'alerte « Un attaquant externe tente de pirater c.moreau par force brute depuis 10.24.8.19 », quel indice contredit directement le mot « externe » ?",
+              "options": [
+                {
+                  "id": "mc-ch1-rfc1918",
+                  "label": "L'adresse 10.24.8.19 appartient à la plage d'adresses privées internes (10.0.0.0/8).",
+                  "feedback": "Exact : la plage 10.0.0.0/8 (RFC 1918) désigne un réseau privé interne. Parler d'attaquant externe sur cette seule base est factuellement faux."
+                },
+                {
+                  "id": "mc-ch1-three-fails",
+                  "label": "Le fait qu'il n'y ait eu que trois tentatives en sept secondes.",
+                  "feedback": "Non : le nombre d'essais (3) ne dit rien sur l'origine interne ou externe du réseau émetteur."
+                },
+                {
+                  "id": "mc-ch1-account-name",
+                  "label": "Le fait que le compte visé porte le nom d'une salariée de l'entreprise.",
+                  "feedback": "Non : un attaquant externe peut très bien viser le nom d'une salariée si un service est exposé. C'est la plage IP qui indique le réseau interne."
+                }
+              ],
+              "correctOptionId": "mc-ch1-rfc1918",
+              "explanation": "Contrôler la nature de l'adresse IP avant de répéter « externe » évite une erreur grossière dès la première minute d'analyse."
+            },
+            {
+              "type": "summary",
+              "points": [
+                "Une alerte automatique applique une règle pré-écrite ; elle extrapole souvent au-delà des données mesurées.",
+                "L'observation brute isole uniquement les 5 champs consignés (horodatage UTC, capteur, verdict, compte demandé, IP source).",
+                "L'adresse `10.24.8.19` appartient à la plage privée RFC 1918 (`10.0.0.0/8`), ce qui réfute immédiatement « attaquant externe ».",
+                "Sur-interprétation hostile (panique) et sur-interprétation bénigne (complaisance) sont deux visages de la même erreur."
+              ],
+              "transition": "Ouvrons maintenant le vrai fichier /var/log/auth.log sur srv-paie-01 au chapitre 2 pour lire une ligne OpenSSH complète et découvrir les 3 angles morts de tout capteur."
+            }
+          ],
+          "scenes": [
+            {
+              "id": "ch1-s1-crise",
+              "title": "Le dilemme de 08:15 UTC chez TechNova",
+              "focusPoints": [
+                "Lundi 08:15 UTC, matin des virements de paie chez TechNova",
+                "Couper srv-paie-01 à tort bloque 300 salaires ; ignorer un intrus expose la paie",
+                "Réflexe d'analyste : revenir au fait mesuré avant toute action d'urgence"
+              ],
+              "audioStyle": "engaged and steady",
+              "slide": {
+                "layout": "hero-dilemma",
+                "kicker": "TechNova · LUNDI 08:15 UTC · JOUR DE PAIE",
+                "headline": "Couper le serveur tout de suite ou laisser tourner ?",
+                "alertBadge": "ALERTE CRITIQUE · RÈGLE R-AUTH-04",
+                "alertText": "Un attaquant externe tente de pirater le compte de Claire Moreau par force brute depuis 10.24.8.19 sur srv-paie-01.",
+                "leftStake": {
+                  "label": "Si vous coupez à tort",
+                  "detail": "300 virements de salaires bloqués et crise interne immédiate.",
+                  "tone": "warning"
+                },
+                "rightStake": {
+                  "label": "Si vous ignorez une vraie attaque",
+                  "detail": "Accès potentiel aux données bancaires et aux paies de l'entreprise.",
+                  "tone": "danger"
+                }
+              },
+              "blocks": [
+                {
+                  "type": "banner",
+                  "variant": "welcome"
+                },
+                {
+                  "type": "heading",
+                  "text": "Pourquoi la précipitation est l'ennemie n°1 en cybersécurité"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Lundi matin, **08:15 UTC**, chez **TechNova**. C'est le matin des virements de paie. Sur votre console de supervision, un bandeau rouge clignote :"
+                  ]
+                },
+                {
+                  "type": "quote",
+                  "paragraphs": [
+                    "« ALERTE CRITIQUE · 08:15 UTC — Un attaquant externe tente de pirater le compte de Claire Moreau par force brute depuis 10.24.8.19 sur srv-paie-01 »"
+                  ],
+                  "attribution": "Console de sécurité TechNova · Règle R-AUTH-04"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Votre responsable vous appelle aussitôt : **« On coupe `srv-paie-01` et on bloque le compte de Claire maintenant ? »**",
+                    "C'est exactement dans cette minute de pression que se joue le métier d'analyste. Couper le serveur par panique sur une fausse piste bloque trois cents salaires. Balayer l'alerte sans vérifier expose les données bancaires si un intrus agit vraiment."
+                  ]
+                },
+                {
+                  "type": "callout",
+                  "kind": "information",
+                  "title": "Votre objectif dans ce cours",
+                  "body": "Vous allez acquérir la discipline complète qui évite ces deux fautes : **autopsier une alerte**, **lire un vrai journal système**, **repérer les 3 angles morts d'un capteur**, **recouper des sources indépendantes** et **rédiger un ticket professionnel en 3 volets**."
+                }
+              ]
+            },
+            {
+              "id": "ch1-s2-alerte-vs-log",
+              "title": "Ne confondez jamais une alerte et un journal brut",
+              "focusPoints": [
+                "Un journal (log) enregistre des paramètres techniques neutres à la seconde près",
+                "Une alerte est une phrase pré-écrite déclenchée par une règle simple",
+                "Règle NIST SP 800-92 : toujours remonter au journal brut avant de qualifier"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "contrast-split",
+                "leftTitle": "L'alerte (traduction automatique)",
+                "leftTone": "danger",
+                "leftItems": [
+                  "Règle écrite des mois plus tôt par un humain",
+                  "Déclenchée par un simple seuil (ex. 3 échecs en 10 s)",
+                  "Plaque un récit dramatique (« attaquant », « force brute »)",
+                  "Point de départ d'enquête — jamais une preuve"
+                ],
+                "rightTitle": "Le journal brut / log (mesure primaire)",
+                "rightTone": "fact",
+                "rightItems": [
+                  "Écrit directement par le service sur le serveur",
+                  "Horodatage, programme, résultat, compte, IP source",
+                  "Aucun adjectif, aucune émotion, aucune hypothèse",
+                  "Base indispensable pour vérifier ce qui s'est passé"
+                ],
+                "verdict": "NIST SP 800-92 : l'alerte vous dit où regarder ; seul le journal brut vous dit ce qui a été enregistré."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Une alerte n'est pas un fait : c'est une règle pré-écrite"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Avant d'appuyer sur le moindre bouton, séparez deux réalités que presque tous les débutants mélangent :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "Le journal (`log`) :",
+                      "detail": "le fichier d'historique brut écrit directement par un programme sur le serveur. Il enregistre uniquement des grandeurs techniques neutres, ligne par ligne."
+                    },
+                    {
+                      "lead": "L'alerte :",
+                      "detail": "un texte automatique déclenché par une règle de supervision — par exemple : *« si 3 mots de passe échouent en moins de 10 secondes, afficher : attaque externe par force brute »*."
+                    }
+                  ]
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Le texte alarmant que vous lisez à 08:15 UTC a donc été rédigé **des mois avant l'incident**, par quelqu'un qui ne voit même pas votre situation actuelle."
+                  ]
+                },
+                {
+                  "type": "callout",
+                  "kind": "warning",
+                  "title": "Référence officielle · NIST SP 800-92",
+                  "body": "Le guide **NIST SP 800-92** (*Guide to Computer Security Log Management*) pose le principe fondateur : un outil d'alerte sert à prioriser votre attention, jamais à remplacer l'examen de l'entrée de journal brute."
+                }
+              ]
+            },
+            {
+              "id": "ch1-s3-autopsie-faits",
+              "title": "5 données mesurées face à 2 inventions de l'alerte",
+              "focusPoints": [
+                "5 champs réels : heure UTC, service sshd, refus de mot de passe, compte c.moreau, IP 10.24.8.19",
+                "2 ajouts non prouvés : « attaquant externe » et « piratage par force brute »",
+                "Extraire les champs avant tout commentaire bloque la sur-interprétation"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "log-spotlight",
+                "sourceLabel": "Alerte R-AUTH-04 vs relevé réel de srv-paie-01",
+                "lines": [
+                  "08:14:02 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19",
+                  "08:14:05 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19",
+                  "08:14:09 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19"
+                ],
+                "highlights": [
+                  {
+                    "token": "08:14:02 UTC",
+                    "label": "1. Horodatage",
+                    "explanation": "3 essais en 7 secondes enregistrés par l'horloge du serveur.",
+                    "tone": "fact"
+                  },
+                  {
+                    "token": "service=sshd",
+                    "label": "2. Capteur",
+                    "explanation": "Le programme d'accès distant SSH qui a reçu les demandes.",
+                    "tone": "fact"
+                  },
+                  {
+                    "token": "AUTH_FAILURE",
+                    "label": "3. Résultat",
+                    "explanation": "Mot de passe refusé : l'accès n'a pas été accordé.",
+                    "tone": "fact"
+                  },
+                  {
+                    "token": "account=c.moreau",
+                    "label": "4. Compte demandé",
+                    "explanation": "Texte transmis dans la requête — pas l'identité physique de l'auteur.",
+                    "tone": "info"
+                  },
+                  {
+                    "token": "10.24.8.19",
+                    "label": "5. IP source",
+                    "explanation": "Adresse réseau privée interne à l'entreprise — pas Internet.",
+                    "tone": "warning"
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Séparez au scalpel ce qui est écrit de ce qui est inventé"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Quand vous comparez le bandeau d'alerte aux trois lignes réellement écrites par `srv-paie-01`, le verdict saute aux yeux :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "5 faits réellement consignés :",
+                      "detail": "les 3 horodatages (`08:14:02`, `08:14:05`, `08:14:09 UTC`), le programme `sshd`, le refus `AUTH_FAILURE`, le nom de compte demandé `c.moreau` et l'adresse réseau `10.24.8.19`."
+                    },
+                    {
+                      "lead": "2 ajouts purement supposés par l'alerte :",
+                      "detail": "les mots **« attaquant externe »** et **« pirater par force brute »** n'existent nulle part dans le journal du serveur."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch1-s4-ip-interne",
+              "title": "Reconnaissez une adresse interne en 2 secondes (RFC 1918)",
+              "focusPoints": [
+                "3 plages privées internes définies par RFC 1918 : 10.x, 172.16-31.x et 192.168.x",
+                "Elles fonctionnent comme un numéro de poste interne dans un immeuble",
+                "10.24.8.19 contredit directement l'affirmation « attaquant externe »"
+              ],
+              "audioStyle": "engaged and steady",
+              "slide": {
+                "layout": "rule-manifesto",
+                "axiom": "10.24.8.19 est une adresse privée interne (RFC 1918) — le mot « externe » est déjà contredit.",
+                "subtext": "Mémorisez les 3 plages privées réservées aux réseaux internes : comme un numéro de poste dans un immeuble, elles ne viennent pas directement d'Internet.",
+                "pillars": [
+                  {
+                    "label": "Plage 10.x.x.x",
+                    "detail": "De 10.0.0.0 à 10.255.255.255 — très courante en entreprise. C'est ici que se trouve 10.24.8.19."
+                  },
+                  {
+                    "label": "Plage 172.16 à 172.31",
+                    "detail": "De 172.16.0.0 à 172.31.255.255 — souvent dédiée aux serveurs et services internes."
+                  },
+                  {
+                    "label": "Plage 192.168.x.x",
+                    "detail": "De 192.168.0.0 à 192.168.255.255 — familière sur les réseaux domestiques et petits bureaux."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "L'indice immédiat que l'alerte a raté : `10.24.8.19`"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Sur un réseau, une **adresse IP** joue le rôle d'un numéro de téléphone pour acheminer les messages d'une machine à l'autre. Comme dans un immeuble d'entreprise qui a des numéros de postes internes (`poste 402`) distincts des numéros publics joignables depuis la rue, le standard Internet **RFC 1918** réserve **trois plages d'adresses IP privées** aux réseaux internes :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "`10.0.0.0` à `10.255.255.255` (notée `10.0.0.0/8`, c'est-à-dire toutes les adresses commençant par `10.`) :",
+                      "detail": "très répandue dans les grands réseaux d'entreprises — c'est le cas de **`10.24.8.19`**."
+                    },
+                    {
+                      "lead": "`172.16.0.0` à `172.31.255.255` (`172.16.0.0/12`) :",
+                      "detail": "souvent utilisée pour les serveurs ou environnements internes."
+                    },
+                    {
+                      "lead": "`192.168.0.0` à `192.168.255.255` (`192.168.0.0/16`) :",
+                      "detail": "familière sur les box domestiques et petits bureaux."
+                    }
+                  ]
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Dire « attaquant externe » à la vue de `10.24.8.19` est donc **factuellement faux** : le paquet arrive bien d'une machine située sur le réseau interne de TechNova. *(En revanche, cela ne blanchit pas l'incident : une machine interne peut tout à fait être compromise ou mal configurée !)*"
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch1-s5-deux-pieges",
+              "title": "Évitez les deux erreurs symétriques : panique et complaisance",
+              "focusPoints": [
+                "Sur-interprétation hostile : accuser une attaque sans preuve -> coupures coûteuses",
+                "Sur-interprétation bénigne : conclure « faute de frappe » sans preuve -> intrusion ratée",
+                "Les deux violent la même règle : inventer une cause non mesurée"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "contrast-split",
+                "leftTitle": "Piège A · Sur-interprétation hostile",
+                "leftTone": "danger",
+                "leftItems": [
+                  "« C'est forcément un pirate en force brute ! »",
+                  "Réflexe : couper srv-paie-01 et bloquer Claire",
+                  "Conséquence : 300 salaires bloqués pour un script mal réglé"
+                ],
+                "rightTitle": "Piège B · Sur-interprétation bénigne",
+                "rightTone": "warning",
+                "rightItems": [
+                  "« Ce sont juste 3 fautes de frappe de Claire ! »",
+                  "Réflexe : fermer l'alerte sans rien vérifier",
+                  "Conséquence : si un intrus agit depuis 10.24.8.19, il passe inaperçu"
+                ],
+                "verdict": "Une supposition rassurante est tout aussi interdite dans les faits qu'une supposition alarmiste."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Ni paranoïaque, ni naïf : factuel"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Beaucoup de débutants pensent que « ne pas sur-interpréter » signifie « minimiser l'alerte ». C'est faux. **Deux pièges symétriques** cassent une analyse :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": true,
+                  "items": [
+                    {
+                      "lead": "La sur-interprétation hostile :",
+                      "detail": "écrire « tentative d'intrusion » à partir de 3 refus de mot de passe. Vous déclenchez une crise sur une hypothèse non vérifiée."
+                    },
+                    {
+                      "lead": "La sur-interprétation bénigne :",
+                      "detail": "écrire « Claire Moreau a fait 3 fautes de frappe » pour rassurer vite. Vous fermez les yeux sur une vraie piste interne sans aucune preuve."
+                    }
+                  ]
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Dans les deux cas, vous avez remplacé le fait mesuré par une histoire inventée."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch1-s6-atelier-autopsie",
+              "title": "Atelier : autopsiez l'alerte et testez votre réflexe",
+              "focusPoints": [
+                "Inspectez chaque bloc du schéma : 5 données mesurées vs 2 conclusions hâtives",
+                "Cliquez sur « Attaquant externe » et « Force brute » pour lire la réfutation",
+                "Validez la vérification rapide avant de passer au bilan du chapitre"
+              ],
+              "pauseForAction": true,
+              "audioStyle": "calm, warm and steady",
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "À vous d'autopsier le message de 08:15 UTC"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Cliquez sur les différents jetons du schéma ci-dessous pour inspecter chaque fait mesuré et chaque ajout supposé de l'alerte, puis répondez à la vérification rapide :"
+                  ]
+                },
+                {
+                  "type": "diagram",
+                  "diagramId": "signal-autopsy",
+                  "caption": "Schéma 1 · Autopsie du signal : 5 données mesurées face aux 2 ajouts supposés de l'alerte."
+                },
+                {
+                  "type": "micro-check",
+                  "id": "mc-ch1-autopsy",
+                  "prompt": "Dans l'alerte « Un attaquant externe tente de pirater c.moreau par force brute depuis 10.24.8.19 », quel indice contredit directement le mot « externe » ?",
+                  "options": [
+                    {
+                      "id": "mc-ch1-rfc1918",
+                      "label": "L'adresse 10.24.8.19 appartient à la plage d'adresses privées internes (10.0.0.0/8).",
+                      "feedback": "Exact : la plage 10.0.0.0/8 (RFC 1918) désigne un réseau privé interne. Parler d'attaquant externe sur cette seule base est factuellement faux."
+                    },
+                    {
+                      "id": "mc-ch1-three-fails",
+                      "label": "Le fait qu'il n'y ait eu que trois tentatives en sept secondes.",
+                      "feedback": "Non : le nombre d'essais (3) ne dit rien sur l'origine interne ou externe du réseau émetteur."
+                    },
+                    {
+                      "id": "mc-ch1-account-name",
+                      "label": "Le fait que le compte visé porte le nom d'une salariée de l'entreprise.",
+                      "feedback": "Non : un attaquant externe peut très bien viser le nom d'une salariée si un service est exposé. C'est la plage IP qui indique le réseau interne."
+                    }
+                  ],
+                  "correctOptionId": "mc-ch1-rfc1918",
+                  "explanation": "Contrôler la nature de l'adresse IP avant de répéter « externe » évite une erreur grossière dès la première minute d'analyse."
+                }
+              ]
+            },
+            {
+              "id": "ch1-s7-synthese-ch1",
+              "title": "Bilan du chapitre 1 : la règle d'or de l'autopsie",
+              "focusPoints": [
+                "Revenir au log brut avant de répéter une alerte",
+                "Vérifier les plages privées RFC 1918 en 2 secondes",
+                "Bloquer à la fois la panique et la complaisance"
+              ],
+              "audioStyle": "calm, warm and steady",
+              "slide": {
+                "layout": "rule-manifesto",
+                "axiom": "Une alerte ouvre une vérification ; seul le journal brut fixe les faits.",
+                "subtext": "Chapitre 1 validé · Vous savez désormais décomposer une alerte avant d'agir.",
+                "pillars": [
+                  {
+                    "label": "1. Source avant récit",
+                    "detail": "Toujours ouvrir le log brut au lieu de recopier le titre rouge d'une console."
+                  },
+                  {
+                    "label": "2. Réflexe RFC 1918",
+                    "detail": "Repérer 10.x, 172.16-31.x et 192.168.x pour ne pas confondre réseau interne et Internet."
+                  },
+                  {
+                    "label": "3. Double garde-fou",
+                    "detail": "Refuser autant l'accusation hâtive que l'excuse rassurante sans preuve."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "summary",
+                  "points": [
+                    "Une alerte automatique applique une règle pré-écrite ; elle extrapole souvent au-delà des données mesurées.",
+                    "L'observation brute isole uniquement les 5 champs consignés (horodatage UTC, capteur, verdict, compte demandé, IP source).",
+                    "L'adresse `10.24.8.19` appartient à la plage privée RFC 1918 (`10.0.0.0/8`), ce qui réfute immédiatement « attaquant externe ».",
+                    "Sur-interprétation hostile (panique) et sur-interprétation bénigne (complaisance) sont deux visages de la même erreur."
+                  ],
+                  "transition": "Ouvrons maintenant le vrai fichier /var/log/auth.log sur srv-paie-01 au chapitre 2 pour lire une ligne OpenSSH complète et découvrir les 3 angles morts de tout capteur."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ch-2-mesure-et-angles-morts",
+          "number": 2,
+          "title": "Lisez ce qu'un capteur mesure vraiment",
+          "subtitle": "Anatomie OpenSSH · Les 3 angles morts · Exemple résolu · 7 slides",
+          "estimatedMinutes": 8,
+          "blocks": [
+            {
+              "type": "heading",
+              "text": "Ouvrez la trace primaire sur `srv-paie-01`"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Sur un serveur Linux réel, les connexions d'administration à distance passent par **SSH** (*Secure Shell*), géré par le service **`sshd`** (*SSH daemon*). Voici exactement ce qu'il consigne dans `/var/log/auth.log` :"
+              ]
+            },
+            {
+              "type": "terminal",
+              "label": "srv-paie-01 : /var/log/auth.log",
+              "content": "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2\nOct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2\nOct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2"
+            },
+            {
+              "type": "prose",
+              "paragraphs": ["Chaque fragment technique correspond à une mesure précise :"]
+            },
+            {
+              "type": "list",
+              "ordered": true,
+              "items": [
+                {
+                  "lead": "Horodatage (`08:14:02` UTC) :",
+                  "detail": "heure de l'horloge locale en temps universel **UTC** (sans ambiguïté de fuseau horaire)."
+                },
+                {
+                  "lead": "Machine et service (`srv-paie-01 sshd[18420]`) :",
+                  "detail": "serveur récepteur, démon `sshd` et son numéro de processus (**PID**), qui change à chaque nouvelle connexion (`18420`, `18423`, `18427`)."
+                },
+                {
+                  "lead": "Verdict (`Failed password for c.moreau`) :",
+                  "detail": "mot de passe non valide. *(Détail terrain précieux : lorsque le nom demandé n'existe même pas sur le serveur, OpenSSH ajoute `invalid user` devant le nom.)*"
+                },
+                {
+                  "lead": "Compte demandé (`c.moreau`) :",
+                  "detail": "identifiant texte soumis par le client dans sa requête réseau."
+                },
+                {
+                  "lead": "Origine réseau (`from 10.24.8.19 port 42118`) :",
+                  "detail": "adresse IP vue par le serveur et **port éphémère** temporaire côté client. Comme ce port change trois fois (`42118`, `42120`, `42124`), il s'agit de trois connexions réseau (**TCP**, le protocole de liaison fiable entre deux machines) séparées."
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Angle mort n°1 : ce qui se passe avant le câble réseau est invisible"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Imaginez que vous sortez de chez vous le matin et que le trottoir est mouillé. Vos yeux mesurent un seul fait : **de l'eau recouvre le bitume**. Une averse nocturne, le passage d'une arroseuse municipale ou une fuite de canalisation laissent exactement la même trace.",
+                "*(Limite de l'analogie : un serveur consigne des champs numériques bien plus structurés qu'un trottoir, mais dès qu'on remonte vers la cause humaine ou logicielle en amont, l'impasse logique est identique.)*",
+                "Le démon `sshd` est **aveugle à l'amont** : il reçoit une requête réseau et compare le mot de passe reçu au secret attendu. Il ne sait jamais si la commande a été tapée par un humain, déclenchée par une tâche automatique ou lancée par un attaquant."
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Angle mort n°2 : le masquage réseau (`NAT` et relais)"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Chez TechNova, `10.24.8.19` est une IP interne directe. Mais sur le terrain, vous rencontrerez constamment un deuxième piège : le **NAT** (*Network Address Translation*, une passerelle qui partage une seule adresse IP de sortie entre des dizaines de postes — exactement comme votre box Internet à la maison partage une seule adresse publique entre votre téléphone, votre ordinateur et votre télévision)."
+              ]
+            },
+            {
+              "type": "callout",
+              "kind": "warning",
+              "title": "Conséquence directe en lecture de journaux",
+              "body": "Lorsqu'un trafic traverse un équipement **NAT** ou un serveur relais (**proxy**), le serveur de destination enregistre **l'adresse IP de l'équipement intermédiaire**, pas celle du poste d'origine. Pour identifier la vraie machine, il faut recouper les journaux de la passerelle (avec l'heure exacte et le port source !)."
+            },
+            {
+              "type": "heading",
+              "text": "Angle mort n°3 : ce que l'émetteur choisit d'écrire lui-même"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Dernier piège subtil : un journal peut être **100 % exact** tout en contenant une **information trompeuse**, simplement parce que le champ recopie un texte librement choisi par l'émetteur !"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "Le champ `account` (`c.moreau`, `root`) :",
+                  "detail": "n'importe quel programme peut envoyer la chaîne `c.moreau` ou `admin` au serveur. Le fait mesuré est : *« cette chaîne a été soumise »*, jamais *« Claire Moreau est au clavier »*."
+                },
+                {
+                  "lead": "Le nom d'hôte inverse (`PTR DNS`) :",
+                  "detail": "certains outils traduisent une IP en nom lisible (par exemple `update-officiel-securite.example`). Or, le détenteur d'une plage d'adresses IP peut écrire **n'importe quel texte** dans son enregistrement PTR sans aucun contrôle officiel !"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Exemple résolu : décomposer une ligne sans glisser dans l'interprétation"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Suivons la méthode exacte sur la première entrée de `srv-paie-01`, en explicitant **pourquoi** chaque geste protège votre analyse :"
+              ]
+            },
+            {
+              "type": "worked-example",
+              "title": "Décomposer la ligne de 08:14:02 UTC sans sur-interpréter",
+              "startingPoint": "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2",
+              "steps": [
+                {
+                  "step": "Notez d'abord la source complète : `/var/log/auth.log` sur `srv-paie-01` (service `sshd`, PID `18420`).",
+                  "why": "Lors d'une vraie crise avec plusieurs terminaux ouverts, une note sans source exacte devient inutilisable cinq minutes plus tard."
+                },
+                {
+                  "step": "Relevez le résultat (`Failed password`) et le compte demandé (`c.moreau`) sans jamais écrire que « Claire Moreau a échoué ».",
+                  "why": "Le champ account est déclaratif : n'importe quel script ou opérateur peut soumettre la chaîne c.moreau."
+                },
+                {
+                  "step": "Notez le rythme mesuré (3 connexions sur ports `42118`, `42120`, `42124` entre `08:14:02` et `08:14:09 UTC` depuis l'IP interne `10.24.8.19`), puis ouvrez les hypothèses au lieu de conclure.",
+                  "why": "Un script en boucle de réessai automatique ou une saisie rapide génèrent facilement 3 connexions en 7 secondes."
+                }
+              ],
+              "conclusion": "Une seule source (sshd) établit 5 champs mesurés et laisse 3 hypothèses compatibles ouvertes — zéro cause n'est encore prouvée."
+            },
+            {
+              "type": "banner",
+              "variant": "practice"
+            },
+            {
+              "type": "practice",
+              "title": "À vous de jouer : éprouvez la frontière du capteur",
+              "context": "Avant de toucher aux boutons ci-dessous, formulez votre prédiction : si un script de sauvegarde remplace Claire Moreau au clavier depuis `10.24.8.19` avec le même mot de passe refusé, quels champs changent dans le journal de `srv-paie-01` ?",
+              "instructions": [
+                "Cliquez successivement sur les **3 causes amont** (Erreur humaine, Script automatique, Tentative suspecte) dans le schéma interactif ci-dessous.",
+                "Observez la ligne écrite dans `/var/log/auth.log` à droite du schéma.",
+                "Confirmez votre constat avec la vérification rapide."
+              ],
+              "solutionSummary": "Les 4 champs hors horodatage (service, event, account, source_ip) restent 100 % identiques : sshd ne voit pas comment la connexion a été déclenchée sur 10.24.8.19."
+            },
+            {
+              "type": "diagram",
+              "diagramId": "sensor-boundary",
+              "caption": "Schéma 2 · Frontière du capteur : trois causes amont opposées produisent exactement la même ligne sur srv-paie-01."
+            },
+            {
+              "type": "micro-check",
+              "id": "mc-ch2-invariance",
+              "prompt": "Si un script automatique remplace une frappe manuelle au clavier depuis 10.24.8.19 avec le même mot de passe refusé, que change sshd dans son journal ?",
+              "options": [
+                {
+                  "id": "mc-ch2-none",
+                  "label": "Rien dans les 4 champs d'identification (service, résultat, compte, IP source) : la trace reste identique.",
+                  "feedback": "Exact. Le démon sshd n'a accès qu'aux paquets réseau reçus : les quatre champs d'identification restent strictement identiques."
+                },
+                {
+                  "id": "mc-ch2-code",
+                  "label": "Le code d'événement indique désormais un échec d'automatisation au lieu d'une erreur utilisateur.",
+                  "feedback": "Non : le protocole SSH ne signale pas au serveur si le client est piloté par un clavier ou par une tâche planifiée."
+                },
+                {
+                  "id": "mc-ch2-user",
+                  "label": "Le champ compte affiche le nom du script à la place de c.moreau.",
+                  "feedback": "Non : le champ account indique le compte cible demandé sur srv-paie-01, jamais le programme local exécuté sur 10.24.8.19."
+                }
+              ],
+              "correctOptionId": "mc-ch2-none",
+              "explanation": "C'est l'inobservabilité de l'amont : plusieurs causes opposées produisent la même trace dans un capteur isolé."
+            },
+            {
+              "type": "summary",
+              "points": [
+                "Une entrée OpenSSH réelle livre 5 repères factuels (UTC, serveur/PID, verdict, compte demandé, IP/port éphémère).",
+                "Trois angles morts bornent tout capteur unique : cécité amont, partage d'IP (NAT/relais) et champs déclaratifs (`account`, `PTR`).",
+                "Pour passer du doute à une conclusion défendable, il faut interroger des sources indépendantes."
+              ],
+              "transition": "Puisqu'une seule source laisse trois causes plausibles ouvertes, apprenons au chapitre 3 à recouper des sources véritablement indépendantes sans tomber dans les pièges du terrain."
+            }
+          ],
+          "scenes": [
+            {
+              "id": "ch2-s1-log-openssh",
+              "title": "Décryptez une vraie ligne /var/log/auth.log",
+              "focusPoints": [
+                "Lire les 5 repères exacts d'une entrée OpenSSH réelle sous Linux",
+                "Distinguer compte existant (Failed password for c.moreau) et compte inexistant (invalid user)",
+                "Repérer les processus enfants (18420, 18423, 18427) et ports éphémères : 3 connexions distinctes"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "log-spotlight",
+                "sourceLabel": "srv-paie-01 : /var/log/auth.log (format OpenSSH réel)",
+                "lines": [
+                  "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2",
+                  "Oct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2",
+                  "Oct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2"
+                ],
+                "highlights": [
+                  {
+                    "token": "sshd[18420]",
+                    "label": "Programme & PID",
+                    "explanation": "Le service OpenSSH (démon réseau) ouvre un numéro de processus enfant par connexion (18420, 18423, 18427).",
+                    "tone": "fact"
+                  },
+                  {
+                    "token": "Failed password for c.moreau",
+                    "label": "Verdict & compte existant",
+                    "explanation": "Mot de passe refusé. Si le compte n'existait pas, OpenSSH écrirait « invalid user ».",
+                    "tone": "info"
+                  },
+                  {
+                    "token": "port 42118",
+                    "label": "Port éphémère client",
+                    "explanation": "42118, 42120, 42124 : trois ouvertures de connexion réseau (TCP) successives en 7 secondes.",
+                    "tone": "warning"
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Ouvrez la trace primaire sur `srv-paie-01`"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Sur un serveur Linux réel, les connexions d'administration à distance passent par **SSH** (*Secure Shell*), géré par le service **`sshd`** (*SSH daemon*). Voici exactement ce qu'il consigne dans `/var/log/auth.log` :"
+                  ]
+                },
+                {
+                  "type": "terminal",
+                  "label": "srv-paie-01 : /var/log/auth.log",
+                  "content": "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2\nOct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2\nOct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": ["Chaque fragment technique correspond à une mesure précise :"]
+                },
+                {
+                  "type": "list",
+                  "ordered": true,
+                  "items": [
+                    {
+                      "lead": "Horodatage (`08:14:02` UTC) :",
+                      "detail": "heure de l'horloge locale en temps universel **UTC** (sans ambiguïté de fuseau horaire)."
+                    },
+                    {
+                      "lead": "Machine et service (`srv-paie-01 sshd[18420]`) :",
+                      "detail": "serveur récepteur, démon `sshd` et son numéro de processus (**PID**), qui change à chaque nouvelle connexion (`18420`, `18423`, `18427`)."
+                    },
+                    {
+                      "lead": "Verdict (`Failed password for c.moreau`) :",
+                      "detail": "mot de passe non valide. *(Détail terrain précieux : lorsque le nom demandé n'existe même pas sur le serveur, OpenSSH ajoute `invalid user` devant le nom.)*"
+                    },
+                    {
+                      "lead": "Compte demandé (`c.moreau`) :",
+                      "detail": "identifiant texte soumis par le client dans sa requête réseau."
+                    },
+                    {
+                      "lead": "Origine réseau (`from 10.24.8.19 port 42118`) :",
+                      "detail": "adresse IP vue par le serveur et **port éphémère** temporaire côté client. Comme ce port change trois fois (`42118`, `42120`, `42124`), il s'agit de trois connexions réseau (**TCP**, le protocole de liaison fiable entre deux machines) séparées."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch2-s2-angle-mort-amont",
+              "title": "Angle mort n°1 : la cécité amont du capteur",
+              "focusPoints": [
+                "Un capteur réseau ne voit jamais ce qui déclenche l'envoi de l'autre côté du câble",
+                "Analogie bornée : un trottoir mouillé peut venir de la pluie, de la voirie ou d'une fuite",
+                "Erreur humaine, script automatique et intrusion produisent la même trace sshd"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "mechanism-flow",
+                "nodes": [
+                  {
+                    "title": "1. Amont inconnu",
+                    "detail": "Clavier de Claire, script cron ou session shell sur 10.24.8.19",
+                    "zone": "upstream"
+                  },
+                  {
+                    "title": "2. Frontière réseau opaque",
+                    "detail": "Le câble ne transporte que des paquets SSH, jamais l'intention ni les mains",
+                    "zone": "boundary"
+                  },
+                  {
+                    "title": "3. Capteur sshd (srv-paie-01)",
+                    "detail": "Vérifie la correspondance identifiant + mot de passe reçu",
+                    "zone": "sensor"
+                  },
+                  {
+                    "title": "4. Trace identique",
+                    "detail": "Failed password for c.moreau from 10.24.8.19",
+                    "zone": "output"
+                  }
+                ],
+                "blindSpotLabel": "Zone invisible pour sshd : humain, script ou intrus ?",
+                "takeaway": "Plusieurs causes amont incompatibles convergent vers exactement la même ligne de journal."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Angle mort n°1 : ce qui se passe avant le câble réseau est invisible"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Imaginez que vous sortez de chez vous le matin et que le trottoir est mouillé. Vos yeux mesurent un seul fait : **de l'eau recouvre le bitume**. Une averse nocturne, le passage d'une arroseuse municipale ou une fuite de canalisation laissent exactement la même trace.",
+                    "*(Limite de l'analogie : un serveur consigne des champs numériques bien plus structurés qu'un trottoir, mais dès qu'on remonte vers la cause humaine ou logicielle en amont, l'impasse logique est identique.)*",
+                    "Le démon `sshd` est **aveugle à l'amont** : il reçoit une requête réseau et compare le mot de passe reçu au secret attendu. Il ne sait jamais si la commande a été tapée par un humain, déclenchée par une tâche automatique ou lancée par un attaquant."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch2-s3-angle-mort-nat",
+              "title": "Angle mort n°2 : une adresse IP peut cacher plusieurs machines (NAT)",
+              "focusPoints": [
+                "Sur un réseau réel, une passerelle NAT ou un relais regroupe des dizaines de postes sous 1 seule IP",
+                "L'IP vue par le serveur est celle du dernier équipement qui a transmis le paquet",
+                "Règle pro : 1 adresse IP dans un log ≠ automatiquement 1 machine unique ni 1 personne"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "mechanism-flow",
+                "nodes": [
+                  {
+                    "title": "50 postes ou appareils",
+                    "detail": "Employés, imprimantes, serveurs derrière un même bureau ou Wi-Fi",
+                    "zone": "upstream"
+                  },
+                  {
+                    "title": "Passerelle NAT / Relais",
+                    "detail": "Remplace toutes les adresses internes par une seule adresse de sortie partagée",
+                    "zone": "boundary"
+                  },
+                  {
+                    "title": "Serveur distant",
+                    "detail": "Ne voit que l'adresse IP de la passerelle dans son journal",
+                    "zone": "sensor"
+                  },
+                  {
+                    "title": "Faux raccourci à éviter",
+                    "detail": "Accuser un unique utilisateur sur la seule base d'une IP partagée",
+                    "zone": "output"
+                  }
+                ],
+                "blindSpotLabel": "Masquage réseau : qui est derrière la passerelle ?",
+                "takeaway": "Une adresse IP identifie un point d'émission vu par le récepteur, pas automatiquement une personne physique."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Angle mort n°2 : le masquage réseau (`NAT` et relais)"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Chez TechNova, `10.24.8.19` est une IP interne directe. Mais sur le terrain, vous rencontrerez constamment un deuxième piège : le **NAT** (*Network Address Translation*, une passerelle qui partage une seule adresse IP de sortie entre des dizaines de postes — exactement comme votre box Internet à la maison partage une seule adresse publique entre votre téléphone, votre ordinateur et votre télévision)."
+                  ]
+                },
+                {
+                  "type": "callout",
+                  "kind": "warning",
+                  "title": "Conséquence directe en lecture de journaux",
+                  "body": "Lorsqu'un trafic traverse un équipement **NAT** ou un serveur relais (**proxy**), le serveur de destination enregistre **l'adresse IP de l'équipement intermédiaire**, pas celle du poste d'origine. Pour identifier la vraie machine, il faut recouper les journaux de la passerelle (avec l'heure exacte et le port source !)."
+                }
+              ]
+            },
+            {
+              "id": "ch2-s4-angle-mort-declaratif",
+              "title": "Angle mort n°3 : méfiez-vous des données déclaratives",
+              "focusPoints": [
+                "Certains champs d'un log recopient un texte choisi librement par l'émetteur",
+                "Exemples : le compte demandé (c.moreau / root) ou un nom d'hôte inverse DNS (PTR)",
+                "Le fait mesuré est « le capteur a reçu cette chaîne », jamais « cette identité est vraie »"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "contrast-split",
+                "leftTitle": "Donnée déclarative (contrôlée par l'émetteur)",
+                "leftTone": "warning",
+                "leftItems": [
+                  "account=c.moreau ou account=root dans un paquet SSH",
+                  "Nom inverse DNS (PTR) : « serveur-officiel-securite.example »",
+                  "N'importe qui peut inscrire un nom rassurant ou usurpé"
+                ],
+                "rightTitle": "Fait réellement certifié par le capteur",
+                "rightTone": "fact",
+                "rightItems": [
+                  "« Le client a transmis la chaîne c.moreau »",
+                  "« Le serveur DNS inverse a renvoyé cette chaîne de texte »",
+                  "L'authenticité demande toujours une vérification croisée"
+                ],
+                "verdict": "Un capteur enregistre fidèlement ce qu'on lui envoie — y compris un mensonge si le champ est déclaratif."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Angle mort n°3 : ce que l'émetteur choisit d'écrire lui-même"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Dernier piège subtil : un journal peut être **100 % exact** tout en contenant une **information trompeuse**, simplement parce que le champ recopie un texte librement choisi par l'émetteur !"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "Le champ `account` (`c.moreau`, `root`) :",
+                      "detail": "n'importe quel programme peut envoyer la chaîne `c.moreau` ou `admin` au serveur. Le fait mesuré est : *« cette chaîne a été soumise »*, jamais *« Claire Moreau est au clavier »*."
+                    },
+                    {
+                      "lead": "Le nom d'hôte inverse (`PTR DNS`) :",
+                      "detail": "certains outils traduisent une IP en nom lisible (par exemple `update-officiel-securite.example`). Or, le détenteur d'une plage d'adresses IP peut écrire **n'importe quel texte** dans son enregistrement PTR sans aucun contrôle officiel !"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch2-s5-exemple-resolu-ssh",
+              "title": "Exemple résolu : autopsie pas à pas de la ligne OpenSSH",
+              "focusPoints": [
+                "Étape 1 : nommer le fichier et le serveur exacts",
+                "Étape 2 : distinguer compte demandé et identité réelle",
+                "Étape 3 : mesurer le rythme sans plaquer l'étiquette « force brute »"
+              ],
+              "audioStyle": "calm, warm and steady",
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Exemple résolu : décomposer une ligne sans glisser dans l'interprétation"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Suivons la méthode exacte sur la première entrée de `srv-paie-01`, en explicitant **pourquoi** chaque geste protège votre analyse :"
+                  ]
+                },
+                {
+                  "type": "worked-example",
+                  "title": "Décomposer la ligne de 08:14:02 UTC sans sur-interpréter",
+                  "startingPoint": "Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2",
+                  "steps": [
+                    {
+                      "step": "Notez d'abord la source complète : `/var/log/auth.log` sur `srv-paie-01` (service `sshd`, PID `18420`).",
+                      "why": "Lors d'une vraie crise avec plusieurs terminaux ouverts, une note sans source exacte devient inutilisable cinq minutes plus tard."
+                    },
+                    {
+                      "step": "Relevez le résultat (`Failed password`) et le compte demandé (`c.moreau`) sans jamais écrire que « Claire Moreau a échoué ».",
+                      "why": "Le champ account est déclaratif : n'importe quel script ou opérateur peut soumettre la chaîne c.moreau."
+                    },
+                    {
+                      "step": "Notez le rythme mesuré (3 connexions sur ports `42118`, `42120`, `42124` entre `08:14:02` et `08:14:09 UTC` depuis l'IP interne `10.24.8.19`), puis ouvrez les hypothèses au lieu de conclure.",
+                      "why": "Un script en boucle de réessai automatique ou une saisie rapide génèrent facilement 3 connexions en 7 secondes."
+                    }
+                  ],
+                  "conclusion": "Une seule source (sshd) établit 5 champs mesurés et laisse 3 hypothèses compatibles ouvertes — zéro cause n'est encore prouvée."
+                }
+              ]
+            },
+            {
+              "id": "ch2-s6-atelier-capteur",
+              "title": "Atelier : prédisez et éprouvez l'invariance du capteur",
+              "focusPoints": [
+                "Prédisez avant de cliquer : que change sshd si un script remplace Claire ?",
+                "Basculez les 3 causes amont sur le schéma interactif juste ici",
+                "Vérifiez votre réponse avec la question rapide"
+              ],
+              "pauseForAction": true,
+              "audioStyle": "calm, warm and steady",
+              "blocks": [
+                {
+                  "type": "banner",
+                  "variant": "practice"
+                },
+                {
+                  "type": "practice",
+                  "title": "À vous de jouer : éprouvez la frontière du capteur",
+                  "context": "Avant de toucher aux boutons ci-dessous, formulez votre prédiction : si un script de sauvegarde remplace Claire Moreau au clavier depuis `10.24.8.19` avec le même mot de passe refusé, quels champs changent dans le journal de `srv-paie-01` ?",
+                  "instructions": [
+                    "Cliquez successivement sur les **3 causes amont** (Erreur humaine, Script automatique, Tentative suspecte) dans le schéma interactif ci-dessous.",
+                    "Observez la ligne écrite dans `/var/log/auth.log` à droite du schéma.",
+                    "Confirmez votre constat avec la vérification rapide."
+                  ],
+                  "solutionSummary": "Les 4 champs hors horodatage (service, event, account, source_ip) restent 100 % identiques : sshd ne voit pas comment la connexion a été déclenchée sur 10.24.8.19."
+                },
+                {
+                  "type": "diagram",
+                  "diagramId": "sensor-boundary",
+                  "caption": "Schéma 2 · Frontière du capteur : trois causes amont opposées produisent exactement la même ligne sur srv-paie-01."
+                },
+                {
+                  "type": "micro-check",
+                  "id": "mc-ch2-invariance",
+                  "prompt": "Si un script automatique remplace une frappe manuelle au clavier depuis 10.24.8.19 avec le même mot de passe refusé, que change sshd dans son journal ?",
+                  "options": [
+                    {
+                      "id": "mc-ch2-none",
+                      "label": "Rien dans les 4 champs d'identification (service, résultat, compte, IP source) : la trace reste identique.",
+                      "feedback": "Exact. Le démon sshd n'a accès qu'aux paquets réseau reçus : les quatre champs d'identification restent strictement identiques."
+                    },
+                    {
+                      "id": "mc-ch2-code",
+                      "label": "Le code d'événement indique désormais un échec d'automatisation au lieu d'une erreur utilisateur.",
+                      "feedback": "Non : le protocole SSH ne signale pas au serveur si le client est piloté par un clavier ou par une tâche planifiée."
+                    },
+                    {
+                      "id": "mc-ch2-user",
+                      "label": "Le champ compte affiche le nom du script à la place de c.moreau.",
+                      "feedback": "Non : le champ account indique le compte cible demandé sur srv-paie-01, jamais le programme local exécuté sur 10.24.8.19."
+                    }
+                  ],
+                  "correctOptionId": "mc-ch2-none",
+                  "explanation": "C'est l'inobservabilité de l'amont : plusieurs causes opposées produisent la même trace dans un capteur isolé."
+                }
+              ]
+            },
+            {
+              "id": "ch2-s7-synthese-ch2",
+              "title": "Bilan du chapitre 2 : les 3 angles morts à garder en tête",
+              "focusPoints": [
+                "Cécité amont : le capteur ne voit jamais la cause locale ni l'intention",
+                "Masquage réseau : NAT et relais peuvent regrouper plusieurs postes derrière 1 IP",
+                "Données déclaratives : compte demandé et PTR sont choisis par l'émetteur"
+              ],
+              "audioStyle": "calm, warm and steady",
+              "slide": {
+                "layout": "rule-manifesto",
+                "axiom": "Un capteur ne raconte pas ce qui s'est passé : il mesure ce qui a atteint son interface.",
+                "subtext": "Chapitre 2 validé · Vous connaissez les 3 angles morts de tout journal système.",
+                "pillars": [
+                  {
+                    "label": "1. Cécité amont",
+                    "detail": "Erreur humaine, script périmé et intrusion peuvent laisser exactement la même trace."
+                  },
+                  {
+                    "label": "2. Masquage NAT / relais",
+                    "detail": "Une IP source peut représenter une passerelle partagée par des dizaines de postes."
+                  },
+                  {
+                    "label": "3. Champs déclaratifs",
+                    "detail": "account= ou un nom PTR ne prouvent jamais l'identité réelle sans recoupement."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "summary",
+                  "points": [
+                    "Une entrée OpenSSH réelle livre 5 repères factuels (UTC, serveur/PID, verdict, compte demandé, IP/port éphémère).",
+                    "Trois angles morts bornent tout capteur unique : cécité amont, partage d'IP (NAT/relais) et champs déclaratifs (`account`, `PTR`).",
+                    "Pour passer du doute à une conclusion défendable, il faut interroger des sources indépendantes."
+                  ],
+                  "transition": "Puisqu'une seule source laisse trois causes plausibles ouvertes, apprenons au chapitre 3 à recouper des sources véritablement indépendantes sans tomber dans les pièges du terrain."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ch-3-recoupez-sources",
+          "number": 3,
+          "title": "Recoupez des sources indépendantes pour trancher",
+          "subtitle": "Indépendance · Entonnoir · Laboratoire 2D · NTP, absence de trace & biais · 8 slides",
+          "estimatedMinutes": 10,
+          "blocks": [
+            {
+              "type": "heading",
+              "text": "Posez les 3 hypothèses sur la table avant d'ouvrir une autre fenêtre"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Avec le journal `sshd` seul, nous savons une chose capitale : **il est impossible de trancher**. En revanche, nous pouvons recenser proprement les **trois hypothèses réalistes** capables de générer exactement ces trois lignes :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "Piste H1 (Erreur humaine) :",
+                  "detail": "Claire Moreau saisit trois fois un mauvais mot de passe depuis son poste."
+                },
+                {
+                  "lead": "Piste H2 (Automatisme périmé) :",
+                  "detail": "un script ou une tâche planifiée tente de se connecter avec un ancien mot de passe expiré."
+                },
+                {
+                  "lead": "Piste H3 (Session interactive sur `10.24.8.19`) :",
+                  "detail": "une personne connectée sur `10.24.8.19` tente d'accéder manuellement au serveur de paie."
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Qu'est-ce qu'une source véritablement indépendante ?"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Avant de recouper, déjouez un piège très courant sur les consoles de supervision : voir **deux alertes différentes** (par exemple *« 3 échecs SSH »* et *« Accès sur serveur critique »*) et croire que l'une confirme l'autre.",
+                "Si les deux alertes lisent le **même** fichier `/var/log/auth.log`, vous n'avez **toujours qu'une seule source**. Pour savoir s'il a vraiment plu sur le trottoir mouillé, vous ne prenez pas deux photos du même trottoir : vous regardez le toit des voitures ou un pluviomètre."
+              ]
+            },
+            {
+              "type": "callout",
+              "kind": "information",
+              "title": "Critère d'indépendance",
+              "body": "Une deuxième source est indépendante lorsqu'elle provient d'un **autre système, d'un autre capteur ou d'une autre machine** (ici : l'inventaire réseau **CMDB**, puis les journaux locaux de la machine émettrice `10.24.8.19`)."
+            },
+            {
+              "type": "heading",
+              "text": "Pourquoi l'inventaire élimine H1 mais ne suffit pas encore"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Ouvrons la **Source 2**, la **CMDB** (*Configuration Management Database*, le registre officiel qui associe chaque adresse IP à son équipement physique) :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "detail": "`10.24.2.45` est le poste de bureau de Claire Moreau."
+                },
+                {
+                  "detail": "`10.24.8.19` est **`srv-backup-interne`**, un serveur de sauvegarde rangé en baie dans la salle machine, sans écran ni clavier."
+                }
+              ]
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "**Résultat :** l'hypothèse **H1** (faute de frappe directe de Claire sur son poste) est **réfutée par un fait matériel**."
+              ]
+            },
+            {
+              "type": "callout",
+              "kind": "question",
+              "title": "Puisque 10.24.8.19 est le serveur de sauvegarde, H2 est-elle prouvée ?",
+              "body": "**Non !** C'est le piège n°1 de l'étape 2. Le rôle habituel d'un serveur ne prouve jamais quel processus a agi à `08:14 UTC`. Une session shell interactive ouverte à distance sur `srv-backup-interne` (**H3**) reste parfaitement possible tant que ses journaux locaux n'ont pas été consultés."
+            },
+            {
+              "type": "heading",
+              "text": "L'entonnoir complet : observer ce qui change entre Cas 3A et Cas 3B"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Sur la machine émettrice `10.24.8.19`, nous vérifions deux traces locales complémentaires : le journal du planificateur automatique **`/var/log/cron`** (et le journal du script `backup-sync.sh` / `sync-paie-backup.log`), ainsi que l'historique des sessions utilisateurs (**`wtmp` / `audit-sessions.log`**). Deux issues opposées deviennent immédiatement discernables :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "Cas 3A :",
+                  "detail": "`/var/log/cron` montre l'exécution planifiée du script de sauvegarde (`backup-sync.sh` / `sync-paie-backup`) à `08:14:00 UTC` (deux secondes avant le premier refus sur `srv-paie-01`), le journal applicatif affiche une erreur de mot de passe, et aucune session interactive n'est ouverte → **H2 est corroborée** (inutile de couper la paie : on renouvelle le secret du script)."
+                },
+                {
+                  "lead": "Cas 3B :",
+                  "detail": "aucune tâche planifiée à `08:14`, mais une session shell interactive ouverte à `08:13:55 UTC` sur `10.24.8.19` lance trois connexions SSH vers `srv-paie-01` → **H3 est corroborée** (là, une escalade sécurité immédiate s'impose !)."
+                }
+              ]
+            },
+            {
+              "type": "diagram",
+              "diagramId": "refutation-funnel",
+              "caption": "Schéma 3 · Entonnoir de réfutation multi-sources : comparez Cas 3A (H2), Cas 3B (H3) et l'impact d'une dérive NTP."
+            },
+            {
+              "type": "banner",
+              "variant": "practice"
+            },
+            {
+              "type": "practice",
+              "title": "À vous de jouer : pilotez le laboratoire déterministe à 3 sources",
+              "context": "Manipulez le moteur d'enquête complet ci-dessous. Contrairement à un schéma statique, ce banc d'essai vous permet de comparer les deux dénouements opposés (**Cas 3A** vs **Cas 3B**) et de vérifier les limites du modèle simulé.",
+              "instructions": [
+                "Laissez la **Source 1 seule** active et changez la cause amont : vérifiez que le compteur reste à `5 champs` et `3 pistes`.",
+                "Sélectionnez une hypothèse et cochez **Affirmer comme fait prouvé sans réserve ni mention des limites** sans recoupement : observez le verdict de conclusion prématurée, puis décochez.",
+                "Activez la **Source 2 (Inventaire CMDB)** : passez à `2 / 3` sources et `2 pistes`.",
+                "Testez enfin la **Source 3 · Cas 3A** (corroboration H2) puis la **Source 3 · Cas 3B** (corroboration H3)."
+              ],
+              "experienceId": "observation-workbench",
+              "solutionSummary": "Avec 1 source seule, affirmer une cause produit une conclusion non soutenue. La Source 2 (CMDB) élimine H1 (3 -> 2 pistes), puis la Source 3 tranche entre H2 (Cas 3A) et H3 (Cas 3B)."
+            },
+            {
+              "type": "heading",
+              "text": "Pourquoi « UTC » ne garantit pas que deux serveurs ont la même heure"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Croiser deux journaux issus de machines distinctes repose sur une hypothèse cachée : **les deux serveurs vivent à la même seconde**.",
+                "Or, l'horloge interne d'un ordinateur dérive naturellement si elle n'est pas recalée en continu par le protocole **NTP** (*Network Time Protocol*). Même si les deux fichiers affichent bien **UTC**, un simple retard de **6 secondes** sur un serveur applicatif suffit à faire apparaître l'effet (`09:12:02 UTC`) **avant** sa propre cause (`09:12:05 UTC` sur la passerelle VPN) !"
+              ]
+            },
+            {
+              "type": "callout",
+              "kind": "warning",
+              "title": "Réflexe chronologique (NIST SP 800-92)",
+              "body": "Avant d'affirmer que l'événement B s'est produit avant l'événement A sur deux machines différentes, vérifiez l'état de synchronisation **NTP** (et méfiez-vous aussi de l'heure de réception dans une console centrale, décalée par la mise en tampon des agents)."
+            },
+            {
+              "type": "heading",
+              "text": "L'absence de trace est un angle mort, pas un certificat d'innocence"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Autre raccourci dangereux : ouvrir `/var/log/audit/audit.log` sur un serveur Linux, n'y trouver aucune ligne suspecte et conclure *« il est prouvé que rien ne s'est passé »*.",
+                "Un fichier local vide sur une plage horaire prouve uniquement qu'**aucune ligne n'y figure aujourd'hui**. Plusieurs causes doivent être vérifiées : le service de journalisation arrêté, une règle d'audit absente, un disque plein, ou une altération locale. *(Et symétriquement, un fichier vide ne prouve pas non plus un effacement malveillant tant qu'on n'a pas vérifié la santé du service !)*",
+                "C'est pour préserver l'intégrité des observations que **NIST SP 800-92** recommande d'expédier les journaux en continu vers un serveur central de collecte (**SIEM**, *Security Information and Event Management*) protégé contre la modification (stockage en écriture seule dit **WORM**, *Write Once Read Many*, qu'un attaquant sur la machine source ne peut pas effacer)."
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Les 3 biais cognitifs à surveiller dans votre propre raisonnement"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Même avec des journaux complets et synchronisés, trois raccourcis mentaux piègent régulièrement les analystes sous pression :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": true,
+              "items": [
+                {
+                  "lead": "Le biais de confirmation :",
+                  "detail": "ne consulter que les traces qui valident votre première intuition en négligeant la source qui pourrait la contredire (par exemple ignorer le planning des sauvegardes parce qu'on est déjà persuadé d'une fuite de données)."
+                },
+                {
+                  "lead": "Le biais d'ancrage :",
+                  "detail": "rester prisonnier du tout premier mot lu dans l'alerte (« attaque par force brute ») même après que l'inventaire ou les logs bruts montrent autre chose."
+                },
+                {
+                  "lead": "Le biais de complaisance :",
+                  "detail": "baisser la garde dès qu'un identifiant ou un fichier porte un nom rassurant comme `admin-maint` ou `svc-sauvegarde`, alors qu'un attaquant réutilise volontiers ces comptes."
+                }
+              ]
+            },
+            {
+              "type": "micro-check",
+              "id": "mc-ch3-bias",
+              "prompt": "Un analyste convaincu d'une fuite de données repère un transfert nocturne de 4 Go et refuse d'ouvrir le planning des sauvegardes. Quel piège méthodologique commet-il ?",
+              "options": [
+                {
+                  "id": "mc-ch3-confirm",
+                  "label": "Le biais de confirmation : il cherche à confirmer son intuition au lieu de tester une hypothèse concurrente.",
+                  "feedback": "Exact : le biais de confirmation consiste à retenir uniquement ce qui conforte son scénario favori tout en écartant les sources capables de le réfuter."
+                },
+                {
+                  "id": "mc-ch3-ntp",
+                  "label": "Une erreur de synchronisation temporelle NTP entre serveurs.",
+                  "feedback": "Non : il ne s'agit pas ici d'un décalage d'horloge entre deux serveurs, mais d'un refus volontaire de consulter une source qui pourrait contredire sa piste."
+                },
+                {
+                  "id": "mc-ch3-nat",
+                  "label": "Un angle mort de masquage réseau derrière une passerelle NAT.",
+                  "feedback": "Non : le masquage NAT concerne le partage d'adresse IP réseau, pas le choix des sources consultées par l'analyste."
+                }
+              ],
+              "correctOptionId": "mc-ch3-confirm",
+              "explanation": "La méthode scientifique protège contre nos propres biais : cherchez activement la source qui pourrait contredire votre première intuition."
+            },
+            {
+              "type": "summary",
+              "points": [
+                "Deux alertes issues du même journal forment toujours une seule source : exigez une source véritablement indépendante.",
+                "L'entonnoir fonctionne par élimination (réfutation) : Source 2 (CMDB) élimine H1 ; Source 3 (`cron` + `wtmp`) départage H2 et H3.",
+                "Vérifiez toujours la synchronisation **NTP**, la continuité de la collecte centralisée et vos propres biais (confirmation, ancrage, complaisance)."
+              ],
+              "transition": "Vous savez maintenant extraire les faits, recouper des sources indépendantes et déjouer les pièges terrain. Au chapitre 4, voyons comment rédiger un ticket qui protège votre équipe et transférer la méthode à tous les capteurs."
+            }
+          ],
+          "scenes": [
+            {
+              "id": "ch3-s1-trois-hypotheses",
+              "title": "Ouvrez toutes les hypothèses compatibles avant d'enquêter",
+              "focusPoints": [
+                "Avec 1 source seule (sshd), 3 hypothèses réalistes expliquent la trace",
+                "H1 : faute de frappe de Claire · H2 : script automatique périmé · H3 : session interactive suspecte",
+                "Lister pistes bénignes ET hostiles dès le départ évite de chercher un coupable à tout prix"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "elimination-board",
+                "sourceLabel": "Source 1 seule : /var/log/auth.log sur srv-paie-01",
+                "activeSourceCount": "1 / 3 sources · 3 pistes ouvertes",
+                "hypotheses": [
+                  {
+                    "code": "H1",
+                    "title": "Erreur de frappe de Claire Moreau",
+                    "status": "open",
+                    "reason": "Compatible avec 3 refus en 7 secondes sur le compte c.moreau."
+                  },
+                  {
+                    "code": "H2",
+                    "title": "Script de sauvegarde avec ancien mot de passe",
+                    "status": "open",
+                    "reason": "Une boucle de retry automatique produit exactement 3 connexions rapides."
+                  },
+                  {
+                    "code": "H3",
+                    "title": "Session interactive ouverte sur 10.24.8.19",
+                    "status": "open",
+                    "reason": "Un opérateur ou attaquant interne peut tester c.moreau depuis cette machine."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Posez les 3 hypothèses sur la table avant d'ouvrir une autre fenêtre"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Avec le journal `sshd` seul, nous savons une chose capitale : **il est impossible de trancher**. En revanche, nous pouvons recenser proprement les **trois hypothèses réalistes** capables de générer exactement ces trois lignes :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "Piste H1 (Erreur humaine) :",
+                      "detail": "Claire Moreau saisit trois fois un mauvais mot de passe depuis son poste."
+                    },
+                    {
+                      "lead": "Piste H2 (Automatisme périmé) :",
+                      "detail": "un script ou une tâche planifiée tente de se connecter avec un ancien mot de passe expiré."
+                    },
+                    {
+                      "lead": "Piste H3 (Session interactive sur `10.24.8.19`) :",
+                      "detail": "une personne connectée sur `10.24.8.19` tente d'accéder manuellement au serveur de paie."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch3-s2-independance-sources",
+              "title": "Attention : deux alertes du même journal ne font pas deux sources !",
+              "focusPoints": [
+                "Un piège fréquent en supervision : croire que 2 alertes sur auth.log se confirment mutuellement",
+                "Si deux outils lisent le même fichier, ils ne forment qu'une seule source",
+                "Une source indépendante observe la scène depuis une autre machine ou un autre référentiel"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "contrast-split",
+                "leftTitle": "Faux recoupement (même source)",
+                "leftTone": "danger",
+                "leftItems": [
+                  "Alerte R-AUTH-04 + Alerte « Compte critique »",
+                  "Toutes deux déclenchées par les mêmes 3 lignes d'auth.log",
+                  "Résultat : 0 information nouvelle, toujours 3 pistes ouvertes"
+                ],
+                "rightTitle": "Vrai recoupement indépendant",
+                "rightTone": "fact",
+                "rightItems": [
+                  "Source 1 : /var/log/auth.log sur srv-paie-01 (récepteur)",
+                  "Source 2 : Inventaire réseau CMDB (rôle réel des machines)",
+                  "Source 3 : Journaux locaux de 10.24.8.19 (tâches planifiées et sessions)"
+                ],
+                "verdict": "NIST SP 800-61r3 : croisez des sources qui observent la réalité sous des angles indépendants."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Qu'est-ce qu'une source véritablement indépendante ?"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Avant de recouper, déjouez un piège très courant sur les consoles de supervision : voir **deux alertes différentes** (par exemple *« 3 échecs SSH »* et *« Accès sur serveur critique »*) et croire que l'une confirme l'autre.",
+                    "Si les deux alertes lisent le **même** fichier `/var/log/auth.log`, vous n'avez **toujours qu'une seule source**. Pour savoir s'il a vraiment plu sur le trottoir mouillé, vous ne prenez pas deux photos du même trottoir : vous regardez le toit des voitures ou un pluviomètre."
+                  ]
+                },
+                {
+                  "type": "callout",
+                  "kind": "information",
+                  "title": "Critère d'indépendance",
+                  "body": "Une deuxième source est indépendante lorsqu'elle provient d'un **autre système, d'un autre capteur ou d'une autre machine** (ici : l'inventaire réseau **CMDB**, puis les journaux locaux de la machine émettrice `10.24.8.19`)."
+                }
+              ]
+            },
+            {
+              "id": "ch3-s3-filtre-cmdb",
+              "title": "Source 2 (CMDB) : H1 est réfutée, mais H2 et H3 restent ouvertes !",
+              "focusPoints": [
+                "Inventaire réseau (CMDB) : 10.24.8.19 = srv-backup-interne (serveur en baie, sans clavier)",
+                "Poste de bureau de Claire Moreau = 10.24.2.45 -> H1 immédiatement éliminée",
+                "Piège subtil : connaître le rôle « sauvegarde » ne prouve pas encore H2 (H3 reste possible)"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "elimination-board",
+                "sourceLabel": "Source 2 activée : Inventaire réseau (CMDB)",
+                "activeSourceCount": "2 / 3 sources · 1 réfutée, 2 pistes ouvertes",
+                "hypotheses": [
+                  {
+                    "code": "H1",
+                    "title": "Erreur de frappe depuis le poste de Claire",
+                    "status": "refuted",
+                    "reason": "Contredite : Claire utilise 10.24.2.45 ; 10.24.8.19 est un serveur sans clavier en salle machine."
+                  },
+                  {
+                    "code": "H2",
+                    "title": "Script de sauvegarde automatique expiré",
+                    "status": "open",
+                    "reason": "Plausible sur srv-backup-interne, mais non prouvée sans lire /var/log/cron."
+                  },
+                  {
+                    "code": "H3",
+                    "title": "Session interactive ouverte sur 10.24.8.19",
+                    "status": "open",
+                    "reason": "Reste possible : un opérateur ou attaquant peut rebondir depuis ce serveur."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Pourquoi l'inventaire élimine H1 mais ne suffit pas encore"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Ouvrons la **Source 2**, la **CMDB** (*Configuration Management Database*, le registre officiel qui associe chaque adresse IP à son équipement physique) :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "detail": "`10.24.2.45` est le poste de bureau de Claire Moreau."
+                    },
+                    {
+                      "detail": "`10.24.8.19` est **`srv-backup-interne`**, un serveur de sauvegarde rangé en baie dans la salle machine, sans écran ni clavier."
+                    }
+                  ]
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "**Résultat :** l'hypothèse **H1** (faute de frappe directe de Claire sur son poste) est **réfutée par un fait matériel**."
+                  ]
+                },
+                {
+                  "type": "callout",
+                  "kind": "question",
+                  "title": "Puisque 10.24.8.19 est le serveur de sauvegarde, H2 est-elle prouvée ?",
+                  "body": "**Non !** C'est le piège n°1 de l'étape 2. Le rôle habituel d'un serveur ne prouve jamais quel processus a agi à `08:14 UTC`. Une session shell interactive ouverte à distance sur `srv-backup-interne` (**H3**) reste parfaitement possible tant que ses journaux locaux n'ont pas été consultés."
+                }
+              ]
+            },
+            {
+              "id": "ch3-s4-filtre-local",
+              "title": "Source 3 (journaux de 10.24.8.19) : départager Cas 3A et Cas 3B",
+              "focusPoints": [
+                "Ouvrir deux journaux locaux sur 10.24.8.19 : le planificateur (/var/log/cron + log backup) ET les sessions locales (wtmp / audit-sessions)",
+                "Cas 3A : le script de sauvegarde tourne à 08:14:00 et aucune session humaine active -> H2 corroborée",
+                "Cas 3B : aucune tâche planifiée, mais une session shell interactive active -> H3 corroborée"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "elimination-board",
+                "sourceLabel": "Source 3 : journaux locaux de 10.24.8.19 (exemple Cas 3A)",
+                "activeSourceCount": "3 / 3 sources · 1 hypothèse corroborée",
+                "hypotheses": [
+                  {
+                    "code": "H1",
+                    "title": "Erreur de frappe depuis le poste de Claire",
+                    "status": "refuted",
+                    "reason": "Déjà écartée par l'inventaire CMDB (poste de Claire = 10.24.2.45)."
+                  },
+                  {
+                    "code": "H2",
+                    "title": "Script de sauvegarde automatique expiré",
+                    "status": "corroborated",
+                    "reason": "Cas 3A : /var/log/cron et sync-paie-backup.log confirment le script à 08:14:00 + 0 session humaine."
+                  },
+                  {
+                    "code": "H3",
+                    "title": "Session interactive ouverte sur 10.24.8.19",
+                    "status": "refuted",
+                    "reason": "Écartée dans le Cas 3A (mais devient la piste corroborée dans le Cas 3B si les sessions montrent un shell actif !)."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "L'entonnoir complet : observer ce qui change entre Cas 3A et Cas 3B"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Sur la machine émettrice `10.24.8.19`, nous vérifions deux traces locales complémentaires : le journal du planificateur automatique **`/var/log/cron`** (et le journal du script `backup-sync.sh` / `sync-paie-backup.log`), ainsi que l'historique des sessions utilisateurs (**`wtmp` / `audit-sessions.log`**). Deux issues opposées deviennent immédiatement discernables :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "Cas 3A :",
+                      "detail": "`/var/log/cron` montre l'exécution planifiée du script de sauvegarde (`backup-sync.sh` / `sync-paie-backup`) à `08:14:00 UTC` (deux secondes avant le premier refus sur `srv-paie-01`), le journal applicatif affiche une erreur de mot de passe, et aucune session interactive n'est ouverte → **H2 est corroborée** (inutile de couper la paie : on renouvelle le secret du script)."
+                    },
+                    {
+                      "lead": "Cas 3B :",
+                      "detail": "aucune tâche planifiée à `08:14`, mais une session shell interactive ouverte à `08:13:55 UTC` sur `10.24.8.19` lance trois connexions SSH vers `srv-paie-01` → **H3 est corroborée** (là, une escalade sécurité immédiate s'impose !)."
+                    }
+                  ]
+                },
+                {
+                  "type": "diagram",
+                  "diagramId": "refutation-funnel",
+                  "caption": "Schéma 3 · Entonnoir de réfutation multi-sources : comparez Cas 3A (H2), Cas 3B (H3) et l'impact d'une dérive NTP."
+                }
+              ]
+            },
+            {
+              "id": "ch3-s5-laboratoire-reel",
+              "title": "Laboratoire déterministe : testez Cas 3A, Cas 3B et la conclusion prématurée",
+              "focusPoints": [
+                "Changez la cause amont avec Source 1 seule : 5 champs et 3 pistes restent figés",
+                "Testez la case « Affirmer comme fait prouvé sans réserve » avant recoupement -> alerte conclusion prématurée",
+                "Basculez entre Inventaire (Source 2), Cas 3A (H2) et Cas 3B (H3)"
+              ],
+              "pauseForAction": true,
+              "audioStyle": "calm, warm and steady",
+              "blocks": [
+                {
+                  "type": "banner",
+                  "variant": "practice"
+                },
+                {
+                  "type": "practice",
+                  "title": "À vous de jouer : pilotez le laboratoire déterministe à 3 sources",
+                  "context": "Manipulez le moteur d'enquête complet ci-dessous. Contrairement à un schéma statique, ce banc d'essai vous permet de comparer les deux dénouements opposés (**Cas 3A** vs **Cas 3B**) et de vérifier les limites du modèle simulé.",
+                  "instructions": [
+                    "Laissez la **Source 1 seule** active et changez la cause amont : vérifiez que le compteur reste à `5 champs` et `3 pistes`.",
+                    "Sélectionnez une hypothèse et cochez **Affirmer comme fait prouvé sans réserve ni mention des limites** sans recoupement : observez le verdict de conclusion prématurée, puis décochez.",
+                    "Activez la **Source 2 (Inventaire CMDB)** : passez à `2 / 3` sources et `2 pistes`.",
+                    "Testez enfin la **Source 3 · Cas 3A** (corroboration H2) puis la **Source 3 · Cas 3B** (corroboration H3)."
+                  ],
+                  "experienceId": "observation-workbench",
+                  "solutionSummary": "Avec 1 source seule, affirmer une cause produit une conclusion non soutenue. La Source 2 (CMDB) élimine H1 (3 -> 2 pistes), puis la Source 3 tranche entre H2 (Cas 3A) et H3 (Cas 3B)."
+                }
+              ]
+            },
+            {
+              "id": "ch3-s6-piege-ntp",
+              "title": "Piège terrain n°1 : comment la dérive NTP inverse la cause et l'effet",
+              "focusPoints": [
+                "Afficher « UTC » supprime l'erreur de fuseau horaire, PAS le retard d'une horloge locale",
+                "6 secondes de dérive entre 2 serveurs font apparaître la conséquence AVANT la cause",
+                "Réflexe NIST SP 800-92 : toujours contrôler le statut NTP avant une chronologie à la seconde"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "timeline-shift",
+                "driftNote": "Scénario réel : l'horloge du serveur applicatif retarde de 6 secondes faute de synchronisation NTP.",
+                "apparentOrder": [
+                  {
+                    "time": "09:12:02 UTC",
+                    "host": "srv-app-01 (horloge -6 s)",
+                    "event": "Événement B : ouverture de session applicative"
+                  },
+                  {
+                    "time": "09:12:05 UTC",
+                    "host": "vpn-gateway (horloge juste)",
+                    "event": "Événement A : connexion VPN entrante"
+                  }
+                ],
+                "realOrder": [
+                  {
+                    "time": "09:12:05 UTC",
+                    "host": "vpn-gateway",
+                    "event": "1. Connexion VPN entrante (vraie cause)"
+                  },
+                  {
+                    "time": "09:12:08 UTC",
+                    "host": "srv-app-01 (corrigé +6 s)",
+                    "event": "2. Session applicative (3 secondes APRÈS le VPN)"
+                  }
+                ],
+                "lesson": "Sans contrôle NTP, un analyste croit que B a précédé A et bâtit un scénario chronologique entièrement faux."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Pourquoi « UTC » ne garantit pas que deux serveurs ont la même heure"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Croiser deux journaux issus de machines distinctes repose sur une hypothèse cachée : **les deux serveurs vivent à la même seconde**.",
+                    "Or, l'horloge interne d'un ordinateur dérive naturellement si elle n'est pas recalée en continu par le protocole **NTP** (*Network Time Protocol*). Même si les deux fichiers affichent bien **UTC**, un simple retard de **6 secondes** sur un serveur applicatif suffit à faire apparaître l'effet (`09:12:02 UTC`) **avant** sa propre cause (`09:12:05 UTC` sur la passerelle VPN) !"
+                  ]
+                },
+                {
+                  "type": "callout",
+                  "kind": "warning",
+                  "title": "Réflexe chronologique (NIST SP 800-92)",
+                  "body": "Avant d'affirmer que l'événement B s'est produit avant l'événement A sur deux machines différentes, vérifiez l'état de synchronisation **NTP** (et méfiez-vous aussi de l'heure de réception dans une console centrale, décalée par la mise en tampon des agents)."
+                }
+              ]
+            },
+            {
+              "id": "ch3-s7-absence-et-integrite",
+              "title": "Piège terrain n°2 : un journal vide ne prouve jamais l'innocuité",
+              "focusPoints": [
+                "Absence de trace locale ≠ preuve d'absence d'événement",
+                "4 causes possibles : service d'audit arrêté, disque saturé, règle manquante ou effacement local",
+                "Protection NIST SP 800-92 : collecte déportée en continu vers un serveur central protégé"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "contrast-split",
+                "leftTitle": "Ce qu'un journal local vide NE prouve PAS",
+                "leftTone": "danger",
+                "leftItems": [
+                  "« Il est prouvé qu'aucune anomalie n'a eu lieu »",
+                  "Le service d'audit (auditd) a pu être arrêté ou mal configuré",
+                  "Le disque local a pu saturer et stopper l'écriture",
+                  "Un attaquant privilégié a pu tronquer le fichier local"
+                ],
+                "rightTitle": "La posture professionnelle (NIST SP 800-92)",
+                "rightTone": "fact",
+                "rightItems": [
+                  "Constater sobrement : « aucune entrée dans ce fichier local »",
+                  "Vérifier que le service tournait et couvrait bien l'action",
+                  "Recouper la copie centralisée envoyée en temps réel (SIEM)",
+                  "Ne pas conclure non plus à un effacement malveillant sans indice"
+                ],
+                "verdict": "Absence de preuve dans un capteur local ne vaut jamais preuve d'absence dans la réalité."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "L'absence de trace est un angle mort, pas un certificat d'innocence"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Autre raccourci dangereux : ouvrir `/var/log/audit/audit.log` sur un serveur Linux, n'y trouver aucune ligne suspecte et conclure *« il est prouvé que rien ne s'est passé »*.",
+                    "Un fichier local vide sur une plage horaire prouve uniquement qu'**aucune ligne n'y figure aujourd'hui**. Plusieurs causes doivent être vérifiées : le service de journalisation arrêté, une règle d'audit absente, un disque plein, ou une altération locale. *(Et symétriquement, un fichier vide ne prouve pas non plus un effacement malveillant tant qu'on n'a pas vérifié la santé du service !)*",
+                    "C'est pour préserver l'intégrité des observations que **NIST SP 800-92** recommande d'expédier les journaux en continu vers un serveur central de collecte (**SIEM**, *Security Information and Event Management*) protégé contre la modification (stockage en écriture seule dit **WORM**, *Write Once Read Many*, qu'un attaquant sur la machine source ne peut pas effacer)."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch3-s8-biais-et-bilan",
+              "title": "Déjouez les 3 biais cognitifs de l'analyste & bilan",
+              "focusPoints": [
+                "Biais de confirmation : ne chercher que les preuves qui valident sa première idée",
+                "Biais d'ancrage : rester prisonnier du titre alarmiste de la règle d'alerte",
+                "Biais de complaisance : faire confiance à un nom rassurant (svc-sauvegarde, admin-maint)"
+              ],
+              "audioStyle": "calm, warm and steady",
+              "slide": {
+                "layout": "rule-manifesto",
+                "axiom": "On ne cherche pas des indices pour avoir raison : on croise des sources indépendantes pour éliminer ce qui est faux.",
+                "subtext": "Chapitre 3 validé · Les 3 biais mentaux à surveiller sur chaque enquête.",
+                "pillars": [
+                  {
+                    "label": "1. Biais de confirmation",
+                    "detail": "Ignorer l'inventaire des sauvegardes parce qu'on est déjà convaincu d'une attaque."
+                  },
+                  {
+                    "label": "2. Biais d'ancrage",
+                    "detail": "Garder en tête le mot « force brute » du bandeau rouge malgré les faits contraires."
+                  },
+                  {
+                    "label": "3. Biais de complaisance",
+                    "detail": "Classer sans vérifier parce que le compte s'appelle admin-maint ou svc-sauvegarde."
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Les 3 biais cognitifs à surveiller dans votre propre raisonnement"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Même avec des journaux complets et synchronisés, trois raccourcis mentaux piègent régulièrement les analystes sous pression :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": true,
+                  "items": [
+                    {
+                      "lead": "Le biais de confirmation :",
+                      "detail": "ne consulter que les traces qui valident votre première intuition en négligeant la source qui pourrait la contredire (par exemple ignorer le planning des sauvegardes parce qu'on est déjà persuadé d'une fuite de données)."
+                    },
+                    {
+                      "lead": "Le biais d'ancrage :",
+                      "detail": "rester prisonnier du tout premier mot lu dans l'alerte (« attaque par force brute ») même après que l'inventaire ou les logs bruts montrent autre chose."
+                    },
+                    {
+                      "lead": "Le biais de complaisance :",
+                      "detail": "baisser la garde dès qu'un identifiant ou un fichier porte un nom rassurant comme `admin-maint` ou `svc-sauvegarde`, alors qu'un attaquant réutilise volontiers ces comptes."
+                    }
+                  ]
+                },
+                {
+                  "type": "micro-check",
+                  "id": "mc-ch3-bias",
+                  "prompt": "Un analyste convaincu d'une fuite de données repère un transfert nocturne de 4 Go et refuse d'ouvrir le planning des sauvegardes. Quel piège méthodologique commet-il ?",
+                  "options": [
+                    {
+                      "id": "mc-ch3-confirm",
+                      "label": "Le biais de confirmation : il cherche à confirmer son intuition au lieu de tester une hypothèse concurrente.",
+                      "feedback": "Exact : le biais de confirmation consiste à retenir uniquement ce qui conforte son scénario favori tout en écartant les sources capables de le réfuter."
+                    },
+                    {
+                      "id": "mc-ch3-ntp",
+                      "label": "Une erreur de synchronisation temporelle NTP entre serveurs.",
+                      "feedback": "Non : il ne s'agit pas ici d'un décalage d'horloge entre deux serveurs, mais d'un refus volontaire de consulter une source qui pourrait contredire sa piste."
+                    },
+                    {
+                      "id": "mc-ch3-nat",
+                      "label": "Un angle mort de masquage réseau derrière une passerelle NAT.",
+                      "feedback": "Non : le masquage NAT concerne le partage d'adresse IP réseau, pas le choix des sources consultées par l'analyste."
+                    }
+                  ],
+                  "correctOptionId": "mc-ch3-confirm",
+                  "explanation": "La méthode scientifique protège contre nos propres biais : cherchez activement la source qui pourrait contredire votre première intuition."
+                },
+                {
+                  "type": "summary",
+                  "points": [
+                    "Deux alertes issues du même journal forment toujours une seule source : exigez une source véritablement indépendante.",
+                    "L'entonnoir fonctionne par élimination (réfutation) : Source 2 (CMDB) élimine H1 ; Source 3 (`cron` + `wtmp`) départage H2 et H3.",
+                    "Vérifiez toujours la synchronisation **NTP**, la continuité de la collecte centralisée et vos propres biais (confirmation, ancrage, complaisance)."
+                  ],
+                  "transition": "Vous savez maintenant extraire les faits, recouper des sources indépendantes et déjouer les pièges terrain. Au chapitre 4, voyons comment rédiger un ticket qui protège votre équipe et transférer la méthode à tous les capteurs."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ch-4-redigez-constat",
+          "number": 4,
+          "title": "Rédigez un constat d'analyste senior et transférez",
+          "subtitle": "3 tickets comparés · 5 capteurs cyber · Exemple résolu antivirus · Atelier & Fiche · 6 slides",
+          "estimatedMinutes": 5,
+          "blocks": [
+            {
+              "type": "heading",
+              "text": "Ce que vous écrivez déclenche des décisions réelles"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "En situation réelle, votre ticket n'est pas un devoir scolaire : il est lu par les administrateurs système, les responsables métiers et parfois la direction. Comparons deux écrits défectueux face au standard professionnel :"
+              ]
+            },
+            {
+              "type": "list",
+              "ordered": false,
+              "items": [
+                {
+                  "lead": "Écrit alarmiste :",
+                  "detail": "*« Un pirate externe attaque Claire Moreau par force brute sur srv-paie-01, il faut isoler le serveur. »* → Panique, blocage injustifié de la paie."
+                },
+                {
+                  "lead": "Écrit laxiste :",
+                  "detail": "*« Faux positif, Claire a fait 3 fautes de frappe, on ferme. »* → Risque majeur si une session non autorisée tourne sur `10.24.8.19`."
+                },
+                {
+                  "detail": "**Ticket senior en 3 volets :**"
+                },
+                {
+                  "lead": "1. Observation brute :",
+                  "detail": "*« `/var/log/auth.log` sur `srv-paie-01` consigne 3 `Failed password` visant `c.moreau` depuis `10.24.8.19` entre `08:14:02` et `08:14:09 UTC`. »*"
+                },
+                {
+                  "lead": "2. Hypothèses ouvertes :",
+                  "detail": "*« H1 erreur de saisie, H2 script automatique à mot de passe expiré, H3 session interactive sur `10.24.8.19`. »*"
+                },
+                {
+                  "lead": "3. Action immédiate :",
+                  "detail": "*« Vérifier la CMDB puis les journaux locaux de `10.24.8.19` avant toute coupure de service. »*"
+                }
+              ]
+            },
+            {
+              "type": "heading",
+              "text": "Structurez chaque compte rendu en trois volets étanches"
+            },
+            {
+              "type": "diagram",
+              "diagramId": "medicolegal-triptych",
+              "caption": "Schéma 4 · Le format en 3 volets : séparez rigoureusement faits mesurés, hypothèses et actions."
+            },
+            {
+              "type": "callout",
+              "kind": "error",
+              "title": "Liste rouge · À ne jamais écrire dans le volet « Observation brute »",
+              "body": "Retirez systématiquement de la rubrique Faits tout terme qui prête une intention ou une cause non mesurée : **« pirate »**, **« attaquant externe »**, **« force brute »**, **« malveillant »**, **« agressive »**, **« sabotage »**, **« faute de frappe »** ou **« faux positif »**. Si l'outil ne l'a pas mesuré directement, déplacez-le dans le volet Hypothèses."
+            },
+            {
+              "type": "heading",
+              "text": "Transférez le réflexe à tous vos outils de sécurité"
+            },
+            {
+              "type": "prose",
+              "paragraphs": [
+                "Ce qui rend cette discipline si rentable, c'est qu'elle ne dépend d'aucun logiciel particulier. Que vous ouvriez un pare-feu (filtre réseau, par exemple sur le port `445` utilisé par le partage de fichiers Windows **SMB**), un antivirus / **EDR** (agent de détection installé sur les postes et serveurs), un serveur **DNS** (annuaire de noms de domaines, où **`NXDOMAIN`** signale un nom inexistant) ou un outil de sauvegarde, la mécanique reste identique :"
+              ]
+            },
+            {
+              "type": "table",
+              "headers": [
+                "Capteur",
+                "Fait réellement mesuré",
+                "Interprétation hâtive à éviter",
+                "Recoupement indépendant"
+              ],
+              "rows": [
+                [
+                  "**OpenSSH (`sshd`)**",
+                  "3 `Failed password` sur `c.moreau` depuis `10.24.8.19` en 7 s",
+                  "« Attaque externe par force brute »",
+                  "CMDB + `/var/log/cron` et `wtmp` de `10.24.8.19`"
+                ],
+                [
+                  "**Pare-feu interne**",
+                  "`DROP` TCP depuis `10.24.5.30` vers port `445` de `10.24.8.10`",
+                  "« Rançongiciel en propagation SMB »",
+                  "Processus réseau local sur `10.24.5.30` + règles SMB"
+                ],
+                [
+                  "**Antivirus / EDR**",
+                  "`EXECUTION_BLOCKED` sur `nettoyage.sh` (`unsigned_script`)",
+                  "« Malware neutralisé » ou « faux positif sûr »",
+                  "Registre des maintenances + lecture du contenu du script"
+                ],
+                [
+                  "**Résolveur DNS**",
+                  "8 000 `NXDOMAIN` en 2 min vers `.exfil-data.test` depuis `10.24.4.18`",
+                  "« Exfiltration confirmée de la base clients »",
+                  "Processus émetteur sur `10.24.4.18` + capture des requêtes"
+                ],
+                [
+                  "**Agent sauvegarde**",
+                  "`UPLOAD_REJECTED` sur `archives-rh.zip` (`quota_exceeded`)",
+                  "« Sabotage volontaire des sauvegardes »",
+                  "Espace disque réel + évolution de taille des archives"
+                ]
+              ],
+              "caption": "Tableau récapitulatif · Du champ mesuré au bon recoupement sur 5 capteurs courants."
+            },
+            {
+              "type": "heading",
+              "text": "Exemple résolu n°2 : appliquer la méthode sur un autre capteur"
+            },
+            {
+              "type": "worked-example",
+              "title": "Décomposer le blocage antivirus de 14:02:11 UTC sur srv-fichiers-02",
+              "startingPoint": "14:02:11 UTC | service=antivirus-agent | event=EXECUTION_BLOCKED | file=nettoyage.sh | account=admin-maint | reason=unsigned_script",
+              "steps": [
+                {
+                  "step": "Formulez le Volet 1 en gardant les 6 champs exacts sans écrire ni « script malveillant » ni « blocage par erreur ».",
+                  "why": "Le code unsigned_script mesure uniquement l'absence de signature interne, pas la présence d'un virus."
+                },
+                {
+                  "step": "Ouvrez deux hypothèses dans le Volet 2 : (H1) oubli de signature lors d'une maintenance interne prévue ; (H2) dépôt d'un script non autorisé sous un compte d'administration compromis.",
+                  "why": "Un nom rassurant comme nettoyage.sh ou admin-maint est facile à imiter ; garder une piste bénigne et une piste atypique bloque le biais de complaisance."
+                },
+                {
+                  "step": "Prescrivez dans le Volet 3 : consulter le registre des maintenances planifiées et lire le contenu exact du fichier `nettoyage.sh`.",
+                  "why": "Deux vérifications rapides en lecture seule permettent de trancher sans couper le serveur ni désactiver la règle antivirus."
+                }
+              ],
+              "conclusion": "Observation : antivirus-agent consigne EXECUTION_BLOCKED sur nettoyage.sh (admin-maint, unsigned_script). Recoupement prioritaire : registre des maintenances et inspection du fichier."
+            },
+            {
+              "type": "banner",
+              "variant": "practice"
+            },
+            {
+              "type": "practice",
+              "title": "À vous de jouer : rédigez le ticket d'un incident inédit",
+              "context": "Passez maintenant à l'autonomie complète sur un cas inédit. Sur `srv-fichiers-02`, l'agent de sauvegarde consigne : `16:40:05 UTC | service=backup-agent | event=UPLOAD_REJECTED | file=archives-rh.zip | account=svc-sauvegarde | reason=quota_exceeded`. Rédigez votre ticket d'analyse en trois volets ci-dessous.",
+              "instructions": [
+                "**Volet 1 (Observation brute) :** nommez la source (`backup-agent` sur `srv-fichiers-02`) et reprenez les champs exacts sans parler ni de sabotage ni de simple bug.",
+                "**Volet 2 (Hypothèses compatibles) :** proposez deux explications distinctes capables de déclencher `quota_exceeded`.",
+                "**Volet 3 (Recoupement) :** indiquez quelle source indépendante consulter pour trancher."
+              ],
+              "showTransferPad": true,
+              "selfCheckPoints": [
+                "Votre observation nomme la source (`backup-agent` sur `srv-fichiers-02`) et l'horodatage `16:40:05 UTC`.",
+                "Aucun mot d'intention (« sabotage », « attaque », « bug bénin ») ne figure dans le volet 1.",
+                "Vous avez formulé au moins deux hypothèses distinctes et une vérification concrète (espace disque réel, évolution de taille, historique des tâches)."
+              ],
+              "solutionSummary": "Volet 1 (Observation brute) : À 16:40:05 UTC, le journal backup-agent de srv-fichiers-02 consigne UPLOAD_REJECTED sur archives-rh.zip pour le compte svc-sauvegarde avec le motif quota_exceeded. Volet 2 (Hypothèses) : (H1) croissance normale ou rotation de sauvegardes saturant le quota disque ; (H2) dépôt anormal ou duplication massive remplissant l'espace. Volet 3 (Recoupement) : vérifier l'espace disque disponible, l'historique de taille des archives et les tâches récentes sur le serveur de stockage."
+            },
+            {
+              "type": "reference-sheet",
+              "title": "Fiche réflexe · Analyser une trace sans sur-interpréter",
+              "intro": "Aide-mémoire opérationnel détaché à consulter sur le terrain sans relire les chapitres.",
+              "groups": [
+                {
+                  "title": "Les 5 repères d'une observation brute",
+                  "items": [
+                    {
+                      "term": "Source nommée",
+                      "meaning": "Machine, fichier ou service exact (ex. `/var/log/auth.log` sur `srv-paie-01`)",
+                      "pitfall": "Oublier la source rend le constat invérifiable."
+                    },
+                    {
+                      "term": "Horodatage UTC",
+                      "meaning": "Repère chronologique universel",
+                      "pitfall": "Toujours vérifier la synchronisation NTP entre serveurs."
+                    },
+                    {
+                      "term": "Verdict technique",
+                      "meaning": "Code mesuré (`Failed password`, `DROP`, `EXECUTION_BLOCKED`)",
+                      "pitfall": "Un refus ne prouve pas une compromission."
+                    },
+                    {
+                      "term": "Compte demandé",
+                      "meaning": "Chaîne envoyée par le client (`c.moreau`, `root`)",
+                      "pitfall": "Champ déclaratif : ne certifie jamais l'opérateur physique."
+                    },
+                    {
+                      "term": "IP / Port source",
+                      "meaning": "Point d'émission vu par le récepteur",
+                      "pitfall": "Vérifier plage privée RFC 1918 vs passerelle NAT avant attribution."
+                    }
+                  ]
+                },
+                {
+                  "title": "Checklist avant d'envoyer un ticket",
+                  "items": [
+                    {
+                      "term": "Zéro mot d'intention dans les Faits",
+                      "meaning": "Retirer « pirate », « malveillant », « force brute », « sabotage », « faux positif »",
+                      "pitfall": "Déplacer toute hypothèse dans le Volet 2."
+                    },
+                    {
+                      "term": "Indépendance des sources",
+                      "meaning": "Deux alertes du même fichier = 1 seule source",
+                      "pitfall": "Croiser CMDB, machine émettrice ou collecte SIEM."
+                    },
+                    {
+                      "term": "Absence de trace ≠ innocence",
+                      "meaning": "Un journal local vide peut être arrêté, saturé ou altéré",
+                      "pitfall": "Vérifier la santé du service et la collecte centralisée."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "summary",
+              "points": [
+                "Une alerte déclenche une vérification ; seul le journal brut fixe les faits mesurés.",
+                "Trois angles morts bornent tout capteur : cécité amont, masquage NAT/relais et champs déclaratifs (`account`, `PTR`).",
+                "Recoupez des sources véritablement indépendantes en contrôlant la synchronisation NTP et la continuité de la collecte centralisée.",
+                "Structurez chaque compte rendu en trois volets étanches (observation brute, hypothèses compatibles, recoupements proportionnés)."
+              ],
+              "transition": "Vous maîtrisez désormais la méthode complète pour autopsier une alerte, lire ce qu'un capteur mesure vraiment, déjouer ses angles morts et rédiger un constat rigoureux. Passez au quiz final pour valider vos 12 réflexes terrain."
+            }
+          ],
+          "scenes": [
+            {
+              "id": "ch4-s1-trois-tickets",
+              "title": "Avant / Après : du ticket catastrophique au ticket d'analyste senior",
+              "focusPoints": [
+                "Un mauvais ticket déclenche soit une coupure inutile, soit une faille ignorée",
+                "Un ticket senior sépare faits mesurés, hypothèses ouvertes et plan de vérification",
+                "Communication calibrée : dire exactement ce qu'on sait et ce qu'on ne sait pas encore"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "contrast-split",
+                "leftTitle": "À bannir : ticket alarmiste ou laxiste",
+                "leftTone": "danger",
+                "leftItems": [
+                  "Alarmiste : « Attaque externe sur srv-paie-01 — je coupe le serveur tout de suite ! »",
+                  "Laxiste : « Juste 3 fautes de frappe de Claire, ticket clos sans suite. »",
+                  "Mélange fait brut et jugement d'intention dans la même phrase"
+                ],
+                "rightTitle": "Standard pro : ticket en 3 volets étanches",
+                "rightTone": "fact",
+                "rightItems": [
+                  "1. Observation : auth.log (srv-paie-01) note 3 Failed password sur c.moreau depuis 10.24.8.19 (08:14:02-09 UTC)",
+                  "2. Hypothèses : H1 erreur saisie, H2 script périmé, H3 session sur 10.24.8.19",
+                  "3. Action immédiate : ouvrir CMDB + logs locaux de 10.24.8.19 avant toute coupure"
+                ],
+                "verdict": "Un constat calibré protège la production ET maintient la vigilance sécurité intacte."
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Ce que vous écrivez déclenche des décisions réelles"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "En situation réelle, votre ticket n'est pas un devoir scolaire : il est lu par les administrateurs système, les responsables métiers et parfois la direction. Comparons deux écrits défectueux face au standard professionnel :"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "ordered": false,
+                  "items": [
+                    {
+                      "lead": "Écrit alarmiste :",
+                      "detail": "*« Un pirate externe attaque Claire Moreau par force brute sur srv-paie-01, il faut isoler le serveur. »* → Panique, blocage injustifié de la paie."
+                    },
+                    {
+                      "lead": "Écrit laxiste :",
+                      "detail": "*« Faux positif, Claire a fait 3 fautes de frappe, on ferme. »* → Risque majeur si une session non autorisée tourne sur `10.24.8.19`."
+                    },
+                    {
+                      "detail": "**Ticket senior en 3 volets :**"
+                    },
+                    {
+                      "lead": "1. Observation brute :",
+                      "detail": "*« `/var/log/auth.log` sur `srv-paie-01` consigne 3 `Failed password` visant `c.moreau` depuis `10.24.8.19` entre `08:14:02` et `08:14:09 UTC`. »*"
+                    },
+                    {
+                      "lead": "2. Hypothèses ouvertes :",
+                      "detail": "*« H1 erreur de saisie, H2 script automatique à mot de passe expiré, H3 session interactive sur `10.24.8.19`. »*"
+                    },
+                    {
+                      "lead": "3. Action immédiate :",
+                      "detail": "*« Vérifier la CMDB puis les journaux locaux de `10.24.8.19` avant toute coupure de service. »*"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "ch4-s2-anatomie-trois-volets",
+              "title": "Le triptyque étanche et les mots interdits dans les faits",
+              "focusPoints": [
+                "Volet 1 (Faits) : source nommée + horodatage UTC + champs exacts uniquement",
+                "Mots interdits dans les Faits : pirate, malveillant, force brute, sabotage, faux positif",
+                "Tout jugement de cause ou d'intention appartient strictement au Volet 2 (Hypothèses)"
+              ],
+              "audioStyle": "clear and steady",
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Structurez chaque compte rendu en trois volets étanches"
+                },
+                {
+                  "type": "diagram",
+                  "diagramId": "medicolegal-triptych",
+                  "caption": "Schéma 4 · Le format en 3 volets : séparez rigoureusement faits mesurés, hypothèses et actions."
+                },
+                {
+                  "type": "callout",
+                  "kind": "error",
+                  "title": "Liste rouge · À ne jamais écrire dans le volet « Observation brute »",
+                  "body": "Retirez systématiquement de la rubrique Faits tout terme qui prête une intention ou une cause non mesurée : **« pirate »**, **« attaquant externe »**, **« force brute »**, **« malveillant »**, **« agressive »**, **« sabotage »**, **« faute de frappe »** ou **« faux positif »**. Si l'outil ne l'a pas mesuré directement, déplacez-le dans le volet Hypothèses."
+                }
+              ]
+            },
+            {
+              "id": "ch4-s3-transfert-capteurs",
+              "title": "Un seul réflexe valable sur 5 capteurs cyber réels",
+              "focusPoints": [
+                "La même méthode s'applique à SSH, Pare-feu, Antivirus/EDR, DNS et Sauvegarde",
+                "Toujours associer : 1 fait mesuré -> 1 piège d'interprétation -> 1 recoupement indépendant",
+                "Un nom rassurant (admin-maint) ou alarmant (port 445) ne dispense jamais de recouper"
+              ],
+              "audioStyle": "engaged and steady",
+              "slide": {
+                "layout": "case-gallery",
+                "cards": [
+                  {
+                    "sensor": "OpenSSH (sshd)",
+                    "fact": "3 Failed password sur c.moreau depuis 10.24.8.19 en 7 s",
+                    "trap": "Attaque externe par force brute",
+                    "check": "CMDB + /var/log/cron et sessions locales de 10.24.8.19"
+                  },
+                  {
+                    "sensor": "Pare-feu interne",
+                    "fact": "DROP TCP de 10.24.5.30 vers port 445 (partage Windows SMB) de 10.24.8.10",
+                    "trap": "Propagation d'un rançongiciel",
+                    "check": "Processus local sur 10.24.5.30 + règles de partage"
+                  },
+                  {
+                    "sensor": "Antivirus / EDR (agent de détection)",
+                    "fact": "EXECUTION_BLOCKED sur nettoyage.sh (unsigned_script)",
+                    "trap": "Malware confirmé OU script sûr bloqué par erreur",
+                    "check": "Registre des maintenances + lecture du script"
+                  },
+                  {
+                    "sensor": "Résolveur DNS",
+                    "fact": "8 000 NXDOMAIN (domaines inexistants) en 2 min depuis 10.24.4.18",
+                    "trap": "Vol confirmé de la base clients",
+                    "check": "Processus émetteur sur 10.24.4.18 + capture DNS"
+                  },
+                  {
+                    "sensor": "Agent sauvegarde",
+                    "fact": "UPLOAD_REJECTED sur archives-rh.zip (quota_exceeded)",
+                    "trap": "Sabotage volontaire des sauvegardes",
+                    "check": "Espace disque réel + historique de taille des archives"
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Transférez le réflexe à tous vos outils de sécurité"
+                },
+                {
+                  "type": "prose",
+                  "paragraphs": [
+                    "Ce qui rend cette discipline si rentable, c'est qu'elle ne dépend d'aucun logiciel particulier. Que vous ouvriez un pare-feu (filtre réseau, par exemple sur le port `445` utilisé par le partage de fichiers Windows **SMB**), un antivirus / **EDR** (agent de détection installé sur les postes et serveurs), un serveur **DNS** (annuaire de noms de domaines, où **`NXDOMAIN`** signale un nom inexistant) ou un outil de sauvegarde, la mécanique reste identique :"
+                  ]
+                },
+                {
+                  "type": "table",
+                  "headers": [
+                    "Capteur",
+                    "Fait réellement mesuré",
+                    "Interprétation hâtive à éviter",
+                    "Recoupement indépendant"
+                  ],
+                  "rows": [
+                    [
+                      "**OpenSSH (`sshd`)**",
+                      "3 `Failed password` sur `c.moreau` depuis `10.24.8.19` en 7 s",
+                      "« Attaque externe par force brute »",
+                      "CMDB + `/var/log/cron` et `wtmp` de `10.24.8.19`"
+                    ],
+                    [
+                      "**Pare-feu interne**",
+                      "`DROP` TCP depuis `10.24.5.30` vers port `445` de `10.24.8.10`",
+                      "« Rançongiciel en propagation SMB »",
+                      "Processus réseau local sur `10.24.5.30` + règles SMB"
+                    ],
+                    [
+                      "**Antivirus / EDR**",
+                      "`EXECUTION_BLOCKED` sur `nettoyage.sh` (`unsigned_script`)",
+                      "« Malware neutralisé » ou « faux positif sûr »",
+                      "Registre des maintenances + lecture du contenu du script"
+                    ],
+                    [
+                      "**Résolveur DNS**",
+                      "8 000 `NXDOMAIN` en 2 min vers `.exfil-data.test` depuis `10.24.4.18`",
+                      "« Exfiltration confirmée de la base clients »",
+                      "Processus émetteur sur `10.24.4.18` + capture des requêtes"
+                    ],
+                    [
+                      "**Agent sauvegarde**",
+                      "`UPLOAD_REJECTED` sur `archives-rh.zip` (`quota_exceeded`)",
+                      "« Sabotage volontaire des sauvegardes »",
+                      "Espace disque réel + évolution de taille des archives"
+                    ]
+                  ],
+                  "caption": "Tableau récapitulatif · Du champ mesuré au bon recoupement sur 5 capteurs courants."
+                }
+              ]
+            },
+            {
+              "id": "ch4-s4-exemple-resolu-edr",
+              "title": "Exemple résolu n°2 : analyser un blocage antivirus / EDR",
+              "focusPoints": [
+                "Cas réel : EXECUTION_BLOCKED sur nettoyage.sh lancé sous admin-maint (unsigned_script)",
+                "Ne pas céder au piège « malware confirmé » ni au piège « nom admin-maint rassurant »",
+                "Appliquer exactement les 3 volets sur un deuxième capteur"
+              ],
+              "audioStyle": "clear and steady",
+              "slide": {
+                "layout": "log-spotlight",
+                "sourceLabel": "srv-fichiers-02 : journal antivirus-agent",
+                "lines": [
+                  "14:02:11 UTC | service=antivirus-agent | event=EXECUTION_BLOCKED | file=nettoyage.sh | account=admin-maint | reason=unsigned_script"
+                ],
+                "highlights": [
+                  {
+                    "token": "EXECUTION_BLOCKED",
+                    "label": "Action technique",
+                    "explanation": "Le lancement a été empêché par la politique de sécurité locale.",
+                    "tone": "fact"
+                  },
+                  {
+                    "token": "admin-maint",
+                    "label": "Compte déclencheur",
+                    "explanation": "Nom rassurant mais non suffisant : un attaquant exploite aussi les comptes d'admin.",
+                    "tone": "warning"
+                  },
+                  {
+                    "token": "unsigned_script",
+                    "label": "Motif technique exact",
+                    "explanation": "Absence de signature interne — ne qualifie pas le contenu de malveillant ni de sûr.",
+                    "tone": "info"
+                  }
+                ]
+              },
+              "blocks": [
+                {
+                  "type": "heading",
+                  "text": "Exemple résolu n°2 : appliquer la méthode sur un autre capteur"
+                },
+                {
+                  "type": "worked-example",
+                  "title": "Décomposer le blocage antivirus de 14:02:11 UTC sur srv-fichiers-02",
+                  "startingPoint": "14:02:11 UTC | service=antivirus-agent | event=EXECUTION_BLOCKED | file=nettoyage.sh | account=admin-maint | reason=unsigned_script",
+                  "steps": [
+                    {
+                      "step": "Formulez le Volet 1 en gardant les 6 champs exacts sans écrire ni « script malveillant » ni « blocage par erreur ».",
+                      "why": "Le code unsigned_script mesure uniquement l'absence de signature interne, pas la présence d'un virus."
+                    },
+                    {
+                      "step": "Ouvrez deux hypothèses dans le Volet 2 : (H1) oubli de signature lors d'une maintenance interne prévue ; (H2) dépôt d'un script non autorisé sous un compte d'administration compromis.",
+                      "why": "Un nom rassurant comme nettoyage.sh ou admin-maint est facile à imiter ; garder une piste bénigne et une piste atypique bloque le biais de complaisance."
+                    },
+                    {
+                      "step": "Prescrivez dans le Volet 3 : consulter le registre des maintenances planifiées et lire le contenu exact du fichier `nettoyage.sh`.",
+                      "why": "Deux vérifications rapides en lecture seule permettent de trancher sans couper le serveur ni désactiver la règle antivirus."
+                    }
+                  ],
+                  "conclusion": "Observation : antivirus-agent consigne EXECUTION_BLOCKED sur nettoyage.sh (admin-maint, unsigned_script). Recoupement prioritaire : registre des maintenances et inspection du fichier."
+                }
+              ]
+            },
+            {
+              "id": "ch4-s5-atelier-ticket",
+              "title": "Atelier de transfert : rédigez votre propre ticket en 3 volets",
+              "focusPoints": [
+                "Cas inédit : srv-fichiers-02, backup-agent, UPLOAD_REJECTED, archives-rh.zip, quota_exceeded",
+                "Rédigez les 3 volets sans mot d'intention dans le Volet 1",
+                "Auto-évaluez votre texte avec la grille et le corrigé commenté"
+              ],
+              "pauseForAction": true,
+              "audioStyle": "calm, warm and steady",
+              "blocks": [
+                {
+                  "type": "banner",
+                  "variant": "practice"
+                },
+                {
+                  "type": "practice",
+                  "title": "À vous de jouer : rédigez le ticket d'un incident inédit",
+                  "context": "Passez maintenant à l'autonomie complète sur un cas inédit. Sur `srv-fichiers-02`, l'agent de sauvegarde consigne : `16:40:05 UTC | service=backup-agent | event=UPLOAD_REJECTED | file=archives-rh.zip | account=svc-sauvegarde | reason=quota_exceeded`. Rédigez votre ticket d'analyse en trois volets ci-dessous.",
+                  "instructions": [
+                    "**Volet 1 (Observation brute) :** nommez la source (`backup-agent` sur `srv-fichiers-02`) et reprenez les champs exacts sans parler ni de sabotage ni de simple bug.",
+                    "**Volet 2 (Hypothèses compatibles) :** proposez deux explications distinctes capables de déclencher `quota_exceeded`.",
+                    "**Volet 3 (Recoupement) :** indiquez quelle source indépendante consulter pour trancher."
+                  ],
+                  "showTransferPad": true,
+                  "selfCheckPoints": [
+                    "Votre observation nomme la source (`backup-agent` sur `srv-fichiers-02`) et l'horodatage `16:40:05 UTC`.",
+                    "Aucun mot d'intention (« sabotage », « attaque », « bug bénin ») ne figure dans le volet 1.",
+                    "Vous avez formulé au moins deux hypothèses distinctes et une vérification concrète (espace disque réel, évolution de taille, historique des tâches)."
+                  ],
+                  "solutionSummary": "Volet 1 (Observation brute) : À 16:40:05 UTC, le journal backup-agent de srv-fichiers-02 consigne UPLOAD_REJECTED sur archives-rh.zip pour le compte svc-sauvegarde avec le motif quota_exceeded. Volet 2 (Hypothèses) : (H1) croissance normale ou rotation de sauvegardes saturant le quota disque ; (H2) dépôt anormal ou duplication massive remplissant l'espace. Volet 3 (Recoupement) : vérifier l'espace disque disponible, l'historique de taille des archives et les tâches récentes sur le serveur de stockage."
+                }
+              ]
+            },
+            {
+              "id": "ch4-s6-fiche-reference",
+              "title": "Fiche réflexe terrain & bilan final du cours",
+              "focusPoints": [
+                "Aide-mémoire détaché réutilisable sur tous vos prochains cours et laboratoires",
+                "Les 5 repères d'une observation brute + checklist avant envoi de ticket",
+                "Prêt pour le quiz final de 12 mises en situation terrain"
+              ],
+              "audioStyle": "calm, warm and steady",
+              "blocks": [
+                {
+                  "type": "reference-sheet",
+                  "title": "Fiche réflexe · Analyser une trace sans sur-interpréter",
+                  "intro": "Aide-mémoire opérationnel détaché à consulter sur le terrain sans relire les chapitres.",
+                  "groups": [
+                    {
+                      "title": "Les 5 repères d'une observation brute",
+                      "items": [
+                        {
+                          "term": "Source nommée",
+                          "meaning": "Machine, fichier ou service exact (ex. `/var/log/auth.log` sur `srv-paie-01`)",
+                          "pitfall": "Oublier la source rend le constat invérifiable."
+                        },
+                        {
+                          "term": "Horodatage UTC",
+                          "meaning": "Repère chronologique universel",
+                          "pitfall": "Toujours vérifier la synchronisation NTP entre serveurs."
+                        },
+                        {
+                          "term": "Verdict technique",
+                          "meaning": "Code mesuré (`Failed password`, `DROP`, `EXECUTION_BLOCKED`)",
+                          "pitfall": "Un refus ne prouve pas une compromission."
+                        },
+                        {
+                          "term": "Compte demandé",
+                          "meaning": "Chaîne envoyée par le client (`c.moreau`, `root`)",
+                          "pitfall": "Champ déclaratif : ne certifie jamais l'opérateur physique."
+                        },
+                        {
+                          "term": "IP / Port source",
+                          "meaning": "Point d'émission vu par le récepteur",
+                          "pitfall": "Vérifier plage privée RFC 1918 vs passerelle NAT avant attribution."
+                        }
+                      ]
+                    },
+                    {
+                      "title": "Checklist avant d'envoyer un ticket",
+                      "items": [
+                        {
+                          "term": "Zéro mot d'intention dans les Faits",
+                          "meaning": "Retirer « pirate », « malveillant », « force brute », « sabotage », « faux positif »",
+                          "pitfall": "Déplacer toute hypothèse dans le Volet 2."
+                        },
+                        {
+                          "term": "Indépendance des sources",
+                          "meaning": "Deux alertes du même fichier = 1 seule source",
+                          "pitfall": "Croiser CMDB, machine émettrice ou collecte SIEM."
+                        },
+                        {
+                          "term": "Absence de trace ≠ innocence",
+                          "meaning": "Un journal local vide peut être arrêté, saturé ou altéré",
+                          "pitfall": "Vérifier la santé du service et la collecte centralisée."
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "summary",
+                  "points": [
+                    "Une alerte déclenche une vérification ; seul le journal brut fixe les faits mesurés.",
+                    "Trois angles morts bornent tout capteur : cécité amont, masquage NAT/relais et champs déclaratifs (`account`, `PTR`).",
+                    "Recoupez des sources véritablement indépendantes en contrôlant la synchronisation NTP et la continuité de la collecte centralisée.",
+                    "Structurez chaque compte rendu en trois volets étanches (observation brute, hypothèses compatibles, recoupements proportionnés)."
+                  ],
+                  "transition": "Vous maîtrisez désormais la méthode complète pour autopsier une alerte, lire ce qu'un capteur mesure vraiment, déjouer ses angles morts et rédiger un constat rigoureux. Passez au quiz final pour valider vos 12 réflexes terrain."
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "quizTitle": "Quiz : Distinguer une observation d'une interprétation",
+      "quizIntro": "Validez vos réflexes sur 12 mises en situation concrètes (logs SSH, pare-feu, antivirus, horloges NTP, journaux absents et pièges DNS). Chaque mauvaise option correspond à une vraie erreur de terrain. Seuil de validation : 75 %."
+    }
+  ],
+  "finalTakeaway": "Séparez toujours le fait brut horodaté (source nommée + champs exacts) des hypothèses compatibles, vérifiez l'indépendance et l'horloge NTP de vos sources, puis rédigez un constat proportionné."
+}

@@ -18,3 +18,4 @@ export {
   type AlertProps,
   type ProgressProps,
 } from "./components/feedback.js";
+export { EditorialCallout, type EditorialCalloutProps } from "./components/editorial-callout.js";

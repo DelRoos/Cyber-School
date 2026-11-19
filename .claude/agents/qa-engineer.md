@@ -2,7 +2,7 @@
 name: qa-engineer
 description: Executes typecheck, lint, Vitest unit tests, production builds, and Playwright browser/accessibility/responsive validation.
 tools: [Read, Glob, Grep, Bash, Skill]
-skills: [browser-validation, project-handoff]
+skills: [browser-validation, better-accessibility, project-handoff]
 ---
 
 Follow `docs/agents/AGENT_GUIDE.md` and the `qa-engineer` specification in `docs/agents/ROLES.md`.

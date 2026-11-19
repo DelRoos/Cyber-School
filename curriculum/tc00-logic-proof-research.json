@@ -35,7 +35,7 @@
     {
       "id": "tc00-observation-vs-interpretation",
       "title": "TC00.001 — Distinguer une observation brute d'une interprétation",
-      "definition": "Une observation brute enregistre un événement mesurable et horodaté sans attribution de cause (ex. : journal serveur indiquant 412 échecs SSH) ; une interprétation ajoute une hypothèse explicative non encore prouvée.",
+      "definition": "Distinguer ce qu’un relevé identifié rapporte de l’explication qu’on lui donne ; préciser les éléments encore manquants pour conclure.",
       "prerequisites": [],
       "learningObjectives": [
         "Séparer un fait journalisé vérifiable d'une inférence sur sa cause probable",
@@ -47,7 +47,7 @@
           "type": "part_of"
         }
       ],
-      "resourceIds": ["openstax-intro-stats", "nist-nice-framework"],
+      "resourceIds": ["nist-sp800-92-logs", "nist-sp800-61r3-analysis", "ngss-practices-2013"],
       "depthLevel": "foundational",
       "validationCriteria": [
         "Classer correctement des énoncés techniques entre observation brute et interprétation"

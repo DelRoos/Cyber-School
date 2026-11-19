@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "1.0",
+  "unitId": "unit-tc00-observation-interpretation",
+  "lessonId": "lesson-observation-et-interpretation",
+  "audience": "",
+  "introduction": "",
+  "learningObjectives": [],
+  "prerequisites": [],
+  "chapters": [
+    {
+      "id": "chapter-first",
+      "title": "",
+      "estimatedMinutes": 10,
+      "question": "",
+      "objective": "",
+      "explanation": [],
+      "workedExample": {
+        "title": "",
+        "startingPoint": "",
+        "steps": [],
+        "conclusion": ""
+      },
+      "predictionExerciseId": "exercise-predict",
+      "experience": {
+        "componentId": "unregistered",
+        "instruction": "",
+        "observe": "",
+        "modelLimits": ""
+      },
+      "practiceExerciseIds": [],
+      "misconception": {
+        "claim": "",
+        "correction": ""
+      },
+      "takeaway": "",
+      "transferQuestion": "",
+      "resourceIds": [],
+      "conceptIds": [],
+      "microLessonIds": ["TC00.001"]
+    }
+  ],
+  "finalTakeaway": ""
+}

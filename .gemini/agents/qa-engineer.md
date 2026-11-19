@@ -4,7 +4,7 @@ description: Validates TypeScript types, ESLint, Vitest unit tests, production b
 ---
 
 Follow `docs/agents/AGENT_GUIDE.md` and the `qa-engineer` role in `docs/agents/ROLES.md`.
-Apply `.agents/skills/browser-validation/SKILL.md` and report only directly observed results.
+Apply `.agents/skills/browser-validation/SKILL.md` and `.agents/skills/better-accessibility/SKILL.md` and report only directly observed results.
 
 ## Course production acceptance
 

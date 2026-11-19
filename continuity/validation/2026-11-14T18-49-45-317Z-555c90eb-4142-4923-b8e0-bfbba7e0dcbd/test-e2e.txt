@@ -1,0 +1,34 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-14T18:50:29.049Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+[WebServer] (node:23548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:12756) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 10 tests using 2 workers
+
+(node:11544) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20788) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  2 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:23:1 › orientation offers a foundation and searchable specialisations without inventing availability (9.0s)
+  ok  3 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:74:1 › programme accordion, search, switcher and module deep links work by keyboard (3.3s)
+  ok  1 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › home landing, interactive workbench, scroll-synced nav, and parcours routing respond to the learner (12.4s)
+  ok  4 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:126:1 › six programmes reflow at 320px and remain usable with reduced motion (2.3s)
+  ok  5 [chromium-desktop] › tests\e2e\parcours.spec.ts:3:1 › Parcours catalog and detail pages work cleanly without legacy course or listing links (2.5s)
+(node:13684) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:18216) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  6 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:23:1 › orientation offers a foundation and searchable specialisations without inventing availability (3.1s)
+  ok  8 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:74:1 › programme accordion, search, switcher and module deep links work by keyboard (4.0s)
+  ok  9 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:126:1 › six programmes reflow at 320px and remain usable with reduced motion (2.0s)
+  ok  7 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › home landing, interactive workbench, scroll-synced nav, and parcours routing respond to the learner (9.4s)
+  ok 10 [chromium-mobile] › tests\e2e\parcours.spec.ts:3:1 › Parcours catalog and detail pages work cleanly without legacy course or listing links (3.0s)
+
+  10 passed (32.4s)

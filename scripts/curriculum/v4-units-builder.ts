@@ -9,15 +9,28 @@ import { V4UnitsCatalogSchema, verifyUnitCoverage } from "@cyber-school/lesson-r
 
 const TC00_CURATED_UNITS: V4PedagogicalUnit[] = [
   {
-    id: "unit-tc00-observation-hypotheses",
-    slug: "scientific-reasoning-and-proof",
-    title: "Observation, hypothèses, causalité et contre-exemples",
+    id: "unit-tc00-observation-interpretation",
+    slug: "observation-et-interpretation",
+    title: "Distinguer une observation d’une interprétation",
     moduleId: "TC-00",
     domainId: "v4-tronc-commun",
     rationale:
-      "Premier bloc de raisonnement scientifique : distinguer observation et modèle, formuler une hypothèse falsifiable, isoler variables contrôlées et confondantes, et construire un contre-exemple minimal.",
+      "Première leçon complète : lire un relevé, séparer ce qu’il rapporte de l’explication proposée et formuler une conclusion justifiée.",
+    microLessonIds: ["TC00.001"],
+    prerequisiteUnitIds: [],
+    recommendedMedium: "2d-animated",
+    estimatedMinutes: 20,
+    groupingStatus: "curated",
+  },
+  {
+    id: "unit-tc00-observation-hypotheses",
+    slug: "scientific-reasoning-and-proof",
+    title: "Hypothèses, causalité et contre-exemples",
+    moduleId: "TC-00",
+    domainId: "v4-tronc-commun",
+    rationale:
+      "Suite du raisonnement scientifique : formuler une hypothèse falsifiable, isoler variables contrôlées et confondantes, et construire un contre-exemple minimal.",
     microLessonIds: [
-      "TC00.001",
       "TC00.002",
       "TC00.003",
       "TC00.004",
@@ -26,10 +39,9 @@ const TC00_CURATED_UNITS: V4PedagogicalUnit[] = [
       "TC00.007",
       "TC00.008",
     ],
-    prerequisiteUnitIds: [],
+    prerequisiteUnitIds: ["unit-tc00-observation-interpretation"],
     recommendedMedium: "2d-animated",
     estimatedMinutes: 25,
-    legacyBridgeLessonSlug: "scientific-reasoning-and-proof",
     groupingStatus: "curated",
   },
   {
@@ -149,16 +161,6 @@ function groupModuleMicroLessons(
   }));
 }
 
-function detectLegacyBridge(microIds: string[]): string | undefined {
-  if (microIds.includes("TC01.022") || microIds.includes("TC01.023")) {
-    return "program-memory-fundamentals";
-  }
-  if (microIds.includes("TC03.017") || microIds.includes("TC03.018")) {
-    return "tcp-three-way-handshake";
-  }
-  return undefined;
-}
-
 function toSafeSlug(input: string): string {
   return input
     .toLowerCase()
@@ -220,7 +222,6 @@ export function buildUnitsCatalog(
       const unitCode = `${toSafeSlug(mod.id)}-${String(idx + 1).padStart(2, "0")}`;
       const id = `unit-${unitCode}`;
       const microIds = group.items.map((item) => item.id);
-      const bridgeSlug = detectLegacyBridge(microIds);
       const existing = existingById.get(id);
       const titlesJoined = group.items.map((i) => i.title).join(" ");
 
@@ -237,8 +238,8 @@ export function buildUnitsCatalog(
         prerequisiteUnitIds: idx > 0 ? [created[idx - 1]!.id] : [],
         recommendedMedium: existing?.recommendedMedium ?? inferMedium(mod.id, titlesJoined),
         estimatedMinutes: existing?.estimatedMinutes ?? Math.max(15, microIds.length * 4),
-        ...(bridgeSlug || existing?.legacyBridgeLessonSlug
-          ? { legacyBridgeLessonSlug: existing?.legacyBridgeLessonSlug ?? bridgeSlug }
+        ...(existing?.legacyBridgeLessonSlug
+          ? { legacyBridgeLessonSlug: existing.legacyBridgeLessonSlug }
           : {}),
         groupingStatus: existing?.groupingStatus ?? "auto-grouped",
       };

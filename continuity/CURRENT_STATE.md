@@ -2,16 +2,16 @@
 
 Checkpoint généré par quality:checkpoint ; ne pas modifier ce fichier à la main.
 
-- Mise à jour UTC : 2026-11-14T11:07:51.017Z
-- Tâche active : TASK-021 (Done)
-- Base Git : 4e4c79e5232fd4ee36ea9e731ef24255e7515602
-- Empreinte du code/contenu/configuration : 2ce9ba2c8afd45e8607b5f95c531884737a48cc06c89c244da1df70de05127ee
-- Fichiers contrôlés : 223
-- Dernière validation : passed — [rapport](validation/2026-11-14T11-04-30-392Z-ac95b35b-aa8b-4154-bd4a-d3178841b2a6/result.json)
+- Mise à jour UTC : 2026-11-19T17:27:03.179Z
+- Tâche active : TASK-026 (In Progress)
+- Base Git : 7d8e89aa8317eb29bf0dea82172a30fb3ab38d0e
+- Empreinte du code/contenu/configuration : 83ccde15060b9fde3511c8ff3fdf401efbbe1ed6cee7e10c7ad3defa59668ef5
+- Fichiers contrôlés : 390
+- Dernière validation : passed — [rapport](validation/2026-11-19T17-24-37-310Z-cc70a3eb-005d-4e9d-9559-dea13db0e35e/result.json)
 
 ## Prochaine action
 
-Revue utilisateur de la maquette Explorable Explanation (program-memory-fundamentals) avant déploiement sur tcp-three-way-handshake et scientific-reasoning-and-proof.
+Faire relire les critères et la preuve générée avant toute clôture ou publication.
 
 ## Blocages observés automatiquement
 
@@ -19,4 +19,4 @@ Aucun blocage d'environnement détecté ; cela ne signifie pas que les tests ont
 
 ## Reprise
 
-Lire [STATE.json](STATE.json), [HANDOFF.md](HANDOFF.md), [BLOCKERS.md](BLOCKERS.md) et [le protocole](RESUME_PROTOCOL.md). Les packages et la leçon TCP existent déjà ; consulter les audits pour leurs limites.
+Lire [STATE.json](STATE.json), [HANDOFF.md](HANDOFF.md), [BLOCKERS.md](BLOCKERS.md) et [le protocole](RESUME_PROTOCOL.md). Vérifier les leçons actives dans lessons/ et consulter les audits pour les prototypes retirés.

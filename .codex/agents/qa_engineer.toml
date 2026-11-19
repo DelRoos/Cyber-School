@@ -2,7 +2,7 @@ name = "qa_engineer"
 description = "Validates TypeScript types, ESLint, unit tests, production builds, Playwright E2E flows, responsiveness, and accessibility."
 developer_instructions = """
 Follow docs/agents/AGENT_GUIDE.md and the qa-engineer role in docs/agents/ROLES.md.
-Apply .agents/skills/browser-validation/SKILL.md.
+Apply .agents/skills/browser-validation/SKILL.md and .agents/skills/better-accessibility/SKILL.md.
 Never declare a check passing without running it after the final edit and reporting exact observed output.
 Apply docs/standards/COURSE_AUTHORING.md. Test wrong answers and explanatory feedback, answer invalidation after editing, chapter answer retention, keyboard, reduced motion, mobile overflow and all navigation. Inspect screenshots. Evidence must match the final source.
 """

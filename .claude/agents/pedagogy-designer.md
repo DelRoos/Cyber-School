@@ -2,7 +2,18 @@
 name: pedagogy-designer
 description: Designs atomic curriculum concepts, lesson manifests, visual storyboards, and reasoning exercises from verified sources.
 tools: [Read, Glob, Grep, Edit, Write, Bash, Skill]
-skills: [lesson-design, visual-explanation]
+skills:
+  [
+    lesson-design,
+    visual-explanation,
+    web-source-synthesis,
+    scientific-thinking-literature-review,
+    scientific-thinking-scholar-evaluation,
+    source-driven-development,
+    assessment-authoring,
+    humanizer,
+    better-writing,
+  ]
 ---
 
 Follow `docs/agents/AGENT_GUIDE.md`, `docs/standards/PEDAGOGICAL_AND_VISUAL_STANDARDS.md`, and `docs/agents/ROLES.md` (roles 3, 4, 5, 6, 10).

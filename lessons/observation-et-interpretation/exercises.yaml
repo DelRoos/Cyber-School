@@ -1,0 +1,317 @@
+schemaVersion: "2.0"
+predictionExerciseId: ex-obs-01-prediction
+assessments:
+  - id: assess-observation-et-interpretation
+    title: "Quiz : Distinguer une observation d'une interprétation"
+    conceptIds: ["tc00-observation-vs-interpretation"]
+    passingScorePercent: 75
+    exerciseIds:
+      - ex-obs-01-prediction
+      - ex-obs-02-classification
+      - ex-obs-05-corroboration
+      - ex-obs-03-sequence
+      - ex-obs-04-transfer
+      - ex-obs-06-account-meaning
+      - ex-obs-07-vocabulary-bias
+      - ex-obs-08-firewall-drop
+      - ex-obs-09-corroboration-local-cron
+      - ex-obs-12-ntp-drift
+      - ex-obs-13-absence-of-log
+      - ex-obs-16-reverse-dns-trap
+exercises:
+  - id: ex-obs-01-prediction
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-2-mesure-et-angles-morts
+    kind: state-prediction
+    scenario: "Sur le serveur de paie srv-paie-01, vous observez trois refus sshd depuis 10.24.8.19 visant c.moreau. Dans le simulateur, vous remplacez la cause amont (saisie manuelle au clavier) par un script de sauvegarde automatisé qui envoie le même mot de passe périmé."
+    prompt: "Comment évoluent les quatre champs hors horodatage (service, event, account, source_ip) dans le journal sshd de srv-paie-01 ?"
+    correctOptionId: opt-pred-identical-fields
+    explanation: "Le démon sshd sur srv-paie-01 ne voit que les paquets réseau reçus : identifiant demandé, secret refusé et IP émettrice. Changer la cause locale sur 10.24.8.19 ne modifie aucun de ces quatre champs."
+    misconceptionTags:
+      opt-pred-event-distinguishes: "attribue-une-vision-locale-au-capteur-distant"
+      opt-pred-account-shows-origin: "confond-compte-cible-et-programme-emetteur"
+      opt-pred-ip-changes-by-mode: "confond-ip-machine-et-mode-de-session"
+    options:
+      - id: opt-pred-event-distinguishes
+        label: "Le code d'événement passe de AUTH_FAILURE à SCRIPT_FAILURE dès que la requête provient d'une tâche planifiée."
+        feedback: "Erreur fréquente : le serveur distant reçoit un paquet SSH standard, il n'a aucun moyen de savoir si le client distant est piloté par un clavier ou par un script cron. Le code reste AUTH_FAILURE."
+      - id: opt-pred-identical-fields
+        label: "Les quatre champs (service, event, account, source_ip) restent strictement identiques quelle que soit la cause amont."
+        feedback: "Exact. Le démon sshd n'observe que ce qui franchit sa porte réseau : compte demandé, mot de passe refusé et IP source. D'où la nécessité de recouper une autre source."
+      - id: opt-pred-account-shows-origin
+        label: "Le champ account affiche le nom du script local (backup-sync.sh) à la place de c.moreau lors d'un envoi automatisé."
+        feedback: "Attention : le champ account consigne le compte cible demandé sur srv-paie-01, jamais le nom du programme exécuté sur la machine émettrice."
+      - id: opt-pred-ip-changes-by-mode
+        label: "Le champ source_ip bascule vers une adresse de service distincte lorsqu'une tâche cron émet la connexion."
+        feedback: "L'adresse IP source identifie l'interface réseau de la machine 10.24.8.19, qu'un humain ou un script déclenche la connexion depuis cette même machine."
+
+  - id: ex-obs-02-classification
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-1-decomposez-alerte
+    kind: multiple-choice
+    prompt: "Vous rédigez le volet « Observation brute » d'un ticket à partir des seules 3 lignes sshd de srv-paie-01 (08:14:02 à 08:14:09 UTC, Failed password, c.moreau, 10.24.8.19). Quelle formulation est irréprochable ?"
+    correctOptionId: opt-obs-strict-attribution
+    explanation: "Une observation brute cite sa source et restitue les champs mesurés sans qualifier la légitimité, l'intention ni la provenance géographique."
+    misconceptionTags:
+      opt-obs-human-typo: "sur-interpretation-benigne-sans-preuve"
+      opt-obs-unauthorized-attempt: "jugement-de-legitimite-dans-les-faits"
+      opt-obs-external-bruteforce: "reprise-aveugle-du-libelle-alerte"
+    options:
+      - id: opt-obs-human-typo
+        label: "Le journal sshd de srv-paie-01 montre 3 erreurs de saisie de Claire Moreau sur son compte entre 08:14:02 et 08:14:09 UTC depuis 10.24.8.19."
+        feedback: "C'est une sur-interprétation bénigne : le champ account=c.moreau indique le compte demandé, mais rien dans le log ne prouve que Claire Moreau tenait le clavier."
+      - id: opt-obs-unauthorized-attempt
+        label: "Le journal sshd de srv-paie-01 enregistre 3 tentatives d'accès non autorisées sur c.moreau depuis 10.24.8.19 entre 08:14:02 et 08:14:09 UTC."
+        feedback: "Le piège est subtil : qualifier l'accès de « non autorisé » introduit déjà un jugement sur la légitimité. Un script interne autorisé muni d'un mot de passe expiré génère exactement cette trace."
+      - id: opt-obs-external-bruteforce
+        label: "Le journal sshd de srv-paie-01 signale un début d'attaque par force brute depuis 10.24.8.19 sur c.moreau entre 08:14:02 et 08:14:09 UTC."
+        feedback: "« Attaque par force brute » projette une intention hostile et une méthode qui ne figurent pas dans les 5 champs mesurés par sshd."
+      - id: opt-obs-strict-attribution
+        label: "Le journal sshd de srv-paie-01 consigne 3 événements AUTH_FAILURE visant c.moreau depuis 10.24.8.19 entre 08:14:02 et 08:14:09 UTC."
+        feedback: "Exact. La source est nommée et chaque information rapportée correspond mot pour mot à un champ mesuré, sans supposition."
+
+  - id: ex-obs-05-corroboration
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-3-recoupez-sources
+    kind: multiple-choice
+    prompt: "Vous croisez les 3 échecs sshd avec l'inventaire réseau (Source 2) : 10.24.8.19 est le serveur automatisé srv-backup-interne (salle serveur), tandis que le poste de Claire Moreau est 10.24.2.45. Vous n'avez pas encore ouvert les journaux locaux de 10.24.8.19. Que pouvez-vous conclure ?"
+    correctOptionId: opt-corr-two-paths-remain
+    explanation: "L'inventaire écarte la saisie directe sur le poste de Claire (H1), mais ne permet pas encore de départager un script planifié (H2) d'une session interactive ouverte sur srv-backup-interne (H3)."
+    misconceptionTags:
+      opt-corr-script-proven: "assimile-role-habituel-et-cause-prouvee"
+      opt-corr-all-three-equal: "ignore-la-refutation-apportee-par-la-source-2"
+      opt-corr-intrusion-confirmed: "conclut-a-un-rebond-sans-verifier-cron"
+    options:
+      - id: opt-corr-script-proven
+        label: "L'hypothèse du script de sauvegarde (H2) est établie, puisque la machine émettrice est officiellement le serveur de sauvegarde."
+        feedback: "Piège classique : le rôle habituel d'un serveur ne prouve pas quel processus a agi à 08:14 UTC. Un opérateur ou un attaquant connecté en SSH sur srv-backup-interne (H3) reste possible."
+      - id: opt-corr-two-paths-remain
+        label: "La faute de frappe depuis le poste de Claire (H1) est écartée, mais deux hypothèses compatibles restent ouvertes : script planifié (H2) ou session interactive sur 10.24.8.19 (H3)."
+        feedback: "Exact. L'inventaire réduit l'entonnoir de 3 pistes à 2 en contredisant H1, et pointe directement la Source 3 nécessaire : les journaux locaux de 10.24.8.19."
+      - id: opt-corr-all-three-equal
+        label: "Les trois hypothèses H1, H2 et H3 restent toutes aussi plausibles tant que srv-paie-01 n'a pas enregistré d'autres tentatives."
+        feedback: "La Source 2 a déjà apporté une réfutation décisive : 10.24.8.19 n'est pas le poste de bureau de Claire (10.24.2.45), donc H1 ne tient plus."
+      - id: opt-corr-intrusion-confirmed
+        label: "Une compromission par rebond sur srv-backup-interne (H3) est confirmée, car un serveur de sauvegarde ne devrait jamais provoquer d'échec de mot de passe."
+        feedback: "Un script automatisé dont le secret a expiré lors d'une rotation de mots de passe provoque très couramment 3 tentatives rapprochées. Sans lire /var/log/cron, H2 n'est pas écartée."
+
+  - id: ex-obs-03-sequence
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-1-decomposez-alerte
+    kind: sequence-order
+    prompt: "Remettez dans l'ordre rigoureux les quatre étapes permettant de passer d'une alerte brute à une conclusion défendable :"
+    items:
+      - id: item-correlate
+        label: "Interroger des sources indépendantes pour réfuter ou corroborer chaque piste ouverte."
+      - id: item-conclude
+        label: "Rédiger un constat mesuré citant les sources consultées et les incertitudes restantes."
+      - id: item-extract
+        label: "Relever les champs exacts du journal initial en attribuant le constat à sa source."
+      - id: item-hypothesize
+        label: "Recenser toutes les hypothèses compatibles (bénignes et hostiles) et lister ce qui manque."
+    expectedOrder:
+      - item-extract
+      - item-hypothesize
+      - item-correlate
+      - item-conclude
+    explanation: "On fixe d'abord la trace mesurée, on ouvre ensuite l'éventail des explications compatibles, on filtre par recoupement indépendant, puis on formule une conclusion proportionnée."
+
+  - id: ex-obs-04-transfer
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-4-redigez-constat
+    kind: multiple-choice
+    prompt: "À 14:02:11 UTC sur srv-fichiers-02, l'agent de sécurité consigne : `service=antivirus-agent | event=EXECUTION_BLOCKED | file=nettoyage.sh | account=admin-maint | reason=unsigned_script`. Quelle analyse respecte la méthode ?"
+    correctOptionId: opt-transfer-separated
+    explanation: "Le code unsigned_script mesure uniquement l'absence de signature de validation interne. Qualifier le fichier de malveillant ou de sûr avant recoupement viole la séparation faits/hypothèses."
+    misconceptionTags:
+      opt-transfer-malware: "assimile-blocage-edr-et-malware-confirme"
+      opt-transfer-benign-error: "fait-confiance-au-nom-de-compte-admin"
+      opt-transfer-unusable-log: "confond-incompletude-et-absence-de-fait"
+    options:
+      - id: opt-transfer-separated
+        label: "Observation : antivirus-agent consigne EXECUTION_BLOCKED sur nettoyage.sh (admin-maint, unsigned_script). Recoupement : vérifier le registre des maintenances et le contenu du script."
+        feedback: "Exact. Les champs techniques sont restitués tels quels et les deux pistes (oubli de signature interne vs script non autorisé) sont orientées vers la bonne vérification."
+      - id: opt-transfer-malware
+        label: "Observation : antivirus-agent a neutralisé le script malveillant nettoyage.sh sous admin-maint. Action immédiate : isoler srv-fichiers-02 du réseau."
+        feedback: "Le motif unsigned_script signifie seulement que le fichier n'est pas signé : un script légitime déployé à la hâte déclenche exactement ce blocage. Ne qualifiez jamais le fichier de malveillant dans les faits."
+      - id: opt-transfer-benign-error
+        label: "Observation : faux positif d'antivirus-agent sur le script de maintenance nettoyage.sh lancé par admin-maint. Action : ajouter une exception permanente."
+        feedback: "Faire confiance au nom de compte `admin-maint` ou au nom rassurant `nettoyage.sh` est un piège classique : un attaquant utilise volontiers des noms plausibles pour se fondre dans la masse."
+      - id: opt-transfer-unusable-log
+        label: "Observation : cette ligne ne prouve rien sans une analyse complète du contenu binaire du fichier. Action : clore l'alerte faute d'élément factuel exploitable."
+        feedback: "Incomplet ne veut pas dire inexistant : l'heure, l'agent, le nom du fichier, le compte et la raison constituent déjà une observation brute valide qui justifie un recoupement."
+
+  - id: ex-obs-06-account-meaning
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-2-mesure-et-angles-morts
+    kind: multiple-choice
+    prompt: "Dans `/var/log/auth.log`, vous lisez `sshd[9120]: Failed password for root from 192.168.1.45 port 51022 ssh2`. Que certifie strictement la présence de `for root` ?"
+    correctOptionId: opt-06-req-user
+    explanation: "Le champ account/user enregistre uniquement la chaîne d'identifiant soumise par le client SSH lors de sa demande d'authentification."
+    misconceptionTags:
+      opt-06-comp-root: "confond-cible-demandee-et-acces-obtenu"
+      opt-06-admin-human: "confond-identifiant-et-operateur-physique"
+      opt-06-valid-local: "extrapole-le-processus-emetteur"
+    options:
+      - id: opt-06-req-user
+        label: "Un client joignant le serveur depuis 192.168.1.45 a soumis l'identifiant « root » et son mot de passe a été refusé par sshd."
+        feedback: "Exact. C'est tout ce que certifie la ligne : identifiant demandé, résultat négatif et adresse IP vue côté serveur."
+      - id: opt-06-comp-root
+        label: "Le compte root du serveur a été compromis depuis 192.168.1.45 mais la session s'est refermée sur une erreur."
+        feedback: "Au contraire : `Failed password` indique que la vérification a échoué et que l'accès a été refusé. Aucune compromission n'est établie par cette ligne."
+      - id: opt-06-admin-human
+        label: "L'administrateur système titulaire du compte root s'est trompé de mot de passe depuis son poste 192.168.1.45."
+        feedback: "N'importe quelle machine ou script peut envoyer la chaîne `root` dans un paquet SSH ; le journal ne prouve jamais que l'administrateur légitime est à l'origine de l'essai."
+      - id: opt-06-valid-local
+        label: "Un processus tournant avec les privilèges root sur la machine 192.168.1.45 a ouvert une connexion SSH sortante."
+        feedback: "Ne confondez pas le compte cible demandé sur le serveur récepteur (`for root`) avec le compte local qui exécute le client sur 192.168.1.45."
+
+  - id: ex-obs-07-vocabulary-bias
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-4-redigez-constat
+    kind: multiple-choice
+    prompt: "Un collègue écrit dans la section Faits : « À 03:12 UTC, une requête malveillante et agressive a tenté d'extraire la base clients depuis 10.24.9.12 ». Qu'est-ce qui doit être retiré de la section Faits ?"
+    correctOptionId: opt-07-intent-terms
+    explanation: "Seuls l'horodatage, la cible technique, la requête enregistrée et l'IP sont observables. Les qualificatifs d'intention (« malveillante », « agressive ») et le but supposé (« extraire ») appartiennent aux hypothèses."
+    misconceptionTags:
+      opt-07-only-adjectives: "oublie-que-tenter-dextraire-est-une-intention"
+      opt-07-keep-night: "considere-heure-nocturne-comme-preuve-dintention"
+      opt-07-drop-ip: "retire-des-champs-factuels-valides"
+    options:
+      - id: opt-07-intent-terms
+        label: "Les termes « malveillante », « agressive » et « a tenté d'extraire », car le journal mesure une requête et son volume, pas l'intention de l'auteur."
+        feedback: "Exact. Remplacez-les par la requête réellement consignée, le volume mesuré et le code retour, puis placez la piste d'exfiltration dans le volet Hypothèses."
+      - id: opt-07-only-adjectives
+        label: "Uniquement les adjectifs « malveillante » et « agressive », tout en gardant « a tenté d'extraire la base clients » qui décrit l'action."
+        feedback: "Presque, mais « a tenté d'extraire » prête encore un objectif à l'opérateur : une sauvegarde nocturne ou un export analytique exécute aussi une grosse requête de lecture. Décrivez uniquement la requête mesurée."
+      - id: opt-07-keep-night
+        label: "Aucun terme, car une lecture volumineuse sur une base clients à 03:12 UTC est par définition anormale et hostile."
+        feedback: "Les sauvegardes, réplications et exports comptables tournent justement vers 03:00 UTC pour ne pas ralentir la journée. L'heure nocturne n'est jamais une preuve d'hostilité."
+      - id: opt-07-drop-ip
+        label: "L'adresse 10.24.9.12 et l'heure 03:12 UTC, tant qu'on n'a pas prouvé qui se trouvait sur cette machine."
+        feedback: "Au contraire : l'horodatage et l'adresse IP enregistrés par le capteur sont précisément les faits mesurés qu'il faut conserver tels quels."
+
+  - id: ex-obs-08-firewall-drop
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-4-redigez-constat
+    kind: multiple-choice
+    prompt: "Le pare-feu interne consigne : `10:15:02 UTC | firewall | event=DROP | proto=TCP | dport=445 | src_ip=10.24.5.30 | dst_ip=10.24.8.10`. Quelle phrase respecte strictement l'observation brute ?"
+    correctOptionId: opt-08-strict-firewall
+    explanation: "Un rejet pare-feu sur le port 445 (partage de fichiers Windows SMB) prouve seulement l'application d'une règle de filtrage sur un paquet précis ; sa cause reste à recouper."
+    misconceptionTags:
+      opt-08-malware-infect: "assimile-port-445-et-ransomware"
+      opt-08-lateral-movement: "projette-une-tactique-offensive-sur-un-paquet"
+      opt-08-benign-share: "affirme-une-cause-benigne-non-verifiee"
+    options:
+      - id: opt-08-strict-firewall
+        label: "À 10:15:02 UTC, le pare-feu a consigné le rejet (DROP) d'un paquet TCP émis par 10.24.5.30 vers le port 445 de 10.24.8.10."
+        feedback: "Exact. Source nommée et champs exacts restitués, sans supposer ni propagation malveillante ni simple erreur de configuration."
+      - id: opt-08-malware-infect
+        label: "À 10:15:02 UTC, le pare-feu a bloqué la propagation d'un rançongiciel exploitant SMB (port 445) depuis 10.24.5.30 vers 10.24.8.10."
+        feedback: "Le port 445 est utilisé par le protocole de partage Windows SMB. L'associer automatiquement à un rançongiciel dans les faits est une extrapolation dangereuse."
+      - id: opt-08-lateral-movement
+        label: "À 10:15:02 UTC, le poste 10.24.5.30 a effectué une tentative de mouvement latéral SMB bloquée vers 10.24.8.10."
+        feedback: "« Mouvement latéral » est une hypothèse d'enquête à garder ouverte, mais pas un fait mesuré par une seule ligne `DROP` de pare-feu."
+      - id: opt-08-benign-share
+        label: "À 10:15:02 UTC, un utilisateur de 10.24.5.30 a tenté d'ouvrir un dossier partagé Windows mal configuré sur 10.24.8.10."
+        feedback: "Même si ce scénario bénin est très courant, l'écrire comme un fait avéré avant de vérifier le poste 10.24.5.30 relève aussi d'une interprétation prématurée."
+
+  - id: ex-obs-09-corroboration-local-cron
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-3-recoupez-sources
+    kind: multiple-choice
+    prompt: "Sur 10.24.8.19, vous ouvrez `/var/log/cron` et trouvez à 08:14:00 UTC le lancement planifié de `/usr/local/bin/backup-sync.sh`. Que vous permet d'affirmer ce recoupement par rapport aux 3 échecs sshd de 08:14:02 à 08:14:09 UTC ?"
+    correctOptionId: opt-09-corroborates-h2
+    explanation: "La coïncidence horaire corrobore fortement H2, mais rigoureusement il faut vérifier aussi le journal/code de retour du script et l'absence de session interactive simultanée (wtmp/auth.log)."
+    misconceptionTags:
+      opt-09-proves-100-percent: "confond-corroboration-forte-et-exclusion-absolue-de-h3"
+      opt-09-timing-mismatch: "interprete-2-secondes-ecart-comme-contradiction"
+      opt-09-need-disable-cron: "conclut-sans-verifier-le-script-lui-meme"
+    options:
+      - id: opt-09-corroborates-h2
+        label: "Il corrobore fortement la piste du script de sauvegarde (H2), tout en demandant de vérifier le journal du script et l'absence de session interactive simultanée sur 10.24.8.19."
+        feedback: "Exact. C'est le niveau de rigueur attendu : H2 devient la piste dominante, et deux vérifications rapides permettent de boucler l'analyse sans angle mort."
+      - id: opt-09-proves-100-percent
+        label: "Il prouve définitivement H2 et exclut mathématiquement toute session humaine ou intrusion simultanée sur 10.24.8.19."
+        feedback: "Une tâche cron qui tourne à 08:14 n'empêche pas une session shell active au même moment sur la machine. Vérifier `wtmp` et le log de `backup-sync.sh` reste indispensable."
+      - id: opt-09-timing-mismatch
+        label: "Il contredit H2, car le lancement cron a eu lieu à 08:14:00 UTC alors que le premier refus sshd apparaît deux secondes plus tard à 08:14:02 UTC."
+        feedback: "Deux secondes entre le démarrage d'un script et sa première négociation SSH réseau sont parfaitement compatibles (initialisation du script et établissement de la connexion)."
+      - id: opt-09-need-disable-cron
+        label: "Il est inexploitable tant que vous n'avez pas redéclenché manuellement la sauvegarde en production pour voir si l'erreur se reproduit."
+        feedback: "Inutile de modifier la production avant lecture : les journaux du script et les statuts de session existants sur 10.24.8.19 suffisent déjà à vérifier la chaîne causale."
+
+  - id: ex-obs-12-ntp-drift
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-3-recoupez-sources
+    kind: multiple-choice
+    prompt: "Vous comparez la passerelle VPN (événement A à 09:12:05 UTC) et un serveur applicatif (événement B à 09:12:02 UTC). Avant d'affirmer que B a eu lieu avant A, quelle vérification technique est indispensable ?"
+    correctOptionId: opt-12-ntp-sync
+    explanation: "D'après NIST SP 800-92, deux journaux issus de machines distinctes ne peuvent être ordonnés à la seconde près qu'après vérification de leur synchronisation d'horloge (NTP) et de leur dérive."
+    misconceptionTags:
+      opt-12-timezone-only: "confond-fuseau-horaire-et-derive-horloge"
+      opt-12-network-latency: "surestime-la-latence-lan-face-a-la-derive-ntp"
+      opt-12-siem-ingestion: "confond-horodatage-source-et-reception-siem"
+    options:
+      - id: opt-12-ntp-sync
+        label: "Vérifier l'état de synchronisation NTP et la dérive d'horloge des deux machines, car un décalage de quelques secondes suffit à inverser l'ordre apparent."
+        feedback: "Exact. Si l'horloge du serveur applicatif retarde de 6 secondes, B a en réalité eu lieu 3 secondes APRÈS A."
+      - id: opt-12-timezone-only
+        label: "Aucune si les deux lignes affichent explicitement « UTC », car le format UTC garantit que deux serveurs partagent la même seconde exacte."
+        feedback: "Piège classique : UTC supprime seulement l'ambiguïté de fuseau horaire (ex. Paris vs Londres), pas la dérive matérielle de l'horloge locale si NTP est désynchronisé."
+      - id: opt-12-network-latency
+        label: "Calculer uniquement le temps de trajet réseau (ping) entre la passerelle VPN et le serveur applicatif."
+        feedback: "Sur un réseau interne, la latence réseau se mesure en millisecondes, alors qu'une horloge sans NTP dérive couramment de plusieurs secondes ou minutes."
+      - id: opt-12-siem-ingestion
+        label: "Remplacer les horodatages des deux serveurs par l'heure de réception dans la console centrale, qui reflète toujours l'ordre réel."
+        feedback: "Un agent peut mettre ses logs en tampon plusieurs secondes avant de les expédier : l'heure de réception centrale peut elle aussi inverser l'ordre réel des événements."
+
+  - id: ex-obs-13-absence-of-log
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-3-recoupez-sources
+    kind: multiple-choice
+    prompt: "Après un signalement, vous ouvrez `/var/log/audit/audit.log` sur un serveur Linux et ne trouvez aucune entrée anormale sur la plage horaire étudiée. Quelle conclusion est scientifiquement valide ?"
+    correctOptionId: opt-13-absence-not-proof
+    explanation: "L'absence d'enregistrement dans un journal local ne prouve jamais l'absence d'activité : le service d'audit a pu être arrêté, filtré, saturé ou altéré localement."
+    misconceptionTags:
+      opt-13-proves-clean: "confond-absence-de-trace-et-preuve-dabsence"
+      opt-13-proves-tampering: "saute-a-la-conclusion-deffacement-malveillant"
+      opt-13-ignore-audit: "abandonne-toute-collecte-locale"
+    options:
+      - id: opt-13-absence-not-proof
+        label: "Aucune anomalie n'est consignée dans ce fichier local ; il faut vérifier que le service d'audit tournait, que les règles couvraient l'action et recouper la collecte centralisée."
+        feedback: "Exact. En investigation, l'absence de preuve dans un capteur local ne vaut jamais preuve d'absence d'événement."
+      - id: opt-13-proves-clean
+        label: "Le serveur est blanchi sur cette plage horaire, puisque le service auditd enregistre obligatoirement toute activité système."
+        feedback: "Faux : `auditd` n'enregistre que ce que ses règles actives surveillent, et cesse d'écrire si le service est stoppé, si le disque est plein ou si un attaquant privilégié a purgé le fichier local."
+      - id: opt-13-proves-tampering
+        label: "L'absence de trace prouve qu'un attaquant a effacé `/var/log/audit/audit.log` pour masquer son passage."
+        feedback: "Attention à l'erreur symétrique : un journal vide sur cette plage peut aussi venir d'une règle non configurée ou tout simplement de l'absence réelle d'événement. Vérifiez la santé du service et le serveur central (SIEM)."
+      - id: opt-13-ignore-audit
+        label: "Un journal local n'a aucune valeur technique ; il ne faut jamais consulter `/var/log/audit/audit.log` et se limiter au pare-feu."
+        feedback: "Les journaux locaux restent précieux dès lors qu'on vérifie leur continuité et qu'on les croise avec une collecte déportée en écriture seule (SIEM/WORM)."
+
+  - id: ex-obs-16-reverse-dns-trap
+    conceptId: tc00-observation-vs-interpretation
+    chapterId: ch-2-mesure-et-angles-morts
+    kind: multiple-choice
+    prompt: "Un outil d'enrichissement affiche pour l'IP externe `198.51.100.77` un nom d'hôte inverse (PTR DNS) égal à `update-officiel-securite.example`. Pourquoi ne faut-il pas en déduire que la connexion est légitime ?"
+    correctOptionId: opt-16-ptr-arbitrary
+    explanation: "L'enregistrement DNS inverse (PTR) est une donnée déclarative définie librement par le gestionnaire de l'adresse IP ; il ne certifie aucune appartenance officielle sans recoupement indépendant."
+    misconceptionTags:
+      opt-16-ptr-verified-registrar: "croit-que-ptr-est-certifie-par-autorite"
+      opt-16-ptr-spoof-impossible: "confond-dns-inverse-et-controle-officiel"
+      opt-16-ptr-proves-attack: "sur-interprete-un-nom-suspect-comme-preuve"
+    options:
+      - id: opt-16-ptr-arbitrary
+        label: "Parce que le détenteur de la plage IP peut inscrire n'importe quel texte dans son enregistrement PTR sans contrôle d'authenticité ni correspondance vérifiée."
+        feedback: "Exact. Un nom PTR rassurant est une donnée déclarative fournie par l'émetteur lui-même, jamais une preuve de légitimité."
+      - id: opt-16-ptr-verified-registrar
+        label: "Uniquement si le serveur DNS de l'entreprise est ancien, car sinon un nom PTR est toujours vérifié par un organisme officiel avant publication."
+        feedback: "Faux : aucun organisme ne vérifie que le texte inscrit dans un enregistrement PTR correspond réellement à l'éditeur prétendu dans le nom."
+      - id: opt-16-ptr-spoof-impossible
+        label: "En réalité, le nom PTR fait foi dès qu'il correspond à un nom de domaine existant ; seul le port source peut être choisi librement."
+        feedback: "Non : le détenteur d'une adresse IP peut faire pointer son PTR vers n'importe quel nom existant sans l'accord du propriétaire de ce domaine. Il faut recouper d'autres sources (qui possède réellement le domaine et l'adresse IP)."
+      - id: opt-16-ptr-proves-attack
+        label: "Parce qu'un nom contenant les mots « officiel » et « sécurité » prouve automatiquement qu'il s'agit d'un serveur d'attaque."
+        feedback: "C'est un signal de vigilance fort qui justifie une vérification immédiate, pas une preuve automatique : vérifiez le propriétaire réel de l'IP et les échanges réseau avant de qualifier l'hôte."

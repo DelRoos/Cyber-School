@@ -113,9 +113,10 @@ const PROPOSED_MODULE_ANCHORS: Record<string, V4ProposedDependency[]> = {
   ],
   "X-02": [
     {
-      targetId: "TC-01",
+      targetId: "A-01",
       targetKind: "module",
-      rationale: "Modélisation systèmes et protocoles nécessitant TC-01..TC-03.",
+      rationale:
+        "Rapprochement thématique proposé : méthodes de test Web/API/mobile et audit applicatif.",
       status: "proposed",
     },
   ],
@@ -123,23 +124,26 @@ const PROPOSED_MODULE_ANCHORS: Record<string, V4ProposedDependency[]> = {
     {
       targetId: "A-01",
       targetKind: "module",
-      rationale: "Méthodes formelles et invariants appliqués aux audits applicatifs.",
+      rationale:
+        "Rapprochement thématique proposé : chaînes d’impact, préconditions et validation des constats d’audit.",
       status: "proposed",
     },
   ],
   "X-04": [
     {
-      targetId: "TC-05",
+      targetId: "A-01",
       targetKind: "module",
-      rationale: "Spécification et revue critique du code produit avec copilote IA.",
+      rationale:
+        "Rapprochement thématique proposé : navigateur, authentification, sessions et identités Web modernes.",
       status: "proposed",
     },
   ],
   "X-05": [
     {
-      targetId: "B-01",
+      targetId: "A-05",
       targetKind: "module",
-      rationale: "Identités, OAuth/OIDC et fédération avancée dans les SI modernes.",
+      rationale:
+        "Rapprochement thématique proposé : AppSec, Cloud, CI/CD et chaîne d’approvisionnement logicielle.",
       status: "proposed",
     },
   ],
@@ -169,17 +173,19 @@ const PROPOSED_MODULE_ANCHORS: Record<string, V4ProposedDependency[]> = {
   ],
   "X-09": [
     {
-      targetId: "B-02",
+      targetId: "C-12",
       targetKind: "module",
-      rationale: "Surfaces cloud-native, conteneurs et orchestrateurs.",
+      rationale:
+        "Rapprochement thématique proposé : protection des personnes, dossiers et communications d’une équipe d’enquête.",
       status: "proposed",
     },
   ],
   "X-10": [
     {
-      targetId: "C-12",
+      targetId: "TC-05",
       targetKind: "module",
-      rationale: "OPSEC, hygiène opérationnelle et protection des personnes.",
+      rationale:
+        "Rapprochement thématique proposé : spécification, tests et revue critique du code produit par IA.",
       status: "proposed",
     },
   ],

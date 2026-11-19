@@ -92,8 +92,11 @@ export function generateMissionBriefs(
 
     const skills = [
       "curriculum-production",
+      "course-page-production",
       "lesson-design",
       "visual-explanation",
+      "pedagogical-animation",
+      "frontend-design",
       "browser-validation",
     ];
     if (unit.recommendedMedium === "2d-animated" || unit.recommendedMedium === "hybrid") {
@@ -112,7 +115,7 @@ export function generateMissionBriefs(
       schemaVersion: "1.0",
       missionId: `MISSION-${unit.id}`,
       unitId: unit.id,
-      slug: unit.slug,
+      slug: record?.lessonSlug ?? unit.slug,
       title: unit.title,
       moduleId: unit.moduleId,
       domainId: unit.domainId,
@@ -125,6 +128,8 @@ export function generateMissionBriefs(
       requiredSkills: skills,
       deliverablesChecklist,
       verificationCommands: [
+        `pnpm course:workflow -- check --unit ${unit.id}`,
+        `pnpm course:workflow -- verify --unit ${unit.id}`,
         `pnpm v4:audit -- --unit ${unit.id}`,
         "pnpm typecheck",
         "pnpm lint",

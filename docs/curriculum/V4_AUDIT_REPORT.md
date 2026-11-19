@@ -35,9 +35,11 @@ Le document comporte deux couches complémentaires :
 
 ## 3. Pont avec l'existant dans `cyber-school`
 
-Deux leçons interactives déjà développées couvrent partiellement des concepts du tronc commun V4 :
+Lors de cet audit initial, deux prototypes couvraient partiellement des concepts du tronc commun V4 :
 
-- [tcp-three-way-handshake](../../lessons/tcp-three-way-handshake/lesson.json) : pont partiel vers `TC-03` (`TC03.017`..`TC03.021` : SYN/SYN-ACK/ACK, séquences, retransmission, timeout/RST).
-- [program-memory-fundamentals](../../lessons/program-memory-fundamentals/lesson.json) : pont partiel vers `TC-01` (`TC01.011`..`TC01.028` : registres, cycle fetch/decode/execute, RAM/cache, mémoire virtuelle/pages, processus/threads, pile/tas, endianness, limites d'analogie).
+- `tcp-three-way-handshake` : pont partiel vers `TC-03` (`TC03.017`..`TC03.021` : SYN/SYN-ACK/ACK, séquences, retransmission, timeout/RST).
+- `program-memory-fundamentals` : pont partiel vers `TC-01` (`TC01.011`..`TC01.028` : registres, cycle fetch/decode/execute, RAM/cache, mémoire virtuelle/pages, processus/threads, pile/tas, endianness, limites d'analogie).
+
+Mise à jour du 15 novembre 2026 : à la demande de l’utilisateur, tous les cours et pages de leçon ont été retirés du catalogue actif pour repartir sur une base vierge. Leur dernier état historique reste archivé dans [l’archive locale](../../audits/first-lesson-reset/previous-courses.zip). Aucune leçon active n’est publiée pour l’instant.
 
 Aucun des 54 modules complets n'est encore intégralement couvert, et **`TC-00` (`TC00.001..TC00.024`) constitue le point d'entrée racine sans prérequis** idéal pour le premier lot de production industrialisée.

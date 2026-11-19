@@ -1,0 +1,24 @@
+Command: corepack pnpm validate:curriculum
+Started: 2026-11-14T18:50:18.328Z
+
+
+> cyber-school@0.1.0 validate:curriculum C:\Users\Emerite\Documents\projets\cyber-school
+> turbo run build --filter=@cyber-school/lesson-runtime && node --experimental-strip-types tests/scripts/validate-curriculum.ts
+
+
+   • turbo 2.11.11
+   • Packages in scope: @cyber-school/lesson-runtime
+   • Running build in 1 package
+   • Remote caching disabled
+
+@cyber-school/lesson-runtime:build: cache hit, replaying logs 78277163a77a87d3
+@cyber-school/lesson-runtime:build: 
+@cyber-school/lesson-runtime:build: > @cyber-school/lesson-runtime@0.1.0 build C:\Users\Emerite\Documents\projets\cyber-school\packages\lesson-runtime
+@cyber-school/lesson-runtime:build: > tsc -p tsconfig.json
+@cyber-school/lesson-runtime:build: 
+
+ Tasks:    1 successful, 1 total
+Cached:    1 cached, 1 total
+  Time:    64ms >>> FULL TURBO
+
+Curriculum validation passed: 4 catalog(s), 4 domain(s), 34 concept(s), 4 lesson(s), 16 resource(s).

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   assertCanPublishRecord,
+  CoursePageSchema,
   createEmptyDeliverablesRecord,
   CurriculumCatalogSchema,
   LessonManifestSchema,
@@ -526,5 +527,166 @@ describe("V4 Curriculum Industrialization contracts", () => {
     };
     expect(assertCanPublishRecord(publishable, "published", true)).toEqual([]);
     expect(assertCanPublishRecord(publishable, "published", false)).toHaveLength(1);
+  });
+
+  it("validates optional editorial callouts, summaryPoints and transitionToNext on CoursePageSchema", () => {
+    const baseChapter = {
+      id: "chapter-one",
+      title: "Séparez le relevé brut de l'alerte",
+      estimatedMinutes: 20,
+      question:
+        "Une alerte affirme qu'un attaquant agit depuis 10.24.8.19, alors que le log ne montre que trois refus de mot de passe.",
+      objective:
+        "Extraire les cinq champs techniques d'un relevé sans ajouter d'auteur ni d'intention.",
+      explanation: [
+        "Un capteur note un résultat technique sans voir qui tient le clavier ni pourquoi la demande a été envoyée.",
+        "Une observation brute cite toujours le journal source et restitue ses cinq champs exacts sans interprétation.",
+      ],
+      workedExample: {
+        title: "Décomposer le relevé initial",
+        startingPoint:
+          "08:14:02 UTC | service=sshd | event=AUTH_FAILURE | account=c.moreau | source_ip=10.24.8.19",
+        steps: [
+          "Étape 1 : relever les cinq champs factuels consignés par le démon sshd.",
+          "Étape 2 : recenser les hypothèses compatibles avant d'ouvrir une autre source.",
+        ],
+        conclusion: "Avec une seule source, trois hypothèses restent compatibles.",
+      },
+      predictionExerciseId: "ex-predict",
+      experience: {
+        componentId: "observation-workbench",
+        instruction: "Basculez la cause amont et activez les sources complémentaires une par une.",
+        observe:
+          "Le relevé initial reste inchangé tandis que les pistes compatibles diminuent de trois à une.",
+        modelLimits:
+          "Modèle borné à trois hypothèses et trois sources ; vérifiez l'horloge NTP en réel.",
+      },
+      practiceExerciseIds: ["ex-practice"],
+      misconception: {
+        claim: "Écrire tentative d'intrusion dans les faits observés est plus prudent.",
+        correction:
+          "Mélanger fait et supposition oriente vers une fausse piste ; séparez relevé et hypothèses.",
+      },
+      takeaway:
+        "Citez d'abord la source et ses champs exacts, puis listez les hypothèses à recouper.",
+      transferQuestion:
+        "Face à une ligne UPLOAD_REJECTED sur backup-agent, rédigez l'observation brute et deux pistes.",
+      resourceIds: ["rfc-9293"],
+      conceptIds: ["tcp-ports-and-sockets"],
+      microLessonIds: ["TC00.001"],
+    };
+
+    const validPage = {
+      schemaVersion: "1.0",
+      lessonId: "lesson-first",
+      unitId: "unit-tc00-observation-interpretation",
+      audience: "Débutants complets sans prérequis techniques préalables.",
+      introduction:
+        "Apprenez à lire ce qu'un relevé technique enregistre réellement avant d'interpréter l'intention.",
+      overviewNarrative: [
+        "Lorsqu'une alerte tombe sur un serveur, les mots utilisés dans un outil de supervision suggèrent souvent une histoire complète avant toute vérification.",
+        "Ce cours vous apprend à revenir à la source brute et à recouper des journaux indépendants.",
+      ],
+      learningObjectives: [
+        "Isoler les cinq champs factuels d'une entrée de journal horodatée.",
+        "Recouper des sources indépendantes pour départager plusieurs hypothèses.",
+      ],
+      prerequisites: ["Aucun prérequis technique n'est nécessaire pour démarrer cette leçon."],
+      chapters: [
+        {
+          ...baseChapter,
+          callouts: [
+            {
+              id: "callout-q1",
+              kind: "question",
+              placement: "opening",
+              title: "Le serveur ne sait-il pas qui tape ?",
+              body: "Non : le service distant reçoit seulement un identifiant, un mot de passe et une adresse réseau.",
+            },
+          ],
+          summaryPoints: [
+            "Une entrée de journal enregistre des paramètres techniques mesurés.",
+            "Citez toujours le relevé source et ses cinq champs exacts.",
+            "Plusieurs causes amont peuvent produire exactement la même trace.",
+          ],
+          transitionToNext:
+            "Vous savez séparer fait et interprétation ; passons maintenant à la formulation d'hypothèses falsifiables.",
+        },
+      ],
+      courseParts: [
+        {
+          id: "part-1",
+          number: 1,
+          title: "Séparez le fait mesuré du scénario supposé",
+          summary:
+            "Comprenez ce qu'un journal enregistre et vérifiez vos hypothèses par recoupement.",
+          quizTitle: "Quiz : Validez vos acquis",
+          quizIntro: "Répondez aux questions ci-dessous pour vérifier votre compréhension.",
+          chapters: [
+            {
+              id: "ch-1",
+              number: 1,
+              title: "Tirez un maximum de ce cours",
+              subtitle: "Méthode et fil rouge · 3 min",
+              estimatedMinutes: 3,
+              blocks: [
+                {
+                  type: "prose",
+                  paragraphs: [
+                    "Ce chapitre pose la méthode d'observation sur le cas concret du serveur de paie.",
+                  ],
+                },
+                {
+                  type: "banner",
+                  variant: "welcome",
+                  caption: "Ouverture visuelle du cours.",
+                },
+                {
+                  type: "quote",
+                  paragraphs: [
+                    "Alerte reçue à 08:15 UTC : trois refus sur srv-paie-01 depuis 10.24.8.19.",
+                  ],
+                  attribution: "Console de supervision",
+                },
+                {
+                  type: "callout",
+                  kind: "question",
+                  body: "Le service distant voit-il réellement qui appuie sur le clavier ?",
+                },
+                {
+                  type: "table",
+                  headers: ["Champ", "Mesure exacte"],
+                  rows: [
+                    ["service", "sshd"],
+                    ["event", "AUTH_FAILURE"],
+                  ],
+                  caption: "Champs observés dans auth.log",
+                },
+                {
+                  type: "summary",
+                  points: [
+                    "Une trace système consigne uniquement des champs techniques.",
+                    "Nommez toujours la source avant d'énoncer les faits observés.",
+                    "Recoupez plusieurs journaux avant de conclure sur la cause.",
+                  ],
+                  transition:
+                    "Passons maintenant au chapitre suivant pour étudier les cinq champs du journal.",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+      finalTakeaway:
+        "Conservez cette séparation entre observation brute et hypothèse dans toute enquête.",
+    };
+
+    expect(CoursePageSchema.safeParse(validPage).success).toBe(true);
+
+    const invalidSummary = {
+      ...validPage,
+      chapters: [{ ...validPage.chapters[0]!, summaryPoints: ["Un seul point insuffisant."] }],
+    };
+    expect(CoursePageSchema.safeParse(invalidSummary).success).toBe(false);
   });
 });

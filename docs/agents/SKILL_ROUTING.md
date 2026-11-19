@@ -1,20 +1,23 @@
 # Choisir les skills selon le travail
 
-Ces onze compétences du projet sont communes à Codex, Claude Code et Gemini CLI. À chaque tâche, choisir celles qui correspondent au travail réel et lire leurs instructions avant de les appliquer. Les compétences conditionnelles sont activées quand leur domaine intervient ; ne pas charger systématiquement toute la bibliothèque.
+Ces compétences du projet sont communes à Codex, Claude Code et Gemini CLI. À chaque tâche, choisir celles qui correspondent au travail réel et lire leurs instructions avant de les appliquer. Les compétences conditionnelles sont activées quand leur domaine intervient ; ne pas charger systématiquement toute la bibliothèque.
 
-| Domaine                                         | Skills                  | Rôle habituel                        |
-| ----------------------------------------------- | ----------------------- | ------------------------------------ |
-| Architecture, contrats et dépendances           | `architecture-design`   | architect                            |
-| Objectifs, explications, exemples et exercices  | `lesson-design`         | pedagogy-designer                    |
-| Lots du curriculum V4 et dossiers de production | `curriculum-production` | pedagogy-designer, continuity-keeper |
-| Direction artistique et mise en page            | `frontend-design`       | frontend-engineer                    |
-| Schémas et scénarios explicatifs                | `visual-explanation`    | pedagogy-designer, frontend-engineer |
-| Animations causales CTML & explications actives | `pedagogical-animation` | pedagogy-designer, frontend-engineer |
-| Animation 2D et commandes temporelles           | `gsap-animation`        | frontend-engineer                    |
-| 3D avec apport pédagogique démontré             | `threejs-scene`         | frontend-engineer                    |
-| Navigation, accessibilité et rendu réel         | `browser-validation`    | qa-engineer, frontend-engineer       |
-| Décomposition et dépendances des tâches         | `iteration-planning`    | continuity-keeper, architect         |
-| Reprise, preuves et relais                      | `project-handoff`       | tous les rôles                       |
+| Domaine                                          | Skills                                                                                       | Rôle habituel                                     |
+| ------------------------------------------------ | -------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Architecture, contrats et dépendances            | `architecture-design`                                                                        | architect                                         |
+| Recherche en ligne et synthèse sources primaires | `web-source-synthesis`, `scientific-thinking-literature-review`, `source-driven-development` | documentation-researcher, domain-scientist        |
+| Audit des affirmations, revue et affinage        | `scientific-thinking-scholar-evaluation`, `doubt-driven-development`, `humanizer`            | domain-scientist, pedagogy-designer               |
+| Objectifs, explications, exemples et exercices   | `lesson-design`, `assessment-authoring`, `better-writing`                                    | pedagogy-designer, exercise-designer              |
+| Lots du curriculum V4 et dossiers de production  | `curriculum-production`                                                                      | pedagogy-designer, continuity-keeper              |
+| Page de cours complète, de la mission à la QA    | `course-page-production`                                                                     | pedagogy-designer, frontend-engineer, qa-engineer |
+| Direction artistique, UI et accessibilité        | `frontend-design`, `better-accessibility`, `better-writing`                                  | frontend-engineer                                 |
+| Schémas et scénarios explicatifs                 | `visual-explanation`                                                                         | pedagogy-designer, frontend-engineer              |
+| Animations causales CTML & explications actives  | `pedagogical-animation`                                                                      | pedagogy-designer, frontend-engineer              |
+| Animation 2D, React et performance 60 fps        | `gsap-animation`, `gsap-react`, `gsap-performance`                                           | frontend-engineer                                 |
+| 3D avec apport pédagogique démontré              | `threejs-scene`                                                                              | frontend-engineer                                 |
+| Navigation, accessibilité et rendu réel          | `browser-validation`, `better-accessibility`                                                 | qa-engineer, frontend-engineer                    |
+| Décomposition et dépendances des tâches          | `iteration-planning`                                                                         | continuity-keeper, architect                      |
+| Reprise, preuves et relais                       | `project-handoff`                                                                            | tous les rôles                                    |
 
 Les sources canoniques sont dans `.agents/skills/`. Codex et Gemini utilisent ce répertoire commun ; Claude utilise son miroir `.claude/skills/`. La gouvernance vérifie l'identité des copies. Aucun skill n'accorde une permission d'exécution, de modification, de publication ou une approbation scientifique.
 

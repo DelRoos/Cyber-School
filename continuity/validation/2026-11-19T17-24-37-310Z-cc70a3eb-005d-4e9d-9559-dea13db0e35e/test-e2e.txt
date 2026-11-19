@@ -1,0 +1,36 @@
+Command: corepack pnpm test:e2e
+Started: 2026-11-19T17:25:33.129Z
+
+
+> cyber-school@0.1.0 test:e2e C:\Users\Emerite\Documents\projets\cyber-school
+> playwright test
+
+
+Running 24 tests using 2 workers
+
+  ok  2 [chromium-desktop] › tests\e2e\learning-studio.spec.ts:3:1 › home landing, interactive workbench, scroll-synced nav, and parcours routing respond to the learner (18.1s)
+  ok  3 [chromium-desktop] › tests\e2e\observation-et-interpretation.spec.ts:293:1 › editing a verified answer invalidates the score and blocked storage keeps the course usable (1.5s)
+  ok  4 [chromium-desktop] › tests\e2e\observation-et-interpretation.spec.ts:323:1 › course page reflows cleanly at 320px in both Guided Theater and Reading modes with reduced motion and keyboard navigation (2.3s)
+  ok  5 [chromium-desktop] › tests\e2e\observation-et-interpretation.spec.ts:379:1 › removed legacy course slugs return 404 and the curriculum links to the first lesson (2.0s)
+  ok  1 [chromium-desktop] › tests\e2e\observation-et-interpretation.spec.ts:16:1 › MDX+YAML 28-slide course overview, 4 progressive chapters, worked examples, micro-checks, real ObservationWorkbench (Cas 3A & 3B), reference sheet, 12-question quiz and persistence work end-to-end (25.9s)
+  ok  7 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:23:1 › orientation offers a foundation and searchable specialisations without inventing availability (2.6s)
+  ok  6 [chromium-desktop] › tests\e2e\observation-et-interpretation.spec.ts:401:1 › Studio Presentation Theater (28 expressive slides), dual Ogg+MP3 audio, single-controller mode-switch continuity, and Mayer Redundancy work end-to-end (7.4s)
+  ok  8 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:76:1 › programme accordion, search, switcher and module deep links work by keyboard (4.7s)
+  ok  9 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:133:1 › six programmes reflow at 320px and remain usable with reduced motion (2.6s)
+  ok 10 [chromium-desktop] › tests\e2e\parcours-orientation.spec.ts:167:1 › transversal modules are optional topic groups linked to the matching V4 subject (2.6s)
+  ok 12 [chromium-desktop] › tests\e2e\parcours.spec.ts:56:1 › root layout tolerates browser extension attributes on html without hydration errors (900ms)
+  ok 11 [chromium-desktop] › tests\e2e\parcours.spec.ts:3:1 › Parcours catalog and detail pages work cleanly without legacy course or listing links (3.1s)
+  ok 13 [chromium-mobile] › tests\e2e\learning-studio.spec.ts:3:1 › home landing, interactive workbench, scroll-synced nav, and parcours routing respond to the learner (19.4s)
+  ok 15 [chromium-mobile] › tests\e2e\observation-et-interpretation.spec.ts:293:1 › editing a verified answer invalidates the score and blocked storage keeps the course usable (1.1s)
+  ok 16 [chromium-mobile] › tests\e2e\observation-et-interpretation.spec.ts:323:1 › course page reflows cleanly at 320px in both Guided Theater and Reading modes with reduced motion and keyboard navigation (1.5s)
+  ok 17 [chromium-mobile] › tests\e2e\observation-et-interpretation.spec.ts:379:1 › removed legacy course slugs return 404 and the curriculum links to the first lesson (1.7s)
+  ok 14 [chromium-mobile] › tests\e2e\observation-et-interpretation.spec.ts:16:1 › MDX+YAML 28-slide course overview, 4 progressive chapters, worked examples, micro-checks, real ObservationWorkbench (Cas 3A & 3B), reference sheet, 12-question quiz and persistence work end-to-end (26.7s)
+  ok 18 [chromium-mobile] › tests\e2e\observation-et-interpretation.spec.ts:401:1 › Studio Presentation Theater (28 expressive slides), dual Ogg+MP3 audio, single-controller mode-switch continuity, and Mayer Redundancy work end-to-end (5.3s)
+  ok 19 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:23:1 › orientation offers a foundation and searchable specialisations without inventing availability (2.8s)
+  ok 21 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:133:1 › six programmes reflow at 320px and remain usable with reduced motion (2.1s)
+  ok 20 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:76:1 › programme accordion, search, switcher and module deep links work by keyboard (3.8s)
+  ok 22 [chromium-mobile] › tests\e2e\parcours-orientation.spec.ts:167:1 › transversal modules are optional topic groups linked to the matching V4 subject (2.0s)
+  ok 24 [chromium-mobile] › tests\e2e\parcours.spec.ts:56:1 › root layout tolerates browser extension attributes on html without hydration errors (967ms)
+  ok 23 [chromium-mobile] › tests\e2e\parcours.spec.ts:3:1 › Parcours catalog and detail pages work cleanly without legacy course or listing links (2.6s)
+
+  24 passed (1.4m)

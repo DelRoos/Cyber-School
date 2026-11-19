@@ -156,6 +156,89 @@
       "trustLevel": "official-docs",
       "untrustedContentNotice": true,
       "summary": "Synthèse de référence sur la formulation d'hypothèses falsifiables, les contre-exemples minimaux et le contrôle des variables."
+    },
+    {
+      "id": "nist-idps-definitions",
+      "title": "NIST SP 800-94 — Erreurs de détection",
+      "publisher": "NIST",
+      "url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-94.pdf",
+      "publishedYear": 2007,
+      "sectionRef": "§ 2.2, Key Functions of IDPS Technologies : false positives et false negatives",
+      "summary": "Définitions des erreurs de détection ; référence historique utilisée pour ces définitions, sans recommandation de produit.",
+      "verifiedAt": "2026-11-14",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true
+    },
+    {
+      "id": "openstax-bayes-probability",
+      "title": "OpenStax — Probability Theory",
+      "publisher": "OpenStax",
+      "url": "https://openstax.org/books/principles-data-science/pages/3-4-probability-theory",
+      "sectionRef": "§ 3.4, Conditional Probability et Bayes’ Theorem",
+      "summary": "Probabilité conditionnelle et inversion par le théorème de Bayes. Les nombres du cours sont un exemple original fictif.",
+      "verifiedAt": "2026-11-14",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true
+    },
+    {
+      "id": "nist-forensic-provenance",
+      "title": "NIST SP 800-86 — Collecter, analyser et rapporter",
+      "publisher": "NIST",
+      "url": "https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-86.pdf",
+      "publishedYear": 2006,
+      "sectionRef": "§ 3.1 à 3.4 : collection, examination, analysis, reporting ; § 6 : données réseau",
+      "summary": "Cadre technique de collecte, analyse et rapport. Ne constitue pas une qualification juridique de la preuve.",
+      "verifiedAt": "2026-11-14",
+      "trustLevel": "official-docs",
+      "untrustedContentNotice": true
+    },
+    {
+      "id": "nist-sp800-92-logs",
+      "title": "NIST SP 800-92 — Guide to Computer Security Log Management",
+      "publisher": "NIST",
+      "url": "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-92.pdf",
+      "publishedYear": 2006,
+      "sectionRef": "Introduction du §2 et §2.1 — The Basics of Computer Security Logs",
+      "summary": "Définition des journaux et de leurs entrées ; contexte et limites de la collecte et de l’analyse.",
+      "verifiedAt": "2026-11-15",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true
+    },
+    {
+      "id": "nist-sp800-61r3-analysis",
+      "title": "NIST SP 800-61r3 — Incident Response Recommendations",
+      "publisher": "NIST",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf",
+      "publishedYear": 2025,
+      "sectionRef": "DE.AE, note N2 ; DE.AE-02 et DE.AE-03 — Adverse Event Analysis",
+      "summary": "Analyse des événements potentiellement défavorables, fidélité des données et rapprochement de plusieurs sources.",
+      "verifiedAt": "2026-11-15",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true
+    },
+    {
+      "id": "ngss-practices-2013",
+      "title": "NGSS Appendix F — Science and Engineering Practices",
+      "publisher": "NGSS",
+      "url": "https://www.nextgenscience.org/sites/default/files/resource/files/Appendix%20F%20%20Science%20and%20Engineering%20Practices%20in%20the%20NGSS%20-%20FINAL%20060513.pdf",
+      "publishedYear": 2013,
+      "sectionRef": "Practices 4, 6 et 7",
+      "summary": "Analyse des données, construction d’explications et argumentation à partir des éléments disponibles.",
+      "verifiedAt": "2026-11-15",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true
+    },
+    {
+      "id": "rfc-1918",
+      "title": "RFC 1918 — Address Allocation for Private Internets",
+      "publisher": "IETF",
+      "url": "https://datatracker.ietf.org/doc/html/rfc1918",
+      "publishedYear": 1996,
+      "sectionRef": "Section 3 (Private Address Space: 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16)",
+      "summary": "Spécification officielle définissant les trois plages d'adresses IPv4 privées réservées aux réseaux internes non routables directement sur Internet.",
+      "verifiedAt": "2026-11-19",
+      "trustLevel": "primary-standard",
+      "untrustedContentNotice": true
     }
   ]
 }

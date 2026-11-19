@@ -55,10 +55,12 @@ export function loadAcademyData(rootDir = findRepoRoot()): AcademyData {
   };
 
   const lessonsDir = path.join(rootDir, "lessons");
-  const lessonDirs = fs
-    .readdirSync(lessonsDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const lessonDirs = fs.existsSync(lessonsDir)
+    ? fs
+        .readdirSync(lessonsDir, { withFileTypes: true })
+        .filter((entry) => entry.isDirectory())
+        .sort((a, b) => a.name.localeCompare(b.name))
+    : [];
 
   const lessons = lessonDirs.map((dir) => {
     const raw = JSON.parse(fs.readFileSync(path.join(lessonsDir, dir.name, "lesson.json"), "utf8"));
@@ -71,8 +73,7 @@ export function loadAcademyData(rootDir = findRepoRoot()): AcademyData {
     throw new Error(`Curriculum integrity validation failed: ${summary}`);
   }
 
-  const featuredLesson =
-    lessons.find((lesson) => lesson.slug === "tcp-three-way-handshake") ?? lessons[0];
+  const featuredLesson = lessons[0];
 
   return {
     curriculum,

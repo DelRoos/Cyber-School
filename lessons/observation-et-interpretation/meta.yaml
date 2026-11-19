@@ -1,0 +1,87 @@
+schemaVersion: "2.0"
+contentRevision: "2.1.0"
+id: lesson-observation-et-interpretation
+slug: observation-et-interpretation
+unitId: unit-tc00-observation-interpretation
+conceptId: tc00-observation-vs-interpretation
+microLessonIds: ["TC00.001"]
+title: "Distinguer une observation d'une interprétation"
+audience: "Débutants complets (aucun prérequis technique)."
+levelLabel: "Fondamental"
+estimatedMinutes: 30
+medium: "2d-animated"
+mediumJustification: "Un studio de slides visuelles 2D couplé à des schémas interactifs et un simulateur déterministe permet d'isoler chaque champ discret du journal sshd, la frontière du capteur et l'entonnoir de recoupement multi-sources."
+status: "in-review"
+review:
+  status: "pending"
+resourceIds:
+  - nist-sp800-92-logs
+  - nist-sp800-61r3-analysis
+  - ngss-practices-2013
+  - rfc-1918
+introduction: "À 08:15 UTC, une alerte critique accuse un attaquant externe de forcer le serveur de paie. Maîtrisez la méthode complète d'analyse : autopsier une alerte, lire une vraie trace OpenSSH, déjouer les 3 angles morts d'un capteur, recouper des sources indépendantes et rédiger un ticket d'analyste irréprochable."
+overviewNarrative:
+  - "En cybersécurité, une mauvaise interprétation prise sous pression coûte souvent plus cher que l'incident lui-même : couper un serveur de paie sur une fausse alerte bloque les salaires, tandis que classer un signal comme « faux positif » sans vérifier laisse un intrus agir librement."
+  - "Les consoles de supervision traduisent presque toujours des lignes techniques neutres en récits alarmistes : « attaquant externe », « force brute », « exfiltration ». Si vous recopiez ce récit sans revenir au journal brut, vous enquêtez sur une fiction."
+  - "Dans ce cours complet (4 chapitres, **28 slides visuelles interactives** et **2 exemples résolus**), vous prenez en main le premier incident de **TechNova** sur `srv-paie-01`. Vous allez lire de vraies lignes OpenSSH, identifier les 3 angles morts de tout capteur, manipuler un laboratoire déterministe à 3 sources, éviter le piège des horloges NTP et rédiger un constat en 3 volets."
+  - "Choisissez librement votre format : **Mode Lecture** (manuel éditorial complet et aéré) ou **Mode Écoute guidée** (présentation visuelle dynamique de 28 slides rythmées par la voix mentor, conçue pour tout comprendre sans avoir besoin de lire de longs paragraphes)."
+learningObjectives:
+  - "Séparer dans une alerte les champs réellement mesurés par la machine des suppositions ajoutées par une règle automatique."
+  - "Lire les 5 repères d'une vraie entrée OpenSSH et expliquer les 3 angles morts d'un capteur (cécité amont, adresse partagée NAT/relais, données déclaratives)."
+  - "Recouper des sources véritablement indépendantes (CMDB, journaux de la machine émettrice) en déjouant la dérive d'horloge NTP, l'absence trompeuse de trace et les 3 biais cognitifs d'enquête."
+  - "Rédiger un constat d'analyste en 3 volets (observation brute, hypothèses compatibles, recoupements proportionnés) transférable à 5 familles de capteurs."
+prerequisites:
+  - "Aucun prérequis technique : chaque terme (`log`, `UTC`, `sshd`, `RFC 1918`, `NAT`, `CMDB`, `NTP`, `PTR`) est expliqué concrètement dès sa première apparition."
+finalTakeaway: "Séparez toujours le fait brut horodaté (source nommée + champs exacts) des hypothèses compatibles, vérifiez l'indépendance et l'horloge NTP de vos sources, puis rédigez un constat proportionné."
+audio:
+  model: "gemini-3.8-flash-tts"
+  voiceName: "Sadaltager"
+  persona: "Voix pédagogique posée, expressive et claire"
+  defaultStyle: "calm, warm and steady"
+canonicalStep:
+  id: chapter-observation-vs-interpretation
+  title: "Séparez le fait mesuré du scénario supposé"
+  summary: "Extraire les 5 champs factuels du journal sshd, identifier les 3 angles morts d'un capteur, recouper 3 sources indépendantes et rédiger un ticket en 3 volets."
+  visualFocus: "Studio de slides interactives, inspecteur sshd et laboratoire de recoupement multi-sources"
+canonicalChapter:
+  id: chapter-observation-vs-interpretation
+  title: "Séparez le fait mesuré du scénario supposé"
+  estimatedMinutes: 30
+  question: "Lundi à 08:15 UTC, une alerte affirme : « Un attaquant externe tente de pirater Claire Moreau par force brute depuis 10.24.8.19 ». Le journal de srv-paie-01 ne montre que 3 refus de mot de passe en 7 secondes. Que sait-on réellement, et qu'est-ce qui a été inventé ?"
+  objective: "Isoler les 5 champs bruts d'un relevé système, reconnaître les 3 angles morts d'un capteur, recouper des sources indépendantes et rédiger un constat rigoureux."
+  explanation:
+    - "Un service serveur ne voit jamais la personne derrière le clavier ni son intention : il n'enregistre que les paramètres techniques reçus sur son interface réseau."
+    - "Une observation brute nomme sa source et restitue exactement les champs enregistrés. Toute attribution d'auteur, d'intention ou de provenance non mesurée est une hypothèse à tester par recoupement indépendant."
+  workedExample:
+    title: "Autopsie des 3 lignes de 08:14 UTC sur srv-paie-01"
+    startingPoint: |
+      Oct 24 08:14:02 srv-paie-01 sshd[18420]: Failed password for c.moreau from 10.24.8.19 port 42118 ssh2
+      Oct 24 08:14:05 srv-paie-01 sshd[18423]: Failed password for c.moreau from 10.24.8.19 port 42120 ssh2
+      Oct 24 08:14:09 srv-paie-01 sshd[18427]: Failed password for c.moreau from 10.24.8.19 port 42124 ssh2
+    steps:
+      - "Isoler les 5 champs mesurés : horodatage UTC (08:14:02 à 08:14:09), service sshd, résultat Failed password, compte demandé c.moreau et IP privée interne 10.24.8.19."
+      - "Écarter les deux ajouts non prouvés de l'alerte (« attaquant externe » est contredit par la plage privée RFC 1918 ; « force brute » suppose une intention non mesurée)."
+      - "Ouvrir trois hypothèses compatibles (H1 erreur humaine, H2 script de sauvegarde expiré, H3 session shell sur 10.24.8.19) puis les filtrer via la CMDB et les journaux locaux de 10.24.8.19."
+    conclusion: "Avec 1 source (sshd), 3 hypothèses restent ouvertes. Le croisement de la CMDB puis des journaux locaux de 10.24.8.19 permet seul d'écarter les pistes incompatibles."
+  experience:
+    componentId: "observation-workbench"
+    instruction: "1. Laissez le journal sshd seul actif et changez la cause amont sur 10.24.8.19. 2. Activez l'inventaire réseau (Source 2). 3. Comparez les journaux locaux (Cas 3A et Cas 3B) et observez l'impact d'une conclusion prématurée."
+    observe: "Le relevé sshd reste strictement identique quelle que soit la cause amont simulée, tandis que les pistes compatibles passent de 3 à 2 puis à 1 lorsque des sources indépendantes sont recoupées."
+    modelLimits: "Modèle borné à 5 champs normalisés, 3 hypothèses candidates et 3 sources locales. En production, contrôlez systématiquement la synchronisation horaire NTP, les équipements NAT/relais intermédiaires et l'intégrité de la collecte centralisée."
+  misconception:
+    claim: "Qualifier trois refus rapides de « tentative d'intrusion » dès l'observation brute est plus prudent en sécurité."
+    correction: "Au contraire : injecter une conclusion non vérifiée dans les faits déclenche des coupures de service inutiles ou oriente l'équipe sur une fausse piste. Séparez toujours le fait brut des hypothèses à tester."
+  takeaway: "Structurez chaque analyse en trois volets : (1) observation brute attribuée à sa source, (2) hypothèses compatibles bénignes et hostiles, (3) sources indépendantes à recouper."
+  transferQuestion: "Sur le serveur interne srv-fichiers-02, le programme de sauvegarde enregistre : 16:40:05 UTC | service=backup-agent | event=UPLOAD_REJECTED | file=archives-rh.zip | account=svc-sauvegarde | reason=quota_exceeded. Rédigez (1) l'observation brute stricte, (2) deux hypothèses compatibles et (3) la source indépendante à consulter pour trancher."
+externalLabs:
+  - id: lab-local-log-decomposition
+    title: "Atelier autonome : décomposer deux relevés terrain en trois volets"
+    provider: "Activité locale guidée (référence NIST SP 800-92)"
+    url: "https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-92.pdf"
+    description: "Rédiger hors ligne, sur deux entrées de journal inédites, un ticket d'analyse séparant observation brute, hypothèses compatibles et sources de recoupement."
+    estimatedMinutes: 10
+    localSteps:
+      - "Lisez la trace A (16:40:05 UTC | service=backup-agent | event=UPLOAD_REJECTED | file=archives-rh.zip | account=svc-sauvegarde | reason=quota_exceeded sur srv-fichiers-02) et la trace B (11:05:18 UTC | service=vpn-gateway | event=SESSION_CLOSED | account=m.diallo | source_ip=198.51.100.42 | reason=idle_timeout sur passerelle-acces-01)."
+      - "Pour chaque trace, rédigez en une phrase l'observation brute en citant la source et ses champs exacts, sans adjectif d'intention."
+      - "Pour chaque trace, formulez deux hypothèses compatibles (une opérationnelle bénigne, une atypique) et nommez la source indépendante qui les départage."
+      - "Vérifiez vos textes sur quatre critères : source nommée, champs exacts, aucun mot d'intention dans les faits, action proportionnée."

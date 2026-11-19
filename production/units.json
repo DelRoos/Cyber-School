@@ -2,14 +2,26 @@
   "schemaVersion": "1.0",
   "units": [
     {
-      "id": "unit-tc00-observation-hypotheses",
-      "slug": "scientific-reasoning-and-proof",
-      "title": "Observation, hypothèses, causalité et contre-exemples",
+      "id": "unit-tc00-observation-interpretation",
+      "slug": "observation-et-interpretation",
+      "title": "Distinguer une observation d’une interprétation",
       "moduleId": "TC-00",
       "domainId": "v4-tronc-commun",
-      "rationale": "Premier bloc de raisonnement scientifique : distinguer observation et modèle, formuler une hypothèse falsifiable, isoler variables contrôlées et confondantes, et construire un contre-exemple minimal.",
+      "rationale": "Leçon complète pour distinguer un relevé de son interprétation et formuler une conclusion justifiée.",
+      "microLessonIds": ["TC00.001"],
+      "prerequisiteUnitIds": [],
+      "recommendedMedium": "2d-animated",
+      "estimatedMinutes": 20,
+      "groupingStatus": "curated"
+    },
+    {
+      "id": "unit-tc00-observation-hypotheses",
+      "slug": "scientific-reasoning-and-proof",
+      "title": "Hypothèses, causalité et contre-exemples",
+      "moduleId": "TC-00",
+      "domainId": "v4-tronc-commun",
+      "rationale": "Suite du raisonnement scientifique : hypothèses, variables et contre-exemples.",
       "microLessonIds": [
-        "TC00.001",
         "TC00.002",
         "TC00.003",
         "TC00.004",
@@ -18,10 +30,9 @@
         "TC00.007",
         "TC00.008"
       ],
-      "prerequisiteUnitIds": [],
+      "prerequisiteUnitIds": ["unit-tc00-observation-interpretation"],
       "recommendedMedium": "2d-animated",
       "estimatedMinutes": 25,
-      "legacyBridgeLessonSlug": "scientific-reasoning-and-proof",
       "groupingStatus": "curated"
     },
     {
@@ -85,6 +96,7 @@
         "TC01.007"
       ],
       "prerequisiteUnitIds": [
+        "unit-tc00-observation-interpretation",
         "unit-tc00-observation-hypotheses",
         "unit-tc00-uncertainty-errors",
         "unit-tc00-evidence-calibration"
@@ -154,7 +166,6 @@
       "prerequisiteUnitIds": ["unit-tc-01-03"],
       "recommendedMedium": "2d-animated",
       "estimatedMinutes": 28,
-      "legacyBridgeLessonSlug": "program-memory-fundamentals",
       "groupingStatus": "auto-grouped"
     },
     {
@@ -281,7 +292,6 @@
       "prerequisiteUnitIds": ["unit-tc-03-02"],
       "recommendedMedium": "2d-animated",
       "estimatedMinutes": 32,
-      "legacyBridgeLessonSlug": "tcp-three-way-handshake",
       "groupingStatus": "auto-grouped"
     },
     {
@@ -1954,6 +1964,7 @@
         "C01.008"
       ],
       "prerequisiteUnitIds": [
+        "unit-tc00-observation-interpretation",
         "unit-tc00-observation-hypotheses",
         "unit-tc00-uncertainty-errors",
         "unit-tc00-evidence-calibration",
@@ -2541,6 +2552,7 @@
         "D02.008"
       ],
       "prerequisiteUnitIds": [
+        "unit-tc00-observation-interpretation",
         "unit-tc00-observation-hypotheses",
         "unit-tc00-uncertainty-errors",
         "unit-tc00-evidence-calibration",
@@ -2677,6 +2689,7 @@
         "X01.007"
       ],
       "prerequisiteUnitIds": [
+        "unit-tc00-observation-interpretation",
         "unit-tc00-observation-hypotheses",
         "unit-tc00-uncertainty-errors",
         "unit-tc00-evidence-calibration"
@@ -2723,7 +2736,7 @@
         "X02.007",
         "X02.008"
       ],
-      "prerequisiteUnitIds": ["unit-tc-01-04"],
+      "prerequisiteUnitIds": ["unit-a-01-03"],
       "recommendedMedium": "hybrid",
       "estimatedMinutes": 32,
       "groupingStatus": "auto-grouped"
@@ -2809,7 +2822,7 @@
         "X04.007",
         "X04.008"
       ],
-      "prerequisiteUnitIds": ["unit-tc-05-04"],
+      "prerequisiteUnitIds": ["unit-a-01-03"],
       "recommendedMedium": "hybrid",
       "estimatedMinutes": 32,
       "groupingStatus": "auto-grouped"
@@ -2852,7 +2865,7 @@
         "X05.007",
         "X05.008"
       ],
-      "prerequisiteUnitIds": ["unit-b-01-03"],
+      "prerequisiteUnitIds": ["unit-a-05-03"],
       "recommendedMedium": "hybrid",
       "estimatedMinutes": 32,
       "groupingStatus": "auto-grouped"
@@ -3018,7 +3031,7 @@
         "X09.006",
         "X09.007"
       ],
-      "prerequisiteUnitIds": ["unit-b-02-03"],
+      "prerequisiteUnitIds": ["unit-c-12-02"],
       "recommendedMedium": "hybrid",
       "estimatedMinutes": 28,
       "groupingStatus": "auto-grouped"
@@ -3060,7 +3073,7 @@
         "X10.006",
         "X10.007"
       ],
-      "prerequisiteUnitIds": ["unit-c-12-02"],
+      "prerequisiteUnitIds": ["unit-tc-05-04"],
       "recommendedMedium": "hybrid",
       "estimatedMinutes": 28,
       "groupingStatus": "auto-grouped"
